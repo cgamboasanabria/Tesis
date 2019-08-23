@@ -1,0 +1,109 @@
+---
+title: "Título"
+author: "César Gamboa Sanabria"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+always_allow_html: yes
+output: 
+    pdf_document:
+        keep_tex: yes
+        fig_caption: yes
+header-includes: 
+    -   \usepackage{geometry}
+        \geometry{a4paper, left=20mm, right=30mm}
+    -   \usepackage{setspace}
+        \doublespacing
+    -   \usepackage[spanish]{babel}
+    -   \usepackage{color}
+    -   \usepackage{xcolor}
+    -   \usepackage{framed}
+        \colorlet{shadecolor}{gray!20}
+bibliography: referencias.bib
+---
+
+```{r, eval=FALSE, include=FALSE}
+#Comandos para antes del \begin{document}
+
+##Fuente
+\newcommand*{\captionsource}[2]{%
+ \text{Fuente:} #2%
+}
+
+\setcounter{secnumdepth}{0}
+% Pandoc toggle for numbering sections (defaults to be off)
+\setcounter{secnumdepth}{0}
+% Pandoc header
+\usepackage[spanish]{babel}
+\usepackage{sectsty}
+\chapternumberfont{\Large}
+\chaptertitlefont{\Large}
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\usepackage{graphics}
+
+
+\usepackage{setspace} %paquete para el doble espaciado
+\doublespacing %inicia el doble espaciado
+
+%Esto quita el punto final en la numeracion de cada seccion
+\usepackage{tocloft}
+\usepackage{titlesec}
+\titleformat{\section}
+  {\Large\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\large\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+\titleformat{\paragraph}
+  {\normalsize\bfseries}{\theparagraph}{0.5em}{}
+\renewcommand\cftsecaftersnum{}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+
+
+\usepackage{caption}
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\rightmark}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14.5pt}
+\renewcommand\sectionmark[1]{%
+   \markright{\thesection\ #1}}
+```
+
+
+\newpage
+
+```{r setup, include=FALSE, results='hide'}
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
+                      dev="jpeg", out.width = '100%', out.height='100%', fig.pos="!h")
+
+library(carlians)
+requeridos(tidyverse)
+```
+
+\section*{RESUMEN}  
+
+***Palabras clave***: 
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{INTRODUCCIÓN}  
+
+\section{MARCO DE LA CUESTIÓN}
+
+\section{METODOLOGÍA} 
+
+\section{RESULTADOS} 
+
+\section{CONCLUSIONES Y RECOMENDACIONES}
+
+\section{ANEXOS}
+
+\section{REFERENCIAS}    
