@@ -1,8 +1,11 @@
 ---
-title: "TÍTULO IMPRESIONANTE"
-author: "César Gamboa Sanabria"
+title: "Determinación de modelos ARIMA vía sobre parametrización según la temporalidad de la serie cronológica con aplicaciones en datos costarricenses"
+author: |
+  | Universidad de Costa Rica
+  | César Gamboa Sanabria
+  | www.cesargamboasanabria.com
+  | info@cesargamboasanabria.com
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-email: "info@cesargamboasanabria.com"
 always_allow_html: yes
 output: 
     pdf_document:
@@ -78,7 +81,6 @@ linkcolor: blue
    \markright{\thesection\ #1}}
 ```
 
-
 \newpage
 
 ```{r setup, include=FALSE, results='hide'}
@@ -103,15 +105,5 @@ La metodología de Box-Jenkins busca encontrar el mejor proceso autorregresivo i
 
 ```{r, child="01-Introduccion.Rmd"}
 ```
-
-\section{MARCO DE LA CUESTIÓN}
-
-\section{METODOLOGÍA} 
-
-\section{RESULTADOS} 
-
-\section{CONCLUSIONES Y RECOMENDACIONES}
-
-\section{ANEXOS}
 
 \section{REFERENCIAS}    
