@@ -1,12 +1,15 @@
 ---
-title: "Título"
+title: "TÍTULO IMPRESIONANTE"
 author: "César Gamboa Sanabria"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
+email: "info@cesargamboasanabria.com"
 always_allow_html: yes
 output: 
     pdf_document:
         keep_tex: yes
         fig_caption: yes
+    html_notebook: default
+urlcolor: blue
 header-includes: 
     -   \usepackage{geometry}
         \geometry{a4paper, left=20mm, right=30mm}
@@ -18,6 +21,8 @@ header-includes:
     -   \usepackage{framed}
         \colorlet{shadecolor}{gray!20}
 bibliography: referencias.bib
+link-citations: yes
+linkcolor: blue
 ---
 
 ```{r, eval=FALSE, include=FALSE}
@@ -86,7 +91,9 @@ requeridos(tidyverse)
 
 \section*{RESUMEN}  
 
-***Palabras clave***: 
+La metodología de Box-Jenkins busca encontrar el mejor proceso autorregresivo integrado de medias móviles (ARIMA) que explique una serie temporal $y_t$ de $T$ periodos, para pronosticar hasta $T+h$. El paquete `forecast` de R permite hacer uso de la función `auto.arima()` para estimar un  modelo ARIMA basado en pruebas de raíz unitaria, minimización del AICc y de la MLE. De esta forma se obtiene un modelo temporal definiendo las diferenciaciones requeridas en la parte estacional d mediante las pruebas KPSS o ADF, y la no estacional D utilizando las pruebas OCSB o la Canova-Hansen, seleccionado el orden óptimo para los términos $ARIMA(p,d,q)(P,D,Q)$ para una serie $y_t$. Se propone un método de selección fundamentada en las permutaciones de los parámetros de un modelo ARIMA, seleccionando la mejor especificación con base en medidas de rendimiento MAE, RMSE, MAPE y MASE:  se  comparan todos los posibles términos definiendo una diferenciación adecuada para la serie y permutando hasta un máximo determinado para los términos de especificación de un $ARIMA(p,d,q)(P,D,Q)$. El método propuesto se probó en 6 series cronológicas de distinta temporalidad: mortalidad infantil, mortalidad por causa externa, nacimientos, demanda eléctrica, intereses y comisiones del sector público, e incentivos salariales del sector público.   
+
+***Palabras clave***: ARIMA, R, automatización, selección, estadística
 
 \newpage
 
@@ -94,7 +101,8 @@ requeridos(tidyverse)
 
 \newpage
 
-\section{INTRODUCCIÓN}  
+```{r, child="01-Introduccion.Rmd"}
+```
 
 \section{MARCO DE LA CUESTIÓN}
 

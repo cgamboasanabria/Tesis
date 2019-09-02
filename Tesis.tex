@@ -1,4 +1,4 @@
-\documentclass[]{article}
+\documentclass[12pt]{article}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -23,10 +23,14 @@
 }{}
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 \hypersetup{unicode=true,
-            pdftitle={Título},
+            pdftitle={TÍTULO IMPRESIONANTE},
             pdfauthor={César Gamboa Sanabria},
-            pdfborder={0 0 0},
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=Blue,
+            urlcolor=blue,
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \usepackage{graphicx,grffile}
@@ -74,7 +78,7 @@
 
 \setlength{\droptitle}{-2em}
 
-  \title{Título}
+  \title{TÍTULO IMPRESIONANTE}
     \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
     \author{César Gamboa Sanabria}
@@ -82,14 +86,20 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{1 de abril de 2019}
+    \date{02 septiembre, 2019}
 
-\usepackage{geometry} \geometry{a4paper, left=20mm, right=30mm}
-\usepackage{setspace} \doublespacing
+\usepackage{geometry}
+
+\geometry{a4paper, left=20mm, right=30mm}
+\usepackage{setspace}
+
+\doublespacing
 \usepackage[spanish]{babel}
 \usepackage{color}
 \usepackage{xcolor}
-\usepackage{framed} \colorlet{shadecolor}{gray!20}
+\usepackage{framed}
+
+\colorlet{shadecolor}{gray!20}
 
 \newcommand*{\captionsource}[2]{%
  \text{Fuente:} #2%
@@ -139,9 +149,6 @@
 \renewcommand\sectionmark[1]{%
    \markright{\thesection\ #1}}
 
-
-\usepackage{amsmath}
-\usepackage[makeroom]{cancel}
 \begin{document}
 \maketitle
 
@@ -149,11 +156,30 @@
 
 \section*{RESUMEN}
 
-Prueba (Wickham and Bryan 2018)
+La metodología de Box-Jenkins busca encontrar el mejor proceso
+autorregresivo integrado de medias móviles (ARIMA) que explique una
+serie temporal \(y_t\) de \(T\) periodos, para pronosticar hasta
+\(T+h\). El paquete \texttt{forecast} de R permite hacer uso de la
+función \texttt{auto.arima()} para estimar un modelo ARIMA basado en
+pruebas de raíz unitaria, minimización del AICc y de la MLE. De esta
+forma se obtiene un modelo temporal definiendo las diferenciaciones
+requeridas en la parte estacional d mediante las pruebas KPSS o ADF, y
+la no estacional D utilizando las pruebas OCSB o la Canova-Hansen,
+seleccionado el orden óptimo para los términos \(ARIMA(p,d,q)(P,D,Q)\)
+para una serie \(y_t\). Se propone un método de selección fundamentada
+en las permutaciones de los parámetros de un modelo ARIMA, seleccionando
+la mejor especificación con base en medidas de rendimiento MAE, RMSE,
+MAPE y MASE: se comparan todos los posibles términos definiendo una
+diferenciación adecuada para la serie y permutando hasta un máximo
+determinado para los términos de especificación de un
+\(ARIMA(p,d,q)(P,D,Q)\). El método propuesto se probó en 6 series
+cronológicas de distinta temporalidad: mortalidad infantil, mortalidad
+por causa externa, nacimientos, demanda eléctrica, intereses y
+comisiones del sector público, e incentivos salariales del sector
+público.
 
-\textbf{\emph{Palabras clave}}: nacimientos, envejecimiento población,
-series de tiempo, regresión lineal, suavizamiento exponencial, ARIMA,
-redes neuronales.
+\textbf{\emph{Palabras clave}}: ARIMA, R, automatización, selección,
+estadística
 
 \newpage
 
@@ -162,6 +188,129 @@ redes neuronales.
 \newpage
 
 \section{INTRODUCCIÓN}
+
+El manejo de información obtenida de manera secuencial a lo largo del
+tiempo hace referencia al uso de series cronológicas. Este tipo de datos
+se encuentras en diferentes áreas de investigación. En el campo
+financiero, por ejemplo, es común hablar de la devaluación del colón con
+respecto al dólar, cantidad de exportaciones mensuales de un determinado
+producto o las ventas de este (Hernández
+\protect\hyperlink{ref-oscarh-1}{2011}\protect\hyperlink{ref-oscarh-1}{a}).
+
+En demografía, por ejemplo, el tema de las proyecciones de población
+tiene un alto impacto a nivel social, pues conocer con anticipación en
+posible comportamiento de la población en el futuro es clave para una
+adecuada planificación en diversos proyectos sobre los cuales se debe
+distribuir un presupuesto que es finito. Durante una emergencia, que
+difícilmente se sabe cuándo ocurrirá, conocer la posible población que
+se tiene en una zona es clave para la rápida reacción de las autoridades
+para el envío de ayuda o para ejecutar planes de evacuación.
+
+El campo actuarial también se ve beneficiado al mejorar sus métodos de
+pronóstico, pues uno de sus campos de estudio es la mortalidad pues
+representan un insumo de vital importancia para la planificación y
+sostenibilidad de los sistemas de pensiones, servicios de salud tanto
+pública como privada, seguros de vida y asuntos hipotecarios
+(Rosero-Bixby \protect\hyperlink{ref-supenprodc}{2018}).
+
+Sin embargo, las series cronológicas por sí solas representan solo un
+insumo para abordar, como mínimo, tres objetivos básicos: 1) realizar
+análisis exploratorios de estos datos mediante métodos de visualización
+y medidas de posición y variabilidad, como ver su crecimiento o
+decrecimiento a lo largo del tiempo, detectar valores atípicos o cambios
+drásticos en el nivel o valor medio de la serie, 2) generar modelos
+estadísticos que sirvan como un simplificación de la realidad, y 3)
+generar pronósticos para los posibles valores futuros que tomará el
+problema en cuestión (Hernández
+\protect\hyperlink{ref-oscarh-2}{2011}\protect\hyperlink{ref-oscarh-2}{b}).
+
+Los tres objetivos anteriores se trabajan de manera secuencial, pues es
+necesario realizar primero el análisis exploratorio de los datos para
+tener una noción global del panorama y así conocer la serie cronológica
+con la que se está trabajando. Una vez hecho esto, existen múltiples
+formas de generar modelos para estos datos, como por ejemplo los métodos
+de suavizamiento exponencial desarrollados en la década de 1950 (Brown
+\protect\hyperlink{ref-brown}{1956}), modelos de regresión para series
+temporales (Kedem and Fokianos \protect\hyperlink{ref-kedem}{2005}) o
+los procesos autorregresivos integrados de medias móviles (ARIMA) (Box,
+Jenkins, and Reinsel \protect\hyperlink{ref-box-jenkins}{1994}). Cuando
+se ha establecido el modelo, los pronósticos son utilizados en
+instituciones públicas, gobiernos municipales, instituciones del sector
+privado, centros académicos, población civil, centros nacionales o
+regionales de investigación y ONG dedicadas al desarrollo social. Si las
+entidades previamente mencionadas cuentan con proyecciones de calidad,
+la puesta en marcha de sus respectivos planes tendrá un impacto mayor y
+más efectivo.
+
+De lo anterior, generar un modelo adecuado es fundamental para obtener
+un pronóstico de calidad, y es aquí donde resulta importante mencionar
+una diferencia clave entre los dos modelos clásicos más comúnmente
+utilizados: los modelos de suavizamiento y los modelos ARIMA. Ambos
+representan enfoques complementarios a un problema, pues según Hyndman
+(Hyndman and Athanasopoulos
+\protect\hyperlink{ref-hyndman2018forecasting}{2018}), los modelos de
+suavizamiento exponencial se fundamentan en un enfoque más descriptivo
+de los componentes de la serie cronológica en estudio; mientras que los
+modelos ARIMA tienen como objetivo explicar las relaciones pasadas de
+ésta. La importancia de la metodología de Box-Jenkins radica en que no
+supone ningún patrón en particular en la serie histórica que se busca
+pronosticar, sino que contempla un proceso iterativo para identificar un
+posible modelo a partir de una clase general de modelos y luego someter
+dicho modelo a diferentes pruebas y medidas de rendimiento para evaluar
+su ajuste. Al trabajar la metodología de Box-Jenkins, uno de los pasos
+es identificar el los parámetros del proceso ARIMA(p,d,q)(P,D,Q) que
+gobiernan la serie, siendo la manera clásica de trabajar este paso, el
+análisis visual de las funciones de autocorrelación parcial y total.
+
+El gran obstáculo que presenta esta identificación visual es que en la
+actualidad contar con una gran cantidad de series cronológicas para
+analizar es algo muy común. Incluso con cantidades moderadas de series
+cronológicas a analizar, es difícil contar con personal capacitado para
+realizar este análisis visual y poder identificar los modelos, por lo
+que la generación de algoritmos que ayuden a dicha identificación se
+vuelven cada vez más necesarios (Hyndman and Khandakar
+\protect\hyperlink{ref-auto.arima}{2008}).
+
+Han sido varias las aproximaciones a un método que genere de manera
+automática un modelo ARIMA, como por ejemplo los propuestos por Hannan y
+Rissanen (Hannan and Rissanen \protect\hyperlink{ref-hannan}{1982}), la
+extensión de dicha propuesta realizada por Gómez (Gómez
+\protect\hyperlink{ref-gomez}{1998}) y posteriormente aplicada (Gómez
+and Maraval \protect\hyperlink{ref-tramo}{1998}) en los software
+\textbf{TRAMO} y \textbf{SEATS}; de manera similar se planteó una
+aplicación en los software \textbf{SCA-Expert} (Liu
+\protect\hyperlink{ref-liu}{1989}) y \textbf{TSE-AX} (Mélard and
+Pasteels \protect\hyperlink{ref-melard}{2000}). Otros algoritmos
+implementados en programas de cómputo de paga son \textbf{Forecast Pro}
+(Goodrich \protect\hyperlink{ref-forecastpro}{2000}) y \textbf{Autobox}
+(Reilly \protect\hyperlink{ref-autobox}{2000}). Uno de los métodos
+automatizados de estimación es el que ofrece el paquete
+\texttt{forecast} (Hyndman and Khandakar
+\protect\hyperlink{ref-auto.arima}{2008}) del lenguaje de programación
+R{[}\^{}1{]} permite hacer uso de la función \texttt{auto.arima()} para
+estimar un modelo ARIMA basado en pruebas de raíz unitaria, minimización
+del AICc y de la MLE. De esta forma se obtiene un modelo temporal
+definiendo las diferenciaciones requeridas en la parte estacional d
+mediante las pruebas KPSS o ADF, y la no estacional D utilizando las
+pruebas OCSB o la Canova-Hansen, seleccionado el orden óptimo para los
+términos \(ARIMA(p,d,q)(P,D,Q)_s\) para una serie cronológica
+determinada.
+
+Es a partir de esta necesidad que se propone una metodología para la
+estimación del mejor modelo ARIMA para una serie cronológica determinada
+mediante un proceso de selección fundamentada en las permutaciones de
+todos los parámetros de un modelo ARIMA, y posteriormente seleccionando
+el modelo con base en medidas de rendimiento como el MAE, RMSE, MAPE y
+MASE: se comparan todos los posibles términos definiendo una
+diferenciación adecuada para la serie y permutando hasta un máximo
+definido para los términos de especificación de un
+\(ARIMA(p,d,q)(P,D,Q)_s\) para así seleccionar la especificación que
+ofrezca mejores resultados al momento de pronosticar valores futuros de
+la serie cronológica. El método propuesto se probará comparándose con
+los resultados de 6 series con distintas temporalidades: mortalidad
+infantil, mortalidad por causa externa, nacimientos, demanda eléctrica,
+intereses y comisiones del sector público, e incentivos salariales del
+sector público.
 
 \section{MARCO DE LA CUESTIÓN}
 
@@ -176,9 +325,85 @@ redes neuronales.
 \section{REFERENCIAS}
 
 \hypertarget{refs}{}
-\hypertarget{ref-readxl}{}
-Wickham, Hadley, and Jennifer Bryan. 2018. \emph{Readxl: Read Excel
-Files}. \url{https://CRAN.R-project.org/package=readxl}.
+\leavevmode\hypertarget{ref-box-jenkins}{}%
+Box, G.E.P., G.M. Jenkins, and G.C. Reinsel. 1994. \emph{Time Series
+Analysis: Forecasting and Control}. Forecasting and Control Series.
+Prentice Hall. \url{https://books.google.co.cr/books?id=sRzvAAAAMAAJ}.
+
+\leavevmode\hypertarget{ref-brown}{}%
+Brown, Robert G. 1956. \emph{Exponential Smoothing for Predicting
+Demand}. A.D.Little.
+\url{https://www.industrydocuments.ucsf.edu/docs/jzlc0130}.
+
+\leavevmode\hypertarget{ref-forecastpro}{}%
+Goodrich, RL. 2000. ``The Forecast Pro Methodology.''
+\emph{International Journal of Forecasting} 16 (4): 533--35.
+\url{http://www.forecasting-competition.com/downloads/NN3/methods/Goodrich\%20(2000)\%20The\%20Forecast\%20Pro\%20methodology\%20science.pdf}.
+
+\leavevmode\hypertarget{ref-gomez}{}%
+Gómez, V. 1998. ``Automatic Model Identification in the Presence of
+Missing Observations and Outliers.'' Edited by Dirección General de
+Análisis y Programación Presupuestaria Ministerio de Economía y
+Hacienda. Working paper D-98009.
+
+\leavevmode\hypertarget{ref-tramo}{}%
+Gómez, V., and A. Maraval. 1998. ``Programs Tramo and Seats,
+Instructions for the Users.'' Edited by Dirección General de Análisis y
+Programación Presupuestaria Ministerio de Economía y Hacienda. Working
+paper 97001.
+
+\leavevmode\hypertarget{ref-hannan}{}%
+Hannan, E. J., and J. Rissanen. 1982. ``Recursive Estimation of Mixed
+Autoregressive-Moving Average Order.'' \emph{Biometrika} 69 (1): 81--94.
+\url{http://www.jstor.org/stable/2335856}.
+
+\leavevmode\hypertarget{ref-oscarh-1}{}%
+Hernández, O. 2011a. ``Introducción a Las Series Cronológicas.'' In, 1st
+ed., 1. Editorial Universidad de Costa Rica.
+\url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}.
+
+\leavevmode\hypertarget{ref-oscarh-2}{}%
+---------. 2011b. ``Introducción a Las Series Cronológicas.'' In, 1st
+ed., 2. Editorial Universidad de Costa Rica.
+\url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}.
+
+\leavevmode\hypertarget{ref-hyndman2018forecasting}{}%
+Hyndman, R.J., and G. Athanasopoulos. 2018. \emph{Forecasting:
+Principles and Practice}. OTexts.
+\url{https://books.google.co.cr/books?id=/_bBhDwAAQBAJ}.
+
+\leavevmode\hypertarget{ref-auto.arima}{}%
+Hyndman, Rob, and Yeasmin Khandakar. 2008. ``Automatic Time Series
+Forecasting: The Forecast Package for R.'' \emph{Journal of Statistical
+Software, Articles} 27 (3): 1--22.
+\url{https://doi.org/10.18637/jss.v027.i03}.
+
+\leavevmode\hypertarget{ref-kedem}{}%
+Kedem, B., and K. Fokianos. 2005. \emph{Regression Models for Time
+Series Analysis}. Wiley Series in Probability and Statistics. Wiley.
+\url{https://books.google.co.cr/books?id=8r0qE35wt44C}.
+
+\leavevmode\hypertarget{ref-liu}{}%
+Liu, Lon-Mu. 1989. ``Identification of Seasonal Arima Models Using a
+Filtering Method.'' \emph{Communications in Statistics - Theory and
+Methods} 18 (6): 2279--88.
+\url{https://doi.org/10.1080/03610928908830035}.
+
+\leavevmode\hypertarget{ref-melard}{}%
+Mélard, G., and J.-M. Pasteels. 2000. ``Automatic Arima Modeling
+Including Interventions, Using Time Series Expert Software.''
+\emph{International Journal of Forecasting} 16 (4): 497--508.
+\url{https://doi.org/https://doi.org/10.1016/S0169-2070(00)00067-4}.
+
+\leavevmode\hypertarget{ref-autobox}{}%
+Reilly, D. 2000. ``The Autobox System.'' \emph{International Journal of
+Forecasting} 16 (4): 531--33.
+\url{https://ideas.repec.org/a/eee/intfor/v16y2000i4p531-533.html}.
+
+\leavevmode\hypertarget{ref-supenprodc}{}%
+Rosero-Bixby, L. 2018. ``Producto c Para Supen. Proyección de La
+Mortalidad de Costa Rica 2015-2150.'' CCP-UCR.
+\url{http://srv-website.cloudapp.net/documents/10179/999061/Nota+t\%C3\%A9cnica+tablas+de+vida+segunda+parte}.
 
 
 \end{document}
