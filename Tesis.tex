@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[]{article}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -90,68 +90,49 @@ www.cesargamboasanabria.com\\
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{02 septiembre, 2019}
+    \date{12 septiembre, 2019}
 
 \usepackage{geometry}
-
 \geometry{a4paper, left=20mm, right=30mm}
 \usepackage{setspace}
-
 \doublespacing
 \usepackage[spanish]{babel}
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{framed}
-
 \colorlet{shadecolor}{gray!20}
-
-\newcommand*{\captionsource}[2]{%
- \text{Fuente:} #2%
-}
-
 \setcounter{secnumdepth}{0}
-% Pandoc toggle for numbering sections (defaults to be off)
-\setcounter{secnumdepth}{0}
-% Pandoc header
-\usepackage[spanish]{babel}
 \usepackage{sectsty}
 \chapternumberfont{\Large}
 \chaptertitlefont{\Large}
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{5}
 \usepackage{graphics}
-
-
 \usepackage{setspace} %paquete para el doble espaciado
 \doublespacing %inicia el doble espaciado
-
 %Esto quita el punto final en la numeracion de cada seccion
 \usepackage{tocloft}
 \usepackage{titlesec}
 \titleformat{\section}
-  {\Large\bfseries}{\thesection}{0.5em}{}
+{\Large\bfseries}{\thesection}{0.5em}{}
 \titleformat{\subsection}
-  {\large\bfseries}{\thesubsection}{0.5em}{}
+{\large\bfseries}{\thesubsection}{0.5em}{}
 \titleformat{\subsubsection}
-  {\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
 \titleformat{\paragraph}
-  {\normalsize\bfseries}{\theparagraph}{0.5em}{}
+{\normalsize\bfseries}{\theparagraph}{0.5em}{}
 \renewcommand\cftsecaftersnum{}
 \renewcommand\thesection{\arabic{section}}
 \renewcommand\thesubsection{\thesection.\arabic{subsection}}
-
-
 \usepackage{caption}
-
 \usepackage{fancyhdr}
-
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[R]{\rightmark}
 \fancyfoot[C]{\thepage}
-\setlength{\headheight}{14.5pt}
-\renewcommand\sectionmark[1]{%
-   \markright{\thesection\ #1}}
+\setlength{\headheight}{21.9pt}
+\renewcommand\sectionmark[1]{
+\markright{\thesection\ #1}}
 
 \begin{document}
 \maketitle
@@ -235,9 +216,9 @@ con la que se está trabajando. Una vez hecho esto, existen múltiples
 formas de generar modelos para estos datos, como por ejemplo los métodos
 de suavizamiento exponencial desarrollados en la década de 1950 (Brown
 \protect\hyperlink{ref-brown}{1956}), modelos de regresión para series
-temporales (Kedem y Fokianos \protect\hyperlink{ref-kedem}{2005}) o
+temporales (Kedem and Fokianos \protect\hyperlink{ref-kedem}{2005}) o
 los procesos autorregresivos integrados de medias móviles (ARIMA) (Box,
-Jenkins, y Reinsel \protect\hyperlink{ref-box-jenkins}{1994}). Cuando
+Jenkins, and Reinsel \protect\hyperlink{ref-box-jenkins}{1994}). Cuando
 se ha establecido el modelo, los pronósticos son utilizados en
 instituciones públicas, gobiernos municipales, instituciones del sector
 privado, centros académicos, población civil, centros nacionales o
@@ -251,7 +232,7 @@ un pronóstico de calidad, y es aquí donde resulta importante mencionar
 una diferencia clave entre los dos modelos clásicos más comúnmente
 utilizados: los modelos de suavizamiento y los modelos ARIMA. Ambos
 representan enfoques complementarios a un problema, pues según Hyndman
-(Hyndman y Athanasopoulos
+(Hyndman and Athanasopoulos
 \protect\hyperlink{ref-hyndman2018forecasting}{2018}), los modelos de
 suavizamiento exponencial se fundamentan en un enfoque más descriptivo
 de los componentes de la serie cronológica en estudio; mientras que los
@@ -272,24 +253,24 @@ analizar es algo muy común. Incluso con cantidades moderadas de series
 cronológicas a analizar, es difícil contar con personal capacitado para
 realizar este análisis visual y poder identificar los modelos, por lo
 que la generación de algoritmos que ayuden a dicha identificación se
-vuelven cada vez más necesarios (Hyndman y Khandakar
+vuelven cada vez más necesarios (Hyndman and Khandakar
 \protect\hyperlink{ref-auto.arima}{2008}).
 
 Han sido varias las aproximaciones a un método que genere de manera
 automática un modelo ARIMA, como por ejemplo los propuestos por Hannan y
-Rissanen (Hannan y Rissanen \protect\hyperlink{ref-hannan}{1982}), la
+Rissanen (Hannan and Rissanen \protect\hyperlink{ref-hannan}{1982}), la
 extensión de dicha propuesta realizada por Gómez (Gómez
 \protect\hyperlink{ref-gomez}{1998}) y posteriormente aplicada (Gómez
-y Maraval \protect\hyperlink{ref-tramo}{1998}) en los software
+and Maraval \protect\hyperlink{ref-tramo}{1998}) en los software
 \textbf{TRAMO} y \textbf{SEATS}; de manera similar se planteó una
 aplicación en los software \textbf{SCA-Expert} (Liu
-\protect\hyperlink{ref-liu}{1989}) y \textbf{TSE-AX} (Mélard y
+\protect\hyperlink{ref-liu}{1989}) y \textbf{TSE-AX} (Mélard and
 Pasteels \protect\hyperlink{ref-melard}{2000}). Otros algoritmos
 implementados en programas de cómputo de paga son \textbf{Forecast Pro}
 (Goodrich \protect\hyperlink{ref-forecastpro}{2000}) y \textbf{Autobox}
 (Reilly \protect\hyperlink{ref-autobox}{2000}). Uno de los métodos
 automatizados de estimación es el que ofrece el paquete
-\texttt{forecast} (Hyndman y Khandakar
+\texttt{forecast} (Hyndman and Khandakar
 \protect\hyperlink{ref-auto.arima}{2008}) del lenguaje de programación
 R\footnote{\url{https://cran.r-project.org/}} permite hacer uso de la
 función \texttt{auto.arima()} para estimar un modelo ARIMA basado en
@@ -315,6 +296,15 @@ los resultados de 6 series con distintas temporalidades: mortalidad
 infantil, mortalidad por causa externa, nacimientos, demanda eléctrica,
 intereses y comisiones del sector público, e incentivos salariales del
 sector público.
+
+\subsection{Contribución de la tesis a la Estadística como disciplina}
+
+El principal aporte de este estudio es, por medio de un estudio de
+simulación, aportar evidencia sobre cómo la sobreparametrización puede
+representar una herramienta para definir la especificación de un modelo
+ARIMA que genere pronósticos adecuados, contrastando la calidad de estos
+con respecto a otros métodos similares, como lo es la función
+auto.arima().
 
 \subsection{Objetivos}
 
@@ -349,7 +339,7 @@ sector público.
 
 \hypertarget{refs}{}
 \leavevmode\hypertarget{ref-box-jenkins}{}%
-Box, G.E.P., G.M. Jenkins, y G.C. Reinsel. 1994. \emph{Time Series
+Box, G.E.P., G.M. Jenkins, and G.C. Reinsel. 1994. \emph{Time Series
 Analysis: Forecasting and Control}. Forecasting and Control Series.
 Prentice Hall. \url{https://books.google.co.cr/books?id=sRzvAAAAMAAJ}.
 
@@ -370,13 +360,13 @@ Análisis y Programación Presupuestaria Ministerio de Economía y
 Hacienda. Working paper D-98009.
 
 \leavevmode\hypertarget{ref-tramo}{}%
-Gómez, V., y A. Maraval. 1998. ``Programs Tramo and Seats,
+Gómez, V., and A. Maraval. 1998. ``Programs Tramo and Seats,
 Instructions for the Users.'' Edited by Dirección General de Análisis y
 Programación Presupuestaria Ministerio de Economía y Hacienda. Working
 paper 97001.
 
 \leavevmode\hypertarget{ref-hannan}{}%
-Hannan, E. J., y J. Rissanen. 1982. ``Recursive Estimation of Mixed
+Hannan, E. J., and J. Rissanen. 1982. ``Recursive Estimation of Mixed
 Autoregressive-Moving Average Order.'' \emph{Biometrika} 69 (1): 81--94.
 \url{http://www.jstor.org/stable/2335856}.
 
@@ -391,18 +381,18 @@ ed., 2. Editorial Universidad de Costa Rica.
 \url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}.
 
 \leavevmode\hypertarget{ref-hyndman2018forecasting}{}%
-Hyndman, R.J., y G. Athanasopoulos. 2018. \emph{Forecasting:
+Hyndman, R.J., and G. Athanasopoulos. 2018. \emph{Forecasting:
 Principles and Practice}. OTexts.
 \url{https://books.google.co.cr/books?id=/_bBhDwAAQBAJ}.
 
 \leavevmode\hypertarget{ref-auto.arima}{}%
-Hyndman, Rob, y Yeasmin Khandakar. 2008. ``Automatic Time Series
+Hyndman, Rob, and Yeasmin Khandakar. 2008. ``Automatic Time Series
 Forecasting: The Forecast Package for R.'' \emph{Journal of Statistical
 Software, Articles} 27 (3): 1--22.
 \url{https://doi.org/10.18637/jss.v027.i03}.
 
 \leavevmode\hypertarget{ref-kedem}{}%
-Kedem, B., y K. Fokianos. 2005. \emph{Regression Models for Time
+Kedem, B., and K. Fokianos. 2005. \emph{Regression Models for Time
 Series Analysis}. Wiley Series in Probability and Statistics. Wiley.
 \url{https://books.google.co.cr/books?id=8r0qE35wt44C}.
 
@@ -413,7 +403,7 @@ Methods} 18 (6): 2279--88.
 \url{https://doi.org/10.1080/03610928908830035}.
 
 \leavevmode\hypertarget{ref-melard}{}%
-Mélard, G., y J.-M. Pasteels. 2000. ``Automatic Arima Modeling
+Mélard, G., and J.-M. Pasteels. 2000. ``Automatic Arima Modeling
 Including Interventions, Using Time Series Expert Software.''
 \emph{International Journal of Forecasting} 16 (4): 497--508.
 \url{https://doi.org/https://doi.org/10.1016/S0169-2070(00)00067-4}.

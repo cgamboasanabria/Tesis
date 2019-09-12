@@ -20,6 +20,10 @@ Es a partir de esta necesidad que se propone una metodología para la estimació
 
 [^1]: https://cran.r-project.org/
 
+\subsection{Contribución de la tesis a la Estadística como disciplina}
+
+El principal aporte de este estudio es, por medio de un estudio de simulación, aportar evidencia sobre cómo la sobreparametrización puede representar una herramienta para definir la especificación de un modelo ARIMA que genere pronósticos adecuados, contrastando la calidad de estos con respecto a otros métodos similares, como lo es la función auto.arima().
+
 \subsection{Objetivos}
 
 \subsubsection{Objetivos general}

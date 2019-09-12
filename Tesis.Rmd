@@ -11,76 +11,14 @@ output:
     pdf_document:
         keep_tex: yes
         fig_caption: yes
+        include:
+          in_header: header.tex
     html_notebook: default
 urlcolor: blue
-header-includes: 
-    -   \usepackage{geometry}
-        \geometry{a4paper, left=20mm, right=30mm}
-    -   \usepackage{setspace}
-        \doublespacing
-    -   \usepackage[spanish]{babel}
-    -   \usepackage{color}
-    -   \usepackage{xcolor}
-    -   \usepackage{framed}
-        \colorlet{shadecolor}{gray!20}
 bibliography: referencias.bib
 link-citations: yes
 linkcolor: blue
 ---
-
-```{r, eval=FALSE, include=FALSE}
-#Comandos para antes del \begin{document}
-
-##Fuente
-\newcommand*{\captionsource}[2]{%
- \text{Fuente:} #2%
-}
-
-\setcounter{secnumdepth}{0}
-% Pandoc toggle for numbering sections (defaults to be off)
-\setcounter{secnumdepth}{0}
-% Pandoc header
-\usepackage[spanish]{babel}
-\usepackage{sectsty}
-\chapternumberfont{\Large}
-\chaptertitlefont{\Large}
-\setcounter{tocdepth}{5}
-\setcounter{secnumdepth}{5}
-\usepackage{graphics}
-
-
-\usepackage{setspace} %paquete para el doble espaciado
-\doublespacing %inicia el doble espaciado
-
-%Esto quita el punto final en la numeracion de cada seccion
-\usepackage{tocloft}
-\usepackage{titlesec}
-\titleformat{\section}
-  {\Large\bfseries}{\thesection}{0.5em}{}
-\titleformat{\subsection}
-  {\large\bfseries}{\thesubsection}{0.5em}{}
-\titleformat{\subsubsection}
-  {\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
-\titleformat{\paragraph}
-  {\normalsize\bfseries}{\theparagraph}{0.5em}{}
-\renewcommand\cftsecaftersnum{}
-\renewcommand\thesection{\arabic{section}}
-\renewcommand\thesubsection{\thesection.\arabic{subsection}}
-
-
-\usepackage{caption}
-
-\usepackage{fancyhdr}
-
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[R]{\rightmark}
-\fancyfoot[C]{\thepage}
-\setlength{\headheight}{14.5pt}
-\renewcommand\sectionmark[1]{%
-   \markright{\thesection\ #1}}
-```
-
 \newpage
 
 ```{r setup, include=FALSE, results='hide'}
