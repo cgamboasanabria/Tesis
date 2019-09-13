@@ -1,0 +1,41 @@
+Para simular un proceso arima estacional, Hyndman sugiere:
+
+https://www.r-bloggers.com/simulating-from-a-specified-seasonal-arima-model/
+
+```{r}
+model <- Arima(ts(rnorm(100),freq=12), order=c(2,0,1), seasonal=c(1,1,2))
+foo <- simulate(model, nsim=500)
+fit <- Arima(foo, order=c(2,0,1), seasonal=c(1,1,2))
+model;fit
+```
+
+```{r}
+train <- subset(foo, end=400)
+test <- subset(foo, start=401)
+auto.arima(train)
+```
+
+```{r}
+inicio <- Sys.time()
+l <- arimas.auto(tipo = c(2, 1, 2, 2, 1, 2), serie = train, validacion = test, paralelo=TRUE)
+final <- Sys.time()
+final-inicio
+```
+
+```{r}
+mejores.arimas(l$medidas)
+```
+
+```{r}
+mod.hynd <- Arima(train, order=c(1,0,1), seasonal=c(1,0,0))
+mod.gamb <- Arima(train, order=c(0,0,2), seasonal=c(1,0,1))
+
+#model;mod.hynd;mod.gamb
+```
+
+```{r}
+plot(test)
+lines(forecast(mod.hynd, h=100)$mean, col="red")
+lines(forecast(mod.gamb, h=100)$mean, col="blue")
+```
+
