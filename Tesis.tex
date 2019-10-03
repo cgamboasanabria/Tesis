@@ -90,7 +90,7 @@ www.cesargamboasanabria.com\\
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{12 septiembre, 2019}
+    \date{03 octubre, 2019}
 
 \usepackage{geometry}
 \geometry{a4paper, left=20mm, right=30mm}
@@ -283,12 +283,18 @@ para una serie cronológica determinada.
 
 Es a partir de esta necesidad que se propone una metodología para la
 estimación del mejor modelo ARIMA para una serie cronológica determinada
+cuya temporalidad sea mensual, bimensual, trimestral o cuatrimestral
 mediante un proceso de selección fundamentada en las permutaciones de
-todos los parámetros de un modelo ARIMA, y posteriormente seleccionando
-el modelo con base en medidas de rendimiento como el MAE, RMSE, MAPE y
-MASE: se comparan todos los posibles términos definiendo una
-diferenciación adecuada para la serie y permutando hasta un máximo
-definido para los términos de especificación de un
+todos los parámetros de un modelo ARIMA hasta un cierto límite,
+considerando además la inclusión semi-automática de intervenciones en
+periodos específicos y la validación cruzada para evaluar la calidad de
+las particiones de la base de datos en conjuntos para entrenar y probar
+el rendimiento del modelo; dichas pruebas involucran, entre otras
+medidas de rendimiento, el MAE, RMSE, MAPE y MASE, las cuales sirven de
+insumo para utilizar un método de consenso entre ellas para seleccionar
+el modelo más adecuado: se comparan todos los posibles términos
+definiendo una diferenciación adecuada para la serie y permutando hasta
+un máximo definido para los términos de especificación de un
 \(ARIMA(p,d,q)(P,D,Q)_s\) para así seleccionar la especificación que
 ofrezca mejores resultados al momento de pronosticar valores futuros de
 la serie cronológica. El método propuesto se probará comparándose con
