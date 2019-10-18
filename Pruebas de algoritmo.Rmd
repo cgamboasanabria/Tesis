@@ -20,13 +20,13 @@ simular.proceso <- function(data, n, temporalidad, no.estacional, estacional, p=
                             theta=coeficientes$q, 
                             Phi=coeficientes$P, 
                             Theta=coeficientes$Q))
-    datos <- simulate(modelo, nsim=n)
+    datos <- simulate(modelo, nsim=n)[-c(1:length(data))]
     list(modelo=modelo, datos=datos)
 }
 
 set.seed(1)
 
-simulacion <- simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(2,1,1), p=.1)
+simulacion <- simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(1,2,3), p=.1)
 plot(simulacion$datos, type="l")
 
 simulacion <- simular.proceso(data=rpois(100, 15), n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(2,1,1), p=.1)
