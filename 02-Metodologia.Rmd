@@ -1,0 +1,49 @@
+\section{REFERENTES O ELEMENTOS TEÓRICOS QUE VA A UTILIZAR} 
+
+
+```{r}
+simular.proceso <- function(data, n, temporalidad, 
+                            no.estacional, estacional, 
+                            p=NULL, q=NULL, P=NULL, Q=NULL){
+  
+  require(forecast)
+  tryCatch({
+    coeficientes <- list(p, q, P, Q)
+    coeficientes.simulados <- lapply(c(no.estacional[c(1,3)], 
+                                       estacional[c(1,3)]), 
+                                     function(x) sample(seq(-1,1,.1), x))
+    pos <- which(sapply(coeficientes, is.null)==TRUE)
+    
+    coeficientes[pos] <- coeficientes.simulados[pos]
+    names(coeficientes) <- c("p", "q", "P", "Q")
+    
+    modelo <- Arima(ts(data=data, freq=temporalidad), 
+                    order = no.estacional, 
+                    seasonal = estacional,
+                    fixed=c(phi=coeficientes$p, 
+                            theta=coeficientes$q, 
+                            Phi=coeficientes$P, 
+                            Theta=coeficientes$Q))
+    datos <- simulate(modelo, nsim=(n+length(data)))
+    
+    datos <- subset(datos, start=length(data)+1)
+    list(modelo=modelo, datos=datos)}, 
+    error = function(e) simular.proceso(data, n, temporalidad,
+                                        no.estacional, estacional, 
+                                        p, q, P, Q))
+}
+
+set.seed(160589)
+serie.no.estacionaria <- simular.proceso(data=rpois(100, 15), n=500, temporalidad=12, 
+                              no.estacional=c(1,1,2), estacional = c(1,0,1))
+plot(serie.no.estacionaria$datos, type="l")
+```
+
+```{r}
+set.seed(160589)
+serie.estacionaria <- simular.proceso(data=rpois(100, 15), n=500, temporalidad=12, 
+                              no.estacional=c(2,0,2), estacional = c(2,1,1))
+plot(serie.estacionaria$datos, type="l")
+```
+
+$$y_t=c+\epsilon_t+\theta_1\epsilon_{t-1}+\theta_2\epsilon_{t-2}+\cdots+\theta_q\epsilon_{t-q}$$

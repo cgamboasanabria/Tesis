@@ -26,6 +26,7 @@ simular.proceso <- function(data, n, temporalidad,
                             Phi=coeficientes$P, 
                             Theta=coeficientes$Q))
     datos <- simulate(modelo, nsim=(n+length(data)))
+    
     datos <- subset(datos, start=length(data)+1)
     list(modelo=modelo, datos=datos)}, 
     error = function(e) simular.proceso(data, n, temporalidad,
@@ -33,13 +34,21 @@ simular.proceso <- function(data, n, temporalidad,
                                         p, q, P, Q))
 }
 
-simulacion <- simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(1,0,2), q=c(.1, .5, .9))
+simulacion <- simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12, no.estacional=c(1,0,3), estacional = c(1,2,2), q=c(.1, .5, .9))
 plot(simulacion$datos, type="l")
 simulacion$modelo
+Arima(simulacion$datos, c(1,1,3), c(1,0,6))
 auto.arima(simulacion$datos)
 
-simulacion <- simular.proceso(data=rpois(100, 15), n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(2,1,1), p=.1)
+simulacion <- simular.proceso(data=rpois(100, 15), n=500, temporalidad=12, 
+                              no.estacional=c(1,0,3), estacional = c(1,3,3), 
+                              q=c(.1, .5, .9))
 plot(simulacion$datos, type="l")
+
+simulacion2 <- simular.proceso(data=simulacion$datos, n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(1,0,6), q=c(.1, .5, .9))
+plot(simulacion2$datos, type="l")
+simulacion2$modelo
+
 ```
 
 #Funciones para el modelo sobreparametrizado
@@ -47,7 +56,7 @@ plot(simulacion$datos, type="l")
 ```{r}
 #Esta función estima la sobreparametrización
 modelo.arima <- function(serie, no.estacional, estacional, regr = NULL){
-if(is.null(regr)){
+  if(is.null(regr)){
     modelo <- tryCatch({
       forecast::Arima(serie, 
                       order = no.estacional, 

@@ -35,6 +35,8 @@ La metodología de Box-Jenkins busca encontrar el mejor proceso autorregresivo i
 
 ***Palabras clave***: ARIMA, R, automatización, selección, estadística
 
+
+
 \newpage
 
 \tableofcontents
