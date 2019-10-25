@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.6.10)  3 OCT 2019 16:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.6.10)  23 OCT 2019 13:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -831,84 +831,132 @@ LaTeX Info: Redefining \% on input line 1.
 \openout4 = `Tesis.toc'.
 
 [3]
-LaTeX Info: Redefining \. on input line 249.
-LaTeX Info: Redefining \% on input line 249.
+LaTeX Info: Redefining \. on input line 250.
+LaTeX Info: Redefining \% on input line 250.
 [4]
-LaTeX Info: Redefining \. on input line 305.
-LaTeX Info: Redefining \% on input line 305.
+LaTeX Info: Redefining \. on input line 306.
+LaTeX Info: Redefining \% on input line 306.
 [5]
-LaTeX Info: Redefining \. on input line 356.
-LaTeX Info: Redefining \% on input line 356.
+LaTeX Info: Redefining \. on input line 364.
+LaTeX Info: Redefining \% on input line 364.
 [6]
-Underfull \hbox (badness 8019) in paragraph at lines 357--361
+LaTeX Info: Redefining \. on input line 406.
+LaTeX Info: Redefining \% on input line 406.
+[7]
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 457.
+
+LaTeX Info: Redefining \. on input line 462.
+LaTeX Info: Redefining \% on input line 462.
+[8]
+LaTeX Info: Redefining \. on input line 511.
+LaTeX Info: Redefining \% on input line 511.
+[9]
+LaTeX Info: Redefining \. on input line 571.
+LaTeX Info: Redefining \% on input line 571.
+
+Package Fancyhdr Warning: \headheight is too small (21.9pt): 
+Make it at least 24.80502pt.
+We now make it that large for the rest of the document.
+This may cause the page layout to be inconsistent, however.
+
+[10]
+LaTeX Info: Redefining \. on input line 600.
+LaTeX Info: Redefining \% on input line 600.
+[11]
+Underfull \hbox (badness 8019) in paragraph at lines 641--645
 \T1/lmr/m/n/10 35. [][]$http : / / www . forecasting-[]competition . com / down
 loads / NN3 / methods / Goodrich % 20(2000 ) %20The %
  []
 
-
-Overfull \hbox (74.81831pt too wide) in paragraph at lines 379--383
+LaTeX Info: Redefining \. on input line 663.
+LaTeX Info: Redefining \% on input line 663.
+[12]
+Overfull \hbox (74.81831pt too wide) in paragraph at lines 663--667
 \T1/lmr/m/n/10 Cos-ta Ri-ca. [][]$http : / / www . editorial . ucr . ac . cr / 
 ciencias-[]naturales-[]y-[]exactas / item / 1985-[]introduccion-[]a-[]las-[]ser
 ies-[]cronologicas .
  []
 
 
-Overfull \hbox (37.40186pt too wide) in paragraph at lines 384--388
+Overfull \hbox (37.40186pt too wide) in paragraph at lines 668--672
 \T1/lmr/m/n/10 ca. [][]$http : / / www . editorial . ucr . ac . cr / ciencias-[
 ]naturales-[]y-[]exactas / item / 1985-[]introduccion-[]a-[]las-[]series-[]cron
 ologicas .
  []
 
-LaTeX Info: Redefining \. on input line 422.
-LaTeX Info: Redefining \% on input line 422.
-[7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 428.
-LaTeX Info: Redefining \. on input line 428.
-LaTeX Info: Redefining \% on input line 428.
-[8]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 428.
+
+Overfull \hbox (37.40186pt too wide) in paragraph at lines 673--677
+\T1/lmr/m/n/10 ca. [][]$http : / / www . editorial . ucr . ac . cr / ciencias-[
+]naturales-[]y-[]exactas / item / 1985-[]introduccion-[]a-[]las-[]series-[]cron
+ologicas .
+ []
+
+
+Overfull \hbox (37.40186pt too wide) in paragraph at lines 678--682
+\T1/lmr/m/n/10 ca. [][]$http : / / www . editorial . ucr . ac . cr / ciencias-[
+]naturales-[]y-[]exactas / item / 1985-[]introduccion-[]a-[]las-[]series-[]cron
+ologicas .
+ []
+
+LaTeX Info: Redefining \. on input line 729.
+LaTeX Info: Redefining \% on input line 729.
+[13]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 749.
+LaTeX Info: Redefining \. on input line 749.
+LaTeX Info: Redefining \% on input line 749.
+[14]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 749.
 (./Tesis.aux
 LaTeX Info: Redefining \. on input line 23.
 LaTeX Info: Redefining \% on input line 23.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 428.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 428.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 749.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 749.
 Package rerunfilecheck Info: File `Tesis.out' has not changed.
-(rerunfilecheck)             Checksum: FE60EF6E3AE9837047BACBA9F78A03CD;1011.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 428.
+(rerunfilecheck)             Checksum: EEEB17C2E868840DEBA2DD55D8DA59EB;5473.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 749.
  ) 
 Here is how much of TeX's memory you used:
- 13898 strings out of 494535
- 200050 string characters out of 6175112
- 299728 words of memory out of 5000000
- 17341 multiletter control sequences out of 15000+600000
+ 13964 strings out of 494535
+ 200960 string characters out of 6175112
+ 301737 words of memory out of 5000000
+ 17365 multiletter control sequences out of 15000+600000
  71775 words of font info for 60 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 36i,12n,43p,1194b,399s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,12n,43p,1194b,401s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
 st, replaced by a fixed one
 
-{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}
 {c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}
-{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.
-enc}<c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmb
-x10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm
-/lmbx12.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publi
-c/lm/lmbxi10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/
-public/lm/lmmi10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
-pe1/public/lm/lmmi7.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts
-/type1/public/lm/lmr10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fo
-nts/type1/public/lm/lmr17.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist
-/fonts/type1/public/lm/lmr6.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-di
-st/fonts/type1/public/lm/lmr7.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texm
-f-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/
-texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/Dell/AppData/Roaming/Tiny
-TeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Tesis.pdf (8 pages, 272985 bytes).
+{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.
+enc}{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
+hit.enc}{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm
+-mathex.enc}{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
+m/lm-ec.enc}<c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publi
+c/lm/lmbx10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
+ublic/lm/lmbx12.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
+e1/public/lm/lmbxi10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/font
+s/type1/public/lm/lmex10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/
+fonts/type1/public/lm/lmmi10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-d
+ist/fonts/type1/public/lm/lmmi5.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texm
+f-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/t
+exmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Dell/AppData/Roaming/TinyTe
+X/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/Dell/AppData/Roaming/Tin
+yTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/Dell/AppData/Roaming/T
+inyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/Dell/AppData/Roaming
+/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/Dell/AppData/Roami
+ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Dell/AppData/Roa
+ming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/Dell/AppData
+/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/Dell/App
+Data/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/Dell
+/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><c:/Users/D
+ell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/User
+s/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on Tesis.pdf (14 pages, 350087 bytes).
 PDF statistics:
- 199 PDF objects out of 1000 (max. 8388607)
- 174 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
- 49 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 422 PDF objects out of 1000 (max. 8388607)
+ 383 compressed objects within 4 object streams
+ 74 named destinations out of 1000 (max. 500000)
+ 217 words of extra memory for PDF output out of 10000 (max. 10000000)
 

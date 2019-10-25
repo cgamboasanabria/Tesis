@@ -46,4 +46,23 @@ La metodología de Box-Jenkins busca encontrar el mejor proceso autorregresivo i
 ```{r, child="01-Introduccion.Rmd"}
 ```
 
+```{r, child="02-Metodologia.Rmd"}
+```
+
+```{r child="03-Fuente de datos.Rmd"}
+```
+
+```{r child="04-Definicion de variables de estudio.Rmd"}
+```
+
+```{r child="05-Evidencias de calidad.Rmd"}
+```
+
+```{r child="06-Técnicas a usar.Rmd"}
+```
+
+\section{Software estadístico a utilizar}
+
+Se utilizará el lenguaje de programación R [@Rbase] mediante su interfaz RStudio para todos los procesos relacionados con la estimación y la simulación. Se hará uso de funciones contenidas en los paquetes `tidyr` [@tidyr], `dplyr` [@dplyr] y `parallel` [@parallel].
+
 \section{REFERENCIAS}    

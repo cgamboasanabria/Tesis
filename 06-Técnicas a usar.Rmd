@@ -1,0 +1,12 @@
+\section{MODELO(S) ESTADÍSTICOS O TÉCNICA(S) ESTADÍSTICA(S) DE ANÁLISIS A EMPLEAR}
+
+\subsection{Selección de ARIMA vía sobreparametrización}
+
+El método consiste en una selección fundamentada en las permutaciones de los parámetros de un modelo ARIMA, seleccionando la mejor especificación con base en medidas de rendimiento MAE, RMSE, MAPE y MASE:  se  comparan todos los posibles términos definiendo una diferenciación adecuada para la serie y permutando hasta un máximo determinado para los términos de especificación de un $ARIMA(p,d,q)(P,D,Q)$
+
+\subsection{Estudio de simulación}
+
+A partir de datos reales o bien, valores aleatorios de una cierta distribución de probabilidad, se generarán $n$ valores aleatorios que sigan un determinado proceso de series cronológicas.
+
+Para generar un determinado proceso se deben fijar los valores de $p,d,q$ en la parte no estacional y $P,D,Q$ en la parte estacional de un modelo ARIMA, así como la temporalidad que se desea para la misma. Además, se ofrece la posibilidad de definir el valor de los coeficientes del modelo para cada orden del procese; por ejemplo, si se define un $ARIMA(2,1,1)(1,1,3)$, el $2$ indica que se pueden fijar los valores de los coeficientes $AR(1)$ y $AR(2)$ en, digamos, $.2$ y $.46$ respectivamente; de forma análoga, pueden definirse los coeficientes $SMA(1)$, $SMA(2)$ y $SMA(3)$ en $.4$, $.1$ y $.3$ respectivamente.
+
