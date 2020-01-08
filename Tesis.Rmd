@@ -18,6 +18,7 @@ urlcolor: blue
 bibliography: referencias.bib
 link-citations: yes
 linkcolor: blue
+csl: apa.csl
 ---
 \newpage
 
