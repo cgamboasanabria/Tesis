@@ -1,0 +1,744 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{unicode=true,
+            pdftitle={Determinación de modelos ARIMA vía sobre parametrización según la temporalidad de la serie cronológica con aplicaciones en datos costarricenses},
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=Blue,
+            urlcolor=blue,
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Determinación de modelos ARIMA vía sobre parametrización según la
+temporalidad de la serie cronológica con aplicaciones en datos
+costarricenses}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Universidad de Costa Rica\\
+César Gamboa Sanabria\\
+www.cesargamboasanabria.com\\
+\href{mailto:info@cesargamboasanabria.com}{\nolinkurl{info@cesargamboasanabria.com}}}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{01 enero, 2020}
+
+\usepackage{geometry}
+\geometry{a4paper, left=20mm, right=30mm}
+\usepackage{setspace}
+\doublespacing
+\usepackage[spanish]{babel}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{framed}
+\colorlet{shadecolor}{gray!20}
+\setcounter{secnumdepth}{0}
+\usepackage{sectsty}
+\chapternumberfont{\Large}
+\chaptertitlefont{\Large}
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\usepackage{graphics}
+\usepackage{setspace} %paquete para el doble espaciado
+\doublespacing %inicia el doble espaciado
+%Esto quita el punto final en la numeracion de cada seccion
+\usepackage{tocloft}
+\usepackage{titlesec}
+\titleformat{\section}
+{\Large\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}
+{\large\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+\titleformat{\paragraph}
+{\normalsize\bfseries}{\theparagraph}{0.5em}{}
+\renewcommand\cftsecaftersnum{}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\rightmark}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{21.9pt}
+\renewcommand\sectionmark[1]{
+\markright{\thesection\ #1}}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\section*{RESUMEN}
+
+La metodología de Box-Jenkins busca encontrar el mejor proceso
+autorregresivo integrado de medias móviles (ARIMA) que explique una
+serie temporal \(y_t\) de \(T\) periodos, para pronosticar hasta
+\(T+h\). El paquete \texttt{forecast} de R permite hacer uso de la
+función \texttt{auto.arima()} para estimar un modelo ARIMA basado en
+pruebas de raíz unitaria, minimización del AICc y de la MLE. De esta
+forma se obtiene un modelo temporal definiendo las diferenciaciones
+requeridas en la parte estacional d mediante las pruebas KPSS o ADF, y
+la no estacional D utilizando las pruebas OCSB o la Canova-Hansen,
+seleccionado el orden óptimo para los términos \(ARIMA(p,d,q)(P,D,Q)\)
+para una serie \(y_t\). Se propone un método de selección fundamentada
+en las permutaciones de los parámetros de un modelo ARIMA, seleccionando
+la mejor especificación con base en medidas de rendimiento MAE, RMSE,
+MAPE y MASE: se comparan todos los posibles términos definiendo una
+diferenciación adecuada para la serie y permutando hasta un máximo
+determinado para los términos de especificación de un
+\(ARIMA(p,d,q)(P,D,Q)\). El método propuesto se probó en 6 series
+cronológicas de distinta temporalidad: mortalidad infantil, mortalidad
+por causa externa, nacimientos, demanda eléctrica, intereses y
+comisiones del sector público, e incentivos salariales del sector
+público.
+
+\textbf{\emph{Palabras clave}}: ARIMA, R, automatización, selección,
+estadística
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{INTRODUCCIÓN}
+
+El manejo de información obtenida de manera secuencial a lo largo del
+tiempo hace referencia al uso de series cronológicas. Este tipo de datos
+se encuentras en diferentes áreas de investigación. En el campo
+financiero, por ejemplo, es común hablar de la devaluación del colón con
+respecto al dólar, cantidad de exportaciones mensuales de un determinado
+producto o las ventas de este (Hernández,
+\protect\hyperlink{ref-oscarh-1}{2011}\protect\hyperlink{ref-oscarh-1}{a}).
+
+En demografía, por ejemplo, el tema de las proyecciones de población
+tiene un alto impacto a nivel social, pues conocer con anticipación en
+posible comportamiento de la población en el futuro es clave para una
+adecuada planificación en diversos proyectos sobre los cuales se debe
+distribuir un presupuesto que es finito. Durante una emergencia, que
+difícilmente se sabe cuándo ocurrirá, conocer la posible población que
+se tiene en una zona es clave para la rápida reacción de las autoridades
+para el envío de ayuda o para ejecutar planes de evacuación.
+
+El campo actuarial también se ve beneficiado al mejorar sus métodos de
+pronóstico, pues uno de sus campos de estudio es la mortalidad pues
+representan un insumo de vital importancia para la planificación y
+sostenibilidad de los sistemas de pensiones, servicios de salud tanto
+pública como privada, seguros de vida y asuntos hipotecarios
+(Rosero-Bixby, \protect\hyperlink{ref-supenprodc}{2018}).
+
+Sin embargo, las series cronológicas por sí solas representan solo un
+insumo para abordar, como mínimo, tres objetivos básicos: 1) realizar
+análisis exploratorios de estos datos mediante métodos de visualización
+y medidas de posición y variabilidad, como ver su crecimiento o
+decrecimiento a lo largo del tiempo, detectar valores atípicos o cambios
+drásticos en el nivel o valor medio de la serie, 2) generar modelos
+estadísticos que sirvan como un simplificación de la realidad, y 3)
+generar pronósticos para los posibles valores futuros que tomará el
+problema en cuestión (Hernández,
+\protect\hyperlink{ref-oscarh-2}{2011}\protect\hyperlink{ref-oscarh-2}{b}).
+
+Los tres objetivos anteriores se trabajan de manera secuencial, pues es
+necesario realizar primero el análisis exploratorio de los datos para
+tener una noción global del panorama y así conocer la serie cronológica
+con la que se está trabajando. Una vez hecho esto, existen múltiples
+formas de generar modelos para estos datos, como por ejemplo los métodos
+de suavizamiento exponencial desarrollados en la década de 1950 (Brown,
+\protect\hyperlink{ref-brown}{1956}), modelos de regresión para series
+temporales (Kedem \& Fokianos, \protect\hyperlink{ref-kedem}{2005}) o
+los procesos autorregresivos integrados de medias móviles (ARIMA) (Box,
+Jenkins, \& Reinsel, \protect\hyperlink{ref-box-jenkins}{1994}). Cuando
+se ha establecido el modelo, los pronósticos son utilizados en
+instituciones públicas, gobiernos municipales, instituciones del sector
+privado, centros académicos, población civil, centros nacionales o
+regionales de investigación y ONG dedicadas al desarrollo social. Si las
+entidades previamente mencionadas cuentan con proyecciones de calidad,
+la puesta en marcha de sus respectivos planes tendrá un impacto mayor y
+más efectivo.
+
+De lo anterior, generar un modelo adecuado es fundamental para obtener
+un pronóstico de calidad, y es aquí donde resulta importante mencionar
+una diferencia clave entre los dos modelos clásicos más comúnmente
+utilizados: los modelos de suavizamiento y los modelos ARIMA. Ambos
+representan enfoques complementarios a un problema, pues según Hyndman
+(R. J. Hyndman \& Athanasopoulos,
+\protect\hyperlink{ref-hyndman2018forecasting}{2018}\protect\hyperlink{ref-hyndman2018forecasting}{a}),
+los modelos de suavizamiento exponencial se fundamentan en un enfoque
+más descriptivo de los componentes de la serie cronológica en estudio;
+mientras que los modelos ARIMA tienen como objetivo explicar las
+relaciones pasadas de ésta. La importancia de la metodología de
+Box-Jenkins radica en que no supone ningún patrón en particular en la
+serie histórica que se busca pronosticar, sino que contempla un proceso
+iterativo para identificar un posible modelo a partir de una clase
+general de modelos y luego someter dicho modelo a diferentes pruebas y
+medidas de rendimiento para evaluar su ajuste. Al trabajar la
+metodología de Box-Jenkins, uno de los pasos es identificar el los
+parámetros del proceso ARIMA(p,d,q)(P,D,Q) que gobiernan la serie,
+siendo la manera clásica de trabajar este paso, el análisis visual de
+las funciones de autocorrelación parcial y total.
+
+El gran obstáculo que presenta esta identificación visual es que en la
+actualidad contar con una gran cantidad de series cronológicas para
+analizar es algo muy común. Incluso con cantidades moderadas de series
+cronológicas a analizar, es difícil contar con personal capacitado para
+realizar este análisis visual y poder identificar los modelos, por lo
+que la generación de algoritmos que ayuden a dicha identificación se
+vuelven cada vez más necesarios (Hyndman \& Khandakar,
+\protect\hyperlink{ref-auto.arima}{2008}).
+
+Han sido varias las aproximaciones a un método que genere de manera
+automática un modelo ARIMA, como por ejemplo los propuestos por Hannan y
+Rissanen (Hannan \& Rissanen, \protect\hyperlink{ref-hannan}{1982}), la
+extensión de dicha propuesta realizada por Gómez (Gómez,
+\protect\hyperlink{ref-gomez}{1998}) y posteriormente aplicada (Gómez \&
+Maraval, \protect\hyperlink{ref-tramo}{1998}) en los software
+\textbf{TRAMO} y \textbf{SEATS}; de manera similar se planteó una
+aplicación en los software \textbf{SCA-Expert} (Liu,
+\protect\hyperlink{ref-liu}{1989}) y \textbf{TSE-AX} (Mélard \&
+Pasteels, \protect\hyperlink{ref-melard}{2000}). Otros algoritmos
+implementados en programas de cómputo de paga son \textbf{Forecast Pro}
+(Goodrich, \protect\hyperlink{ref-forecastpro}{2000}) y \textbf{Autobox}
+(Reilly, \protect\hyperlink{ref-autobox}{2000}). Uno de los métodos
+automatizados de estimación es el que ofrece el paquete
+\texttt{forecast} (Hyndman \& Khandakar,
+\protect\hyperlink{ref-auto.arima}{2008}) del lenguaje de programación
+R\footnote{\url{https://cran.r-project.org/}} permite hacer uso de la
+función \texttt{auto.arima()} para estimar un modelo ARIMA basado en
+pruebas de raíz unitaria, minimización del AICc y de la MLE. De esta
+forma se obtiene un modelo temporal definiendo las diferenciaciones
+requeridas en la parte estacional d mediante las pruebas KPSS o ADF, y
+la no estacional D utilizando las pruebas OCSB o la Canova-Hansen,
+seleccionado el orden óptimo para los términos \(ARIMA(p,d,q)(P,D,Q)_s\)
+para una serie cronológica determinada.
+
+Es a partir de esta necesidad que se propone una metodología para la
+estimación del mejor modelo ARIMA para una serie cronológica determinada
+cuya temporalidad sea mensual, bimensual, trimestral o cuatrimestral
+mediante un proceso de selección fundamentada en las permutaciones de
+todos los parámetros de un modelo ARIMA hasta un cierto límite,
+considerando además la inclusión semi-automática de intervenciones en
+periodos específicos y la validación cruzada para evaluar la calidad de
+las particiones de la base de datos en conjuntos para entrenar y probar
+el rendimiento del modelo; dichas pruebas involucran, entre otras
+medidas de rendimiento, el MAE, RMSE, MAPE y MASE, las cuales sirven de
+insumo para utilizar un método de consenso entre ellas para seleccionar
+el modelo más adecuado: se comparan todos los posibles términos
+definiendo una diferenciación adecuada para la serie y permutando hasta
+un máximo definido para los términos de especificación de un
+\(ARIMA(p,d,q)(P,D,Q)_s\) para así seleccionar la especificación que
+ofrezca mejores resultados al momento de pronosticar valores futuros de
+la serie cronológica. El método propuesto se probará comparándose con
+los resultados de 6 series con distintas temporalidades: mortalidad
+infantil, mortalidad por causa externa, nacimientos, demanda eléctrica,
+intereses y comisiones del sector público, e incentivos salariales del
+sector público.
+
+\subsection{Contribución de la tesis a la Estadística como disciplina}
+
+El principal aporte de este estudio es, por medio de un estudio de
+simulación, aportar evidencia sobre cómo la sobreparametrización puede
+representar una herramienta para definir la especificación de un modelo
+ARIMA que genere pronósticos adecuados, contrastando la calidad de estos
+con respecto a otros métodos similares, como lo es la función
+auto.arima().
+
+\subsection{Objetivos}
+
+\subsubsection{Objetivos general}
+
+\begin{itemize}
+\tightlist
+\item
+  Evaluar la calidad de los pronósticos realizados con modelos ARIMA
+  especificados vía sobre parametrización.
+\end{itemize}
+
+\subsubsection{Objetivos específicos}
+
+\begin{itemize}
+\tightlist
+\item
+  Diseñar un algoritmo para la selección del mejor modelo ARIMA según la
+  temporalidad de la serie.
+\item
+  Aplicar validación cruzada en distintos horizontes de pronóstico para
+  identificar la mejor especificación de un modelo ARIMA.
+\item
+  Comparar la precisión de los pronósticos con el método propuesto por
+  Rob Hyndman.
+\item
+  Integrar la metodología de análisis de series temporales en una
+  librería del lenguaje estadístico R.
+\end{itemize}
+
+\section{REFERENTES O ELEMENTOS TEÓRICOS QUE VA A UTILIZAR}
+
+\subsection{Modelos Arima}
+
+Los modelos ARIMA, junto con los de suavizamiento exponencial, son los
+de uso más extendido en el análisis de series cronológicas. El nombre
+ARIMA es la abreviatura inglesa para \emph{AutoRegresive Integrated
+Moving Average}, y son aplicados mediante la metodología de Box-Jenkins.
+Como menciona Rob. Hyndman (R. J. Hyndman \& Athanasopoulos,
+\protect\hyperlink{ref-hyndman_box-jenkins}{2018}\protect\hyperlink{ref-hyndman_box-jenkins}{b}),
+la metodología de Box-Jenkins difiere a los demás métodos porque no
+supone un determinado patrón en la serie cronológica, si no que parte de
+un proceso iterativo para identificar el modelo de un gran grupo de
+estos para luego ponerlo a prueba según varias medidas de rendimiento.
+Un proceso ARIMA es caracterizado por dos funciones: la autocorrelación
+y la autocorrelación parcial; el enfoque Box-Jenkins compara estas
+funciones con el objetivo de identificar el proceso que describa de
+manera adecuada el comportamiento de una serie cronológica (Hernández,
+\protect\hyperlink{ref-oscarh-3}{2011}\protect\hyperlink{ref-oscarh-3}{c}).
+
+El componente \textbf{AR} de los modelos ARIMA hace referencia al uso de
+modelos autorregresivos, en los cuales los pronósticos para la variable
+de interés utilizan una combinación lineal de las observaciones previas,
+llamándose así \emph{autorregresivos} porque se aplica una regresión de
+dicha variable de interés con respecto a sí misma; caso contrario a la
+regresión múltiple, en donde los pronósticos se realizan con respecto a
+una combinación lineal de distintos predictores. Un modelo
+autorregresivo de orden \(p\) para una serie cronológica \(y_t\) puede
+expresarse de la siguiente manera
+
+\begin{equation}
+y_t=c+\phi_1y_{t-1}+\phi_2y_{t-2}+\cdots+\phi_py_{t-p}+\epsilon_t
+\end{equation}
+
+Donde el término \(\epsilon_t\) representa ruido blanco. El modelo
+anterior es muy similar a una regresión lineal múltiple, donde cada
+coeficiente \(\phi\) va acompañado por su correspondiente rezago
+\(y_{t-p}\). De manera muy similar, el término \textbf{MA} en los
+modelos ARIMA se refieren a los modelos de medias móviles, los cuales
+para pronosticar hacen uso de los errores; el modelo de medias móviles
+puede representarse de la siguiente manera:
+
+\begin{equation}
+y_t=c+\epsilon_t+\theta_1\epsilon_{t-1}+\theta_2\epsilon_{t-2}+\cdots+\theta_q\epsilon_{t-q}
+\end{equation}
+
+Donde el término \(\epsilon_t\) representa nuevamente el ruido blanco.
+La ecuación anterior representa un modelo de medias móviles de orden
+\(q\), en la cual cada término \(\epsilon_{t-q}\) se entiende como una
+media móvil de los \(t\) previos errores de predicción.
+
+El componente \textbf{I} de los modelos ARIMA se refiere a
+``Itegrated'', es decir, a la estacionariedad de la serie cronológica.
+Tradicionalmente, la metodología de Box-Jenkins consiste en visualizar
+la serie cronológica con el objetivo de, en caso de ser necesario,
+transformar los datos para estabilizar la variancia y generar así un
+proceso estacionario. Se dice que una serie posee un comportamiento
+estacionario si el comportamiento de esta no depende del tiempo, por lo
+que en principio no presentaría ningún patrón particular con respecto al
+tiempo; en otras palabras, la serie posee un movimiento bastante
+horizontal.
+
+Cuando la serie cronológica muestre indicios de tendencia o patrones
+estacionales que resulten en un conjunto de datos que no es estacionario
+por naturaleza, es necesario realizar transformaciones sobre los datos
+para hacer que la serie se vuelva estacionaria (Adhikari et~al.,
+\protect\hyperlink{ref-diferenciacion}{2013}\protect\hyperlink{ref-diferenciacion}{a}).
+Estas transformaciones hacen referencia al uso de logaritmos o alguna
+potencia que logre estabilizar la variabilidad de la serie. Los métodos
+más clásicos para identificar la no estacionariedad en una serie
+cronológica son las previamente mencionadas funciones de autocorrelación
+y autocorrelación parcial, las cuales sirven de indicador acerca de qué
+tan relacionadas están las observaciones unas de otras. Estas funciones
+ofrecen indicios sobre el orden de los términos previamente mencionados
+\textbf{AR} y \textbf{MA}.
+
+\subsection{Función de autocorrelación}
+
+Para medir la relación lineal entre dos variables cuantitativas, es
+común utilizar el coeficiente de correlación \(r\) de Pearson (Benesty
+\& Chen, \protect\hyperlink{ref-pearson}{2009}), el cual se define para
+dos variables \(X\) e \(Y\) como sigue:
+
+\begin{equation}
+r_{X,Y}=\frac{E(XY)}{\sigma_X \sigma_Y} = \frac{\sum_{i=1}^n \left(X_i- \bar X\right) \left(Y_i- \bar Y\right)}{\sqrt{\sum_{i=1}^n \left(X_i- \bar X\right)^2 \sum_{i=1}^n \left(Y_i- \bar Y\right)^2}}
+\end{equation}
+
+Este mismo concepto puede aplicarse a las series cronológicas para
+comparar el valor de la misma en el tiempo \(t\), con su valor en el
+tiempo \(t-1\), es decir, se comparan las observaciones consecutivas
+\(Y_t\) con \(Y_{t-1}\). Esto también es aplicable a no solo una
+observación rezagada \((Y_{t-1})\), sino también con múltiples rezagos
+\((Y_{t-2}), (Y_{t-3}), \cdots,(Y_{t-n})\). Para esto se hace uso del
+coeficiente de autocorrelación.
+
+El coeficiente de autocorrelación recibe su nombre debido a que se
+utiliza el coeficiente de correlación para pares de observaciones
+\(r_{Y_t, Y_{t-1}}\) de la serie cronológica. Al conjunto de todas las
+autocorrelaciones se le llama función de autocorrelación.
+
+\subsection{Función de autocorrelación parcial}
+
+La función de autocorrelación parcial busca medir la asociación lineal
+entre las observaciones \(Y_t\) y \(Y_{t-k}\), descartando los efectos
+de los rezagos \(1,2, \cdots ,k-1\)(Hernández,
+\protect\hyperlink{ref-oscarh-4}{2011}\protect\hyperlink{ref-oscarh-4}{d})
+
+\subsection{Modelos ARIMA no estacionales}
+
+Como se mencionó anteriormente, los modelos ARIMA aplicados a una serie
+cronológica \(Y_t\) son una combinación de un modelo autorregresivo, uno
+de medias móviles, y alguna clase de diferenciación (logarítmica,
+exponenciación) para así obtener una serie diferenciada \(Y’_t\). Si se
+juntan ambas se obtiene un modelo ARIMA(p,d,q) que no cubre los efectos
+estacionales, donde \(p\) es el orden del modelo autorregresivo, \(d\) e
+el grado de la diferenciación y \(q\) es el orden del modelo de medias
+móviles; y cuya estructura se muestra en la ecuación (4):
+
+\begin{equation}
+y'_t=c+\phi_1y'_{t-1}+\phi_2y'_{t-2}+\cdots+\phi_py'_{t-p}+\theta_1\epsilon_{t-1}+\theta_2\epsilon_{t-2}+\cdots+\theta_q\epsilon_{t-q} +\epsilon_t
+\end{equation}
+
+\subsection{Modelos ARIMA estacionales}
+
+Los modelos ARIMA son también capaces de cubrir los efectos
+estacionales, es decir, particularidades de la serie cronológica que se
+repiten periódicamente con una cierta temporalidad (mensual, bimensual,
+etc.). Para ello se incorporan términos adicionales al modelo
+relacionados con la parte estacional de una manera similar a como se
+incorporan en el modelo ARIMA no estacional, pero ahora considerando
+retrocesos según sea la temporalidad estacional, pasando así de un
+\(ARIMA(p,d,q)\) a un \(ARIMA(p,d,q)(P,D,Q)_S\), donde \(P\), \(D\) y
+\(Q\) se refieren a la parte estacional y \(S\) a la temporalidad
+presente en la serie.
+
+\subsection{Medidas de rendimiento}
+
+Cuando se tiene el modelo ARIMA estimado, es importante realizar los
+pronósticos. Sin embargo, estos pronósticos no son imperativos, sino que
+se debe evaluar su calidad con las llamadas medidas de rendimiento.
+Estas mediciones son hechas comparando el pronóstico y su diferencia con
+el valor real. Existen múltiples medidas de rendimiento, Adhikari
+(Adhikari et~al.,
+\protect\hyperlink{ref-medidas}{2013}\protect\hyperlink{ref-medidas}{b})
+menciona las siguientes:
+
+\subsubsection{MAE}
+
+El error absoluto medio se define como
+\(\frac{1}{n}\sum_{t=1}^n |e_t|\).
+
+\subsubsection{MAPE}
+
+El porcentaje promedio de error absoluto se define como
+\(\frac{1}{n}\sum_{t=1}^n \left|\frac{e_t}{y_t}\right|\cdot 100\).
+
+\subsubsection{RMSE}
+
+Es la raíz del error cuadrático medio
+\(\sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}\).
+
+\subsubsection{MASE}
+
+Para series no estacionales:
+\(\frac{\frac{1}{J}\sum_j|e_j|}{\frac{1}{T-1}\sum_{t=2}^T|Y_t-Y_{t-1}|}\)
+
+Para series estacionales:
+\(\frac{\frac{1}{J}\sum_j|e_j|}{\frac{1}{T-m}\sum_{t=m+1}^T|Y_t-Y_{t-m}|}\)
+
+Donde \(m\) es la temporalidad de la serie.
+
+\subsubsection{AIC}
+
+Se calcula de la siguiente manera:
+\(AIC=-2logL\left(\hat\theta\right)+2k\). Donde \(k\) es el número de
+parámetros y \(n\) el número de datos.
+
+\subsubsection{AICc}
+
+Se calcula de la siguiente manera:
+\(AICc=-2logL\left(\hat\theta\right)+2k+\frac{2k+1}{n-k-1}\). Donde
+\(k\) es el número de parámetros y \(n\) el número de datos.
+
+\subsubsection{BIC}
+
+Se calcula de la siguiente manera:
+\(BIC=-2logL\left(\hat\theta\right)+k\cdot log(n)\).
+
+Donde \(k\) es el número de parámetros y \(n\) el número de datos.
+
+\section{FUENTE(S) DE DATOS (SI YA ESTÁN RECOLECTADOS) O DISEÑO DEL ESTUDIO (SI NO ESTÁN RECOLECTADOS)}
+
+Los datos reales que se van a utilizar pertenecen a la Unidad de
+Estadísticas demográficas del Instituto Nacional de Estadística y
+Censos. Corresponden a las series históricas de la tasa de mortalidad
+infantil desde el año 1970 hasta la actualidad; así como la serie
+histórica de nacimientos ocurridos en Costa Rica desde 1950 hasta la
+actualidad.
+
+\section{DEFINICIÓN DE VARIABLE(S) DE ESTUDIO}
+
+Mortalidad infantil: Se define como la muerte de seres humanos que
+nacieron vivos y cuya defunción se dió antes de cumplir el primer año de
+edad.
+
+Nacimientos: Se define el acto de terminar el periodo de gestación en la
+madre y llegar con vida al mundo.
+
+\section{EVIDENCIAS DE CALIDAD DE LA MEDICIÓN PARA LA(S) VARIABLE(S) DEL ESTUDIO}
+
+Las estadísticas vitales son sistematizadas y divulgadas año tras año,
+por tanto, revelan los cambios acontecidos durante este periodo. Esta
+información junto con la proveniente de los censos de población,
+constituye la base para construir los diferentes índices, tasas y otros
+indicadores que revelan la situación demográfica del país, información
+de gran relevancia para la planificación nacional, regional y local en
+diversos campos. Uno de estos principales campos o áreas de acción es la
+salud pública, para la cual la tasa de mortalidad infantil se considera
+uno de los indicadores prioritarios dado que refleja no solo las
+condiciones de salud de la población infante, sino también los niveles
+de desarrollo del país, esto porque depende de la calidad de la atención
+de la salud, principalmente de la prenatal y perinatal, así como de las
+condiciones de saneamiento. Por tanto, su continuo monitoreo es
+fundamental para diseñar, implementar y evaluar políticas de salud
+pública orientadas a disminuir y erradicar aquellas que son prevenibles
+(INEC, \protect\hyperlink{ref-calidad_vitales}{2017}).
+
+\section{MODELO(S) ESTADÍSTICOS O TÉCNICA(S) ESTADÍSTICA(S) DE ANÁLISIS A EMPLEAR}
+
+\subsection{Selección de ARIMA vía sobreparametrización}
+
+El método consiste en una selección fundamentada en las permutaciones de
+los parámetros de un modelo ARIMA, seleccionando la mejor especificación
+con base en medidas de rendimiento MAE, RMSE, MAPE y MASE: se comparan
+todos los posibles términos definiendo una diferenciación adecuada para
+la serie y permutando hasta un máximo determinado para los términos de
+especificación de un \(ARIMA(p,d,q)(P,D,Q)\)
+
+\subsection{Estudio de simulación}
+
+A partir de datos reales o bien, valores aleatorios de una cierta
+distribución de probabilidad, se generarán \(n\) valores aleatorios que
+sigan un determinado proceso de series cronológicas.
+
+Para generar un determinado proceso se deben fijar los valores de
+\(p,d,q\) en la parte no estacional y \(P,D,Q\) en la parte estacional
+de un modelo ARIMA, así como la temporalidad que se desea para la misma.
+Además, se ofrece la posibilidad de definir el valor de los coeficientes
+del modelo para cada orden del procese; por ejemplo, si se define un
+\(ARIMA(2,1,1)(1,1,3)\), el \(2\) indica que se pueden fijar los valores
+de los coeficientes \(AR(1)\) y \(AR(2)\) en, digamos, \(.2\) y \(.46\)
+respectivamente; de forma análoga, pueden definirse los coeficientes
+\(SMA(1)\), \(SMA(2)\) y \(SMA(3)\) en \(.4\), \(.1\) y \(.3\)
+respectivamente.
+
+\section{Software estadístico a utilizar}
+
+Se utilizará el lenguaje de programación R (R Core Team,
+\protect\hyperlink{ref-Rbase}{2019}\protect\hyperlink{ref-Rbase}{a})
+mediante su interfaz RStudio para todos los procesos relacionados con la
+estimación y la simulación. Se hará uso de funciones contenidas en los
+paquetes \texttt{tidyr} (Wickham \& Henry,
+\protect\hyperlink{ref-tidyr}{2019}), \texttt{dplyr} (Wickham et~al.,
+\protect\hyperlink{ref-dplyr}{2019}) y \texttt{parallel} (R Core Team,
+\protect\hyperlink{ref-parallel}{2019}\protect\hyperlink{ref-parallel}{b}).
+
+\section{REFERENCIAS}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-diferenciacion}{}%
+Adhikari, R., K, A. R., \& Agrawal, R. K. (2013a). \emph{An Introductory
+Study on Time Series Modeling and Forecasting} (p. 16). Recuperado de
+\url{https://arxiv.org/ftp/arxiv/papers/1302/1302.6613.pdf}
+
+\leavevmode\hypertarget{ref-medidas}{}%
+Adhikari, R., K, A. R., \& Agrawal, R. K. (2013b). \emph{An Introductory
+Study on Time Series Modeling and Forecasting} (pp. 42-45). Recuperado
+de \url{https://arxiv.org/ftp/arxiv/papers/1302/1302.6613.pdf}
+
+\leavevmode\hypertarget{ref-pearson}{}%
+Benesty, J., \& Chen, Y. C., J.and Huang. (2009). Pearson Correlation
+Coefficient. En \emph{Noise Reduction in Speech Processing} (pp. 37-38).
+\url{https://doi.org/10.1007/978-3-642-00296-0_5}
+
+\leavevmode\hypertarget{ref-box-jenkins}{}%
+Box, G. E., Jenkins, G. M., \& Reinsel, G. C. (1994). \emph{Time Series
+Analysis: Forecasting and Control}. Recuperado de
+\url{https://books.google.co.cr/books?id=sRzvAAAAMAAJ}
+
+\leavevmode\hypertarget{ref-brown}{}%
+Brown, R. G. (1956). \emph{Exponential Smoothing for Predicting Demand}.
+Recuperado de \url{https://www.industrydocuments.ucsf.edu/docs/jzlc0130}
+
+\leavevmode\hypertarget{ref-forecastpro}{}%
+Goodrich, R. (2000). The Forecast Pro Methodology. \emph{International
+Journal of Forecasting}, \emph{16}(4), 533-535. Recuperado de
+\url{http://www.forecasting-competition.com/downloads/NN3/methods/Goodrich\%20(2000)\%20The\%20Forecast\%20Pro\%20methodology\%20science.pdf}
+
+\leavevmode\hypertarget{ref-gomez}{}%
+Gómez, V. (1998). \emph{Automatic Model Identification in the Presence
+of Missing Observations and Outliers.} (D. G. de A. y P. P. Ministerio
+de Economía y Hacienda, Ed.). Working paper D-98009.
+
+\leavevmode\hypertarget{ref-tramo}{}%
+Gómez, V., \& Maraval, A. (1998). \emph{Programs TRAMO and SEATS,
+Instructions for the Users.} (D. G. de A. y P. P. Ministerio de Economía
+y Hacienda, Ed.). Working paper 97001.
+
+\leavevmode\hypertarget{ref-hannan}{}%
+Hannan, E. J., \& Rissanen, J. (1982). Recursive Estimation of Mixed
+Autoregressive-Moving Average Order. \emph{Biometrika}, \emph{69}(1),
+81-94. Recuperado de \url{http://www.jstor.org/stable/2335856}
+
+\leavevmode\hypertarget{ref-oscarh-1}{}%
+Hernández, O. (2011a). \emph{Introducción a las Series Cronológicas}.
+Recuperado de
+\url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}
+
+\leavevmode\hypertarget{ref-oscarh-2}{}%
+Hernández, O. (2011b). \emph{Introducción a las Series Cronológicas}.
+Recuperado de
+\url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}
+
+\leavevmode\hypertarget{ref-oscarh-3}{}%
+Hernández, O. (2011c). \emph{Introducción a las Series Cronológicas}.
+Recuperado de
+\url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}
+
+\leavevmode\hypertarget{ref-oscarh-4}{}%
+Hernández, O. (2011d). \emph{Introducción a las Series Cronológicas}.
+Recuperado de
+\url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}
+
+\leavevmode\hypertarget{ref-hyndman2018forecasting}{}%
+Hyndman, R. J., \& Athanasopoulos, G. (2018a). \emph{Forecasting:
+principles and practice}. Recuperado de
+\url{https://books.google.co.cr/books?id=/_bBhDwAAQBAJ}
+
+\leavevmode\hypertarget{ref-hyndman_box-jenkins}{}%
+Hyndman, R. J., \& Athanasopoulos, G. (2018b). \emph{Forecasting:
+principles and practice}. Recuperado de
+\url{https://books.google.co.cr/books?id=/_bBhDwAAQBAJ}
+
+\leavevmode\hypertarget{ref-auto.arima}{}%
+Hyndman, R., \& Khandakar, Y. (2008). Automatic Time Series Forecasting:
+The forecast Package for R. \emph{Journal of Statistical Software,
+Articles}, \emph{27}(3), 1-22.
+\url{https://doi.org/10.18637/jss.v027.i03}
+
+\leavevmode\hypertarget{ref-calidad_vitales}{}%
+INEC. (2017). \emph{Población, nacimientos, defunciones y matrimonios}.
+Recuperado de
+\url{http://inec.cr/sites/default/files/documetos-biblioteca-virtual/repoblacev2017_0.pdf}
+
+\leavevmode\hypertarget{ref-kedem}{}%
+Kedem, B., \& Fokianos, K. (2005). \emph{Regression Models for Time
+Series Analysis}. Recuperado de
+\url{https://books.google.co.cr/books?id=8r0qE35wt44C}
+
+\leavevmode\hypertarget{ref-liu}{}%
+Liu, L.-M. (1989). Identification of seasonal arima models using a
+filtering method. \emph{Communications in Statistics - Theory and
+Methods}, \emph{18}(6), 2279-2288.
+\url{https://doi.org/10.1080/03610928908830035}
+
+\leavevmode\hypertarget{ref-melard}{}%
+Mélard, G., \& Pasteels, J.-M. (2000). Automatic ARIMA modeling
+including interventions, using time series expert software.
+\emph{International Journal of Forecasting}, \emph{16}(4), 497-508.
+\url{https://doi.org/https://doi.org/10.1016/S0169-2070(00)00067-4}
+
+\leavevmode\hypertarget{ref-Rbase}{}%
+R Core Team. (2019a). \emph{R: A Language and Environment for
+Statistical Computing}. Recuperado de \url{https://www.R-project.org/}
+
+\leavevmode\hypertarget{ref-parallel}{}%
+R Core Team. (2019b). \emph{R: A Language and Environment for
+Statistical Computing}. Recuperado de \url{https://www.R-project.org/}
+
+\leavevmode\hypertarget{ref-autobox}{}%
+Reilly, D. (2000). The Autobox System. \emph{International Journal of
+Forecasting}, \emph{16}(4), 531-533. Recuperado de
+\url{https://ideas.repec.org/a/eee/intfor/v16y2000i4p531-533.html}
+
+\leavevmode\hypertarget{ref-supenprodc}{}%
+Rosero-Bixby, L. (2018). \emph{Producto C para SUPEN. Proyección de la
+mortalidad de Costa Rica 2015-2150}. Recuperado de CCP-UCR website:
+\url{http://srv-website.cloudapp.net/documents/10179/999061/Nota+t\%C3\%A9cnica+tablas+de+vida+segunda+parte}
+
+\leavevmode\hypertarget{ref-dplyr}{}%
+Wickham, H., François, R., Henry, L., \& Müller, K. (2019). \emph{dplyr:
+A Grammar of Data Manipulation}. Recuperado de
+\url{https://CRAN.R-project.org/package=dplyr}
+
+\leavevmode\hypertarget{ref-tidyr}{}%
+Wickham, H., \& Henry, L. (2019). \emph{tidyr: Tidy Messy Data}.
+Recuperado de \url{https://CRAN.R-project.org/package=tidyr}
+
+
+\end{document}

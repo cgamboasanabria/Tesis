@@ -1,5 +1,12 @@
+
+
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\rhead{\includegraphics[width = 1\textwidth]{marca.jpg}}
+
+
 \usepackage{geometry}
-\geometry{a4paper, left=20mm, right=30mm}
+\geometry{a4paper, left=35mm, right=25mm, bottom=15mm}
 \usepackage{setspace}
 \doublespacing
 \usepackage[spanish]{babel}
@@ -9,15 +16,19 @@
 \colorlet{shadecolor}{gray!20}
 \setcounter{secnumdepth}{0}
 \usepackage{sectsty}
+
+
 \chapternumberfont{\Large}
 \chaptertitlefont{\Large}
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{5}
+\setlength{\footskip}{20pt}%Esto sube el número de página
 \usepackage{graphics}
 \usepackage{setspace} %paquete para el doble espaciado
 \doublespacing %inicia el doble espaciado
-%Esto quita el punto final en la numeracion de cada seccion
+ %Esto quita el punto final en la numeracion de cada seccion
 \usepackage{tocloft}
+
 \usepackage{titlesec}
 \titleformat{\section}
 {\Large\bfseries}{\thesection}{0.5em}{}
@@ -34,8 +45,62 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[R]{\rightmark}
-\fancyfoot[C]{\thepage}
+\fancyhead[R]{\thepage}
+%\fancyfoot[R]{\rightmark}
+%\fancyfoot[C]{Teléfono  2511-1400    /    posgrado@sep.ucr.ac.cr  /   www.sep.ucr.ac.cr}
 \setlength{\headheight}{21.9pt}
-\renewcommand\sectionmark[1]{
+\renewcommand\sectionmark[1]{%
 \markright{\thesection\ #1}}
+%\renewcommand{\footrulewidth}{0.4pt}
+
+
+%\renewcommand{\footnoterule}{%
+%  \kern -1pt
+%  \hrule width \textwidth height 1pt
+%  \kern 4pt
+%}
+
+
+%MARCA DE AGUA
+%\usepackage{graphicx}
+% \usepackage{fancyhdr}
+%  \pagestyle{fancy}
+%  \setlength\headheight{28pt}
+%   \fancyhead[L]{\includegraphics[width=16cm]{marca.jpg}}
+%   \fancyfoot[LE,RO]{}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+%\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+%\renewcommand{\familydefault}{\sfdefault} %Para cambiar la fuente
+
+
+%Para referenciar chunks
+\usepackage{caption}
+\usepackage{floatrow}
+\floatsetup[figure]{capposition=top}
+\floatsetup[table]{capposition=top}
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+
+\DeclareNewFloatType{chunk}{placement=H, fileext=chk, name=}
+\captionsetup{options=chunk}
+\renewcommand{\thechunk}{Código~\arabic{chunk}}
+\makeatletter
+\@addtoreset{chunk}{section}
+\makeatother

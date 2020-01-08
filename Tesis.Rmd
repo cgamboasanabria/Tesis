@@ -1,11 +1,35 @@
 ---
-title: "Determinación de modelos ARIMA vía sobre parametrización según la temporalidad de la serie cronológica con aplicaciones en datos costarricenses"
+title: |
+    | UNIVERSIDAD DE COSTA RICA
+    | SISTEMA DE ESTUDIOS DE POSGRADO
+    |
+    |
+    |
+    |
+subtitle: |
+    | LA SOBREPARAMETRIZACIÓN EN EL ARIMA: UNA APLICACIÓN A DATOS COSTARRICENCES
+    |
+    |
+    |
+    |
+    | Tesis sometida a la consideración de la Comisión del Programa de Estudios de Posgrado en Estadística para optar por el grado y título de Maestría Académica en Estadística
 author: |
-  | Universidad de Costa Rica
-  | César Gamboa Sanabria
-  | www.cesargamboasanabria.com
-  | info@cesargamboasanabria.com
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+    |
+    |
+    |
+    |
+    |
+    | CÉSAR ANDRÉS GAMBOA SANABRIA B12672
+    |
+    |
+    |
+    |
+    |
+    | Ciudad Universitaria Rodrigo Facio, Costa Rica
+    |
+    |
+    |
+date: "`r format(Sys.time(), '%Y')`"
 always_allow_html: yes
 output: 
     pdf_document:
@@ -13,57 +37,133 @@ output:
         fig_caption: yes
         include:
           in_header: header.tex
-    html_notebook: default
 urlcolor: blue
 bibliography: referencias.bib
 link-citations: yes
 linkcolor: blue
 csl: apa.csl
 ---
+
+\pagenumbering{gobble}
+\cleardoublepage
+
 \newpage
 
-```{r setup, include=FALSE, results='hide'}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
-                      dev="jpeg", out.width = '100%', out.height='100%', fig.pos="!h")
+                      dev="jpeg", out.width = '100%', out.height='100%', fig.pos="!h",
+                      echo=FALSE)
 
 library(carlians)
-requeridos(tidyverse)
+requeridos(knitr, ggplot2, tidyr, dplyr, kableExtra)
+
+oldSource <- knit_hooks$get("source")
+knit_hooks$set(source = function(x, options) {
+  x <- oldSource(x, options)
+  x <- ifelse(!is.null(options$ref), paste0("\\label{", options$ref,"}", x), x)
+  ifelse(!is.null(options$codecap), paste0("\\captionof{chunk}{", options$codecap,"}", x), x)
+})
 ```
 
-\section*{RESUMEN}  
+\addcontentsline{toc}{section}{DEDICATORIA}
+\section*{DEDICATORIA}
 
-La metodología de Box-Jenkins busca encontrar el mejor proceso autorregresivo integrado de medias móviles (ARIMA) que explique una serie temporal $y_t$ de $T$ periodos, para pronosticar hasta $T+h$. El paquete `forecast` de R permite hacer uso de la función `auto.arima()` para estimar un  modelo ARIMA basado en pruebas de raíz unitaria, minimización del AICc y de la MLE. De esta forma se obtiene un modelo temporal definiendo las diferenciaciones requeridas en la parte estacional d mediante las pruebas KPSS o ADF, y la no estacional D utilizando las pruebas OCSB o la Canova-Hansen, seleccionado el orden óptimo para los términos $ARIMA(p,d,q)(P,D,Q)$ para una serie $y_t$. Se propone un método de selección fundamentada en las permutaciones de los parámetros de un modelo ARIMA, seleccionando la mejor especificación con base en medidas de rendimiento MAE, RMSE, MAPE y MASE:  se  comparan todos los posibles términos definiendo una diferenciación adecuada para la serie y permutando hasta un máximo determinado para los términos de especificación de un $ARIMA(p,d,q)(P,D,Q)$. El método propuesto se probó en 6 series cronológicas de distinta temporalidad: mortalidad infantil, mortalidad por causa externa, nacimientos, demanda eléctrica, intereses y comisiones del sector público, e incentivos salariales del sector público.   
+\pagenumbering{roman}
 
-***Palabras clave***: ARIMA, R, automatización, selección, estadística
+A Batman
+
+\cleardoublepage
 
 
+\addcontentsline{toc}{section}{AGRADECIMIENTOS}
+\section*{AGRADECIMIENTOS}
 
-\newpage
+
+A Flash
+
+\cleardoublepage
+
+
+\section*{}
+
+\begin{center}
+
+"Esta tesis fue aceptada por la Comisión del Programa de Estudios de Posgrado en Estadística de la Universidad de Costa Rica, como requisito parcial para optar al grado y título de Maestría Académica en Estadística"
+
+Esta página es mejor hacerla en word, pasarla a pdf y luego incorporarla como se hizo en los reportes del SEP
+
+\end{center}
+
+\cleardoublepage
+
 
 \tableofcontents
+\listoftables
+\listoffigures
+
+\cleardoublepage
+\pagenumbering{arabic}
 
 \newpage
 
-```{r, child="01-Introduccion.Rmd"}
+\addcontentsline{toc}{section}{RESUMEN}
+\section*{RESUMEN}
+
+\cleardoublepage
+
+\addcontentsline{toc}{section}{ABSTRACT}
+\section*{ABSTRACT}
+
+\cleardoublepage
+
+\section{INTRODUCCIÓN}  
+
+a[@supenprodc] USANDO R[^1]
+
+El cuadro \ref{tab:cuadro1} se referencia así, y la Figura \ref{fig:figura1} así. Si se quiere referenciar un código en un chunk (digamos en la sección de anexos), puede escribirse algo como \ref{funcion1}
+
+```{r}
+kable(head(iris, 10), "latex", booktabs=T,caption="\\label{tab:cuadro1}Un cuadro") %>% 
+footnote(general = "Elaboración propia", general_title = "Fuente:", title_format = "italic",
+         footnote_as_chunk = T) %>% 
+    kable_styling(latex_options = c("striped", "scale_down", "repeat_header", "hold_position"), repeat_header_text = "(cont.)") 
 ```
 
-```{r, child="02-Metodologia.Rmd"}
+```{r figura1, fig.cap="Un gráfico"}
+plot(cars)
 ```
 
-```{r child="03-Fuente de datos.Rmd"}
+
+[^1]: hOLA
+
+\newpage
+
+\section{MARCO DE LA CUESTIÓN}
+
+\newpage
+
+\section{METODOLOGÍA} 
+
+\newpage
+
+\section{RESULTADOS} 
+
+\newpage
+
+\section{CONCLUSIONES Y RECOMENDACIONES}
+
+\newpage
+
+\section{ANEXOS}
+
+```{r, ref="funcion1", codecap = "Una función", echo=TRUE, eval=FALSE}
+registro.tardio <- function(x,y){
+    x+y
+}
 ```
 
-```{r child="04-Definicion de variables de estudio.Rmd"}
-```
+\newpage
 
-```{r child="05-Evidencias de calidad.Rmd"}
-```
+\section{REFERENCIAS}  
 
-```{r child="06-Técnicas a usar.Rmd"}
-```
-
-\section{Software estadístico a utilizar}
-
-Se utilizará el lenguaje de programación R [@Rbase] mediante su interfaz RStudio para todos los procesos relacionados con la estimación y la simulación. Se hará uso de funciones contenidas en los paquetes `tidyr` [@tidyr], `dplyr` [@dplyr] y `parallel` [@parallel].
-
-\section{REFERENCIAS}    
+  
