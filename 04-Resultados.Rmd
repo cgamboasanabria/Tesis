@@ -1,0 +1,23 @@
+\subsection{Introducción}
+
+\subsection{Datos simulados}
+
+\subsubsection{Comparación en datos simulados - Sobreparametrización vs auto.arima}
+
+\subsection{Estimaciones en datos costarricenses}
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+\subsubsection{Tasa global de fecundidad}
+
+\subsubsection{Mortalidad por causa externa}
+
+\subsubsection{Incentivos salariales del sector público}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+\subsubsection{Demanda eléctrica}
+
+\subsubsection{Comparación en datos reales - Sobreparametrización vs auto.arima}
+
+\subsection{Discusión de los resultados}

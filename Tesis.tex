@@ -267,24 +267,56 @@ Ciudad Universitaria Rodrigo Facio, Costa Rica\\
 
 \pagenumbering{roman}
 
-A Batman
+Pendiente
 
 \cleardoublepage
 
 \addcontentsline{toc}{section}{AGRADECIMIENTOS}
 \section*{AGRADECIMIENTOS}
 
-A Flash
+También pendiente
 
 \cleardoublepage
 
-\section*{}
-
 \begin{center}
 
-"Esta tesis fue aceptada por la Comisión del Programa de Estudios de Posgrado en Estadística de la Universidad de Costa Rica, como requisito parcial para optar al grado y título de Maestría Académica en Estadística"
+``Esta tesis fue aceptada por la Comisión del Programa de Estudios de Posgrado en Estadística de la Universidad de Costa Rica, como requisito parcial para optar al grado y título de Maestría Académica en Estadística''
 
-Esta página es mejor hacerla en word, pasarla a pdf y luego incorporarla como se hizo en los reportes del SEP
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. Álvaro Morales Ramírez\\
+\textbf{Decano Sistema de Estudios de Posgrado}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+MSc. Óscar Centeno Mora\\
+\textbf{Director de Tesis}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. Gilbert Brenes Camacho\\
+\textbf{Lector}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. ShuWei Chou.\\
+\textbf{Lector}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+MSc. Johnny Madrigal Pana\\
+\textbf{Director Programa de Posgrado en Estadística}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+César Andrés Gamboa Sanabria\\
+\textbf{Candidato}
 
 \end{center}
 
@@ -311,8 +343,13 @@ Esta página es mejor hacerla en word, pasarla a pdf y luego incorporarla como s
 
 \section{INTRODUCCIÓN}
 
-a(Rosero-Bixby, \protect\hyperlink{ref-supenprodc}{2018}) USANDO
-R\footnote{hOLA}
+\subsection{Antecedentes}
+
+\subsection{El problema}
+
+Una prueba de referencia (Rosero-Bixby,
+\protect\hyperlink{ref-supenprodc}{2018}) USANDO R\footnote{Una nota al
+  pie}
 
 El cuadro \ref{tab:cuadro1} se referencia así, y la Figura
 \ref{fig:figura1} así. Si se quiere referenciar un código en un chunk
@@ -321,7 +358,7 @@ El cuadro \ref{tab:cuadro1} se referencia así, y la Figura
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-1}\label{tab:cuadro1}Un cuadro}
+\caption{\label{tab:unnamed-chunk-7}\label{tab:cuadro1}Un cuadro}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabular}[t]{rrrrl}
@@ -348,31 +385,157 @@ Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
 \includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/figura1-1} \caption{Un gráfico}\label{fig:figura1}
 \end{figure}
 
+\subsection{Objetivos del estudio}
+
+\subsection{Metodología del estudio}
+
+\subsection{Justificación del estudio}
+
+\subsection{Organización del estudio}
+
 \newpage
 
-\section{MARCO DE LA CUESTIÓN}
+\section{MARCO TEÓRICO}
+
+\subsection{Introducción}
+
+\subsection{Investigaciones relacionadas}
+
+\subsection{Observaciones finales sobre la revisión bibliográfica}
 
 \newpage
 
 \section{METODOLOGÍA}
 
+\subsection{Introducción}
+
+\subsection{Conceptos y definiciones en el análisis de series cronológicas}
+
+\subsubsection{Definición de una serie cronológica}
+
+\subsubsection{Procedimiento al analizar series cronológicas}
+
+\subsubsection{Estacionaridad}
+
+\subsubsection{La parsimonia}
+
+\subsection{Componentes de una serie cronológica}
+
+\subsubsection{La tendencia}
+
+\subsubsection{Componentes estacionales}
+
+\subsubsection{Componente cíclico}
+
+\subsubsection{Componente irregular}
+
+\subsection{Supuestos en el análisis de series cronológicas}
+
+\subsection{Modelos de series cronológicas}
+
+\subsection{Modelos Autorregresivos Integrados de Medias Móviles}
+
+\subsubsection{Modelos Autorregresivos}
+
+\subsubsection{Modelos de Medias Móviles}
+
+\subsubsection{Metodología Box-Jenkins}
+
+\subsubsection{Etapa 1 - Identificación}
+
+\subsubsection{Etapa 2 - Estimación y diagnóstico}
+
+\subsubsection{Etapa 3 - Pronóstico}
+
+\subsubsection{Notación de los modelos ARIMA}
+
+\subsubsection{Diferenciación}
+
+\subsection{Análisis de intervención}
+
+\subsection{Validación cruzada}
+
+\subsection{Medidas de rendimiento}
+
+\subsubsection{MFE}
+
+\subsubsection{MAE}
+
+\subsubsection{MAPE}
+
+\subsubsection{MPE}
+
+\subsubsection{MSE}
+
+\subsubsection{SSE}
+
+\subsubsection{SMSE}
+
+\subsubsection{RMSE}
+
+\subsubsection{NMSE}
+
+\subsubsection{AIC}
+
+\subsubsection{AICc}
+
+\subsubsection{BIC}
+
+\subsection{La sobreparametrización}
+
+\subsection{Simulación de series cronológicas}
+
+\subsection{El método propuesto}
+
 \newpage
 
 \section{RESULTADOS}
+
+\subsection{Introducción}
+
+\subsection{Datos simulados}
+
+\subsubsection{Comparación en datos simulados - Sobreparametrización vs auto.arima}
+
+\subsection{Estimaciones en datos costarricenses}
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+\subsubsection{Tasa global de fecundidad}
+
+\subsubsection{Mortalidad por causa externa}
+
+\subsubsection{Incentivos salariales del sector público}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+\subsubsection{Demanda eléctrica}
+
+\subsubsection{Comparación en datos reales - Sobreparametrización vs auto.arima}
+
+\subsection{Discusión de los resultados}
 
 \newpage
 
 \section{CONCLUSIONES Y RECOMENDACIONES}
 
+\subsection{Introducción}
+
+\subsection{Conclusiones}
+
+\subsection{Recomendaciones}
+
 \newpage
 
 \section{ANEXOS}
+
+\subsection{La función funcion\_1}
 
 \captionof{chunk}{Una función}\label{funcion1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{registro.tardio <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x,y)\{}
+\NormalTok{funcion_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x,y)\{}
 \NormalTok{    x}\OperatorTok{+}\NormalTok{y}
 \NormalTok{\}}
 \end{Highlighting}

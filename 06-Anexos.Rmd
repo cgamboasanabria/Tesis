@@ -1,0 +1,7 @@
+\subsection{La función funcion\_1}
+
+```{r, ref="funcion1", codecap = "Una función", echo=TRUE, eval=FALSE}
+funcion_1 <- function(x,y){
+    x+y
+}
+```

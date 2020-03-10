@@ -70,7 +70,7 @@ knit_hooks$set(source = function(x, options) {
 
 \pagenumbering{roman}
 
-A Batman
+Pendiente
 
 \cleardoublepage
 
@@ -78,19 +78,49 @@ A Batman
 \addcontentsline{toc}{section}{AGRADECIMIENTOS}
 \section*{AGRADECIMIENTOS}
 
-
-A Flash
+También pendiente
 
 \cleardoublepage
 
-
-\section*{}
-
 \begin{center}
 
-"Esta tesis fue aceptada por la Comisión del Programa de Estudios de Posgrado en Estadística de la Universidad de Costa Rica, como requisito parcial para optar al grado y título de Maestría Académica en Estadística"
+``Esta tesis fue aceptada por la Comisión del Programa de Estudios de Posgrado en Estadística de la Universidad de Costa Rica, como requisito parcial para optar al grado y título de Maestría Académica en Estadística''
 
-Esta página es mejor hacerla en word, pasarla a pdf y luego incorporarla como se hizo en los reportes del SEP
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. Álvaro Morales Ramírez\\
+\textbf{Decano Sistema de Estudios de Posgrado}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+MSc. Óscar Centeno Mora\\
+\textbf{Director de Tesis}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. Gilbert Brenes Camacho\\
+\textbf{Lector}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. ShuWei Chou.\\
+\textbf{Lector}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+MSc. Johnny Madrigal Pana\\
+\textbf{Director Programa de Posgrado en Estadística}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+César Andrés Gamboa Sanabria\\
+\textbf{Candidato}
 
 \end{center}
 
@@ -118,49 +148,46 @@ Esta página es mejor hacerla en word, pasarla a pdf y luego incorporarla como s
 
 \section{INTRODUCCIÓN}  
 
-a[@supenprodc] USANDO R[^1]
-
-El cuadro \ref{tab:cuadro1} se referencia así, y la Figura \ref{fig:figura1} así. Si se quiere referenciar un código en un chunk (digamos en la sección de anexos), puede escribirse algo como \ref{funcion1}
-
-```{r}
-kable(head(iris, 10), "latex", booktabs=T,caption="\\label{tab:cuadro1}Un cuadro") %>% 
-footnote(general = "Elaboración propia", general_title = "Fuente:", title_format = "italic",
-         footnote_as_chunk = T) %>% 
-    kable_styling(latex_options = c("striped", "scale_down", "repeat_header", "hold_position"), repeat_header_text = "(cont.)") 
+```{r, child="01-Introduccion.Rmd"}
 ```
-
-```{r figura1, fig.cap="Un gráfico"}
-plot(cars)
-```
-
-
-[^1]: hOLA
 
 \newpage
 
-\section{MARCO DE LA CUESTIÓN}
+\section{MARCO TEÓRICO}
+
+```{r, child="02-Marco_teorico.Rmd"}
+```
 
 \newpage
 
 \section{METODOLOGÍA} 
 
+```{r, child="03-Metodologia.Rmd"}
+```
+
+
 \newpage
 
 \section{RESULTADOS} 
+
+```{r, child="04-Resultados.Rmd"}
+```
+
 
 \newpage
 
 \section{CONCLUSIONES Y RECOMENDACIONES}
 
+```{r, child="05-Conclusiones.Rmd"}
+```
+
 \newpage
 
 \section{ANEXOS}
 
-```{r, ref="funcion1", codecap = "Una función", echo=TRUE, eval=FALSE}
-registro.tardio <- function(x,y){
-    x+y
-}
+```{r, child="06-Anexos.Rmd"}
 ```
+
 
 \newpage
 

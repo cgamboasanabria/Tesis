@@ -1,0 +1,79 @@
+\subsection{Introducción}
+
+\subsection{Conceptos y definiciones en el análisis de series cronológicas}
+
+\subsubsection{Definición de una serie cronológica}
+
+\subsubsection{Procedimiento al analizar series cronológicas}
+
+\subsubsection{Estacionaridad}
+
+\subsubsection{La parsimonia}
+
+\subsection{Componentes de una serie cronológica}
+
+\subsubsection{La tendencia}
+
+\subsubsection{Componentes estacionales}
+
+\subsubsection{Componente cíclico}
+
+\subsubsection{Componente irregular}
+
+\subsection{Supuestos en el análisis de series cronológicas}
+
+\subsection{Modelos de series cronológicas}
+
+\subsection{Modelos Autorregresivos Integrados de Medias Móviles}
+
+\subsubsection{Modelos Autorregresivos}
+
+\subsubsection{Modelos de Medias Móviles}
+
+\subsubsection{Metodología Box-Jenkins}
+
+\subsubsection{Etapa 1 - Identificación}
+
+\subsubsection{Etapa 2 - Estimación y diagnóstico}
+
+\subsubsection{Etapa 3 - Pronóstico}
+
+\subsubsection{Notación de los modelos ARIMA}
+
+\subsubsection{Diferenciación}
+
+\subsection{Análisis de intervención}
+
+\subsection{Validación cruzada}
+
+\subsection{Medidas de rendimiento}
+
+\subsubsection{MFE}
+
+\subsubsection{MAE}
+
+\subsubsection{MAPE}
+
+\subsubsection{MPE}
+
+\subsubsection{MSE}
+
+\subsubsection{SSE}
+
+\subsubsection{SMSE}
+
+\subsubsection{RMSE}
+
+\subsubsection{NMSE}
+
+\subsubsection{AIC}
+
+\subsubsection{AICc}
+
+\subsubsection{BIC}
+
+\subsection{La sobreparametrización}
+
+\subsection{Simulación de series cronológicas}
+
+\subsection{El método propuesto}
