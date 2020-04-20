@@ -1,5 +1,7 @@
 \subsection{Introducción}
 
+El método propuesto se probará comparándose con los resultados de seis series con distintas temporalidades: mortalidad infantil, mortalidad por causa externa, nacimientos, demanda eléctrica, intereses y comisiones del sector público e incentivos salariales del sector público.
+
 \subsection{Datos simulados}
 
 \subsubsection{Comparación en datos simulados - Sobreparametrización vs auto.arima}
