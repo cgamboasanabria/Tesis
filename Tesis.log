@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.3.9)  20 APR 2020 09:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.4.30)  6 MAY 2020 12:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Tesis.tex
 (./Tesis.tex
 LaTeX2e <2020-02-02> patch level 5
-L3 programming layer <2020-02-25> (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
+L3 programming layer <2020-04-06> (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
 dist/tex/latex/base/article.cls
 Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
@@ -131,7 +131,7 @@ LaTeX Info: Redefining \] on input line 2860.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifxetex.sty
 Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2019/11/07 v1.0c TeX engine tests
+Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifluatex.st
 y
@@ -262,7 +262,6 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count190
-\pdfmajorversion=\count191
 Package hyperref Info: Option `unicode' set `true' on input line 4421.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2020/01/14 v7.00d Hyperref: PDF Unicode definition (HO)
@@ -276,7 +275,7 @@ Package hyperref Info: Plain pages OFF on input line 4562.
 Package hyperref Info: Backreferencing OFF on input line 4567.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4800.
-\c@Hy@tempcnt=\count192
+\c@Hy@tempcnt=\count191
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -292,7 +291,7 @@ calc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count193
+\Fld@menulength=\count192
 \Field@Width=\dimen146
 \Fld@charsize=\dimen147
 Package hyperref Info: Hyper figures OFF on input line 6430.
@@ -309,9 +308,9 @@ LaTeX Info: Redefining \pageref on input line 6504.
 .sty
 Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
 )
-\Hy@abspage=\count194
-\c@Item=\count195
-\c@Hfootnote=\count196
+\Hy@abspage=\count193
+\c@Item=\count194
+\c@Hfootnote=\count195
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
@@ -323,8 +322,8 @@ File: hpdftex.def 2020/01/14 v7.00d Hyperref driver for pdfTeX
 .sty
 Package: atveryend 2019-12-11 v1.11 Hooks at the very end of document (HO)
 )
-\Fld@listcount=\count197
-\c@bookmark@seq@number=\count198
+\Fld@listcount=\count196
+\c@bookmark@seq@number=\count197
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/reru
 nfilecheck.sty
@@ -347,9 +346,9 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count199
-\Gm@cntv=\count266
-\c@Gm@tempcnt=\count267
+\Gm@cnth=\count198
+\Gm@cntv=\count199
+\c@Gm@tempcnt=\count266
 \Gm@bindingoffset=\dimen148
 \Gm@wd@mp=\dimen149
 \Gm@odd@mp=\dimen150
@@ -363,11 +362,11 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.s
 ty
 Package: fancyvrb 2020/01/13 v3.5 verbatim text (tvz,hv)
-\FV@CodeLineNo=\count268
+\FV@CodeLineNo=\count267
 \FV@InFile=\read2
 \FV@TabBox=\box47
-\c@FancyVerbLine=\count269
-\FV@StepNumber=\count270
+\c@FancyVerbLine=\count268
+\FV@StepNumber=\count269
 \FV@OutFile=\write3
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
@@ -406,25 +405,23 @@ line 40.
 ty
 Package: setspace 2011/12/19 v6.7a set line spacing
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2020/02/28 3.41 The Babel package
-(c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/switch.def
-File: switch.def 2020/02/28 3.41 Babel switching mechanism
-)
-(c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel-spanish/spa
-nish.ldf
-Language: spanish.ldf 2016/03/03 v5.0p Spanish support from the babel system
+Package: babel 2020/04/28 3.43 The Babel package
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2020/02/28 3.41 Babel common definitions
-\babel@savecnt=\count271
+File: babel.def 2020/04/28 3.43 Babel common definitions
+\babel@savecnt=\count270
 \U@D=\dimen162
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.de
 f)
 \bbl@readstream=\read3
-\bbl@dirlevel=\count272
 )
+\bbl@dirlevel=\count271
+
+(c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel-spanish/spa
+nish.ldf
+Language: spanish.ldf 2016/03/03 v5.0p Spanish support from the babel system
 \es@quottoks=\toks25
-\es@quotdepth=\count273
+\es@quotdepth=\count272
 Package babel Info: Making " an active character on input line 561.
 Package babel Info: Making . an active character on input line 662.
 Package babel Info: Making < an active character on input line 707.
@@ -471,8 +468,8 @@ Package tocloft Info: The document has section divisions on input line 51.
 \cftbeforefigskip=\skip77
 \cftfigindent=\skip78
 \cftfignumwidth=\skip79
-\c@lofdepth=\count274
-\c@lotdepth=\count275
+\c@lofdepth=\count273
+\c@lotdepth=\count274
 \cftbeforelottitleskip=\skip80
 \cftafterlottitleskip=\skip81
 \cftbeforetabskip=\skip82
@@ -512,8 +509,8 @@ Package caption3 Info: TeX engine: e-TeX on input line 61.
 \caption@hangindent=\dimen174
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count276
-\c@continuedfloat=\count277
+\c@caption@flags=\count275
+\c@continuedfloat=\count276
 Package caption Info: hyperref package is loaded.
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.s
@@ -543,12 +540,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen182
 \cmidrulekern=\dimen183
 \defaultaddspace=\dimen184
-\@cmidla=\count278
-\@cmidlb=\count279
+\@cmidla=\count277
+\@cmidlb=\count278
 \@aboverulesep=\dimen185
 \@belowrulesep=\dimen186
-\@thisruleclass=\count280
-\@lastruleclass=\count281
+\@thisruleclass=\count279
+\@lastruleclass=\count280
 \@thisrulewidth=\dimen187
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
@@ -557,16 +554,16 @@ Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \LTright=\skip97
 \LTpre=\skip98
 \LTpost=\skip99
-\LTchunksize=\count282
+\LTchunksize=\count281
 \LTcapwidth=\dimen188
 \LT@head=\box49
 \LT@firsthead=\box50
 \LT@foot=\box51
 \LT@lastfoot=\box52
-\LT@cols=\count283
-\LT@rows=\count284
-\c@LT@tables=\count285
-\c@LT@chunks=\count286
+\LT@cols=\count282
+\LT@rows=\count283
+\c@LT@tables=\count284
+\c@LT@chunks=\count285
 \LT@p@ftn=\toks27
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
 Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
@@ -582,14 +579,14 @@ Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
 ty
 Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
 \multirow@colwidth=\skip102
-\multirow@cntb=\count287
+\multirow@cntb=\count286
 \multirow@dima=\skip103
 \bigstrutjot=\dimen191
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen192
 \WF@size=\dimen193
-\c@WF@wrappedlines=\count288
+\c@WF@wrappedlines=\count287
 \WF@box=\box55
 \WF@everypar=\toks29
 Package: wrapfig 2003/01/31  v 3.6
@@ -615,16 +612,16 @@ Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
 ty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box56
-\sift@deathcycles=\count289
+\sift@deathcycles=\count288
 \@vwid@loff=\dimen194
 \@vwid@roff=\dimen195
 )
-\c@taburow=\count290
-\tabu@nbcols=\count291
-\tabu@cnt=\count292
-\tabu@Xcol=\count293
-\tabu@alloc=\count294
-\tabu@nested=\count295
+\c@taburow=\count289
+\tabu@nbcols=\count290
+\tabu@cnt=\count291
+\tabu@Xcol=\count292
+\tabu@alloc=\count293
+\tabu@nested=\count294
 \tabu@target=\dimen196
 \tabu@spreadtarget=\dimen197
 \tabu@naturalX=\dimen198
@@ -665,7 +662,7 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \UL@skip=\skip107
 \UL@hook=\toks33
 \UL@height=\dimen261
-\UL@pe=\count296
+\UL@pe=\count295
 \UL@pixel=\dimen262
 \ULC@box=\box64
 Package: ulem 2019/11/18
@@ -675,13 +672,13 @@ Package: ulem 2019/11/18
 ty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen264
-\c@nlinenum=\count297
+\c@nlinenum=\count296
 \TeXr@lab=\toks34
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/floatrow/floatrow.s
 ty
 Package: floatrow 2008/08/02 v0.3b floatrow: float package extension
-\c@float@type=\count298
+\c@float@type=\count297
 \float@exts=\toks35
 \float@box=\box65
 \@floatcapt=\box66
@@ -699,30 +696,30 @@ Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 \FBo@max=\skip111
 \FBc@max=\skip112
 \FBf@max=\skip113
-\c@FBl@b=\count299
-\floatbox@depth=\count300
-\c@FRobj=\count301
-\c@FRsobj=\count302
+\c@FBl@b=\count298
+\floatbox@depth=\count299
+\c@FRobj=\count300
+\c@FRsobj=\count301
 \Xhsize=\skip114
 \sXhsize=\skip115
 \Zhsize=\skip116
 \sZhsize=\skip117
 \flrow@rowbox=\box67
 \FR@Zunitlength=\dimen268
-\c@FBcnt=\count303
-\FPOScnt=\count304
+\c@FBcnt=\count302
+\FPOScnt=\count303
 \LTleft=\skip118
 \LTright=\skip119
 \LTleft=\skip120
 \LTright=\skip121
 \flrow@types=\toks37
 )
-\c@chunk=\count305
+\c@chunk=\count304
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend
 -pdfmode.def
-File: l3backend-pdfmode.def 2020-02-23 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count306
+File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count305
 \l__pdf_internal_box=\box68
 ) (./Tesis.aux
 LaTeX Info: Redefining \. on input line 24.
@@ -775,7 +772,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ttitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count307
+\c@section@level=\count306
 )
 LaTeX Info: Redefining \ref on input line 257.
 LaTeX Info: Redefining \pageref on input line 257.
@@ -840,7 +837,7 @@ Package: fr-longtable 2007/11/28 v0.1b (beta) floatrow: additions for longtable
 
 \flrow@LT@lasthead=\box70
 \flrow@LT@prelastfoot=\box71
-\c@FBLTpage=\count308
+\c@FBLTpage=\count307
 )
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 2
 59.
@@ -935,7 +932,7 @@ LaTeX Info: Redefining \% on input line 1.
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-33.
+45.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [4] [5] [6] [7] [8] [9] [10]
@@ -944,56 +941,59 @@ Overfull \vbox (406.31303pt too high) has occurred while \output is active []
 [11] [12] [13]
 
 Package caption Warning: \captionsetup{type*=...} or \captionof
-(caption)                outside box or environment on input line 784.
+(caption)                outside box or environment on input line 796.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 784.
+(caption)                particular \caption on input line 796.
 See the caption package documentation for explanation.
 
 Package hyperref Info: bookmark level for unknown chunk defaults to 0 on input 
-line 784.
+line 796.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 788.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 800.
 [14]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
-24.
+36.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \hbox (badness 1406) in paragraph at lines 823--827
+Underfull \hbox (badness 1406) in paragraph at lines 835--839
 [][]\T1/lmr/m/n/10 Hernández, O. (2011). \T1/lmr/m/it/10 In-tro-duc-ción a las 
 Se-ries Cro-no-ló-gi-cas \T1/lmr/m/n/10 (1.\TS1/lmr/m/n/10 ª \T1/lmr/m/n/10 ed.
 , p. 1). Re-cu-pe-ra-
  []
 
 [15]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 881.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 893.
 [16]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 881.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 893.
 (./Tesis.aux
 LaTeX Info: Redefining \. on input line 24.
 LaTeX Info: Redefining \% on input line 24.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 881.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 881.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 893.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 893.
 Package rerunfilecheck Info: File `Tesis.out' has not changed.
-(rerunfilecheck)             Checksum: F172E565A18208DB0517FF3AD3CBB6C0;13168.
+(rerunfilecheck)             Checksum: A3312F5FAAF496A8480526DAA61B96B1;13214.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 16399 strings out of 482920
- 240459 string characters out of 5957997
- 539385 words of memory out of 5000000
- 31218 multiletter control sequences out of 15000+600000
+ 16482 strings out of 482589
+ 241588 string characters out of 5949609
+ 542818 words of memory out of 5000000
+ 31621 multiletter control sequences out of 15000+600000
  597755 words of font info for 72 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 41i,13n,45p,1194b,632s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.3} has been referenced but does not exi
+ 41i,13n,45p,1194b,634s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Hfootnote.4} has been referenced but does not exi
 st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Hfootnote.3} has been referenced but does not exist
+, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist
 , replaced by a fixed one
@@ -1021,10 +1021,10 @@ exmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX
 eX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/Dell/AppData/Roaming/T
 inyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/Dell/AppData/Roami
 ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Tesis.pdf (23 pages, 359698 bytes).
+Output written on Tesis.pdf (23 pages, 362850 bytes).
 PDF statistics:
- 652 PDF objects out of 1000 (max. 8388607)
- 605 compressed objects within 7 object streams
- 117 named destinations out of 1000 (max. 500000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 606 compressed objects within 7 object streams
+ 118 named destinations out of 1000 (max. 500000)
  609 words of extra memory for PDF output out of 10000 (max. 10000000)
 
