@@ -1,5 +1,9 @@
 \subsection{Introducción}
 
+La aplicación de las series cronológicas tiene tres objetivos: 1) el análisis exploratorio de la serie en cuestión, 2) estimar modelos de proyección, y 3) generar pronósticos para los posibles valores futuros que tomará el problema en cuestión. Asimismo, existen múltiples formas de proceder mediante la etapa de estimación, como lo son los métodos de suavizamiento exponencial [@brown], modelos de regresión para series temporales [@kedem], redes neuronales secuenciales aplicadas a datos longitudinales [@redes], estimaciones bayesianas [@bayes], y finalmente, los procesos autorregresivos integrados de medias móviles o ARIMA por sus siglas en inglés [@box-jenkins], siendo estos últimos el foco de interés en este estudio.
+
+Un proceso ARIMA es caracterizado por dos funciones: la autocorrelación y la autocorrelación parcial; mediante la comparación de dichas funciones se busca la identificación del proceso que describa de manera adecuada el comportamiento de una serie cronológica.
+
 En la búsqueda de un modelo adecuado entre varios candidatos, se llevan a cabo comparaciones de medidas de bondad de ajuste y de precisión. Se consideran temporalidades mensuales, bimensuales, trimestrales o cuatrimestrales, mediante un proceso de selección fundamentada en las permutaciones de todos los parámetros de un modelo ARIMA hasta un rango determinado, considerando la inclusión semiautomática de intervenciones en periodos específicos y la validación cruzada para evaluar la calidad de las particiones de la base de datos en conjuntos para entrenar y probar el rendimiento del modelo. Dichas pruebas sirven de insumo para utilizar un método de consenso entre ellas y seleccionar el modelo más adecuado mediante la sobreparametrización: se comparan todos los posibles en in intervalo específico de términos definiendo una diferenciación adecuada para la serie y permutando hasta un máximo definido para los términos autorregresivos y de medias móviles especificados para así seleccionar la especificación que ofrezca mejores resultados al momento de pronosticar valores futuros de la serie cronológica.
 
 \subsection{Conceptos y definiciones en el análisis de series cronológicas}
@@ -21,8 +25,6 @@ En la búsqueda de un modelo adecuado entre varios candidatos, se llevan a cabo 
 \subsubsection{Componente cíclico}
 
 \subsubsection{Componente irregular}
-
-\subsection{Supuestos en el análisis de series cronológicas}
 
 \subsection{Modelos de series cronológicas}
 
