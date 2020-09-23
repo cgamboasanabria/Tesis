@@ -60,22 +60,95 @@ Los modelos ARIMA son los de uso más extendido en el análisis de series cronol
 
 \subsubsection{Modelos Autorregresivos}
 
+Un modelo autorregresivo de orden *p*, denotado como $AR(p)$, considera los valores futuros de una serie cronológica como una combinación lineal las $p$ observaciones predecesoras, un componente aleatorio y un término constante. @Hipel y @Lee emplean la notación de la ecuación \ref{eqn:modelo_AR}.
+
+\begin{equation}
+\label{eqn:modelo_AR}
+y_t=c+\sum_{i=1}^p \varphi_iy_{t-i}+\varepsilon_t
+\end{equation}
+
+Donde $y_t$ y $\varepsilon_t$ corresponden al valor de la serie y al componente aleatorio en el momento actual $t$, mientras que $\varphi_i$, con $i=1,2,\cdots,p$ son los parámetros del modelo, y $c$ es su término constante, que en ciertas ocasiones se suele omitir para simplificar la notación. Los parámetros de esta clase de modelos suelen estimarse mediante la ecuación de Yule-Walker [@yule.walker].
+
 \subsubsection{Modelos de Medias Móviles}
+
+De manera similar a como un $AR(p)$ utiliza los valores pasados para pronosticar los futuros, los modelos de medias móviles de orden q, denotados como $MA(q)$, utilizan los errores pasados de las variables independientes. Estos modelos se describen mediante la ecuación \ref{eqn:modelo_MA}.
+
+\begin{equation}
+\label{eqn:modelo_MA}
+y_t=\mu+\sum_{j=1}^q \theta_j \varepsilon_{t-j}+\varepsilon_t
+\end{equation}
+
+Donde $\mu$ representa el valor medio de la serie cronológica y cada valor de $\theta_j(j=1,2,\cdots,q)$ son los parámetros del modelo. Como los $MA(q)$ utilizan los errores pasados de la serie cronológica, se asume que estos son i.i.d. centrados en cero y con una variancia constante, siguiendo una distribución aproximada mente Normal, con lo cual este tipo de modelos pueden considerarse como una regresión lineal entre una observación determinada y los términos de error que le preceden. 
 
 \subsubsection{Metodología Box-Jenkins}
 
-De esta manera, el método de Box-Jenkins inicia con el análisis exploratorio de la serie cronológica de interés, teniendo un interés particular en identificar si hay presencia de factores no estacionarios en la misma. Si en efecto se cuenta con una serie no estacionaria, ésta debe volverse estacionaria mediante algún tipo de transformación, típicamente el logaritmo natural. Con la serie ya transformada, se busca identificar el proceso que gobierna la serie, la forma clásica de hacer esto es mediante los gráficos de autocorrelación y autocorrelación parcial. Cuando se logra identificar un proceso que se adecue más a la serie cronológica, se deben realizar los diagnósticos para evaluar la calidad del ajuste del modelo, así como las medidas de rendimiento referentes a los pronósticos que genera el modelo estimado hasta un horizonte determinado.
+La combinación de un $AR(p)$ y un $MA(q)$, descritos en las ecuaciones \ref{eqn:modelo_AR} y \ref{eqn:modelo_MA} respectivamente, como se mencionó al inicio de esta sección, generan los modelos autorregresivos de medias móviles, $ARMA(p,q)$, representados mediante la ecuación \ref{eqn:modelo_ARMA}.
 
-\subsubsection{Etapa 1 - Identificación}
+\begin{equation}
+\label{eqn:modelo_ARMA}
+y_t=c+\varepsilon_t+\sum_{i=1}^p \varphi_iy_{t-i}+\sum_{j=1}^q \theta_j \varepsilon_{t-j}
+\end{equation}
 
-\subsubsection{Etapa 2 - Estimación y diagnóstico}
+@Cochrane menciona que los modelos $ARMA(p,q)$ suelen manipularse mediante lo que se conoce como operador de rezagos, denotado como $Ly_t=y_{t-1}$. Esto significa que en un $AR(p)$ se tiene que $\varepsilon_t=\varphi(L)y_t$, mientras que en $MA(q)$ se tiene que $y_t=\theta(L)\varepsilon_t$, y por consiguiente en un $ARMA(p,q)$ se tiene $\varphi(L)y_t=\theta(L)\varepsilon_t$. Por lo tanto, de lo anterior se desprende que $\varphi(L)=1-\sum_{i=1}^p \varphi_iL^i$, y que $\theta(L)=1+\sum_{j=1}^q\theta_jL^j$.
 
-\subsubsection{Etapa 3 - Pronóstico}
+Los modelos $ARMA$, sin embargo, solamente pueden ser utilizados en series cronológicas suyo proceso es estacionario. Esto, en la práctica, es poco común, pues una serie de tiempo a menudo posee tendencias y ciertos patrones estacionales y, además, como menciona @Hamzacebi, presentan procesos no estacionarios por naturaleza. Esta condición hace necesaria la introducción de una generalización de los modelos $ARMA$, la cual se conoce como los modelos $ARIMA$ [@box-jenkins].
+
+Partiendo de una serie con un proceso no estacionario, es posible aplicar transformaciones o diferenciaciones (*d*)a los datos con el objetivo de convertirlos en un proceso estacionario. Utilizar la notación de rezagos descrita anteriormente, según @Lombardo, permite plantear un modelo $ARIMA(p,d,q)$ como se describe en la ecuación \ref{eqn:modelo_ARIMApdq}.
+
+\begin{equation}
+\label{eqn:modelo_ARIMApdq}
+\varphi(L)(1-L)^dy_t=\theta(L)\varepsilon_t\\
+\left(1-\sum_{i=1}^p \varphi_iL^i \right)(1-L)^d y_t=\left(1+\sum_{j=1}^q \theta_jL^j \right) \varepsilon_t
+\end{equation}
+
+Donde los términos $p, d$ y $q$ son positivos y mayores a cero y corresponden al modelo autorregresivo, a la diferenciación y al modelo de medias móviles, respectivamente. El componente $d$ es el número de diferenciaciones, si $d=0$ se tiene un modelo ARMA, y $d\geq1$ representa el número de diferenciaciones; en la mayoría de casos $d=1$ suele ser suficiente. Así, un $ARIMA(p,0,0)=AR(p)$, $ARIMA(0,0,q)=MA(q)$, y un $ARIMA(0,1,0)=y_t=y_{t-1}+\varepsilon_t$, es decir, un modelo de caminata aleatoria.
+
+Como sugieren @box-jenkins, lo anterior puede generalizarse aún más al considerar los efectos estacionales de la serie cronológica. Si se considera una serie cronológica con observaciones mensuales, una diferenciación de primer orden es igual a la diferencia entre una observación y la observación correpondiente al mismo mes pero del año anterior; es decir, si el periodo estacional es de $s=12$ meses, entonces esta diferencia estacional aplicada a un $ARIMA(p,d,q)(P,D,Q)_S$ es calculada mediante $z_t=y_t-y_{t-s}$. 
+
+De esta manera, el método de @box-jenkins inicia con el análisis exploratorio de la serie cronológica, teniendo un interés particular en identificar si hay presencia de factores no estacionarios en la misma. Si en efecto se cuenta con una serie no estacionaria, ésta debe volverse estacionaria mediante algún tipo de transformación, típicamente el logaritmo natural. Con la serie ya transformada, se busca identificar el proceso que gobierna la serie, la forma clásica de hacer esto es mediante los gráficos de autocorrelación y autocorrelación parcial. Cuando se logra identificar un proceso que se adecue más a la serie cronológica, se deben realizar los diagnósticos para evaluar la calidad del ajuste del modelo, así como las medidas de rendimiento referentes a los pronósticos que genera el modelo estimado hasta un horizonte determinado.
+
+\subsubsection{Identificación del modelo}
+
+Los métodos más clásicos para la identificación del proceso que gobierna a una serie cronológica son las funciones de autocorrelación y autocorrelación parcial, las cuales sirven de indicador acerca de qué tan relacionadas están las observaciones unas de otras. Estas funciones ofrecen indicios sobre el orden de los términos para los modelos $AR(p)$, $MA(q)$ y para la diferenciación y, por ende, para la identificación de un modelo $ARIMA$.
+
+Para medir la relación lineal entre dos variables cuantitativas es común utilizar el coeficiente de correlación $r$ de Pearson [@pearson], el cual se define para dos variables $X$ e $Y$ como se muestra en la ecuación \ref{eqn:pearson}.
+
+\begin{equation}
+\label{eqn:pearson}
+r_{X,Y}=\frac{E(XY)}{\sigma_X \sigma_Y} = \frac{\sum_{i=1}^n \left(X_i- \bar X\right) \left(Y_i- \bar Y\right)}{\sqrt{\sum_{i=1}^n \left(X_i- \bar X\right)^2 \sum_{i=1}^n \left(Y_i- \bar Y\right)^2}}
+\end{equation}
+
+Este mismo concepto puede aplicarse a las series cronológicas para comparar el valor de la misma en el tiempo $t$, con su valor en el tiempo $t-1$, es decir, se comparan las observaciones consecutivas $Y_t$ con $Y_{t-1}$. Esto también es aplicable a no solo una observación rezagada $(Y_{t-1})$, sino también con múltiples rezagos $(Y_{t-2}), (Y_{t-3}), \cdots,(Y_{t-n})$. Para esto se hace uso del coeficiente de autocorrelación.
+
+El coeficiente de autocorrelación (*ACF* por sus siglas en inglés) recibe su nombre debido a que se utiliza el coeficiente de correlación para pares de observaciones $r_{Y_t, Y_{t-1}}$ de la serie cronológica. Al conjunto de todas las autocorrelaciones se le llama función de autocorrelación.
+
+La función de autocorrelación parcial (*PACF* por sus siglas en inglés), como menciona @oscarh-4, busca medir la asociación lineal entre las observaciones $Y_t$ y $Y_{t-k}$, descartando los efectos de los rezagos $1,2, \cdots ,k-1$.
+
+Cuando se tiene el modelo ARIMA debidamente identificado, es importante realizar los pronósticos. Sin embargo, estos pronósticos no son imperativos, sino que se debe evaluar su calidad con las llamadas medidas de rendimiento. Estas mediciones son hechas comparando el pronóstico y su diferencia con el valor real. Existen múltiples medidas de rendimiento, @medidas menciona entre ellas el *MAE*, *MAPE*, *RMSE*, *MASE*, *AIC*, *AICc* y el *BIC*.
 
 \subsection{Los autocorrelogramas}
+```{r, eval=FALSE}
+#Lo siguiente se obtuvo del sitio:
+#https://people.duke.edu/~rnau/arimrule.htm
+```
+
+El uso del *ACF* y el *PACF* se suele aplicar de manera visual. Sin embargo, hacer usos de estos elementos implica considerar múltiples condiciones. En el caso de la identificación del orden de la diferenciación:
+
+ - Si la serie posee autocorrelaciones positivas en un amplio número de rezagos, entonces es posible que se requiera un orden más alto en el valor de $d$.
+ - Si la autocorrelación en $t-1$ es menor o igual a cero, o si las autocorrelaciones resultan ser muy bajas y sin seguir algún patrón en particular, entonces no se requiere un alto orden para la diferenciación.
+ - Una desviación estándar baja suele ser indicador de un orden adecuado de integración.
+ - Si no se utiliza ninguna diferenciación, se asume que la serie cronológica es estacionaria. Aplicar una diferenciación asume que la serie cronológica posee una media constante, mientras que dos diferenciaciones sugiere que la tendencia varía en el tiempo.
+
+Para la identificación de los términos $p$ y $q$:
+
+ - Si la *PACF* de la serie cronológica diferenciada muestra una diferencia marcada y si, además, la autocorrelación en $t-1$ es positiva, entonces debe considerarse aumentar el valor de $p$.
+ - Si la *PACF* de la serie cronológica diferenciada muestra una diferencia marcada y si, además, y la autocorrelación en $t-1$ es negativa, entonces debe considerarse aumentar el valor de $q$.
+ - Los términos $p$ y $q$ pueden cancelar sus efectos entre sí, por lo que si se cuenta con un modelo $ARMA$ más mixto que parece adaptarse bien a los datos, puede deberse también a que $p$ o $q$ deben ser menores.
+ - Si la suma de los coeficientes del modelo $AR$ es muy cercana a la unidad, es necesario reducir la cantidad de términos en uno y aumentar el orden de la diferenciación en uno.
+ - Si la suma de los coeficientes del modelo $MA$ es muy cercana a la unidad, es necesario reducir la cantidad de términos en uno y disminuir el orden de la diferenciación en uno.
+
+Tener en consideración estos y otros posibles criterios para la identificación del proceso que gobierna la serie cronológica puede fácilmente volverse algo subjetivo, pues dos personas diferentes pueden llegar a dar distintas interpretaciones a las visualizaciones de los autocorrelogramas. Estas interpretaciones pueden sesgar la identificación de los modelos y, además, no considerar otros escenarios para los términos de un modelo $ARIMA$; para solventar esto es necesario considerar un abanico más amplio de opciones, lo cual se puede lograr al considerar múltiples permutaciones de términos, es decir, empleando la sobreparametrización.
 
 \subsection{La sobreparametrización y el análisis combinatorio}
 
-\subsection{Investigaciones relacionadas}
-
-\subsection{Observaciones finales sobre la revisión bibliográfica}
+La identificación visual mediante los autocorrelogramas puede llevar a decisiones erradas acerca del proceso que gobierna la serie cronológica. Una alternativa es considerar estimaciones procesos de ordenes bajos, como un $ARMA(1,1)$ y poco a poco ir incorporando términos, este proceso de revisión permite encontrar los puntos en que agregar un coeficiente más al modelo no aporta ninguna mejora en los resultados del pronóstico, y así considerar únicamente aquellos modelos que tengan coeficientes con un aporte estadísticamente significativo. Este procedimiento es conocido como sobreparametrización. Dependiendo de la cantidad de observaciones y del rango con que se trabajen los coeficientes, la comparación de los modelos puede volverse muy extensa y complicada, razón por la cual resulta imperativo generar un procedimiento sistemático que logre seleccionar el mejor modelo con base en sus medidas de ajuste y rendimiento del modelo.
