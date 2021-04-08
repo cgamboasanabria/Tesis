@@ -1,3 +1,206 @@
+---
+title: |
+    | UNIVERSIDAD DE COSTA RICA
+    | SISTEMA DE ESTUDIOS DE POSGRADO
+    |
+    |
+    |
+    |
+subtitle: |
+    | LA SOBREPARAMETRIZACIÓN EN EL ARIMA: UNA APLICACIÓN A DATOS COSTARRICENCES
+    |
+    |
+    |
+    |
+    | Tesis sometida a la consideración de la Comisión del Programa de Estudios de Posgrado en Estadística para optar por el grado y título de Maestría Académica en Estadística
+author: |
+    |
+    |
+    |
+    |
+    |
+    | CÉSAR ANDRÉS GAMBOA SANABRIA B12672
+    |
+    |
+    |
+    |
+    |
+    | Ciudad Universitaria Rodrigo Facio, Costa Rica
+    |
+    |
+    |
+date: "2021"
+always_allow_html: yes
+output: 
+    pdf_document:
+        keep_tex: yes
+        fig_caption: yes
+        include:
+          in_header: header.tex
+urlcolor: blue
+bibliography: referencias.bib
+link-citations: yes
+linkcolor: blue
+csl: apa.csl
+---
+
+\pagenumbering{gobble}
+\cleardoublepage
+
+\newpage
+
+
+
+\addcontentsline{toc}{section}{DEDICATORIA}
+\section*{DEDICATORIA}
+
+\pagenumbering{roman}
+
+Pendiente
+
+\cleardoublepage
+
+
+\addcontentsline{toc}{section}{AGRADECIMIENTOS}
+\section*{AGRADECIMIENTOS}
+
+También pendiente
+
+\cleardoublepage
+
+\begin{center}
+
+``Esta tesis fue aceptada por la Comisión del Programa de Estudios de Posgrado en Estadística de la Universidad de Costa Rica, como requisito parcial para optar al grado y título de Maestría Académica en Estadística''
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. Álvaro Morales Ramírez\\
+\textbf{Decano Sistema de Estudios de Posgrado}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+MSc. Óscar Centeno Mora\\
+\textbf{Director de Tesis}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. Gilbert Brenes Camacho\\
+\textbf{Lector}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+Ph.D. ShuWei Chou.\\
+\textbf{Lector}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+MSc. Johnny Madrigal Pana\\
+\textbf{Director Programa de Posgrado en Estadística}
+
+\text{}
+
+\noindent\rule{7cm}{0.4pt}\\
+César Andrés Gamboa Sanabria\\
+\textbf{Candidato}
+
+\end{center}
+
+\cleardoublepage
+
+
+\tableofcontents
+\listoftables
+\listoffigures
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+\newpage
+
+\addcontentsline{toc}{section}{RESUMEN}
+\section*{RESUMEN}
+
+\cleardoublepage
+
+\addcontentsline{toc}{section}{ABSTRACT}
+\section*{ABSTRACT}
+
+\cleardoublepage
+
+\section{INTRODUCCIÓN}  
+
+
+\subsection{Antecedentes}
+
+Estimar los valores futuros en un determinado contexto ha producido un aumento en el análisis de los datos referidos en el tiempo, conocido también como series cronológicas. Este tipo de datos se encuentra en diferentes áreas, tanto en investigación académica como en el análisis de datos para la toma de decisiones. En el campo financiero es común hablar de la devaluación del colón con respecto al dólar, cantidad de exportaciones mensuales de un determinado producto o las ventas, entre otros [@oscarh-1]. Las series cronológicas son particularmente importantes en la investigación de mercados o en las proyecciones demográficas; de manera conjunta apoyan la toma de decisiones para la aprobación presupuestaria en distintas áreas. 
+
+En la actualidad, la información temporal es muy relevante: El Banco Mundial[^1] cuenta en su sitio web con datos para el análisis de series cronológicas de indicadores de desarrollo, capacidad estadística, indicadores educativos, estadísticas de género, nutrición y población. Kaggle[^2], uno de los sitios más populares relacionados con el análisis de información, ofrece una gran cantidad de datos temporales para realizar competencias relacionadas con las series temporales y determinar los modelos ganadores para una determinada temática[^3]. 
+
+Asimismo, los pronósticos (estimación futura de una partícula en una serie temporal) son utilizados por instituciones públicas o del sector privado, centros nacionales o regionales de investigación y organizaciones no gubernamentales dedicadas al desarrollo social. Si las entidades previamente mencionadas cuentan con proyecciones de calidad, la puesta en marcha de sus respectivos planes tendrá un impacto más efectivo.
+
+Los métodos existentes para llevar a cabo un análisis de series cronológicas son diversos, y responden al propio contexto y tipo de datos. Obtener buenos pronósticos o explicar el comportamiento de un fenómeno en el tiempo, siempre será un tema recurrente de investigación. Generar una adecuada estimación es fundamental para obtener un pronóstico de confianza, además resulta importante mencionar que los modelos ARIMA tienen como objetivo explicar las relaciones pasadas de la serie cronológica, para de esta manera conocer el posible comportamiento futuro de la misma [@hyndman2018forecasting]. 
+
+Al trabajar con la metodología de Box-Jenkins, uno de las etapas a concretar es identificar los parámetros de estimación que gobiernan la serie temporal. Para indagar los términos en el proceso de investigación se ha utilizado la identificación de parámetros mediante autocorrelogramas parciales y totales. Sin embargo, los autocorrelogramas formados no analizan de forma exhaustiva y óptima los posibles coeficientes que podrían contemplarse la ecuación de Wold. Según su definición matemática, esta posee infinitos coeficientes, por tanto, se debe buscar una alternativa distinta, que opte por aproximar de una mejor manera la identificación de los parámetros estimados, cubriendo un mayor número de posibilidades. Esto se podría obtener mediante un método analítico de sobreparametrización.
+
+[^1]: [https://databank.worldbank.org/home.aspx](https://databank.worldbank.org/home.aspx)
+[^2]: Se trata de una subsidiaria de la compañía Google que sirve de centro de reunión para todos aquellos interesados en la ciencia de datos.
+[^3]: Muchas de ellas incluyen recompensas económicas que van desde los \$500 hasta los \$100,000 para aquellos que logren obtener los mejor pronósticos.
+
+\subsection{La problemática}
+
+La dificultad visual a la hora de identificar un modelo ARIMA radica en que los autocorrelogramas solo aportan una aproximación al proceso que gobierna la serie. De forma complementaria, es común caer en el problema de la subjetividad, pues a pesar de que alguien proponga un patrón que gobierne la serie, otro analista podría tener una interpretación visual diferente del mismo proceso, proponiendo así distintas identificaciones para un mismo proceso. Además, se posee el inconveniente de que algunos métodos de identificación automática del proceso que gobierna la serie subestiman el número de parámetros que se debería de contemplar.   
+
+Alternativas como la función `auto.arima()`, que ofrece el paquete `forecast` del lenguaje de programación R[^4] [@auto.arima], permite estimar un modelo ARIMA basado en pruebas de raíz unitaria y minimización del AICc [@burnham2007model]. Así se obtiene un modelo temporal definiendo las diferenciaciones requeridas en la parte estacional $d$ mediante las pruebas KPSS [@doi:10.1111/1467-9892.00213] o ADF [@fuller1995introduction], y la no estacional $D$ utilizando las pruebas OCSB [@Osborn2009SEASONALITYAT] o la Canova-Hansen [@10.2307/1392184], seleccionado el orden óptimo para los términos $ARIMA(p, d, q)(P, D, Q)_s$ para una serie cronológica determinada. 
+
+Sin embargo, estas pruebas suelen ignorar diversos términos que bien podrían ofrecer mejores pronósticos; no someten a prueba las posibles especificaciones de un modelo en un rango determinado, sino que realizan aproximaciones analíticas para definir el proceso que gobierna la serie cronológica, dejando así un vacío en el cual se corre el riesgo de no seleccionar un modelo que ofrezca mejores pronósticos. Poner a prueba un mayor número de posibilidades para la especificación de los modelos tiene la ventaja descartar ciertos modelos, y mantener otros con un criterio más científico y una evidencia numérica que despalde esa decisión.
+
+[^4]: Descarga gratuita en [https://cran.r-project.org/](https://cran.r-project.org/)
+
+\subsection{Objetivos del estudio}
+
+El objetivo general de la presente investigación es proponer un algoritmo alternativo más exhaustivo para la selección de modelos ARIMA mediante la sobreparametrización de los términos de la ecuación del ARIMA.
+
+Para lograr esto, se pretende:
+
+**1.** Generar los escenarios de estimación de los distintos modelos ARIMA mediante permutaciones de los términos $(p,d,q)$ y $(P,D,Q)$ para la estimación de los posibles procesos que gobiernan una determinada serie temporal.
+
+**2.** Aplicar diversos métodos de validación en la estimación de procesos que gobiernan la serie cronológica.
+
+**3.** Contrastar la precisión de la estimación así como la generación de pronósticos con otros métodos similares, aplicados en datos costarricenses.
+
+**4.** Integrar el desarrollo de la metodología de análisis de series temporales en una librería del lenguaje estadístico R.
+
+\subsection{Justificación del estudio}
+
+El accionar de políticas gubernamentales, así como de otro tipo de sectores, se apoyan cada vez más en un acertado análisis de la información temporal. En demografía, uno de los principales temas de investigación son las proyecciones de población; durante una emergencia, conocer la posible cantidad de población que habita una zona es clave para la rápida reacción de las autoridades en el envío de ayuda o en la ejecución de planes de evacuación. Asimismo, los análisis actuariales se ven beneficiados al mejorar sus métodos de pronóstico. Una de sus principales áreas de estudio es la mortalidad, ya que representa un insumo de vital importancia para la planificación y sostenibilidad de los sistemas de pensiones, servicios de salud tanto pública como privada, seguros de vida y asuntos hipotecarios [@supenprodc].
+
+La estimación de series de tiempo es una labor común es distintos campos de investigación: el objetivo es poder pronosticar de forma correcta lo que sucederá dentro de los próximos periodos. Métodos actuales como el `auto.arima()` solamente realizan aproximaciones analíticas no óptimas, por lo que suelen omitir procesos que describirían de una mejor manera el comportamiento futuro de una serie cronológica. 
+
+Estimar modelos ARIMA considerando diversas permutaciones en sus estimadores, permite mitigar las falencias de otras aproximaciones analíticas que no analizan de forma exhaustiva todos los posibles parámetros a estimar, o escenarios de selección de la mejor serie que gobierne el proceso de interés. El desarrollo y evaluación del método propuesto, la sobreparametrización, mostrará el potencial de esta metodología en la calidad de los pronósticos. El principal aporte de este estudio es brindar evidencia sobre cómo la sobreparametrización puede contribuir a definir la especificación de un modelo ARIMA que genere pronósticos más precisos.
+
+
+\subsection{Organización del estudio}
+
+El presente trabajo de investigación consta de cinco capítulos. El primer ofreció una contextualización del uso de las series de tiempo, así como la importancia de poder contar con pronósticos de calidad. Se presentó el objetivo del estudio, así como una breve descripción de la metodología empleada en la aplicación de series temporales, y cómo se planea modificar el método de estimación en los modelos ARIMA. Se concluye esta sección con hechos que justifican la importancia de esta investigación.
+
+El siguiente capítulo consiste en el marco teórico, abarcando aspectos fundamentales de la ecuación de Wold, la metodología Box-Jenkins, la selección de los procesos que gobiernan la serie, la descripción del proceso iterativo, el análisis combinatorio que aborda los escenarios de estimación, entre otros.
+
+El tercer capítulo describe la metodología relacionada al estudio. Se inicia con una descripción global de los conceptos más fundamentales del análisis de series cronológicas, pasando por los componentes fundamentales de las mismas. Se discuten también los supuestos clásicos del análisis de series cronológicas, los distintos tipos de modelos, el análisis de intervención, los métodos de validación y las medidas de rendimiento; aspectos cruciales para obtener un modelo ARIMA vía sobreparametrización. La sección metodológica culmina con la descripción del proceso de simulación que se utilizará, así como la discusión del método propuesto.
+
+El capítulo cuatro consiste en la presentación de los resultados, tanto en los datos simulados como en la aplicación a datos costarricenses y se contrastarán contra los obtenidos por otros métodos como el de la función `auto.arima()`, entre otros.
+
+El último capítulo busca discutir los principales resultados, así como señalar las conclusiones más importantes y ofrecer algunas recomendaciones que orienten futuros estudios relacionados.
+
+\newpage
+
+\section{MARCO TEÓRICO}
+
+
 Los modelos de series cronológicas han sido un importante tema de investigación durante décadas [@tsa_decades]. Su objetivo principal consiste en obtener simplificaciones de la realidad mediante el ajuste de diversos modelos, los cuales se ajustan a datos recolectados a lo largo del tiempo de forma regular. Estos modelos son luego utilizados para generar pronósticos sobre el comportamiento futuro del fenómeno de interés. 
 
 Sin embargo, encontrar un modelo que presente un buen comportamiento con respecto a los datos no es tarea fácil, pues deben considerarse diversos aspectos teóricos para obtener un modelo adecuado que logre generar pronósticos realistas y pertinentes para la toma de decisiones [@tsa_decision_making].
@@ -170,10 +373,7 @@ La función de autocorrelación parcial[^5], como menciona @oscarh-4, busca medi
 Cuando se tiene el modelo ARIMA debidamente identificado, es importante realizar los pronósticos. Sin embargo, estos pronósticos no son imperativos, sino que se debe evaluar su calidad con las llamadas medidas de rendimiento. Estas mediciones son hechas comparando el pronóstico y su diferencia con el valor real. Existen múltiples medidas de rendimiento, @medidas menciona entre ellas el *MAE*, *MAPE*, *RMSE*, *MASE*, *AIC*, *AICc* y el *BIC*.
 
 \subsection{Los autocorrelogramas}
-```{r, eval=FALSE}
-#Lo siguiente se obtuvo del sitio:
-#https://people.duke.edu/~rnau/arimrule.htm
-```
+
 
 El uso del *ACF* y el *PACF* se suele aplicar de manera visual. Sin embargo, hacer usos de estos elementos implica considerar múltiples condiciones. En el caso de la identificación del orden de la diferenciación:
 
@@ -195,3 +395,160 @@ Tener en consideración estos y otros posibles criterios para la identificación
 \subsection{La sobreparametrización y el análisis combinatorio}
 
 La identificación visual mediante los autocorrelogramas puede llevar a decisiones erradas acerca del proceso que gobierna la serie cronológica. Una alternativa es considerar estimaciones procesos de ordenes bajos, como un $ARMA(1,1)$ y poco a poco ir incorporando términos, este proceso de revisión permite encontrar los puntos en que agregar un coeficiente más al modelo no aporta ninguna mejora en los resultados del pronóstico, y así considerar únicamente aquellos modelos que tengan coeficientes con un aporte estadísticamente significativo. Este procedimiento es conocido como sobreparametrización. Dependiendo de la cantidad de observaciones y del rango con que se trabajen los coeficientes, la comparación de los modelos puede volverse muy extensa y complicada, razón por la cual resulta imperativo generar un procedimiento sistemático que logre seleccionar el mejor modelo con base en sus medidas de ajuste y rendimiento del modelo.
+
+\newpage
+
+\section{METODOLOGÍA} 
+
+
+\subsection{Introducción}
+
+La aplicación de las series cronológicas tiene tres objetivos: 1) el análisis exploratorio de la serie en cuestión, 2) estimar modelos de proyección, y 3) generar pronósticos para los posibles valores futuros que tomará el problema en cuestión. Asimismo, existen múltiples formas de proceder mediante la etapa de estimación, como lo son los métodos de suavizamiento exponencial [@brown], modelos de regresión para series temporales [@kedem], redes neuronales secuenciales aplicadas a datos longitudinales [@redes], estimaciones bayesianas [@bayes], y finalmente, los procesos autorregresivos integrados de medias móviles o ARIMA por sus siglas en inglés [@box-jenkins], siendo estos últimos el foco de interés en este estudio.
+
+Un proceso ARIMA es caracterizado por dos funciones: la autocorrelación y la autocorrelación parcial; mediante la comparación de dichas funciones se busca la identificación del proceso que describa de manera adecuada el comportamiento de una serie cronológica.
+
+En la búsqueda de un modelo adecuado entre varios candidatos, se llevan a cabo comparaciones de medidas de bondad de ajuste y de precisión. Se consideran temporalidades mensuales, bimensuales, trimestrales o cuatrimestrales, mediante un proceso de selección fundamentada en las permutaciones de todos los parámetros de un modelo ARIMA hasta un rango determinado, considerando la inclusión semiautomática de intervenciones en periodos específicos y la validación cruzada para evaluar la calidad de las particiones de la base de datos en conjuntos para entrenar y probar el rendimiento del modelo. Dichas pruebas sirven de insumo para utilizar un método de consenso entre ellas y seleccionar el modelo más adecuado mediante la sobreparametrización: se comparan todos los posibles en in intervalo específico de términos definiendo una diferenciación adecuada para la serie y permutando hasta un máximo definido para los términos autorregresivos y de medias móviles especificados para así seleccionar la especificación que ofrezca mejores resultados al momento de pronosticar valores futuros de la serie cronológica.
+
+\subsection{Conceptos y definiciones en el análisis de series cronológicas}
+
+\subsubsection{Definición de una serie cronológica}
+
+\subsubsection{Procedimiento al analizar series cronológicas}
+
+\subsubsection{Estacionaridad}
+
+\subsubsection{La parsimonia}
+
+\subsection{Componentes de una serie cronológica}
+
+\subsubsection{La tendencia}
+
+\subsubsection{Componentes estacionales}
+
+\subsubsection{Componente cíclico}
+
+\subsubsection{Componente irregular}
+
+\subsection{Modelos de series cronológicas}
+
+\subsection{Modelos Autorregresivos Integrados de Medias Móviles}
+
+\subsubsection{Modelos Autorregresivos}
+
+\subsubsection{Modelos de Medias Móviles}
+
+\subsubsection{Metodología Box-Jenkins}
+
+\subsubsection{Etapa 1 - Identificación}
+
+\subsubsection{Etapa 2 - Estimación y diagnóstico}
+
+\subsubsection{Etapa 3 - Pronóstico}
+
+\subsubsection{Notación de los modelos ARIMA}
+
+\subsubsection{Diferenciación}
+
+\subsection{Análisis de intervención}
+
+\subsection{Validación cruzada}
+
+\subsection{Medidas de rendimiento}
+
+\subsubsection{MFE}
+
+\subsubsection{MAE}
+
+\subsubsection{MAPE}
+
+\subsubsection{MPE}
+
+\subsubsection{MSE}
+
+\subsubsection{SSE}
+
+\subsubsection{SMSE}
+
+\subsubsection{RMSE}
+
+\subsubsection{NMSE}
+
+\subsubsection{AIC}
+
+\subsubsection{AICc}
+
+\subsubsection{BIC}
+
+\subsection{La sobreparametrización}
+
+\subsection{Simulación de series cronológicas}
+
+\subsection{El método propuesto}
+
+
+\newpage
+
+\section{RESULTADOS} 
+
+
+\subsection{Introducción}
+
+El método propuesto se probará comparándose con los resultados de seis series con distintas temporalidades: mortalidad infantil, mortalidad por causa externa, nacimientos, demanda eléctrica, intereses y comisiones del sector público e incentivos salariales del sector público.
+
+\subsection{Datos simulados}
+
+\subsubsection{Comparación en datos simulados - Sobreparametrización vs auto.arima}
+
+\subsection{Estimaciones en datos costarricenses}
+
+En el campo demográfico, por ejemplo, las estadísticas vitales son sistematizadas y divulgadas año tras año, por tanto, revelan los cambios acontecidos durante este periodo. Esta información junto con la proveniente de los censos de población constituye la base para construir los diferentes índices, tasas y otros indicadores que revelan la situación demográfica del país, información de gran relevancia para la planificación nacional, regional y local en diversos campos. Uno de estos principales campos de acción es la salud pública, para la cual la tasa de mortalidad infantil se considera uno de los indicadores prioritarios dado que refleja no solo las condiciones de salud de la población infante, sino también los niveles de desarrollo del país, pues depende de la calidad de la atención de la salud, principalmente de la prenatal y perinatal, así como de las condiciones de saneamiento. Por tanto, su continuo monitoreo es fundamental para diseñar, implementar y evaluar políticas de salud pública orientadas a disminuir y erradicar aquellas que son prevenibles [@calidad_vitales].
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+\subsubsection{Tasa global de fecundidad}
+
+\subsubsection{Mortalidad por causa externa}
+
+\subsubsection{Incentivos salariales del sector público}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+\subsubsection{Demanda eléctrica}
+
+\subsubsection{Comparación en datos reales - Sobreparametrización vs auto.arima}
+
+\subsection{Discusión de los resultados}
+
+
+\newpage
+
+\section{CONCLUSIONES Y RECOMENDACIONES}
+
+
+\subsection{Introducción}
+
+\subsection{Conclusiones}
+
+\subsection{Recomendaciones}
+
+\newpage
+
+\section{ANEXOS}
+
+
+\subsection{La función funcion\_1}
+
+\captionof{chunk}{Una función}\label{funcion1}
+
+```r
+funcion_1 <- function(x,y){
+    x+y
+}
+```
+
+
+\newpage
+
+\section{REFERENCIAS}  
+
+  
