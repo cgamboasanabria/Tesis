@@ -111,7 +111,8 @@ medidas.arima <- function(modelo, testing, horizonte, regr = NULL){
   rendimiento <- data.frame(Modelo = c(nombre, paste(nombre, "Validacion")), 
                             accuracy(forecast(modelo, horizonte, xreg = regr), testing))
   merge(informacion, rendimiento, by="Modelo", all = TRUE) %>% 
-    dplyr::select(Modelo, AIC, AICc, BIC, MAE, MAPE, RMSE, MASE)
+    dplyr::select(Modelo, AIC, AICc, BIC, MAE, #MAPE, 
+                  RMSE, MASE)
 }
 ```
 
@@ -190,7 +191,8 @@ mejores.arimas <- function(tabla, peso.train=.3, peso.test=.7){
   tabla2 <- tabla %>% 
     mutate_at(vars(contains("C")), function(x){x-min(x, na.rm=TRUE)}) %>% 
     mutate_if(is.numeric, function(x) ifelse(is.na(x),0,x)) %>% 
-    mutate(puntaje = AIC+AICc+BIC+MAE+MAPE+RMSE+MASE,
+    mutate(puntaje = AIC+AICc+BIC+MAE+#MAPE
+           RMSE+MASE,
            ponde = ifelse(grepl("Validacion", Modelo)==TRUE, peso.test, peso.train),
            puntaje = puntaje*ponde)
   
