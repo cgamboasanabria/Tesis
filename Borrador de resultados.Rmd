@@ -43,14 +43,14 @@ simular.proceso <- function(data, n, temporalidad,
                                         no.estacional, estacional, 
                                         p, q, P, Q))
 }
-simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
-                no.estacional=c(1,0,3),
-                estacional = c(1,2,2),
-                q=c(.1, .5, .9))
-simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=1,
-                no.estacional=c(1,0,3),
-                estacional = c(0,0,0),
-                q=c(.1, .5, .9))
+# simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
+#                 no.estacional=c(1,0,3),
+#                 estacional = c(1,2,2),
+#                 q=c(.1, .5, .9))
+# simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=1,
+#                 no.estacional=c(1,0,3),
+#                 estacional = c(0,0,0),
+#                 q=c(.1, .5, .9))
 ```
 
 # Escenarios para simulación de series
@@ -95,40 +95,83 @@ no_estacional_bajo; no_estacional_alto; estacional_bajo; estacional_alto
 
 ```{r}
 set.seed(16051989)
-dat <- rnorm(100, 15, 2)
-no_estacional_bajo <- no_estacional_bajo[sample(1:nrow(no_estacional_bajo), 2, replace = FALSE),]
-no_estacional_alto <- no_estacional_alto[sample(1:nrow(no_estacional_alto), 2, replace = FALSE),]
-proceso_no_estacional <- do.call(rbind, list(no_estacional_bajo, no_estacional_alto))
-estacional_bajo <- estacional_bajo[sample(1:nrow(estacional_bajo), 2, replace = FALSE),]
-estacional_alto <- estacional_alto[sample(1:nrow(estacional_alto), 2, replace = FALSE),]
-proceso_estacional <- do.call(rbind, list(estacional_bajo, estacional_alto))
+dat <- rnorm(100, 10, 1)
+# no_estacional_bajo <- no_estacional_bajo[sample(1:nrow(no_estacional_bajo), 2, replace = FALSE),]
+# no_estacional_alto <- no_estacional_alto[sample(1:nrow(no_estacional_alto), 2, replace = FALSE),]
+# proceso_no_estacional <- do.call(rbind, list(no_estacional_bajo, no_estacional_alto))
+# estacional_bajo <- estacional_bajo[sample(1:nrow(estacional_bajo), 2, replace = FALSE),]
+# estacional_alto <- estacional_alto[sample(1:nrow(estacional_alto), 2, replace = FALSE),]
+# proceso_estacional <- do.call(rbind, list(estacional_bajo, estacional_alto))
+
+
+pos_no_estacional_bajo <- sample(1:nrow(no_estacional_bajo), nrow(no_estacional_bajo), replace = FALSE)
+pos_no_estacional_alto <- sample(1:nrow(no_estacional_alto), nrow(no_estacional_alto), replace = FALSE)
+
+pos_estacional_bajo <- sample(1:nrow(estacional_bajo), nrow(estacional_bajo), replace = FALSE)
+pos_estacional_alto <- sample(1:nrow(estacional_alto), nrow(estacional_alto), replace = FALSE)
+
+
 
 popstudy::descriptive_plot(data = data.frame(Yt=dat), labels = NULL, Yt)
 
-proceso_no_estacional <- mapply(function(dat_,p_,d_,q_){
-    simular.proceso(data=dat_, 
-                    n=500, 
-                    temporalidad=1,
-                    no.estacional=c(p_,d_,q_))
-}, 
-p_=proceso_no_estacional$p, 
-d_=proceso_no_estacional$d, 
-q_=proceso_no_estacional$q,
-MoreArgs = list(dat_=dat))
+# proceso_no_estacional <- mapply(function(dat_,p_,d_,q_){
+#     simular.proceso(data=dat_, 
+#                     n=500, 
+#                     temporalidad=1,
+#                     no.estacional=c(p_,d_,q_))
+# }, 
+# p_=proceso_no_estacional$p, 
+# d_=proceso_no_estacional$d, 
+# q_=proceso_no_estacional$q,
+# MoreArgs = list(dat_=dat))
 
-prova <- lapply(4, function(x){
-    pdq <- proceso_no_estacional[x,1:3] %>% unlist 
-    simular.proceso(data=dat, n=150, temporalidad=1,
-                    no.estacional=pdq)
-    
+resultados_no_estacional_bajo <- lapply(pos_no_estacional_bajo, function(x){
+  
+  pdq <- no_estacional_bajo[x,1:3] %>% unlist 
+  tryCatch({simular.proceso(data=dat, n=500, temporalidad=1,
+                  no.estacional=pdq)}, 
+           error=function(e) NULL)
+  
+  
 })
+resultados_no_estacional_bajo <- resultados_no_estacional_bajo[!sapply(resultados_no_estacional_bajo, is.null)][1:2]
+
+resultados_no_estacional_alto <- lapply(pos_no_estacional_alto, function(x){
+  
+  pdq <- no_estacional_alto[x,1:3] %>% unlist 
+  tryCatch({simular.proceso(data=dat, n=500, temporalidad=1,
+                  no.estacional=pdq)}, 
+           error=function(e) NULL)
+  
+  
+})
+resultados_no_estacional_alto <- resultados_no_estacional_alto[!sapply(resultados_no_estacional_alto, is.null)][1:2]
 
 
+resultados_estacional_bajo <- lapply(pos_estacional_bajo, function(x){
+  
+  pdq <- estacional_bajo[x,1:3] %>% unlist
+  PDQ <- estacional_bajo[x,4:6] %>% unlist
+  tryCatch({simular.proceso(data=dat, n=500, temporalidad=12,
+                  no.estacional=pdq,
+                  estacional = PDQ)}, 
+           error=function(e) NULL)
+  
+  
+})
+resultados_estacional_bajo <- resultados_estacional_bajo[!sapply(resultados_estacional_bajo, is.null)][1:2]
 
-simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
-                no.estacional=c(1,0,3),
-                estacional = c(1,2,2))
-simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
-                no.estacional=c(1,0,3))
+resultados_estacional_alto <- lapply(pos_estacional_alto, function(x){
+  
+  pdq <- estacional_alto[x,1:3] %>% unlist
+  PDQ <- estacional_alto[x,4:6] %>% unlist
+  tryCatch({simular.proceso(data=dat, n=500, temporalidad=12,
+                  no.estacional=pdq,
+                  estacional = PDQ)}, 
+           error=function(e) NULL)
+  
+  
+})
+resultados_estacional_alto <- resultados_estacional_alto[!sapply(resultados_estacional_alto, is.null)][1:2]
 ```
 
