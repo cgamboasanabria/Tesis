@@ -1,0 +1,134 @@
+```{r}
+carlians::requeridos(dplyr)
+```
+
+
+```{r}
+simular.proceso <- function(data, n, temporalidad, 
+                            no.estacional, estacional=c(0,0,0), 
+                            p=NULL, q=NULL, P=NULL, Q=NULL){
+  
+  require(forecast)
+  tryCatch({
+      coeficientes <- list(p, q, P, Q)
+      coeficientes.simulados <- lapply(c(no.estacional[c(1,3)], 
+                                         estacional[c(1,3)]), 
+                                       function(x) sample(seq(-1,1,.1), x))
+      
+    pos <- which(sapply(coeficientes, is.null)==TRUE)
+    pos2 <- which(sapply(coeficientes.simulados, length)>0)
+    
+    coeficientes[pos] <- coeficientes.simulados[pos]
+    
+    names(coeficientes) <- c("p", "q", "P", "Q")
+    coeficientes <- coeficientes[pos2]
+    
+    if(TRUE %in% (c("P", "Q") %in% names(coeficientes))){
+        modelo <- Arima(ts(data=data, freq=temporalidad), 
+                    order = no.estacional, 
+                    seasonal = estacional,
+                    fixed=c(unlist(coeficientes)))
+    }else({
+        modelo <- Arima(ts(data=data, freq=temporalidad), 
+                    order = no.estacional, 
+                    seasonal = estacional,
+                    fixed=c(unlist(coeficientes), NA))
+    })
+    
+    datos <- simulate(modelo, nsim=(n+length(data)))
+    
+    datos <- subset(datos, start=length(data)+1)
+    list(modelo=modelo, datos=datos)}, 
+    error = function(e) simular.proceso(data, n, temporalidad,
+                                        no.estacional, estacional, 
+                                        p, q, P, Q))
+}
+simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
+                no.estacional=c(1,0,3),
+                estacional = c(1,2,2),
+                q=c(.1, .5, .9))
+simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=1,
+                no.estacional=c(1,0,3),
+                estacional = c(0,0,0),
+                q=c(.1, .5, .9))
+```
+
+# Escenarios para simulación de series
+
+```{r}
+escenarios <- expand.grid(p=0:1, d=0:1, q=0:1,P=0:1, D=0:1, Q=0:1)
+no_estacional <- escenarios %>% 
+    select(p:q)
+no_estacional <- no_estacional[rowSums(no_estacional)>0,] %>% 
+    unique
+
+estacional <- escenarios[rowSums(escenarios)>0,]
+estacional <- estacional[rowSums(estacional[,4:6])>0,] 
+estacional <- estacional[rowSums(estacional[,1:3])>0,] %>% 
+    unique
+
+no_estacional_bajo <- no_estacional
+estacional_bajo <- estacional
+
+# Altos
+
+escenarios <- expand.grid(p=2:4, d=0:1, q=2:4,P=2:4, D=0:1, Q=2:4)
+no_estacional <- escenarios %>% 
+    select(p:q)
+no_estacional <- no_estacional[rowSums(no_estacional)>0,] %>% 
+    unique
+
+estacional <- escenarios[rowSums(escenarios)>0,]
+estacional <- estacional[rowSums(estacional[,4:6])>0,] 
+estacional <- estacional[rowSums(estacional[,1:3])>0,] %>% 
+    unique
+
+no_estacional_alto <- no_estacional
+estacional_alto <- estacional
+rm(no_estacional)
+rm(estacional)
+
+no_estacional_bajo; no_estacional_alto; estacional_bajo; estacional_alto
+```
+
+# Simulación de datos
+
+```{r}
+set.seed(16051989)
+dat <- rnorm(100, 15, 2)
+no_estacional_bajo <- no_estacional_bajo[sample(1:nrow(no_estacional_bajo), 2, replace = FALSE),]
+no_estacional_alto <- no_estacional_alto[sample(1:nrow(no_estacional_alto), 2, replace = FALSE),]
+proceso_no_estacional <- do.call(rbind, list(no_estacional_bajo, no_estacional_alto))
+estacional_bajo <- estacional_bajo[sample(1:nrow(estacional_bajo), 2, replace = FALSE),]
+estacional_alto <- estacional_alto[sample(1:nrow(estacional_alto), 2, replace = FALSE),]
+proceso_estacional <- do.call(rbind, list(estacional_bajo, estacional_alto))
+
+popstudy::descriptive_plot(data = data.frame(Yt=dat), labels = NULL, Yt)
+
+proceso_no_estacional <- mapply(function(dat_,p_,d_,q_){
+    simular.proceso(data=dat_, 
+                    n=500, 
+                    temporalidad=1,
+                    no.estacional=c(p_,d_,q_))
+}, 
+p_=proceso_no_estacional$p, 
+d_=proceso_no_estacional$d, 
+q_=proceso_no_estacional$q,
+MoreArgs = list(dat_=dat))
+
+prova <- lapply(4, function(x){
+    pdq <- proceso_no_estacional[x,1:3] %>% unlist 
+    simular.proceso(data=dat, n=150, temporalidad=1,
+                    no.estacional=pdq)
+    
+})
+
+
+
+simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
+                no.estacional=c(1,0,3),
+                estacional = c(1,2,2))
+simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
+                no.estacional=c(1,0,3))
+```
+
