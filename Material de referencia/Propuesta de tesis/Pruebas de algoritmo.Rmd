@@ -4,27 +4,40 @@ https://www.r-bloggers.com/simulating-from-a-specified-seasonal-arima-model/
 
 ```{r}
 simular.proceso <- function(data, n, temporalidad, 
-                            no.estacional, estacional, 
+                            no.estacional, estacional=c(0,0,0), 
                             p=NULL, q=NULL, P=NULL, Q=NULL){
   
   require(forecast)
   tryCatch({
-    coeficientes <- list(p, q, P, Q)
-    coeficientes.simulados <- lapply(c(no.estacional[c(1,3)], 
-                                       estacional[c(1,3)]), 
-                                     function(x) sample(seq(-1,1,.1), x))
+      coeficientes <- list(p, q, P, Q)
+      coeficientes.simulados <- lapply(c(no.estacional[c(1,3)], 
+                                         estacional[c(1,3)]), 
+                                       function(x) sample(seq(-1,1,.1), x))
+      
     pos <- which(sapply(coeficientes, is.null)==TRUE)
+    pos2 <- which(sapply(coeficientes.simulados, length)>0)
     
     coeficientes[pos] <- coeficientes.simulados[pos]
-    names(coeficientes) <- c("p", "q", "P", "Q")
     
-    modelo <- Arima(ts(data=data, freq=temporalidad), 
+    names(coeficientes) <- c("p", "q", "P", "Q")
+    coeficientes <- coeficientes[pos2]
+    
+    if(TRUE %in% (c("P", "Q") %in% names(coeficientes))){
+        modelo <- Arima(ts(data=data, freq=temporalidad), 
                     order = no.estacional, 
                     seasonal = estacional,
-                    fixed=c(phi=coeficientes$p, 
-                            theta=coeficientes$q, 
-                            Phi=coeficientes$P, 
-                            Theta=coeficientes$Q))
+                    fixed=c(unlist(coeficientes)))
+    }else({
+        modelo <- Arima(ts(data=data, freq=temporalidad), 
+                    order = no.estacional, 
+                    seasonal = estacional,
+                    fixed=c(unlist(coeficientes), NA))
+    })
+    
+    # modelo <- Arima(ts(data=data, freq=temporalidad), 
+    #                 order = no.estacional, 
+    #                 seasonal = estacional,
+    #                 fixed=c(unlist(coeficientes)))
     datos <- simulate(modelo, nsim=(n+length(data)))
     
     datos <- subset(datos, start=length(data)+1)
@@ -33,21 +46,28 @@ simular.proceso <- function(data, n, temporalidad,
                                         no.estacional, estacional, 
                                         p, q, P, Q))
 }
+simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12, 
+                no.estacional=c(1,0,3), 
+                estacional = c(1,2,2), 
+                q=c(.1, .5, .9))
+simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=1, 
+                no.estacional=c(1,0,3),
+                q=c(.1, .5, .9))
 
-simulacion <- simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12, no.estacional=c(1,0,3), estacional = c(1,2,2), q=c(.1, .5, .9))
-plot(simulacion$datos, type="l")
-simulacion$modelo
-Arima(simulacion$datos, c(1,1,3), c(1,0,6))
-auto.arima(simulacion$datos)
-
-simulacion <- simular.proceso(data=rpois(100, 15), n=500, temporalidad=12, 
-                              no.estacional=c(1,0,3), estacional = c(1,3,3), 
-                              q=c(.1, .5, .9))
-plot(simulacion$datos, type="l")
-
-simulacion2 <- simular.proceso(data=simulacion$datos, n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(1,0,6), q=c(.1, .5, .9))
-plot(simulacion2$datos, type="l")
-simulacion2$modelo
+# simulacion <- simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12, no.estacional=c(1,0,3), estacional = c(1,2,2), q=c(.1, .5, .9))
+# plot(simulacion$datos, type="l")
+# simulacion$modelo
+# Arima(simulacion$datos, c(1,1,3), c(1,0,6))
+# auto.arima(simulacion$datos)
+# 
+# simulacion <- simular.proceso(data=rpois(100, 15), n=500, temporalidad=12, 
+#                               no.estacional=c(1,0,3), estacional = c(1,3,3), 
+#                               q=c(.1, .5, .9))
+# plot(simulacion$datos, type="l")
+# 
+# simulacion2 <- simular.proceso(data=simulacion$datos, n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(1,0,6), q=c(.1, .5, .9))
+# plot(simulacion2$datos, type="l")
+# simulacion2$modelo
 
 ```
 

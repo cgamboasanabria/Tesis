@@ -1,16 +1,14 @@
-\subsection{Introducción}
+Los modelos de series cronológicas han sido un importante tema de investigación durante décadas [@tsa_decades]. Su objetivo principal consiste en obtener simplificaciones de la realidad mediante el ajuste de diversos modelos, los cuales se ajustan a datos recolectados a lo largo del tiempo de forma regular. Estos modelos son luego utilizados para generar pronósticos sobre el comportamiento futuro del fenómeno de interés. 
 
-Los modelos de series cronológicas han sido un importante tema de investigación durante décadas. Su objetivo principal consiste en obtener simplificaciones de la realidad mediante el ajuste de diversos modelos, los cuales se ajustan a datos recolectados a lo largo del tiempo de forma regular. Estos modelos son luego utilizados para generar pronósticos sobre el comportamiento futuro del fenómeno de interés. 
-
-Sin embargo, encontrar un modelo que presente un buen comportamiento con respecto a los datos no es tarea fácil, pues deben considerarse diversos aspectos teóricos para obtener un modelo adecuado que logre generar pronósticos realistas y pertinentes para la toma de decisiones.
-
-\subsubsection{Definición de una serie cronológica}
+Sin embargo, encontrar un modelo que presente un buen comportamiento con respecto a los datos no es tarea fácil, pues deben considerarse diversos aspectos teóricos para obtener un modelo adecuado que logre generar pronósticos realistas y pertinentes para la toma de decisiones [@tsa_decision_making].
 
 Una serie temporal se define como una secuencia de datos observados, cuyas mediciones ocurren de manera sucesiva durante un periodo de tiempo. Los registros de estos datos pueden referirse a una única variable en cuyo caso de dice que es una serie univariada; o bien, pueden registrarse distintas variables para el mismo periodo de tiempo, conocida como serie temporal multivariada. Según @Hipel, cada observación puede ser continua o discreta, como la temperatura de una ciudad durante el día o las variaciones diarias del precio de un activo financiero, respectivamente; las observaciones continuas, además, pueden ser convertidas a su vez en observaciones discretas. 
 
+El presente capítulo consta de seis apartados: El primer apartado abarca los cuatro componentes de una serie cronológica, siendo estos la tendencia y los componentes estacionales, cíclicos e irregulares. Posteriormente, la segunda sección repasa los supuestos fundamentales en el análisis de series cronológicas. Con los elementos más básicos introducidos, el tercer apartado cubre el eje central de esta investigación: Los modelos Autorregresivos Integrados de Medias Móviles y sus componentes, los modelos autorregresivos y los modelos de medias móviles, así como la metodología Box-Jenkins y el proceso para la identificación de los modelos. En el cuarto apartado se introducen los métodos para la identificación de los modelos. El quinto apartado abarca los componentes relacionados a los autocorrelogramas, la forma más difundida para la selección de modelos y, finalmente, el sexto apartado introduce el principal aporte de este estudio, la sobreparametrización como método para la selección de modelos.
+
 \subsection{Componentes de una serie cronológica}
 
-De acuerdo con @oscarh-1, las series cronológicas poseen cuatro componentes principales: Tendencia, Ciclos, Estacionalidad e Irregularidad. Considerando estos cuatro elementos, las series cronológicas pueden ser *aditivas*, como se muestra en la ecuación \ref{eqn:serie_aditiva}, en cuyo caso se asume que los cuatro componentes son independientes entre sí; o *multiplicativa*, donde, por el contrario, los cuatro componentes son independientes, como muestra la ecuación \ref{eqn:serie_multiplicativa}.
+En el análisis de series cronológicas existen dos grandes corrientes de estudio: Los componentes inherentes a la serie cronológica y el estudio de las autocorrelaciones. De acuerdo con @oscarh-1, las series cronológicas poseen cuatro componentes principales: Tendencia, Ciclos, Estacionalidad e Irregularidad. Considerando estos cuatro elementos, las series cronológicas pueden ser *aditivas*, como se muestra en la ecuación \ref{eqn:serie_aditiva}, en cuyo caso se asume que los cuatro componentes son independientes entre sí; o *multiplicativa*, donde, por el contrario, los cuatro componentes son independientes, como muestra la ecuación \ref{eqn:serie_multiplicativa}.
 
 \begin{equation}
 \label{eqn:serie_aditiva}
@@ -26,19 +24,19 @@ Donde $Y$ es la serie cronológica, $T$ es la tendencia, $S$ es la parte estacio
 
 \subsubsection{La tendencia}
 
-La tendencia general de una serie cronológica se refiere al crecimiento, decrecimiento o lateralización de sus movimientos a lo largo del periodo de estudio. Una tendencia bastante marcada es la del comportamiento poblacional, que con el tiempo su crecimiento suele comportarse de una forma muy similar a una exponencial.
+A partir del texto de @calderon2012estadistica, la tendencia general de una serie cronológica se refiere al crecimiento, decrecimiento o lateralización de sus movimientos a lo largo del periodo de estudio. Una tendencia bastante marcada es la del comportamiento poblacional, que con el tiempo su crecimiento suele comportarse de una forma muy similar a una exponencial.
 
 \subsubsection{Componentes estacionales}
 
-Los cambios estacionales que se presentan en una serie de tiempo se relaciona con las fluctuaciones naturales del fenómeno dentro de una temporada de observaciones. Ejemplos comunes de esto son las condiciones climáticas, consumo de alimentos en fechas festivas, etc.
+@calderon2012estadistica también se refiere a los cambios estacionales que se presentan en una serie de tiempo, los cuales se relacionan con las fluctuaciones naturales del fenómeno dentro de una temporada de observaciones. Ejemplos comunes de esto son las condiciones climáticas, consumo de alimentos en fechas festivas, entre otros.
 
 \subsubsection{Componente cíclico}
 
-Los periodo cíclicos, por su parte, se refieren a los cambios que se dan en una serie cronológica en el mediano plazo, que son causados por determinados eventos que suelen repetirse. Estos ciclos suelen tener una duración determinada, como es el caso de los índice bursátil S&P 500. Este indicador resume el estado de las 500 empresas más importantes de Estados Unidos, y sus ciclos suelen presentar un auge, seguido por un descenso que, posteriormente, se vuelve una depresión, y que finalmente se convierte en una recuperación a su estado inicial.
+Del informe elaborado también por @calderon2012estadistica se desprende que los periodos cíclicos, por su parte, se refieren a los cambios que se dan en una serie cronológica en el mediano plazo, que son causados por determinados eventos que suelen repetirse. Estos ciclos suelen tener una duración determinada, como es el caso de los índice bursátil S&P 500. Este indicador resume el estado de las 500 empresas más importantes de Estados Unidos, y sus ciclos suelen presentar un auge, seguido por un descenso que, posteriormente, se vuelve una depresión, y que finalmente se convierte en una recuperación a su estado inicial.
 
 \subsubsection{Componente irregular}
 
-Finalmente, la irregularidad de una serie cronológica se refiere a las fluctuaciones propias de un fenómeno que no pueden ser predichas. Estos cambios no se dan de manera regular, es decir, no siguen un patrón determinado.
+Finalmente, la irregularidad de una serie cronológica, siguiendo a @calderon2012estadistica, se refiere a las fluctuaciones propias de un fenómeno que no pueden ser predichas. Estos cambios no se dan de manera regular, es decir, no siguen un patrón determinado.
 
 \subsection{Supuestos en el análisis de series cronológicas}
 
@@ -46,9 +44,9 @@ El análisis de series temporales, según @Hipel, representa un método para com
 
 En un proceso determinístico, es posible predecir con certeza lo que ocurrirá en el futuro; las series cronológicas, sin embargo, carecen de esta condición. El análisis de series cronológicas asume que las observaciones pueden ajustarse a un determinado modelo estadístico, esto se conoce como un proceso estocástico. Es de esta manera que @Hipel sugieren que una serie cronológica puede considerarse como una muestra aleatoria de una serie mucho más grande.
 
-Como una serie de tiempo puede considerarse como un proceso estocástico, éstas se encuentran sujetas a múltiples supuestos. El más fundamental de ellos es que todas las observaciones son independientes e idénticamente distribuidas (i.i.d.) siguiendo una distribución aproximadamente Normal, con una media y variancia dadas. Lo anterior, sin embargo, es contrario al uso de las observaciones pasadas para pronosticar el futuro, por lo que este supuesto, según @Cochrane, no es exacto pues una una serie de tiempo no es exactamente, i.i.d., sino que siguen un patrón medianamente regular en el largo plazo.
+Como una serie de tiempo puede considerarse como un proceso estocástico, éstas se encuentran sujetas a múltiples supuestos. El más fundamental de ellos es que todas las observaciones son independientes e idénticamente distribuidas (i.i.d.) siguiendo una distribución aproximadamente Normal, con una media y variancia dadas. Lo anterior es contrario al uso de las observaciones pasadas para pronosticar el futuro, por lo que este supuesto, según @Cochrane, no es exacto pues una una serie de tiempo no es exactamente, i.i.d., sino que siguen un patrón medianamente regular en el largo plazo.
 
-Otro concepto de interés en las series cronológicas es el de estacionaridad. Una serie se considera estacionaria cuando su nivel medio y su variancia son aproximadamente las mismas durante todo el periodo, es decir, el tiempo no afecta a estos estadísticos de variabilidad. Este supuesto busca simplificar la identificación del proceso estocástico con el objetivo de obtener un modelo adecuado para generar los pronósticos. Sin embargo, y de una manera similar al supuesto de i.i.d., si una serie cronológica posee tendencias o patrones estacionales hace que esta sea no estacionaria. En la práctica, una serie puede volverse estacionaria al aplicarle transformaciones o diferenciaciones de distinto orden.
+Otro concepto de interés en las series cronológicas es el de estacionaridad. De acuerdo con @stationary_def, una serie se considera estacionaria cuando su nivel medio y su variancia son aproximadamente las mismas durante todo el periodo, es decir, el tiempo no afecta a estos estadísticos de variabilidad. Este supuesto busca simplificar la identificación del proceso estocástico con el objetivo de obtener un modelo adecuado para generar los pronósticos. Sin embargo, y de una manera similar al supuesto de i.i.d., si una serie cronológica posee tendencias o patrones estacionales hace que esta sea no estacionaria. En la práctica, una serie puede volverse estacionaria al aplicarle transformaciones o diferenciaciones de distinto orden.
 
 El último supuesto, y quizá el que más debate genera, es el criterio de parsimonia. Como mencionan @Zhang y @Hipel, este principio sugiere que se prioricen modelos sencillos, con pocos parámetros, para representar una serie de datos. Mientras más grande y complicado sea el modelo, mayor será el riesgo de sobre ajuste, lo que implica que el ajuste sea muy bueno en el conjunto de datos con que se generó el modelo, pero que los pronósticos generados sean pobres ante nuevos conjuntos de datos. Este problema, sin embargo, se presenta al considerar un único modelo con muchos parámetros; pero si se consideran varios modelos y estos son sometidos a distintos criterios, puede obtenerse un modelo sobreparametrizado que ofrezca buenos pronósticos.
 
@@ -57,6 +55,47 @@ El último supuesto, y quizá el que más debate genera, es el criterio de parsi
 Hay dos grandes grupos de modelos lineales de series cronológicas: Los modelos Autorregresivos (AR) [@Lee] y los modelos de Medias Móviles (MA) [@box-jenkins]. La combinación de estos dos grandes grupos forman los Modelos Autorregresivos de Medias Móviles (ARMA) [@Hipel] y los modelos Autorregresivos Integrados de Medias Móviles (ARIMA), siendo este último de particular interés en esta investigación.
 
 Los modelos ARIMA son los de uso más extendido en el análisis de series cronológicas. Se fundamentan en las autocorrelaciones pasadas, y contempla un proceso iterativo para identificar un posible proceso óptimo a partir de una clase general de modelos. El teorema de Wold [@Wold] sugiere que todo proceso estacionario puede ser determinado de una forma específica y cuya ecuación posee, en realidad, infinitos coeficientes, pero que debe ser reducido a una cantidad finita para luego evaluar su ajuste sometiéndolo a diferentes pruebas y medidas de rendimiento.
+
+\subsubsection{Ecuación de Wold}
+
+Según @sargent_macro, cualquier proceso estacionario puede ser representado mediante la ecuación \ref{eqn:proceso_estacionario}:
+
+\begin{equation}
+\label{eqn:proceso_estacionario}
+x_t=\sum_{j=0}^{\infty} \psi_j\varepsilon_{t-j}+\kappa_t
+\end{equation}
+
+donde $\forall \psi_j \in \mathbb{R}, \psi_0=1, \sum_{j=0}^{\infty} \psi_j^2<\infty$, y $\varepsilon_t$ representa un ruido blanco i.i.d., es decir, $\varepsilon_t \sim N(0, \sigma^2)$; además, $\kappa_t$ es el componente lineal determinístico de forma tal que $cov(\kappa_t,\varepsilon_{t-j}=0)$, lo cual implica que este componente determinístico es independiente de la suma infinita de los choques pasados.
+
+De lo anterior, si se omite la parte determinística $\kappa_t$ de \ref{eqn:proceso_estacionario}, el remanente es la suma ponderada infinita, lo cual implica que si se conocen los ponderadores $\psi_j$, y si además se conoce $\sigma_\varepsilon^2$, es posible obtener una representación para cualquier proceso estacionario; este concepto es conocido como *media móvil infinita*.
+
+Sabiendo que $\varepsilon_t \sim N(0, \sigma^2)$, se tiene que $\varepsilon_t$ tiene media 0, es decir, está centrado en este valor. De esta manera el ruido blanco es por definición un proceso centrado, lo cual implica que la suma ponderada infinita está centrada en sí misma. De esta manera, la representación de Wold de un proceso $x_t$ supone que se suman los choques pasados más un componente determinístico que no es otro que el valor esperado del proceso: $\kappa_t=m$, donde $m$ es una constante cualquiera. Así, la ecuación \ref{eqn:proceso_estacionario} puede sustuirse por:
+
+\begin{equation}
+\label{eqn:proceso_estacionario2}
+x_t=\sum_{j=0}^{\infty} \psi_j\varepsilon_{t-j}+m
+\end{equation}
+
+y de \ref{eqn:proceso_estacionario2} puede verificarse que,
+
+\begin{equation}
+\label{eqn:dem_proceso_estacionario2}
+E(x_t)=E\left(\sum_{j=0}^{\infty} \psi_j\varepsilon_{t-j}+m\right)=\sum_{j=0}^{\infty} \psi_jE\left(\varepsilon_{t-j}\right) + m = m
+\end{equation}
+
+La principal consecuencia del teorema de Wold es que, si se conocen los ponderadores $\psi_j$, y además $\sigma_\varepsilon^2$ es ruido blanco es posible conocer el proceso por medio del cual se rige la serie cronológica. Esto permite realizar cualquier previsión, denotada por $\hat X_{T+h}$ para el proceso de interés $x_T$ en el momento $T+h$ para una muestra cualquiera de $T$ observaciones de $x_t$. De acuerdo con @sargent_macro, basado en el teorema de Wold, la mejor previsión posible para un proceso $x_t$ para el momento $T+h$, denotado por $\hat x_{T+h}$, la predicción está dada por:
+
+\begin{equation}
+\label{eqn:prevision}
+\hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-j+1}
+\end{equation}
+
+De la ecuación \ref{eqn:prevision} se desprende que el error de previsión asociado está dado por:
+
+\begin{equation}
+\label{eqn:error_prevision}
+x_{T+h}- \hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-h+1}
+\end{equation}
 
 \subsubsection{Modelos Autorregresivos}
 
@@ -78,7 +117,7 @@ De manera similar a como un $AR(p)$ utiliza los valores pasados para pronosticar
 y_t=\mu+\sum_{j=1}^q \theta_j \varepsilon_{t-j}+\varepsilon_t
 \end{equation}
 
-Donde $\mu$ representa el valor medio de la serie cronológica y cada valor de $\theta_j(j=1,2,\cdots,q)$ son los parámetros del modelo. Como los $MA(q)$ utilizan los errores pasados de la serie cronológica, se asume que estos son i.i.d. centrados en cero y con una variancia constante, siguiendo una distribución aproximada mente Normal, con lo cual este tipo de modelos pueden considerarse como una regresión lineal entre una observación determinada y los términos de error que le preceden. 
+Donde $\mu$ representa el valor medio de la serie cronológica y cada valor de $\theta_j(j=1,2,\cdots,q)$ son los parámetros del modelo. Como los $MA(q)$ utilizan los errores pasados de la serie cronológica, se asume que estos son i.i.d. centrados en cero y con una variancia constante, siguiendo una distribución aproximadamente Normal, con lo cual este tipo de modelos pueden considerarse como una regresión lineal entre una observación determinada y los términos de error que le preceden [@stationary_def]. 
 
 \subsubsection{Metodología Box-Jenkins}
 
@@ -93,6 +132,8 @@ y_t=c+\varepsilon_t+\sum_{i=1}^p \varphi_iy_{t-i}+\sum_{j=1}^q \theta_j \varepsi
 
 Los modelos $ARMA$, sin embargo, solamente pueden ser utilizados en series cronológicas suyo proceso es estacionario. Esto, en la práctica, es poco común, pues una serie de tiempo a menudo posee tendencias y ciertos patrones estacionales y, además, como menciona @Hamzacebi, presentan procesos no estacionarios por naturaleza. Esta condición hace necesaria la introducción de una generalización de los modelos $ARMA$, la cual se conoce como los modelos $ARIMA$ [@box-jenkins].
 
+\subsubsection{Modelos ARIMA}
+
 Partiendo de una serie con un proceso no estacionario, es posible aplicar transformaciones o diferenciaciones (*d*)a los datos con el objetivo de convertirlos en un proceso estacionario. Utilizar la notación de rezagos descrita anteriormente, según @Lombardo, permite plantear un modelo $ARIMA(p,d,q)$ como se describe en la ecuación \ref{eqn:modelo_ARIMApdq}.
 
 \begin{equation}
@@ -105,11 +146,11 @@ Donde los términos $p, d$ y $q$ son positivos y mayores a cero y corresponden a
 
 Como sugieren @box-jenkins, lo anterior puede generalizarse aún más al considerar los efectos estacionales de la serie cronológica. Si se considera una serie cronológica con observaciones mensuales, una diferenciación de primer orden es igual a la diferencia entre una observación y la observación correpondiente al mismo mes pero del año anterior; es decir, si el periodo estacional es de $s=12$ meses, entonces esta diferencia estacional aplicada a un $ARIMA(p,d,q)(P,D,Q)_S$ es calculada mediante $z_t=y_t-y_{t-s}$. 
 
-De esta manera, el método de @box-jenkins inicia con el análisis exploratorio de la serie cronológica, teniendo un interés particular en identificar si hay presencia de factores no estacionarios en la misma. Si en efecto se cuenta con una serie no estacionaria, ésta debe volverse estacionaria mediante algún tipo de transformación, típicamente el logaritmo natural. Con la serie ya transformada, se busca identificar el proceso que gobierna la serie, la forma clásica de hacer esto es mediante los gráficos de autocorrelación y autocorrelación parcial. Cuando se logra identificar un proceso que se adecue más a la serie cronológica, se deben realizar los diagnósticos para evaluar la calidad del ajuste del modelo, así como las medidas de rendimiento referentes a los pronósticos que genera el modelo estimado hasta un horizonte determinado.
+De esta manera, el método de @box-jenkins inicia con el análisis exploratorio de la serie cronológica, teniendo un interés particular en identificar si hay presencia de factores no estacionarios en la misma. Si en efecto se cuenta con una serie no estacionaria, ésta debe volverse estacionaria mediante algún tipo de transformación, típicamente el logaritmo natural. Con la serie ya transformada, se busca identificar el proceso que gobierna la serie. La forma clásica de hacer esto es mediante los gráficos de autocorrelación y autocorrelación parcial. Cuando se logra identificar un proceso que se adecue más a la serie cronológica, se deben realizar los diagnósticos para evaluar la calidad del ajuste del modelo, así como las medidas de rendimiento referentes a los pronósticos que genera el modelo estimado hasta un horizonte determinado.
 
-\subsubsection{Identificación del modelo}
+\subsection{Identificación del modelo}
 
-Los métodos más clásicos para la identificación del proceso que gobierna a una serie cronológica son las funciones de autocorrelación y autocorrelación parcial, las cuales sirven de indicador acerca de qué tan relacionadas están las observaciones unas de otras. Estas funciones ofrecen indicios sobre el orden de los términos para los modelos $AR(p)$, $MA(q)$ y para la diferenciación y, por ende, para la identificación de un modelo $ARIMA$.
+Los métodos más clásicos para la identificación del proceso que gobierna a una serie cronológica son las funciones de autocorrelación y autocorrelación parcial, las cuales sirven de indicador acerca de qué tan relacionadas están las observaciones unas de otras. Estas funciones ofrecen indicios sobre el orden de los términos para los modelos $AR(p)$, $MA(q)$ y para la diferenciación y, por ende, para la identificación de un modelo $ARIMA$ [@hyndman_box-jenkins].
 
 Para medir la relación lineal entre dos variables cuantitativas es común utilizar el coeficiente de correlación $r$ de Pearson [@pearson], el cual se define para dos variables $X$ e $Y$ como se muestra en la ecuación \ref{eqn:pearson}.
 
@@ -122,7 +163,9 @@ Este mismo concepto puede aplicarse a las series cronológicas para comparar el 
 
 El coeficiente de autocorrelación (*ACF* por sus siglas en inglés) recibe su nombre debido a que se utiliza el coeficiente de correlación para pares de observaciones $r_{Y_t, Y_{t-1}}$ de la serie cronológica. Al conjunto de todas las autocorrelaciones se le llama función de autocorrelación.
 
-La función de autocorrelación parcial (*PACF* por sus siglas en inglés), como menciona @oscarh-4, busca medir la asociación lineal entre las observaciones $Y_t$ y $Y_{t-k}$, descartando los efectos de los rezagos $1,2, \cdots ,k-1$.
+La función de autocorrelación parcial[^5], como menciona @oscarh-4, busca medir la asociación lineal entre las observaciones $Y_t$ y $Y_{t-k}$, descartando los efectos de los rezagos $1,2, \cdots ,k-1$.
+
+[^5]: *PACF* por sus siglas en inglés
 
 Cuando se tiene el modelo ARIMA debidamente identificado, es importante realizar los pronósticos. Sin embargo, estos pronósticos no son imperativos, sino que se debe evaluar su calidad con las llamadas medidas de rendimiento. Estas mediciones son hechas comparando el pronóstico y su diferencia con el valor real. Existen múltiples medidas de rendimiento, @medidas menciona entre ellas el *MAE*, *MAPE*, *RMSE*, *MASE*, *AIC*, *AICc* y el *BIC*.
 
@@ -147,7 +190,7 @@ Para la identificación de los términos $p$ y $q$:
  - Si la suma de los coeficientes del modelo $AR$ es muy cercana a la unidad, es necesario reducir la cantidad de términos en uno y aumentar el orden de la diferenciación en uno.
  - Si la suma de los coeficientes del modelo $MA$ es muy cercana a la unidad, es necesario reducir la cantidad de términos en uno y disminuir el orden de la diferenciación en uno.
 
-Tener en consideración estos y otros posibles criterios para la identificación del proceso que gobierna la serie cronológica puede fácilmente volverse algo subjetivo, pues dos personas diferentes pueden llegar a dar distintas interpretaciones a las visualizaciones de los autocorrelogramas. Estas interpretaciones pueden sesgar la identificación de los modelos y, además, no considerar otros escenarios para los términos de un modelo $ARIMA$; para solventar esto es necesario considerar un abanico más amplio de opciones, lo cual se puede lograr al considerar múltiples permutaciones de términos, es decir, empleando la sobreparametrización.
+Tener en consideración estos y otros posibles criterios para la identificación del proceso que gobierna la serie cronológica puede fácilmente volverse algo subjetivo, pues dos personas diferentes pueden llegar a dar distintas interpretaciones a las visualizaciones de los autocorrelogramas. Estas interpretaciones pueden sesgar la identificación de los modelos y, además, no considerar otros escenarios para los términos de un modelo $ARIMA$; para solventar esto es necesario considerar un abanico más amplio de opciones que a su vez elimine el criterio subjetivo del observador, lo cual se puede lograr al considerar múltiples permutaciones de términos, es decir, empleando la sobreparametrización.
 
 \subsection{La sobreparametrización y el análisis combinatorio}
 

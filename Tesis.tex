@@ -6,12 +6,13 @@
 \documentclass[
 ]{article}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
+\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -122,6 +123,7 @@
 \usepackage{sectsty}
 
 
+
 \chapternumberfont{\Large}
 \chaptertitlefont{\Large}
 \setcounter{tocdepth}{5}
@@ -208,6 +210,42 @@
 \makeatletter
 \@addtoreset{chunk}{section}
 \makeatother
+
+
+% Para etiquetar matrices
+% Load TikZ
+\usepackage{tikz}
+\usetikzlibrary{matrix,decorations.pathreplacing,calc}
+
+% Set various styles for the matrices and braces. It might pay off to fiddle around with the values a little bit
+\pgfkeys{tikz/mymatrixenv/.style={decoration=brace,every left delimiter/.style={xshift=3pt},every right delimiter/.style={xshift=-3pt}}}
+\pgfkeys{tikz/mymatrix/.style={matrix of math nodes,left delimiter=[,right delimiter={]},inner sep=2pt,column sep=1em,row sep=0.5em,nodes={inner sep=0pt}}}
+\pgfkeys{tikz/mymatrixbrace/.style={decorate,thick}}
+\newcommand\mymatrixbraceoffseth{0.5em}
+\newcommand\mymatrixbraceoffsetv{0.2em}
+
+% Now the commands to produce the braces. (I'll explain below how to use them.)
+\newcommand*\mymatrixbraceright[4][m]{
+    \draw[mymatrixbrace] ($(#1.north west)!(#1-#3-1.south west)!(#1.south west)-(\mymatrixbraceoffseth,0)$)
+        -- node[left=2pt] {#4} 
+        ($(#1.north west)!(#1-#2-1.north west)!(#1.south west)-(\mymatrixbraceoffseth,0)$);
+}
+\newcommand*\mymatrixbraceleft[4][m]{
+    \draw[mymatrixbrace] ($(#1.north east)!(#1-#2-1.north east)!(#1.south east)+(\mymatrixbraceoffseth,0)$)
+        -- node[right=2pt] {#4} 
+        ($(#1.north east)!(#1-#3-1.south east)!(#1.south east)+(\mymatrixbraceoffseth,0)$);
+}
+\newcommand*\mymatrixbracetop[4][m]{
+    \draw[mymatrixbrace] ($(#1.north west)!(#1-1-#2.north west)!(#1.north east)+(0,\mymatrixbraceoffsetv)$)
+        -- node[above=2pt] {#4} 
+        ($(#1.north west)!(#1-1-#3.north east)!(#1.north east)+(0,\mymatrixbraceoffsetv)$);
+}
+\newcommand*\mymatrixbracebottom[4][m]{
+    \draw[mymatrixbrace] ($(#1.south west)!(#1-1-#3.south east)!(#1.south east)-(0,\mymatrixbraceoffsetv)$)
+        -- node[below=2pt] {#4} 
+        ($(#1.south west)!(#1-1-#2.south west)!(#1.south east)-(0,\mymatrixbraceoffsetv)$);
+}
+%%%
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -222,12 +260,29 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
-\newenvironment{cslreferences}%
-  {\setlength{\parindent}{0pt}%
-  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
-  {\par}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \title{UNIVERSIDAD DE COSTA RICA\\
 SISTEMA DE ESTUDIOS DE POSGRADO\\
@@ -263,7 +318,7 @@ CÉSAR ANDRÉS GAMBOA SANABRIA B12672\\
 Ciudad Universitaria Rodrigo Facio, Costa Rica\\
 ~\\
 ~\\}
-\date{2020}
+\date{2021}
 
 \begin{document}
 \maketitle
@@ -363,12 +418,11 @@ diferentes áreas, tanto en investigación académica como en el análisis
 de datos para la toma de decisiones. En el campo financiero es común
 hablar de la devaluación del colón con respecto al dólar, cantidad de
 exportaciones mensuales de un determinado producto o las ventas, entre
-otros (Hernández,
-\protect\hyperlink{ref-oscarh-1}{2011}\protect\hyperlink{ref-oscarh-1}{a}).
-Las series cronológicas son particularmente importantes en la
-investigación de mercados o en las proyecciones demográficas; de manera
-conjunta apoyan la toma de decisiones para la aprobación presupuestaria
-en distintas áreas.
+otros (\protect\hyperlink{ref-oscarh-1}{Hernández, 2011a}). Las series
+cronológicas son particularmente importantes en la investigación de
+mercados o en las proyecciones demográficas; de manera conjunta apoyan
+la toma de decisiones para la aprobación presupuestaria en distintas
+áreas.
 
 En la actualidad, la información temporal es muy relevante: El Banco
 Mundial\footnote{\url{https://databank.worldbank.org/home.aspx}} cuenta
@@ -401,8 +455,8 @@ Generar una adecuada estimación es fundamental para obtener un
 pronóstico de confianza, además resulta importante mencionar que los
 modelos ARIMA tienen como objetivo explicar las relaciones pasadas de la
 serie cronológica, para de esta manera conocer el posible comportamiento
-futuro de la misma (Hyndman \& Athanasopoulos,
-\protect\hyperlink{ref-hyndman2018forecasting}{2018}).
+futuro de la misma (\protect\hyperlink{ref-hyndman2018forecasting}{R. J.
+Hyndman \& Athanasopoulos, 2018a}).
 
 Al trabajar con la metodología de Box-Jenkins, uno de las etapas a
 concretar es identificar los parámetros de estimación que gobiernan la
@@ -431,20 +485,21 @@ subestiman el número de parámetros que se debería de contemplar.
 
 Alternativas como la función \texttt{auto.arima()}, que ofrece el
 paquete \texttt{forecast} del lenguaje de programación R\footnote{Descarga
-  gratuita en \url{https://cran.r-project.org/}} (Hyndman \& Khandakar,
-\protect\hyperlink{ref-auto.arima}{2008}), permite estimar un modelo
-ARIMA basado en pruebas de raíz unitaria y minimización del AICc
-(Burnham \& Anderson, \protect\hyperlink{ref-burnham2007model}{2007}).
-Así se obtiene un modelo temporal definiendo las diferenciaciones
-requeridas en la parte estacional \(d\) mediante las pruebas KPSS (Xiao,
-\protect\hyperlink{ref-doi:10.1111ux2f1467-9892.00213}{2001}) o ADF
-(Fuller, \protect\hyperlink{ref-fuller1995introduction}{1995}), y la no
-estacional \(D\) utilizando las pruebas OCSB (Osborn, Chui, Smith, \&
-Birchenhall, \protect\hyperlink{ref-Osborn2009SEASONALITYAT}{2009}) o la
-Canova-Hansen (Canova \& Hansen,
-\protect\hyperlink{ref-10.2307ux2f1392184}{1995}), seleccionado el orden
-óptimo para los términos \(ARIMA(p, d, q)(P, D, Q)_s\) para una serie
-cronológica determinada.
+  gratuita en \url{https://cran.r-project.org/}}
+(\protect\hyperlink{ref-auto.arima}{R. Hyndman \& Khandakar, 2008}),
+permite estimar un modelo ARIMA basado en pruebas de raíz unitaria y
+minimización del AICc (\protect\hyperlink{ref-burnham2007model}{Burnham
+\& Anderson, 2007}). Así se obtiene un modelo temporal definiendo las
+diferenciaciones requeridas en la parte estacional \(d\) mediante las
+pruebas KPSS
+(\protect\hyperlink{ref-doi:10.1111ux2f1467-9892.00213}{Xiao, 2001}) o
+ADF (\protect\hyperlink{ref-fuller1995introduction}{Fuller, 1995}), y la
+no estacional \(D\) utilizando las pruebas OCSB
+(\protect\hyperlink{ref-Osborn2009SEASONALITYAT}{Osborn, Chui, Smith, \&
+Birchenhall, 2009}) o la Canova-Hansen
+(\protect\hyperlink{ref-10.2307ux2f1392184}{Canova \& Hansen, 1995}),
+seleccionado el orden óptimo para los términos
+\(ARIMA(p, d, q)(P, D, Q)_s\) para una serie cronológica determinada.
 
 Sin embargo, estas pruebas suelen ignorar diversos términos que bien
 podrían ofrecer mejores pronósticos; no someten a prueba las posibles
@@ -494,8 +549,8 @@ ven beneficiados al mejorar sus métodos de pronóstico. Una de sus
 principales áreas de estudio es la mortalidad, ya que representa un
 insumo de vital importancia para la planificación y sostenibilidad de
 los sistemas de pensiones, servicios de salud tanto pública como
-privada, seguros de vida y asuntos hipotecarios (Rosero-Bixby,
-\protect\hyperlink{ref-supenprodc}{2018}).
+privada, seguros de vida y asuntos hipotecarios
+(\protect\hyperlink{ref-supenprodc}{Rosero-Bixby, 2018}).
 
 La estimación de series de tiempo es una labor común es distintos campos
 de investigación: el objetivo es poder pronosticar de forma correcta lo
@@ -556,10 +611,9 @@ recomendaciones que orienten futuros estudios relacionados.
 
 \section{MARCO TEÓRICO}
 
-\subsection{Introducción}
-
 Los modelos de series cronológicas han sido un importante tema de
-investigación durante décadas. Su objetivo principal consiste en obtener
+investigación durante décadas (\protect\hyperlink{ref-tsa_decades}{De
+Gooijer \& Hyndman, 2006}). Su objetivo principal consiste en obtener
 simplificaciones de la realidad mediante el ajuste de diversos modelos,
 los cuales se ajustan a datos recolectados a lo largo del tiempo de
 forma regular. Estos modelos son luego utilizados para generar
@@ -568,34 +622,53 @@ pronósticos sobre el comportamiento futuro del fenómeno de interés.
 Sin embargo, encontrar un modelo que presente un buen comportamiento con
 respecto a los datos no es tarea fácil, pues deben considerarse diversos
 aspectos teóricos para obtener un modelo adecuado que logre generar
-pronósticos realistas y pertinentes para la toma de decisiones.
-
-\subsubsection{Definición de una serie cronológica}
+pronósticos realistas y pertinentes para la toma de decisiones
+(\protect\hyperlink{ref-tsa_decision_making}{Rezaee, Aliabadi,
+Dorestani, \& Rezaee, 2020}).
 
 Una serie temporal se define como una secuencia de datos observados,
 cuyas mediciones ocurren de manera sucesiva durante un periodo de
 tiempo. Los registros de estos datos pueden referirse a una única
 variable en cuyo caso de dice que es una serie univariada; o bien,
 pueden registrarse distintas variables para el mismo periodo de tiempo,
-conocida como serie temporal multivariada. Según Hipel \& McLeod
+conocida como serie temporal multivariada. Según
+\protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
 (\protect\hyperlink{ref-Hipel}{1994}), cada observación puede ser
 continua o discreta, como la temperatura de una ciudad durante el día o
 las variaciones diarias del precio de un activo financiero,
 respectivamente; las observaciones continuas, además, pueden ser
 convertidas a su vez en observaciones discretas.
 
+El presente capítulo consta de seis apartados: El primer apartado abarca
+los cuatro componentes de una serie cronológica, siendo estos la
+tendencia y los componentes estacionales, cíclicos e irregulares.
+Posteriormente, la segunda sección repasa los supuestos fundamentales en
+el análisis de series cronológicas. Con los elementos más básicos
+introducidos, el tercer apartado cubre el eje central de esta
+investigación: Los modelos Autorregresivos Integrados de Medias Móviles
+y sus componentes, los modelos autorregresivos y los modelos de medias
+móviles, así como la metodología Box-Jenkins y el proceso para la
+identificación de los modelos. En el cuarto apartado se introducen los
+métodos para la identificación de los modelos. El quinto apartado abarca
+los componentes relacionados a los autocorrelogramas, la forma más
+difundida para la selección de modelos y, finalmente, el sexto apartado
+introduce el principal aporte de este estudio, la sobreparametrización
+como método para la selección de modelos.
+
 \subsection{Componentes de una serie cronológica}
 
-De acuerdo con Hernández
-(\protect\hyperlink{ref-oscarh-1}{2011}\protect\hyperlink{ref-oscarh-1}{a}),
-las series cronológicas poseen cuatro componentes principales:
-Tendencia, Ciclos, Estacionalidad e Irregularidad. Considerando estos
-cuatro elementos, las series cronológicas pueden ser \emph{aditivas},
-como se muestra en la ecuación \ref{eqn:serie_aditiva}, en cuyo caso se
-asume que los cuatro componentes son independientes entre sí; o
-\emph{multiplicativa}, donde, por el contrario, los cuatro componentes
-son independientes, como muestra la ecuación
-\ref{eqn:serie_multiplicativa}.
+En el análisis de series cronológicas existen dos grandes corrientes de
+estudio: Los componentes inherentes a la serie cronológica y el estudio
+de las autocorrelaciones. De acuerdo con
+\protect\hyperlink{ref-oscarh-1}{Hernández}
+(\protect\hyperlink{ref-oscarh-1}{2011a}), las series cronológicas
+poseen cuatro componentes principales: Tendencia, Ciclos, Estacionalidad
+e Irregularidad. Considerando estos cuatro elementos, las series
+cronológicas pueden ser \emph{aditivas}, como se muestra en la ecuación
+\ref{eqn:serie_aditiva}, en cuyo caso se asume que los cuatro
+componentes son independientes entre sí; o \emph{multiplicativa}, donde,
+por el contrario, los cuatro componentes son independientes, como
+muestra la ecuación \ref{eqn:serie_multiplicativa}.
 
 \begin{equation}
 \label{eqn:serie_aditiva}
@@ -614,7 +687,10 @@ se definen a continuación.
 
 \subsubsection{La tendencia}
 
-La tendencia general de una serie cronológica se refiere al crecimiento,
+A partir del texto de
+\protect\hyperlink{ref-calderon2012estadistica}{Calderón}
+(\protect\hyperlink{ref-calderon2012estadistica}{2012}), la tendencia
+general de una serie cronológica se refiere al crecimiento,
 decrecimiento o lateralización de sus movimientos a lo largo del periodo
 de estudio. Una tendencia bastante marcada es la del comportamiento
 poblacional, que con el tiempo su crecimiento suele comportarse de una
@@ -622,15 +698,21 @@ forma muy similar a una exponencial.
 
 \subsubsection{Componentes estacionales}
 
-Los cambios estacionales que se presentan en una serie de tiempo se
-relaciona con las fluctuaciones naturales del fenómeno dentro de una
-temporada de observaciones. Ejemplos comunes de esto son las condiciones
-climáticas, consumo de alimentos en fechas festivas, etc.
+\protect\hyperlink{ref-calderon2012estadistica}{Calderón}
+(\protect\hyperlink{ref-calderon2012estadistica}{2012}) también se
+refiere a los cambios estacionales que se presentan en una serie de
+tiempo, los cuales se relacionan con las fluctuaciones naturales del
+fenómeno dentro de una temporada de observaciones. Ejemplos comunes de
+esto son las condiciones climáticas, consumo de alimentos en fechas
+festivas, entre otros.
 
 \subsubsection{Componente cíclico}
 
-Los periodo cíclicos, por su parte, se refieren a los cambios que se dan
-en una serie cronológica en el mediano plazo, que son causados por
+Del informe elaborado también por
+\protect\hyperlink{ref-calderon2012estadistica}{Calderón}
+(\protect\hyperlink{ref-calderon2012estadistica}{2012}) se desprende que
+los periodos cíclicos, por su parte, se refieren a los cambios que se
+dan en una serie cronológica en el mediano plazo, que son causados por
 determinados eventos que suelen repetirse. Estos ciclos suelen tener una
 duración determinada, como es el caso de los índice bursátil S\&P 500.
 Este indicador resume el estado de las 500 empresas más importantes de
@@ -640,99 +722,182 @@ se convierte en una recuperación a su estado inicial.
 
 \subsubsection{Componente irregular}
 
-Finalmente, la irregularidad de una serie cronológica se refiere a las
-fluctuaciones propias de un fenómeno que no pueden ser predichas. Estos
-cambios no se dan de manera regular, es decir, no siguen un patrón
+Finalmente, la irregularidad de una serie cronológica, siguiendo a
+\protect\hyperlink{ref-calderon2012estadistica}{Calderón}
+(\protect\hyperlink{ref-calderon2012estadistica}{2012}), se refiere a
+las fluctuaciones propias de un fenómeno que no pueden ser predichas.
+Estos cambios no se dan de manera regular, es decir, no siguen un patrón
 determinado.
 
 \subsection{Supuestos en el análisis de series cronológicas}
 
-El análisis de series temporales, según Hipel \& McLeod
+El análisis de series temporales, según
+\protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
 (\protect\hyperlink{ref-Hipel}{1994}), representa un método para
 comprender la naturaleza de la serie en cuestión y poder utilizarla para
 generar pronósticos. Es en este sentido que entran en escena las
 observaciones recolectadas de la serie, pues ellas son analizadas y
 sujetas a modelados matemáticos que logren capturar el proceso que
-gobierna a toda la serie cronológica (Zhang,
-\protect\hyperlink{ref-Zhang}{2003}). Los pronósticos se generan a
-partir de este modelo, es decir, pronosticar el futuro, se utilizan las
-correlaciones con las observaciones pasadas.
+gobierna a toda la serie cronológica
+(\protect\hyperlink{ref-Zhang}{Zhang, 2003}). Los pronósticos se generan
+a partir de este modelo, es decir, pronosticar el futuro, se utilizan
+las correlaciones con las observaciones pasadas.
 
 En un proceso determinístico, es posible predecir con certeza lo que
 ocurrirá en el futuro; las series cronológicas, sin embargo, carecen de
 esta condición. El análisis de series cronológicas asume que las
 observaciones pueden ajustarse a un determinado modelo estadístico, esto
-se conoce como un proceso estocástico. Es de esta manera que Hipel \&
-McLeod (\protect\hyperlink{ref-Hipel}{1994}) sugieren que una serie
-cronológica puede considerarse como una muestra aleatoria de una serie
-mucho más grande.
+se conoce como un proceso estocástico. Es de esta manera que
+\protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
+(\protect\hyperlink{ref-Hipel}{1994}) sugieren que una serie cronológica
+puede considerarse como una muestra aleatoria de una serie mucho más
+grande.
 
 Como una serie de tiempo puede considerarse como un proceso estocástico,
 éstas se encuentran sujetas a múltiples supuestos. El más fundamental de
 ellos es que todas las observaciones son independientes e idénticamente
 distribuidas (i.i.d.) siguiendo una distribución aproximadamente Normal,
-con una media y variancia dadas. Lo anterior, sin embargo, es contrario
-al uso de las observaciones pasadas para pronosticar el futuro, por lo
-que este supuesto, según Cochrane
+con una media y variancia dadas. Lo anterior es contrario al uso de las
+observaciones pasadas para pronosticar el futuro, por lo que este
+supuesto, según \protect\hyperlink{ref-Cochrane}{Cochrane}
 (\protect\hyperlink{ref-Cochrane}{1997}), no es exacto pues una una
 serie de tiempo no es exactamente, i.i.d., sino que siguen un patrón
 medianamente regular en el largo plazo.
 
 Otro concepto de interés en las series cronológicas es el de
-estacionaridad. Una serie se considera estacionaria cuando su nivel
-medio y su variancia son aproximadamente las mismas durante todo el
-periodo, es decir, el tiempo no afecta a estos estadísticos de
-variabilidad. Este supuesto busca simplificar la identificación del
-proceso estocástico con el objetivo de obtener un modelo adecuado para
-generar los pronósticos. Sin embargo, y de una manera similar al
-supuesto de i.i.d., si una serie cronológica posee tendencias o patrones
-estacionales hace que esta sea no estacionaria. En la práctica, una
-serie puede volverse estacionaria al aplicarle transformaciones o
-diferenciaciones de distinto orden.
+estacionaridad. De acuerdo con
+\protect\hyperlink{ref-stationary_def}{Agrawal \& Adhikari}
+(\protect\hyperlink{ref-stationary_def}{2013}), una serie se considera
+estacionaria cuando su nivel medio y su variancia son aproximadamente
+las mismas durante todo el periodo, es decir, el tiempo no afecta a
+estos estadísticos de variabilidad. Este supuesto busca simplificar la
+identificación del proceso estocástico con el objetivo de obtener un
+modelo adecuado para generar los pronósticos. Sin embargo, y de una
+manera similar al supuesto de i.i.d., si una serie cronológica posee
+tendencias o patrones estacionales hace que esta sea no estacionaria. En
+la práctica, una serie puede volverse estacionaria al aplicarle
+transformaciones o diferenciaciones de distinto orden.
 
 El último supuesto, y quizá el que más debate genera, es el criterio de
-parsimonia. Como mencionan Zhang (\protect\hyperlink{ref-Zhang}{2003}) y
-Hipel \& McLeod (\protect\hyperlink{ref-Hipel}{1994}), este principio
-sugiere que se prioricen modelos sencillos, con pocos parámetros, para
-representar una serie de datos. Mientras más grande y complicado sea el
-modelo, mayor será el riesgo de sobre ajuste, lo que implica que el
-ajuste sea muy bueno en el conjunto de datos con que se generó el
-modelo, pero que los pronósticos generados sean pobres ante nuevos
-conjuntos de datos. Este problema, sin embargo, se presenta al
-considerar un único modelo con muchos parámetros; pero si se consideran
-varios modelos y estos son sometidos a distintos criterios, puede
-obtenerse un modelo sobreparametrizado que ofrezca buenos pronósticos.
+parsimonia. Como mencionan \protect\hyperlink{ref-Zhang}{Zhang}
+(\protect\hyperlink{ref-Zhang}{2003}) y
+\protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
+(\protect\hyperlink{ref-Hipel}{1994}), este principio sugiere que se
+prioricen modelos sencillos, con pocos parámetros, para representar una
+serie de datos. Mientras más grande y complicado sea el modelo, mayor
+será el riesgo de sobre ajuste, lo que implica que el ajuste sea muy
+bueno en el conjunto de datos con que se generó el modelo, pero que los
+pronósticos generados sean pobres ante nuevos conjuntos de datos. Este
+problema, sin embargo, se presenta al considerar un único modelo con
+muchos parámetros; pero si se consideran varios modelos y estos son
+sometidos a distintos criterios, puede obtenerse un modelo
+sobreparametrizado que ofrezca buenos pronósticos.
 
 \subsection{Modelos Autorregresivos Integrados de Medias Móviles}
 
 Hay dos grandes grupos de modelos lineales de series cronológicas: Los
-modelos Autorregresivos (AR) (Lee, \protect\hyperlink{ref-Lee}{s.~f.}) y
-los modelos de Medias Móviles (MA) (Box, Jenkins, \& Reinsel,
-\protect\hyperlink{ref-box-jenkins}{1994}). La combinación de estos dos
-grandes grupos forman los Modelos Autorregresivos de Medias Móviles
-(ARMA) (Hipel \& McLeod, \protect\hyperlink{ref-Hipel}{1994}) y los
-modelos Autorregresivos Integrados de Medias Móviles (ARIMA), siendo
-este último de particular interés en esta investigación.
+modelos Autorregresivos (AR) (\protect\hyperlink{ref-Lee}{Lee, s.~f.}) y
+los modelos de Medias Móviles (MA)
+(\protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \& Reinsel, 1994}).
+La combinación de estos dos grandes grupos forman los Modelos
+Autorregresivos de Medias Móviles (ARMA)
+(\protect\hyperlink{ref-Hipel}{Hipel \& McLeod, 1994}) y los modelos
+Autorregresivos Integrados de Medias Móviles (ARIMA), siendo este último
+de particular interés en esta investigación.
 
 Los modelos ARIMA son los de uso más extendido en el análisis de series
 cronológicas. Se fundamentan en las autocorrelaciones pasadas, y
 contempla un proceso iterativo para identificar un posible proceso
 óptimo a partir de una clase general de modelos. El teorema de Wold
-(Surhone, Timpledon, \& Marseken, \protect\hyperlink{ref-Wold}{2010})
+(\protect\hyperlink{ref-Wold}{Surhone, Timpledon, \& Marseken, 2010})
 sugiere que todo proceso estacionario puede ser determinado de una forma
 específica y cuya ecuación posee, en realidad, infinitos coeficientes,
 pero que debe ser reducido a una cantidad finita para luego evaluar su
 ajuste sometiéndolo a diferentes pruebas y medidas de rendimiento.
+
+\subsubsection{Ecuación de Wold}
+
+Según \protect\hyperlink{ref-sargent_macro}{Sargent}
+(\protect\hyperlink{ref-sargent_macro}{1979}), cualquier proceso
+estacionario puede ser representado mediante la ecuación
+\ref{eqn:proceso_estacionario}:
+
+\begin{equation}
+\label{eqn:proceso_estacionario}
+x_t=\sum_{j=0}^{\infty} \psi_j\varepsilon_{t-j}+\kappa_t
+\end{equation}
+
+donde
+\(\forall \psi_j \in \mathbb{R}, \psi_0=1, \sum_{j=0}^{\infty} \psi_j^2<\infty\),
+y \(\varepsilon_t\) representa un ruido blanco i.i.d., es decir,
+\(\varepsilon_t \sim N(0, \sigma^2)\); además, \(\kappa_t\) es el
+componente lineal determinístico de forma tal que
+\(cov(\kappa_t,\varepsilon_{t-j}=0)\), lo cual implica que este
+componente determinístico es independiente de la suma infinita de los
+choques pasados.
+
+De lo anterior, si se omite la parte determinística \(\kappa_t\) de
+\ref{eqn:proceso_estacionario}, el remanente es la suma ponderada
+infinita, lo cual implica que si se conocen los ponderadores \(\psi_j\),
+y si además se conoce \(\sigma_\varepsilon^2\), es posible obtener una
+representación para cualquier proceso estacionario; este concepto es
+conocido como \emph{media móvil infinita}.
+
+Sabiendo que \(\varepsilon_t \sim N(0, \sigma^2)\), se tiene que
+\(\varepsilon_t\) tiene media 0, es decir, está centrado en este valor.
+De esta manera el ruido blanco es por definición un proceso centrado, lo
+cual implica que la suma ponderada infinita está centrada en sí misma.
+De esta manera, la representación de Wold de un proceso \(x_t\) supone
+que se suman los choques pasados más un componente determinístico que no
+es otro que el valor esperado del proceso: \(\kappa_t=m\), donde \(m\)
+es una constante cualquiera. Así, la ecuación
+\ref{eqn:proceso_estacionario} puede sustuirse por:
+
+\begin{equation}
+\label{eqn:proceso_estacionario2}
+x_t=\sum_{j=0}^{\infty} \psi_j\varepsilon_{t-j}+m
+\end{equation}
+
+y de \ref{eqn:proceso_estacionario2} puede verificarse que,
+
+\begin{equation}
+\label{eqn:dem_proceso_estacionario2}
+E(x_t)=E\left(\sum_{j=0}^{\infty} \psi_j\varepsilon_{t-j}+m\right)=\sum_{j=0}^{\infty} \psi_jE\left(\varepsilon_{t-j}\right) + m = m
+\end{equation}
+
+La principal consecuencia del teorema de Wold es que, si se conocen los
+ponderadores \(\psi_j\), y además \(\sigma_\varepsilon^2\) es ruido
+blanco es posible conocer el proceso por medio del cual se rige la serie
+cronológica. Esto permite realizar cualquier previsión, denotada por
+\(\hat X_{T+h}\) para el proceso de interés \(x_T\) en el momento
+\(T+h\) para una muestra cualquiera de \(T\) observaciones de \(x_t\).
+De acuerdo con \protect\hyperlink{ref-sargent_macro}{Sargent}
+(\protect\hyperlink{ref-sargent_macro}{1979}), basado en el teorema de
+Wold, la mejor previsión posible para un proceso \(x_t\) para el momento
+\(T+h\), denotado por \(\hat x_{T+h}\), la predicción está dada por:
+
+\begin{equation}
+\label{eqn:prevision}
+\hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-j+1}
+\end{equation}
+
+De la ecuación \ref{eqn:prevision} se desprende que el error de
+previsión asociado está dado por:
+
+\begin{equation}
+\label{eqn:error_prevision}
+x_{T+h}- \hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-h+1}
+\end{equation}
 
 \subsubsection{Modelos Autorregresivos}
 
 Un modelo autorregresivo de orden \emph{p}, denotado como \(AR(p)\),
 considera los valores futuros de una serie cronológica como una
 combinación lineal las \(p\) observaciones predecesoras, un componente
-aleatorio y un término constante. Hipel \& McLeod
-(\protect\hyperlink{ref-Hipel}{1994}) y Lee
-(\protect\hyperlink{ref-Lee}{s.~f.}) emplean la notación de la ecuación
-\ref{eqn:modelo_AR}.
+aleatorio y un término constante. \protect\hyperlink{ref-Hipel}{Hipel \&
+McLeod} (\protect\hyperlink{ref-Hipel}{1994}) y
+\protect\hyperlink{ref-Lee}{Lee} (\protect\hyperlink{ref-Lee}{s.~f.})
+emplean la notación de la ecuación \ref{eqn:modelo_AR}.
 
 \begin{equation}
 \label{eqn:modelo_AR}
@@ -744,8 +909,8 @@ componente aleatorio en el momento actual \(t\), mientras que
 \(\varphi_i\), con \(i=1,2,\cdots,p\) son los parámetros del modelo, y
 \(c\) es su término constante, que en ciertas ocasiones se suele omitir
 para simplificar la notación. Los parámetros de esta clase de modelos
-suelen estimarse mediante la ecuación de Yule-Walker (Brockwell \&
-Davis, \protect\hyperlink{ref-yule.walker}{2009}).
+suelen estimarse mediante la ecuación de Yule-Walker
+(\protect\hyperlink{ref-yule.walker}{Brockwell \& Davis, 2009}).
 
 \subsubsection{Modelos de Medias Móviles}
 
@@ -764,10 +929,11 @@ Donde \(\mu\) representa el valor medio de la serie cronológica y cada
 valor de \(\theta_j(j=1,2,\cdots,q)\) son los parámetros del modelo.
 Como los \(MA(q)\) utilizan los errores pasados de la serie cronológica,
 se asume que estos son i.i.d. centrados en cero y con una variancia
-constante, siguiendo una distribución aproximada mente Normal, con lo
+constante, siguiendo una distribución aproximadamente Normal, con lo
 cual este tipo de modelos pueden considerarse como una regresión lineal
 entre una observación determinada y los términos de error que le
-preceden.
+preceden (\protect\hyperlink{ref-stationary_def}{Agrawal \& Adhikari,
+2013}).
 
 \subsubsection{Metodología Box-Jenkins}
 
@@ -782,11 +948,12 @@ la ecuación \ref{eqn:modelo_ARMA}.
 y_t=c+\varepsilon_t+\sum_{i=1}^p \varphi_iy_{t-i}+\sum_{j=1}^q \theta_j \varepsilon_{t-j}
 \end{equation}
 
-Cochrane (\protect\hyperlink{ref-Cochrane}{1997}) menciona que los
-modelos \(ARMA(p,q)\) suelen manipularse mediante lo que se conoce como
-operador de rezagos, denotado como \(Ly_t=y_{t-1}\). Esto significa que
-en un \(AR(p)\) se tiene que \(\varepsilon_t=\varphi(L)y_t\), mientras
-que en \(MA(q)\) se tiene que \(y_t=\theta(L)\varepsilon_t\), y por
+\protect\hyperlink{ref-Cochrane}{Cochrane}
+(\protect\hyperlink{ref-Cochrane}{1997}) menciona que los modelos
+\(ARMA(p,q)\) suelen manipularse mediante lo que se conoce como operador
+de rezagos, denotado como \(Ly_t=y_{t-1}\). Esto significa que en un
+\(AR(p)\) se tiene que \(\varepsilon_t=\varphi(L)y_t\), mientras que en
+\(MA(q)\) se tiene que \(y_t=\theta(L)\varepsilon_t\), y por
 consiguiente en un \(ARMA(p,q)\) se tiene
 \(\varphi(L)y_t=\theta(L)\varepsilon_t\). Por lo tanto, de lo anterior
 se desprende que \(\varphi(L)=1-\sum_{i=1}^p \varphi_iL^i\), y que
@@ -795,17 +962,21 @@ se desprende que \(\varphi(L)=1-\sum_{i=1}^p \varphi_iL^i\), y que
 Los modelos \(ARMA\), sin embargo, solamente pueden ser utilizados en
 series cronológicas suyo proceso es estacionario. Esto, en la práctica,
 es poco común, pues una serie de tiempo a menudo posee tendencias y
-ciertos patrones estacionales y, además, como menciona Hamzaçebi
+ciertos patrones estacionales y, además, como menciona
+\protect\hyperlink{ref-Hamzacebi}{Hamzaçebi}
 (\protect\hyperlink{ref-Hamzacebi}{2008}), presentan procesos no
 estacionarios por naturaleza. Esta condición hace necesaria la
 introducción de una generalización de los modelos \(ARMA\), la cual se
-conoce como los modelos \(ARIMA\) (Box et~al.,
-\protect\hyperlink{ref-box-jenkins}{1994}).
+conoce como los modelos \(ARIMA\)
+(\protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \& Reinsel, 1994}).
+
+\subsubsection{Modelos ARIMA}
 
 Partiendo de una serie con un proceso no estacionario, es posible
 aplicar transformaciones o diferenciaciones (\emph{d})a los datos con el
 objetivo de convertirlos en un proceso estacionario. Utilizar la
-notación de rezagos descrita anteriormente, según Flaherty \& Lombardo
+notación de rezagos descrita anteriormente, según
+\protect\hyperlink{ref-Lombardo}{Flaherty \& Lombardo}
 (\protect\hyperlink{ref-Lombardo}{2000}), permite plantear un modelo
 \(ARIMA(p,d,q)\) como se describe en la ecuación
 \ref{eqn:modelo_ARIMApdq}.
@@ -825,32 +996,32 @@ suele ser suficiente. Así, un \(ARIMA(p,0,0)=AR(p)\),
 \(ARIMA(0,0,q)=MA(q)\), y un \(ARIMA(0,1,0)=y_t=y_{t-1}+\varepsilon_t\),
 es decir, un modelo de caminata aleatoria.
 
-Como sugieren Box et~al. (\protect\hyperlink{ref-box-jenkins}{1994}), lo
-anterior puede generalizarse aún más al considerar los efectos
-estacionales de la serie cronológica. Si se considera una serie
-cronológica con observaciones mensuales, una diferenciación de primer
-orden es igual a la diferencia entre una observación y la observación
-correpondiente al mismo mes pero del año anterior; es decir, si el
-periodo estacional es de \(s=12\) meses, entonces esta diferencia
-estacional aplicada a un \(ARIMA(p,d,q)(P,D,Q)_S\) es calculada mediante
-\(z_t=y_t-y_{t-s}\).
+Como sugieren \protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \&
+Reinsel} (\protect\hyperlink{ref-box-jenkins}{1994}), lo anterior puede
+generalizarse aún más al considerar los efectos estacionales de la serie
+cronológica. Si se considera una serie cronológica con observaciones
+mensuales, una diferenciación de primer orden es igual a la diferencia
+entre una observación y la observación correpondiente al mismo mes pero
+del año anterior; es decir, si el periodo estacional es de \(s=12\)
+meses, entonces esta diferencia estacional aplicada a un
+\(ARIMA(p,d,q)(P,D,Q)_S\) es calculada mediante \(z_t=y_t-y_{t-s}\).
 
-De esta manera, el método de Box et~al.
-(\protect\hyperlink{ref-box-jenkins}{1994}) inicia con el análisis
-exploratorio de la serie cronológica, teniendo un interés particular en
-identificar si hay presencia de factores no estacionarios en la misma.
-Si en efecto se cuenta con una serie no estacionaria, ésta debe volverse
-estacionaria mediante algún tipo de transformación, típicamente el
-logaritmo natural. Con la serie ya transformada, se busca identificar el
-proceso que gobierna la serie, la forma clásica de hacer esto es
-mediante los gráficos de autocorrelación y autocorrelación parcial.
-Cuando se logra identificar un proceso que se adecue más a la serie
-cronológica, se deben realizar los diagnósticos para evaluar la calidad
-del ajuste del modelo, así como las medidas de rendimiento referentes a
-los pronósticos que genera el modelo estimado hasta un horizonte
-determinado.
+De esta manera, el método de \protect\hyperlink{ref-box-jenkins}{Box,
+Jenkins, \& Reinsel} (\protect\hyperlink{ref-box-jenkins}{1994}) inicia
+con el análisis exploratorio de la serie cronológica, teniendo un
+interés particular en identificar si hay presencia de factores no
+estacionarios en la misma. Si en efecto se cuenta con una serie no
+estacionaria, ésta debe volverse estacionaria mediante algún tipo de
+transformación, típicamente el logaritmo natural. Con la serie ya
+transformada, se busca identificar el proceso que gobierna la serie. La
+forma clásica de hacer esto es mediante los gráficos de autocorrelación
+y autocorrelación parcial. Cuando se logra identificar un proceso que se
+adecue más a la serie cronológica, se deben realizar los diagnósticos
+para evaluar la calidad del ajuste del modelo, así como las medidas de
+rendimiento referentes a los pronósticos que genera el modelo estimado
+hasta un horizonte determinado.
 
-\subsubsection{Identificación del modelo}
+\subsection{Identificación del modelo}
 
 Los métodos más clásicos para la identificación del proceso que gobierna
 a una serie cronológica son las funciones de autocorrelación y
@@ -858,12 +1029,14 @@ autocorrelación parcial, las cuales sirven de indicador acerca de qué
 tan relacionadas están las observaciones unas de otras. Estas funciones
 ofrecen indicios sobre el orden de los términos para los modelos
 \(AR(p)\), \(MA(q)\) y para la diferenciación y, por ende, para la
-identificación de un modelo \(ARIMA\).
+identificación de un modelo \(ARIMA\)
+(\protect\hyperlink{ref-hyndman_box-jenkins}{R. J. Hyndman \&
+Athanasopoulos, 2018b}).
 
 Para medir la relación lineal entre dos variables cuantitativas es común
-utilizar el coeficiente de correlación \(r\) de Pearson (Benesty \&
-Chen, \protect\hyperlink{ref-pearson}{2009}), el cual se define para dos
-variables \(X\) e \(Y\) como se muestra en la ecuación
+utilizar el coeficiente de correlación \(r\) de Pearson
+(\protect\hyperlink{ref-pearson}{Benesty \& Chen, 2009}), el cual se
+define para dos variables \(X\) e \(Y\) como se muestra en la ecuación
 \ref{eqn:pearson}.
 
 \begin{equation}
@@ -885,19 +1058,19 @@ para pares de observaciones \(r_{Y_t, Y_{t-1}}\) de la serie
 cronológica. Al conjunto de todas las autocorrelaciones se le llama
 función de autocorrelación.
 
-La función de autocorrelación parcial (\emph{PACF} por sus siglas en
-inglés), como menciona Hernández
-(\protect\hyperlink{ref-oscarh-4}{2011}\protect\hyperlink{ref-oscarh-4}{b}),
-busca medir la asociación lineal entre las observaciones \(Y_t\) y
-\(Y_{t-k}\), descartando los efectos de los rezagos
-\(1,2, \cdots ,k-1\).
+La función de autocorrelación parcial\footnote{\emph{PACF} por sus
+  siglas en inglés}, como menciona
+\protect\hyperlink{ref-oscarh-4}{Hernández}
+(\protect\hyperlink{ref-oscarh-4}{2011b}), busca medir la asociación
+lineal entre las observaciones \(Y_t\) y \(Y_{t-k}\), descartando los
+efectos de los rezagos \(1,2, \cdots ,k-1\).
 
 Cuando se tiene el modelo ARIMA debidamente identificado, es importante
 realizar los pronósticos. Sin embargo, estos pronósticos no son
 imperativos, sino que se debe evaluar su calidad con las llamadas
 medidas de rendimiento. Estas mediciones son hechas comparando el
 pronóstico y su diferencia con el valor real. Existen múltiples medidas
-de rendimiento, Adhikari, K, \& Agrawal
+de rendimiento, \protect\hyperlink{ref-medidas}{Adhikari, K, \& Agrawal}
 (\protect\hyperlink{ref-medidas}{2013}) menciona entre ellas el
 \emph{MAE}, \emph{MAPE}, \emph{RMSE}, \emph{MASE}, \emph{AIC},
 \emph{AICc} y el \emph{BIC}.
@@ -964,9 +1137,10 @@ llegar a dar distintas interpretaciones a las visualizaciones de los
 autocorrelogramas. Estas interpretaciones pueden sesgar la
 identificación de los modelos y, además, no considerar otros escenarios
 para los términos de un modelo \(ARIMA\); para solventar esto es
-necesario considerar un abanico más amplio de opciones, lo cual se puede
-lograr al considerar múltiples permutaciones de términos, es decir,
-empleando la sobreparametrización.
+necesario considerar un abanico más amplio de opciones que a su vez
+elimine el criterio subjetivo del observador, lo cual se puede lograr al
+considerar múltiples permutaciones de términos, es decir, empleando la
+sobreparametrización.
 
 \subsection{La sobreparametrización y el análisis combinatorio}
 
@@ -989,122 +1163,246 @@ en sus medidas de ajuste y rendimiento del modelo.
 
 \section{METODOLOGÍA}
 
-\subsection{Introducción}
-
 La aplicación de las series cronológicas tiene tres objetivos: 1) el
 análisis exploratorio de la serie en cuestión, 2) estimar modelos de
 proyección, y 3) generar pronósticos para los posibles valores futuros
-que tomará el problema en cuestión. Asimismo, existen múltiples formas
-de proceder mediante la etapa de estimación, como lo son los métodos de
-suavizamiento exponencial (Brown, \protect\hyperlink{ref-brown}{1956}),
-modelos de regresión para series temporales (Kedem \& Fokianos,
-\protect\hyperlink{ref-kedem}{2005}), redes neuronales secuenciales
-aplicadas a datos longitudinales (Tadayon \& Iwashita,
-\protect\hyperlink{ref-redes}{2020}), estimaciones bayesianas
-(Jammalamadaka, Qiu, \& Ning, \protect\hyperlink{ref-bayes}{2018}), y
-finalmente, los procesos autorregresivos integrados de medias móviles o
-ARIMA por sus siglas en inglés (Box et~al.,
-\protect\hyperlink{ref-box-jenkins}{1994}), siendo estos últimos el foco
-de interés en este estudio.
+que tomará la serie cronológica. Asimismo, existen múltiples formas de
+proceder mediante la etapa de estimación, como lo son los métodos de
+suavizamiento exponencial (\protect\hyperlink{ref-brown}{Brown, 1956}),
+modelos de regresión para series temporales
+(\protect\hyperlink{ref-kedem}{Kedem \& Fokianos, 2005}), redes
+neuronales secuenciales aplicadas a datos longitudinales
+(\protect\hyperlink{ref-redes}{Tadayon \& Iwashita, 2020}), estimaciones
+bayesianas (\protect\hyperlink{ref-bayes}{Jammalamadaka, Qiu, \& Ning,
+2018}), y finalmente, los procesos Autorregresivos Integrados de Medias
+Móviles o ARIMA por sus siglas en inglés
+(\protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \& Reinsel, 1994}),
+siendo estos últimos el foco de interés en este estudio.
 
-Un proceso ARIMA es caracterizado por dos funciones: la autocorrelación
-y la autocorrelación parcial; mediante la comparación de dichas
-funciones se busca la identificación del proceso que describa de manera
-adecuada el comportamiento de una serie cronológica.
+Esta sección aborda la metodología propuesta como método de estimación y
+pronóstico de series cronológicas. En la búsqueda de un modelo adecuado
+de entre varios candidatos, se cubren en un primer apartado las medidas
+de bondad de ajuste y de precisión a utilizar.
 
-En la búsqueda de un modelo adecuado entre varios candidatos, se llevan
-a cabo comparaciones de medidas de bondad de ajuste y de precisión. Se
-consideran temporalidades mensuales, bimensuales, trimestrales o
-cuatrimestrales, mediante un proceso de selección fundamentada en las
-permutaciones de todos los parámetros de un modelo ARIMA hasta un rango
-determinado, considerando la inclusión semiautomática de intervenciones
-en periodos específicos y la validación cruzada para evaluar la calidad
-de las particiones de la base de datos en conjuntos para entrenar y
-probar el rendimiento del modelo. Dichas pruebas sirven de insumo para
-utilizar un método de consenso entre ellas y seleccionar el modelo más
-adecuado mediante la sobreparametrización: se comparan todos los
-posibles en in intervalo específico de términos definiendo una
-diferenciación adecuada para la serie y permutando hasta un máximo
-definido para los términos autorregresivos y de medias móviles
-especificados para así seleccionar la especificación que ofrezca mejores
-resultados al momento de pronosticar valores futuros de la serie
-cronológica.
+El segundo apartado describe en detalle el uso de la
+sobreparametrización como herramienta para la generación de pronósticos
+de series cronológicas con temporalidades mensuales, bimensuales,
+trimestrales, cuatrimestrales o anuales mediante un proceso de selección
+fundamentada en las permutaciones de todos los parámetros de un modelo
+ARIMA hasta un rango determinado. Las medidas de precisión y de bondad
+de ajuste sirven de insumo para utilizar un método de consenso entre
+ellas y seleccionar el modelo más adecuado mediante la
+sobreparametrización: se comparan todos los posibles en un intervalo
+específico de términos definiendo una diferenciación adecuada para la
+serie y permutando hasta un máximo definido para los términos
+autorregresivos y de medias móviles especificados para así seleccionar
+la especificación que ofrezca mejores resultados al momento de
+pronosticar valores futuros de la serie cronológica.
 
-\subsection{Conceptos y definiciones en el análisis de series cronológicas}
+\subsection{Medidas de bondad de ajuste y rendimiento}
 
-\subsubsection{Definición de una serie cronológica}
-
-\subsubsection{Procedimiento al analizar series cronológicas}
-
-\subsubsection{Estacionaridad}
-
-\subsubsection{La parsimonia}
-
-\subsection{Componentes de una serie cronológica}
-
-\subsubsection{La tendencia}
-
-\subsubsection{Componentes estacionales}
-
-\subsubsection{Componente cíclico}
-
-\subsubsection{Componente irregular}
-
-\subsection{Modelos de series cronológicas}
-
-\subsection{Modelos Autorregresivos Integrados de Medias Móviles}
-
-\subsubsection{Modelos Autorregresivos}
-
-\subsubsection{Modelos de Medias Móviles}
-
-\subsubsection{Metodología Box-Jenkins}
-
-\subsubsection{Etapa 1 - Identificación}
-
-\subsubsection{Etapa 2 - Estimación y diagnóstico}
-
-\subsubsection{Etapa 3 - Pronóstico}
-
-\subsubsection{Notación de los modelos ARIMA}
-
-\subsubsection{Diferenciación}
-
-\subsection{Análisis de intervención}
-
-\subsection{Validación cruzada}
-
-\subsection{Medidas de rendimiento}
-
-\subsubsection{MFE}
-
-\subsubsection{MAE}
-
-\subsubsection{MAPE}
-
-\subsubsection{MPE}
-
-\subsubsection{MSE}
-
-\subsubsection{SSE}
-
-\subsubsection{SMSE}
-
-\subsubsection{RMSE}
-
-\subsubsection{NMSE}
+El objetivo último al estimar un modelo ARIMA es obtener los pronósticos
+de dicho modelo Sin embargo, estos pronósticos no son pueden asumirse
+como correctos, sino que se debe evaluar su calidad con las llamadas
+medidas de bondad de ajuste y de rendimiento. Existen múltiples medidas,
+\protect\hyperlink{ref-medidas}{Adhikari, K, \& Agrawal}
+(\protect\hyperlink{ref-medidas}{2013}) menciona, entre otras, las
+siguientes:
 
 \subsubsection{AIC}
 
+Se calcula de la siguiente manera:
+
+\begin{equation}
+\label{eqn:AIC}
+AIC=-2logL\left(\hat\theta\right)+2k
+\end{equation}
+
+Donde \(k\) es el número de parámetros y \(n\) el número de datos.
+
 \subsubsection{AICc}
+
+Su forma de cálculo se muestra en la ecuación \ref{eqn:AICc}
+\begin{equation}
+\label{eqn:AICc}
+AICc=-2logL\left(\hat\theta\right)+2k+\frac{2k+1}{n-k-1}
+\end{equation}
+
+Donde \(k\) es el número de parámetros y \(n\) el número de datos.
 
 \subsubsection{BIC}
 
+El último estadístico de bondad de ajuste se calcula como se muestran en
+la ecuación \ref{eqn:BIC}.
+
+\begin{equation}
+\label{eqn:BIC}
+BIC=-2logL\left(\hat\theta\right)+k\cdot log(n)
+\end{equation}
+
+Donde \(k\) es el número de parámetros y \(n\) el número de datos.
+
+\subsubsection{MAE}
+
+El error absoluto medio se define mediante la ecuación \ref{eqn:MAE}
+
+\begin{equation}
+\label{eqn:MAE}
+\frac{1}{n}\sum_{t=1}^n |e_t|
+\end{equation}
+
+\subsubsection{MASE}
+
+Esta medida de rendimiento tiene dos casos, uno para series cronológicas
+no estacionales y otro para series cronológicas estacionales, como se
+muestra en las ecuaciones \ref{eqn:MASE_no} y \ref{eqn:MASE_si}.
+
+\begin{equation}
+\label{eqn:MASE_no}
+\frac{\frac{1}{J}\sum_j|e_j|}{\frac{1}{T-1}\sum_{t=2}^T|Y_t-Y_{t-1}|}
+\end{equation}
+
+\begin{equation}
+\label{eqn:MASE_si}
+\frac{\frac{1}{J}\sum_j|e_j|}{\frac{1}{T-m}\sum_{t=m+1}^T|Y_t-Y_{t-m}|}
+\end{equation}
+
+Donde \(m\) es la temporalidad de la serie.
+
+\subsubsection{RMSE}
+
+Es la raíz del error cuadrático medio, como se define en la ecuación
+\ref{eqn:RMSE}.
+
+\begin{equation}
+\label{eqn:RMSE}
+\sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}
+\end{equation}
+
 \subsection{La sobreparametrización}
 
-\subsection{Simulación de series cronológicas}
+La estimación de los modelos y posterior selección de los mismos vía
+sobreparametrización es un proceso que requiere de distintas etapas. El
+procedimiento completo fue programado utilizando el lenguaje
+R\footnote{\url{https://cran.r-project.org/}} y su código se muestra en
+el \ref{funcion_op_arima}, la cuál fue construida haciendo uso de los
+paquetes de R \texttt{tidyr} (\protect\hyperlink{ref-tidyr}{Wickham \&
+Henry, 2019}), \texttt{dplyr}(\protect\hyperlink{ref-dplyr}{Wickham,
+François, Henry, \& Müller, 2019}) y
+\texttt{parallel}(\protect\hyperlink{ref-parallel}{R Core Team, 2019}),
+los procesos internos de esta función son descritos a continuación.
 
-\subsection{El método propuesto}
+A partir de una serie cronológica \(y_t\), se realiza una partición de
+los datos para tener dos conjuntos distintos. Uno de ellos servirá para
+entrenar y estimar los distintos modelos; mientras que el segundo
+servirá para validar los pronósticos y posteriormente seleccionar el
+modelo más adecuado. De manera predeterminada, se utiliza una partición
+del 80\% de los datos para el conjunto de entrenamiento y un 20\% para
+los datos de validación, sin embargo, esto puede cambiar de acuerdo al
+interés propio del investigador(a).
+
+Una vez que se define la partición que tendrá la serie cronológica, se
+prosigue con la selección de los escenarios para estimar los modelos de
+ARIMA. Es en esta instancia en donde se decide en valor máximo de los
+parámetros \(p,d,q,P,D,Q\) del modelo \(ARIMA(p,d,q)(P,D,Q)_s\) que
+serán sujetos al análisis. Si se cuenta con una serie sin patrones
+estacionales y cuyo modelo con mayor cantidad de parámetros es un
+\(ARIMA(3,1,4)\), la matriz de valores paramétricos es la que se muestra
+en \ref{eqn:matriz_arima_1}:
+
+\begin{equation}
+\label{eqn:matriz_arima_1}
+\begin{tikzpicture}[mymatrixenv]
+    \matrix[mymatrix] (m)  {
+        0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 2 & 0 & 0 & 0 \\
+        0 & 0 & 3 & 0 & 0 & 0 \\
+        0 & 0 & 4 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 1 & 0 & 0 & 0 \\
+        0 & 1 & 2 & 0 & 0 & 0 \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+        3 & 1 & 4 & 0 & 0 & 0 \\
+    };
+    \mymatrixbracetop{1}{3}{$p, d, q$};
+    \mymatrixbracetop{4}{6}{$P,D,Q$}
+\end{tikzpicture}
+\end{equation}
+
+De manera análoga, al trabajar con un modelo con algún efecto estacional
+en una determinada periodicidad, como por ejemplo mensual, la matriz de
+valores paramétricos al definir el modelo con mayor número de parámetros
+como un \(ARIMA(6,1,6)(6,1,6)_{12}\) es la mostrada en
+\ref{eqn:matriz_arima_2}:
+
+\begin{equation}
+\label{eqn:matriz_arima_2}
+\begin{tikzpicture}[mymatrixenv]
+    \matrix[mymatrix] (m)  {
+        0 & 0 & 1 & 0 & 0 & 1 \\
+        0 & 0 & 1 & 0 & 0 & 2 \\
+        0 & 0 & 1 & 0 & 0 & 3 \\
+        0 & 0 & 1 & 0 & 0 & 4 \\
+        0 & 1 & 1 & 0 & 0 & 5 \\
+        0 & 1 & 1 & 0 & 0 & 6 \\
+        0 & 1 & 1 & 0 & 1 & 0 \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+        6 & 1 & 6 & 6 & 1 & 6 \\
+    };
+    \mymatrixbracetop{1}{3}{$p, d, q$};
+    \mymatrixbracetop{4}{6}{$P,D,Q$}
+\end{tikzpicture}
+\end{equation}
+
+Con la matriz de valores paramétricos, como las mostradas en
+\ref{eqn:matriz_arima_1} y \ref{eqn:matriz_arima_2}, se estiman los
+modelos en orden descendente, del modelo con menos parámetros al que
+tiene más parámetros. Al estimar un nuevo modelo, se evalúa mediante una
+prueba t (\protect\hyperlink{ref-astsa}{Stoffer, 2020}) para verificar
+el nuevo término incorporado al modelo es estadísticamente distinto de
+cero, es decir, el nuevo parámetro está generando un impacto en el
+modelo. AL tratarse de un proceso iterativo, los cálculos son pueden
+volverse computacionalmente pesado, es por esta razón que la
+programación del proceso fue habilitada para realizar procesamiento
+paralelo y de esta manera reducir el consumo de tiempo en la obtención
+de resultados.
+
+Cuando se han realizado las pruebas de significancia estadística a los
+modelos, son calculadas las medidas de bondad de ajuste y de rendimiento
+mencionadas con anterioridad. Tras esto, se aplica un método de concenso
+para seleccionar el modelo más adecuado. Este criterio consiste en darle
+mayor o menor ponderación a los resultados obtenidos con el conjunto de
+datos de entrenamiento y el de validación; de forma predeterminada se le
+da una ponderación de 0.8 a los resultados de validación y un 0.2 a los
+de entrenamiento, esto porque en la práctica, los datos de validación
+son considerados como datos más recientes y que, mientras más cercanos
+sean los pronósticos a estos datos, mejores resultados ofrece el modelo.
+El método de concenso es utilizado para obtener un puntaje de cada
+modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
+
+\begin{equation}
+\label{eqn:concenso}
+min\left( \sum_i {m_i}\cdot w_j \right)
+\end{equation}
+
+Donde \(m_i\) representa cada una de las medidas de rendimiento y
+\(w_j\) es el valor de ponderación de los conjunto de entrenamiento y
+validación mencionados anteriormente. El valor más bajo de todos los
+modelos es el que se define como el modelo más adecuado.
+
+Como parte de esta investigación, es necesario validar la estimación de
+modelos ARIMA mediante sobreparametrización no solo con datos reales,
+sino también mediante datos simulados. Para ello es necesario obtener
+series cronológicas que son gobernadas por un proceso determinado.
+
+Con este fin, se programó un función haciendo uso del lenguaje R que
+toma una serie de valores, los cuales pueden ser reales o simulados.
+Además, se especifican los valores \(p,d,q,P,D,Q\) del modelo ARIMA a
+partir del cual se desea obtener los datos, así como los valores de los
+coeficientes presentes en el modelo. Es partiendo de este modelo que se
+simulan los datos de las series cronológicas que serán insumo para la
+prueba la selección mediante sobreparametrización, este procedimiento se
+encuentra en el \ref{simula_series}.
 
 \newpage
 
@@ -1138,8 +1436,8 @@ depende de la calidad de la atención de la salud, principalmente de la
 prenatal y perinatal, así como de las condiciones de saneamiento. Por
 tanto, su continuo monitoreo es fundamental para diseñar, implementar y
 evaluar políticas de salud pública orientadas a disminuir y erradicar
-aquellas que son prevenibles (INEC,
-\protect\hyperlink{ref-calidad_vitales}{2017}).
+aquellas que son prevenibles
+(\protect\hyperlink{ref-calidad_vitales}{INEC, 2017}).
 
 \subsubsection{Tasa de mortalidad infantil interanual}
 
@@ -1171,14 +1469,228 @@ aquellas que son prevenibles (INEC,
 
 \section{ANEXOS}
 
-\subsection{La función funcion\_1}
+\subsection{Función de sobreparametrización}
 
-\captionof{chunk}{Una función}\label{funcion1}
+\captionof{chunk}{Función op.arima}\label{funcion_op_arima}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{funcion\_}\DecValTok{1}\NormalTok{ \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x,y)\{}
-\NormalTok{    x}\OperatorTok{+}\NormalTok{y}
+\NormalTok{op.arima }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{arima\_process =} \FunctionTok{c}\NormalTok{(}\AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{d =} \DecValTok{1}\NormalTok{, }\AttributeTok{q =} \DecValTok{1}\NormalTok{, }
+                                       \AttributeTok{P =} \DecValTok{1}\NormalTok{, }\AttributeTok{D =} \DecValTok{1}\NormalTok{, }\AttributeTok{Q =} \DecValTok{1}\NormalTok{), }
+\NormalTok{                     seasonal\_periodicity,}
+\NormalTok{                     time\_serie, }\AttributeTok{reg =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{horiz =} \DecValTok{12}\NormalTok{,}
+                     \AttributeTok{prop=}\NormalTok{.}\DecValTok{8}\NormalTok{, }\AttributeTok{training\_weight=}\NormalTok{.}\DecValTok{2}\NormalTok{, }\AttributeTok{testing\_weight=}\NormalTok{.}\DecValTok{8}\NormalTok{,}
+                     \AttributeTok{parallelize=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{clusters=}\FunctionTok{detectCores}\NormalTok{(}\AttributeTok{logical =} \ConstantTok{FALSE}\NormalTok{))\{}
+    
+\NormalTok{    data\_partition }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FunctionTok{length}\NormalTok{(time\_serie)}\SpecialCharTok{*}\NormalTok{prop, }\DecValTok{0}\NormalTok{)}
+\NormalTok{    train }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{subset}\NormalTok{(time\_serie, }\AttributeTok{end=}\NormalTok{data\_partition)}
+\NormalTok{    test }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{subset}\NormalTok{(time\_serie, }\AttributeTok{start=}\NormalTok{data\_partition}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
+    
+\NormalTok{    arima\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(time\_serie, non\_seasonal, seasonal, }
+\NormalTok{                            periodic, }\AttributeTok{regr =} \ConstantTok{NULL}\NormalTok{)\{}
+        
+\NormalTok{        seasonal\_part }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{order=}\NormalTok{seasonal, }\AttributeTok{period=}\NormalTok{periodic)}
+        \ControlFlowTok{if}\NormalTok{(}\FunctionTok{is.null}\NormalTok{(regr))\{}
+\NormalTok{            arima\_model }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(\{}
+                \FunctionTok{Arima}\NormalTok{(time\_serie, }
+                      \AttributeTok{order =}\NormalTok{ non\_seasonal, }
+                      \AttributeTok{seasonal =}\NormalTok{ seasonal\_part)}
+\NormalTok{            \}, }
+            \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{)  }
+\NormalTok{        \}}
+        
+        \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(regr))\{}
+\NormalTok{            arima\_model }\OtherTok{\textless{}{-}}\FunctionTok{tryCatch}\NormalTok{(\{}
+                \FunctionTok{Arima}\NormalTok{(time\_serie, }
+                      \AttributeTok{order =}\NormalTok{ non\_seasonal, }
+                      \AttributeTok{seasonal =}\NormalTok{ seasonal\_part, }
+                      \AttributeTok{xreg =}\NormalTok{ regr)}
+\NormalTok{            \}, }
+            \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{)   }
+\NormalTok{        \}}
+        
+        \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(arima\_model))\{}
+\NormalTok{            degrees\_of\_freedom }\OtherTok{\textless{}{-}}\NormalTok{ arima\_model}\SpecialCharTok{$}\NormalTok{nobs }\SpecialCharTok{{-}} \FunctionTok{length}\NormalTok{(arima\_model}\SpecialCharTok{$}\NormalTok{coef)}
+\NormalTok{            t\_value }\OtherTok{\textless{}{-}}\NormalTok{ arima\_model}\SpecialCharTok{$}\NormalTok{coef}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(arima\_model}\SpecialCharTok{$}\NormalTok{var.coef))}
+\NormalTok{            prob }\OtherTok{\textless{}{-}}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{pf}\NormalTok{(t\_value}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{df1 =} \DecValTok{1}\NormalTok{, }\AttributeTok{df2 =}\NormalTok{ degrees\_of\_freedom, }
+                              \AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+            \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{sum}\NormalTok{(}\DecValTok{1}\SpecialCharTok{*}\NormalTok{prob}\SpecialCharTok{\textgreater{}}\FloatTok{0.05}\NormalTok{)}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{, }\FunctionTok{return}\NormalTok{(arima\_model), }\DecValTok{1}\NormalTok{)}
+\NormalTok{        \}}
+        
+\NormalTok{    \}}
+
+\NormalTok{    arima\_measures }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(arima\_model, testing, horizon, }\AttributeTok{regr =} \ConstantTok{NULL}\NormalTok{)\{}
+        
+\NormalTok{        model\_spec }\OtherTok{\textless{}{-}} \FunctionTok{capture.output}\NormalTok{(arima\_model)}
+\NormalTok{        model\_spec }\OtherTok{\textless{}{-}} \FunctionTok{substr}\NormalTok{(model\_spec[}\DecValTok{2}\NormalTok{],}\DecValTok{1}\NormalTok{, }\DecValTok{23}\NormalTok{)}
+        
+\NormalTok{        data }\OtherTok{\textless{}{-}} \FunctionTok{capture.output}\NormalTok{(}\FunctionTok{summary}\NormalTok{(arima\_model))}
+\NormalTok{        data }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{grepl}\NormalTok{(}\StringTok{"AIC"}\NormalTok{, data) }\SpecialCharTok{==}\NormalTok{ T]}
+\NormalTok{        model\_info }\OtherTok{\textless{}{-}} \FunctionTok{strsplit}\NormalTok{(data, }\StringTok{" "}\NormalTok{)}
+\NormalTok{        pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(model\_info, nchar)}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)}
+\NormalTok{        model\_info }\OtherTok{\textless{}{-}}\NormalTok{ model\_info[[}\DecValTok{1}\NormalTok{]][pos]}
+\NormalTok{        model\_info }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind"}\NormalTok{, }\FunctionTok{strsplit}\NormalTok{(model\_info, }\StringTok{"="}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{data.frame}\NormalTok{() }
+        \FunctionTok{colnames}\NormalTok{(model\_info) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Medida"}\NormalTok{, }\StringTok{"Valor"}\NormalTok{)}
+\NormalTok{        model\_info }\OtherTok{\textless{}{-}}\NormalTok{ model\_info }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Valor =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(Valor))) }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{spread}\NormalTok{(Medida, Valor) }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{arima\_model =}\NormalTok{ model\_spec)}
+        
+\NormalTok{        model\_performance }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{arima\_model =} \FunctionTok{c}\NormalTok{(model\_spec, }
+                                                        \FunctionTok{paste}\NormalTok{(model\_spec, }
+                                                              \StringTok{"Validacion"}\NormalTok{)), }
+                                        \FunctionTok{accuracy}\NormalTok{(}\FunctionTok{forecast}\NormalTok{(arima\_model, }
+\NormalTok{                                                          horizon, }
+                                                          \AttributeTok{xreg =}\NormalTok{ regr), }
+\NormalTok{                                                 testing))}
+        \FunctionTok{merge}\NormalTok{(model\_info, model\_performance, }\AttributeTok{by=}\StringTok{"arima\_model"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{select}\NormalTok{(arima\_model, AIC, AICc, BIC, MAE, RMSE, MASE)}
+\NormalTok{    \}}
+    
+\NormalTok{    arima\_selected }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(model\_table, }
+                               \AttributeTok{Wtrain=}\NormalTok{training\_weight, }
+                               \AttributeTok{Wtest=}\NormalTok{testing\_weight)\{}
+        
+
+\NormalTok{        model\_table }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{distinct}\NormalTok{(arima\_model, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{)}
+        
+
+\NormalTok{        model\_table }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mod =} \FunctionTok{as.character}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(model\_table)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}\SpecialCharTok{\%/\%}\DecValTok{2}\NormalTok{))))}
+        
+
+\NormalTok{        tabla2 }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{mutate\_at}\NormalTok{(}\FunctionTok{vars}\NormalTok{(}\FunctionTok{contains}\NormalTok{(}\StringTok{"C"}\NormalTok{)), }\ControlFlowTok{function}\NormalTok{(x)\{x}\SpecialCharTok{{-}}\FunctionTok{min}\NormalTok{(x, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{)\}) }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{mutate\_if}\NormalTok{(is.numeric, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x),}\DecValTok{0}\NormalTok{,x)) }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{mutate}\NormalTok{(}\AttributeTok{puntaje =}\NormalTok{ AIC}\SpecialCharTok{+}\NormalTok{AICc}\SpecialCharTok{+}\NormalTok{BIC}\SpecialCharTok{+}\NormalTok{MAE}\SpecialCharTok{+}\NormalTok{RMSE}\SpecialCharTok{+}\NormalTok{MASE,}
+                   \AttributeTok{ponde =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Validacion"}\NormalTok{, }
+\NormalTok{                                        arima\_model)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{,}
+\NormalTok{                                  Wtest, }
+\NormalTok{                                  Wtrain),}
+                   \AttributeTok{puntaje =}\NormalTok{ puntaje}\SpecialCharTok{*}\NormalTok{ponde)}
+        
+
+        \FunctionTok{suppressMessages}\NormalTok{(\{}
+\NormalTok{            minimal\_score }\OtherTok{\textless{}{-}}\NormalTok{ tabla2 }\SpecialCharTok{\%\textgreater{}\%} 
+                \FunctionTok{group\_by}\NormalTok{(mod) }\SpecialCharTok{\%\textgreater{}\%} 
+                \FunctionTok{summarise}\NormalTok{(}\AttributeTok{puntaje=}\FunctionTok{sum}\NormalTok{(puntaje)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{                ungroup}
+\NormalTok{        \})}
+
+\NormalTok{        pos }\OtherTok{\textless{}{-}}\NormalTok{ minimal\_score}\SpecialCharTok{$}\NormalTok{mod[}\FunctionTok{which}\NormalTok{(minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje}\SpecialCharTok{==}\FunctionTok{min}\NormalTok{(}
+\NormalTok{            minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje))]}
+
+\NormalTok{        model\_table }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{filter}\NormalTok{(mod }\SpecialCharTok{\%in\%}\NormalTok{ pos) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{            dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(arima\_model}\SpecialCharTok{:}\NormalTok{MASE)}
+\NormalTok{    \}}
+    
+    \FunctionTok{suppressWarnings}\NormalTok{(\{     }
+
+\NormalTok{        valores }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{p =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{1}\NormalTok{], }
+                               \AttributeTok{d =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{2}\NormalTok{], }
+                               \AttributeTok{q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{3}\NormalTok{], }
+                               \AttributeTok{P =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{4}\NormalTok{], }
+                               \AttributeTok{D =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{5}\NormalTok{], }
+                               \AttributeTok{Q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{6}\NormalTok{])}
+        
+\NormalTok{        non\_seasonal\_values }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(valores[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]), }
+                                     \FunctionTok{row}\NormalTok{(valores[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]))}
+\NormalTok{        seasonal\_values }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(valores[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]), }
+                                 \FunctionTok{row}\NormalTok{(valores[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]))}
+        
+
+        \ControlFlowTok{if}\NormalTok{(parallelize}\SpecialCharTok{==}\ConstantTok{FALSE}\NormalTok{)\{}
+\NormalTok{            arima\_models }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(arima\_model, }
+                                   \AttributeTok{non\_seasonal=}\NormalTok{non\_seasonal\_values, }
+                                   \AttributeTok{seasonal=}\NormalTok{seasonal\_values, }
+                                   \AttributeTok{MoreArgs =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time\_serie=}\NormalTok{train, }\AttributeTok{regr=}\NormalTok{reg, }
+                                                   \AttributeTok{periodic=}\NormalTok{seasonal\_periodicity), }
+                                   \AttributeTok{SIMPLIFY =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{        \}}
+        
+        \ControlFlowTok{if}\NormalTok{(parallelize}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{)\{}
+            
+
+            
+\NormalTok{            obj }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{match.call}\NormalTok{()), paste)}
+\NormalTok{            pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{names}\NormalTok{(obj) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"time\_serie"}\NormalTok{, }\StringTok{"validacion"}\NormalTok{))}
+            
+
+\NormalTok{            clp }\OtherTok{\textless{}{-}} \FunctionTok{makeCluster}\NormalTok{(clusters, }\AttributeTok{type =} \StringTok{"SOCK"}\NormalTok{, }\AttributeTok{useXDR=}\ConstantTok{FALSE}\NormalTok{)}
+            \FunctionTok{clusterExport}\NormalTok{(clp, }\AttributeTok{varlist =} \FunctionTok{c}\NormalTok{(obj[pos], }
+                                           \StringTok{"arima\_measures"}\NormalTok{, }
+                                           \StringTok{"arima\_model"}\NormalTok{))}
+            
+
+\NormalTok{            arima\_models }\OtherTok{\textless{}{-}} \FunctionTok{clusterMap}\NormalTok{(}\AttributeTok{cl=}\NormalTok{clp, }\AttributeTok{fun =}\NormalTok{ arima\_model, }
+                                       \AttributeTok{non\_seasonal=}\NormalTok{non\_seasonal\_values, }
+                                       \AttributeTok{seasonal=}\NormalTok{seasonal\_values, }
+                                       \AttributeTok{MoreArgs =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time\_serie=}\NormalTok{train, }
+                                                       \AttributeTok{regr=}\NormalTok{reg, }
+                                                       \AttributeTok{periodic=}\NormalTok{seasonal\_periodicity), }
+                                       \AttributeTok{SIMPLIFY =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{.scheduling =} \StringTok{"dynamic"}\NormalTok{)}
+            \FunctionTok{stopCluster}\NormalTok{(clp)}
+            
+\NormalTok{        \}}
+        
+
+\NormalTok{        pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(arima\_models, class), length)}\SpecialCharTok{\textgreater{}}\DecValTok{1}\NormalTok{)}
+        
+
+\NormalTok{        final\_measures }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind"}\NormalTok{, }\FunctionTok{lapply}\NormalTok{(arima\_models[pos], }
+\NormalTok{                                                  arima\_measures, }
+                                                  \AttributeTok{testing =}\NormalTok{ test, }
+                                                  \AttributeTok{horizon=}\NormalTok{ horiz, }
+                                                  \AttributeTok{regr =}\NormalTok{ reg)) }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{mutate\_if}\NormalTok{(is.numeric, round, }\DecValTok{2}\NormalTok{)}
+
+        \FunctionTok{list}\NormalTok{(}\AttributeTok{arima\_models=}\NormalTok{arima\_models[pos], }
+             \AttributeTok{final\_measures=}\NormalTok{final\_measures, }
+             \AttributeTok{bests=}\FunctionTok{arima\_selected}\NormalTok{(final\_measures, }
+                                  \AttributeTok{Wtrain =}\NormalTok{ training\_weight, }
+                                  \AttributeTok{Wtest =}\NormalTok{ testing\_weight))\})}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Función de simulación de series cronológicas}
+
+\captionof{chunk}{Función ts.sim}\label{simula_series}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ts.sim }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, n, temporalidad, }
+\NormalTok{                            no.estacional, estacional, }
+                            \AttributeTok{p=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{q=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{P=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{Q=}\ConstantTok{NULL}\NormalTok{)\{}
+  
+  \FunctionTok{require}\NormalTok{(forecast)}
+  \FunctionTok{tryCatch}\NormalTok{(\{}
+\NormalTok{    coeficientes }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(p, q, P, Q)}
+\NormalTok{    coeficientes.simulados }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\FunctionTok{c}\NormalTok{(no.estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)], }
+\NormalTok{                                       estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)]), }
+                                     \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sample}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{), x))}
+\NormalTok{    pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(coeficientes, is.null)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{)}
+    
+\NormalTok{    coeficientes[pos] }\OtherTok{\textless{}{-}}\NormalTok{ coeficientes.simulados[pos]}
+    \FunctionTok{names}\NormalTok{(coeficientes) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"q"}\NormalTok{, }\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{)}
+    
+\NormalTok{    modelo }\OtherTok{\textless{}{-}} \FunctionTok{Arima}\NormalTok{(}\FunctionTok{ts}\NormalTok{(}\AttributeTok{data=}\NormalTok{data, }\AttributeTok{freq=}\NormalTok{temporalidad), }
+                    \AttributeTok{order =}\NormalTok{ no.estacional, }
+                    \AttributeTok{seasonal =}\NormalTok{ estacional,}
+                    \AttributeTok{fixed=}\FunctionTok{c}\NormalTok{(}\AttributeTok{phi=}\NormalTok{coeficientes}\SpecialCharTok{$}\NormalTok{p, }
+                            \AttributeTok{theta=}\NormalTok{coeficientes}\SpecialCharTok{$}\NormalTok{q, }
+                            \AttributeTok{Phi=}\NormalTok{coeficientes}\SpecialCharTok{$}\NormalTok{P, }
+                            \AttributeTok{Theta=}\NormalTok{coeficientes}\SpecialCharTok{$}\NormalTok{Q))}
+\NormalTok{    datos }\OtherTok{\textless{}{-}} \FunctionTok{simulate}\NormalTok{(modelo, }\AttributeTok{nsim=}\NormalTok{(n}\SpecialCharTok{+}\FunctionTok{length}\NormalTok{(data)))}
+    
+\NormalTok{    datos }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(datos, }\AttributeTok{start=}\FunctionTok{length}\NormalTok{(data)}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
+    \FunctionTok{list}\NormalTok{(}\AttributeTok{modelo=}\NormalTok{modelo, }\AttributeTok{datos=}\NormalTok{datos)\}, }
+    \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\FunctionTok{simular.proceso}\NormalTok{(data, n, temporalidad,}
+\NormalTok{                                        no.estacional, estacional, }
+\NormalTok{                                        p, q, P, Q))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -1188,16 +1700,20 @@ aquellas que son prevenibles (INEC,
 \section{REFERENCIAS}
 
 \hypertarget{refs}{}
-\begin{cslreferences}
+\begin{CSLReferences}{1}{0}
 \leavevmode\hypertarget{ref-medidas}{}%
 Adhikari, R., K, A. R., \& Agrawal, R. K. (2013). \emph{An Introductory
 Study on Time Series Modeling and Forecasting} (pp. 42-45). Recuperado
 de \url{https://arxiv.org/ftp/arxiv/papers/1302/1302.6613.pdf}
 
+\leavevmode\hypertarget{ref-stationary_def}{}%
+Agrawal, R., \& Adhikari, R. (2013). An introductory study on time
+series modeling and forecasting. \emph{Nova York: CoRR}.
+
 \leavevmode\hypertarget{ref-pearson}{}%
-Benesty, J., \& Chen, Y. C., J.and Huang. (2009). Pearson Correlation
-Coefficient. En \emph{Noise Reduction in Speech Processing} (pp. 37-38).
-\url{https://doi.org/10.1007/978-3-642-00296-0_5}
+Benesty, J., \& Chen, Y. and C., J.and Huang. (2009). Pearson
+Correlation Coefficient. En \emph{Noise Reduction in Speech Processing}
+(pp. 37-38). \url{https://doi.org/10.1007/978-3-642-00296-0_5}
 
 \leavevmode\hypertarget{ref-box-jenkins}{}%
 Box, G. E. P., Jenkins, G. M., \& Reinsel, G. C. (1994). \emph{Time
@@ -1206,8 +1722,8 @@ Series Analysis: Forecasting and Control}. Recuperado de
 
 \leavevmode\hypertarget{ref-yule.walker}{}%
 Brockwell, P. J., \& Davis, R. A. (2009). \emph{Time Series: Theory and
-Methods}. En \emph{Springer Series in Statistics} (p. 239). Recuperado
-de \url{https://books.google.co.cr/books?id=/_DcYu/_EhVzUC}
+Methods}. En \emph{Springer Series en Statistics} (p. 239). Recuperado
+de \url{https://books.google.co.cr/books?id=_DcYu_EhVzUC}
 
 \leavevmode\hypertarget{ref-brown}{}%
 Brown, R. (1956). \emph{Exponential Smoothing for Predicting Demand}.
@@ -1217,6 +1733,12 @@ Recuperado de \url{https://www.industrydocuments.ucsf.edu/docs/jzlc0130}
 Burnham, K. P., \& Anderson, D. R. (2007). \emph{Model Selection and
 Multimodel Inference: A Practical Information-Theoretic Approach}.
 Recuperado de \url{https://books.google.co.cr/books?id=IWUKBwAAQBAJ}
+
+\leavevmode\hypertarget{ref-calderon2012estadistica}{}%
+Calderón, C. E. (2012). Estadística para Estudiantes de Administración
+de Empresas de la Universidad Nacional del Callao. \emph{Editorial San
+Marcos, 2da Edición, Lima Perú}. Recuperado de
+\url{https://unac.edu.pe/documentos/organizacion/vri/cdcitra/Informes_Finales_Investigacion/IF_JUNIO_2012/IF_CALDERON\%20OTOYA_FCA/capitulo\%208.pdf}
 
 \leavevmode\hypertarget{ref-10.2307ux2f1392184}{}%
 Canova, F., \& Hansen, B. E. (1995). Are Seasonal Patterns Constant over
@@ -1228,6 +1750,12 @@ Economic Statistics}, \emph{13}(3), 237-252. Recuperado de
 Cochrane, J. H. (1997). \emph{Time Series for Macroeconomics and
 Finance}. Recuperado de
 \url{http://econ.lse.ac.uk/staff/wdenhaan/teach/cochrane.pdf}
+
+\leavevmode\hypertarget{ref-tsa_decades}{}%
+De Gooijer, J. G., \& Hyndman, R. J. (2006). 25 years of time series
+forecasting. \emph{International Journal of Forecasting}, \emph{22}(3),
+443-473.
+https://doi.org/\url{https://doi.org/10.1016/j.ijforecast.2006.01.001}
 
 \leavevmode\hypertarget{ref-Lombardo}{}%
 Flaherty, J., \& Lombardo, R. (2000, enero). \emph{Modelling Private New
@@ -1259,9 +1787,14 @@ Water Resources and Environmental Systems}. Recuperado de
 \url{https://books.google.co.cr/books?id=t1zG8OUbgdgC}
 
 \leavevmode\hypertarget{ref-hyndman2018forecasting}{}%
-Hyndman, R. J., \& Athanasopoulos, G. (2018). \emph{Forecasting:
+Hyndman, R. J., \& Athanasopoulos, G. (2018a). \emph{Forecasting:
 principles and practice}. Recuperado de
-\url{https://books.google.co.cr/books?id=/_bBhDwAAQBAJ}
+\url{https://books.google.co.cr/books?id=_bBhDwAAQBAJ}
+
+\leavevmode\hypertarget{ref-hyndman_box-jenkins}{}%
+Hyndman, R. J., \& Athanasopoulos, G. (2018b). \emph{Forecasting:
+principles and practice}. Recuperado de
+\url{https://books.google.co.cr/books?id=_bBhDwAAQBAJ}
 
 \leavevmode\hypertarget{ref-auto.arima}{}%
 Hyndman, R., \& Khandakar, Y. (2008). Automatic Time Series Forecasting:
@@ -1294,10 +1827,27 @@ Osborn, D. R., Chui, A. P. L., Smith, J., \& Birchenhall, C. (2009).
 Recuperado de
 \url{http://www.est.uc3m.es/esp/nueva_docencia/comp_col_get/lade/tecnicas_prediccion/OCSB_OxBull1988.pdf}
 
+\leavevmode\hypertarget{ref-parallel}{}%
+R Core Team. (2019). \emph{R: A Language and Environment for Statistical
+Computing}. Recuperado de \url{https://www.R-project.org/}
+
+\leavevmode\hypertarget{ref-tsa_decision_making}{}%
+Rezaee, Z., Aliabadi, S., Dorestani, A., \& Rezaee, N. J. (2020).
+Application of Time Series Models in Business Research: Correlation,
+Association, Causation. \emph{Sustainability}, \emph{12}(12), 4833.
+
 \leavevmode\hypertarget{ref-supenprodc}{}%
 Rosero-Bixby, L. (2018). \emph{Producto C para SUPEN. Proyección de la
 mortalidad de Costa Rica 2015-2150}. Recuperado de CCP-UCR website:
-\url{http://srv-website.cloudapp.net/documents/10179/999061/Nota+t\%C3\%A9cnica+tablas+de+vida+segunda+parte}
+\url{http://srv-website.cloudapp.net/documents/10179/999061/Nota+t}
+
+\leavevmode\hypertarget{ref-sargent_macro}{}%
+Sargent, T. J. (1979). \emph{Macroeconomic Theory}. Recuperado de
+\url{https://books.google.co.cr/books?id=X6u7AAAAIAAJ}
+
+\leavevmode\hypertarget{ref-astsa}{}%
+Stoffer, D. (2020). \emph{astsa: Applied Statistical Time Series
+Analysis}. Recuperado de \url{https://CRAN.R-project.org/package=astsa}
 
 \leavevmode\hypertarget{ref-Wold}{}%
 Surhone, L. M., Timpledon, M. T., \& Marseken, S. F. (2010). \emph{Wold
@@ -1309,6 +1859,15 @@ Tadayon, M., \& Iwashita, Y. (2020). \emph{Comprehensive Analysis of
 Time Series Forecasting Using Neural Networks}. Recuperado de
 \url{https://arxiv.org/pdf/2001.09547.pdf}
 
+\leavevmode\hypertarget{ref-dplyr}{}%
+Wickham, H., François, R., Henry, L., \& Müller, K. (2019). \emph{dplyr:
+A Grammar of Data Manipulation}. Recuperado de
+\url{https://CRAN.R-project.org/package=dplyr}
+
+\leavevmode\hypertarget{ref-tidyr}{}%
+Wickham, H., \& Henry, L. (2019). \emph{tidyr: Tidy Messy Data}.
+Recuperado de \url{https://CRAN.R-project.org/package=tidyr}
+
 \leavevmode\hypertarget{ref-doi:10.1111ux2f1467-9892.00213}{}%
 Xiao, Z. (2001). Testing the Null Hypothesis of Stationarity Against an
 Autoregressive Unit Root Alternative. \emph{Journal of Time Series
@@ -1318,6 +1877,7 @@ Analysis}, \emph{22}(1), 87-105.
 \leavevmode\hypertarget{ref-Zhang}{}%
 Zhang, G. (2003). Time series forecasting using a hybrid ARIMA and
 neural network model. \emph{Neurocomputing}, \emph{50}, 159-175.
-\end{cslreferences}
+
+\end{CSLReferences}
 
 \end{document}
