@@ -1,0 +1,951 @@
+---
+title: "Proyecciones de nacimientos en Costa Rica"
+author:
+  - name: César Gamboa Sanabria
+    affiliation: Universidad de Costa Rica
+    footnote: "email: cesar.gamboasanabria@ucr.ac.cr | LinkedIn: https://linkedin.com/in/cgamboasanabria | Github: https://github.com/cgamboasanabria"
+  - name: Stefany Matarrita Muñoz 
+    affiliation: Universidad de Costa Rica
+    footnote: "email: stefmatarrita@hotmail.com"
+address:
+  - code: Universidad de Costa Rica
+    address: Escuela de Estadística, Universidad de Costa Rica
+header-includes: \usepackage[spanish]{babel}
+bibliography: mybibfile.bib
+output: rticles::elsevier_article
+---
+
+\newpage
+
+\section*{RESUMEN}  
+
+El monitoreo de los procesos demográficos es vital debido a su estrecha relación con el desarrollo económico y social de un país. Desde hace varios años, numerosos estudios han abordado el pronóstico de los nacimientos, pues su disminución junto con el aumento en la esperanza de vida,  modifican de manera importante la estructura por edad de la población, produciendo el envejecimiento de la población. Este fenómeno, obliga a los gobiernos a generar políticas públicas dirigidas a los sistemas de seguridad social y servicios de salud, para ello se debe contar con estimaciones precisas del futuro demográfico. Dado lo anterior se pretende analizar los nacimientos mensuales en Costa Rica desde enero de 1988 hasta diciembre 2017, con datos provenientes del Instituto Nacional de Estadística y Censos, con el fin de pronosticar hasta el 2022. Los nacimientos se estimaron con 4 modelos: la regresión lineal, el suavizamiento exponencial, el ARIMA y las redes neuronales. La selección del mejor dentro de ellos se escogió mediante las medidas de rendimiento (MAE, RMSE, MAPE, MASE) y criterios de información (AIC, BIC y AICc). Se encontró que el $ARIMA(3,1,4)(1,1,3)$ fue el modelo que obtuvo mejor desempeño. El pronóstico revela que el nivel medio del número de nacimientos seguirá decreciendo. Por ende si los nacimientos siguen disminuyendo tal y como indica el modelo, y la esperanza de vida sigue en aumento como se ha observado en la última década,  eventualmente la población de Costa Rica envejecerá y los jóvenes serán menos.  Por tanto se invita a las autoridades a tomar diferentes medidas en diferentes ámbitos como: la inclusión del adulto mayor en el mercado laboral, mejoría de servicios de salud y política migratoria, promoción de ahorros en la población, así como inversión en investigaciones sobre envejecimiento que dirijan la toma decisiones.
+
+***Palabras clave***: nacimientos, envejecimiento población, series de tiempo, regresión lineal, suavizamiento exponencial, ARIMA, redes neuronales.
+
+\section{1. INTRODUCCIÓN}  
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache=TRUE,
+                      fig.align='center')
+
+#fig.height=3.3, fig.width=6.6
+```
+
+Durante las Primeras Jornadas de Investigación del Centro Centroamericano de Población de la Universidad de Costa Rica (CCP-UCR), se llegó a concluir que dado el panorama demográfico actual es muy improbable que Costa Rica llegue a tener 6 millones de habitantes en un futuro cercano, pues para ello se necesitaría una tasa de fecundidad de 1,8 [@ucr].
+La tendencia de los indicadores demográficos indica que en los próximos años la población en Costa Rica envejecerá y los jóvenes serán menos,  es decir, se espera un envejecimiento acelerado de la población [@teletica].
+Cada vez es más difícil lograr que cada generación sea remplazada por otra del mismo tamaño. Según datos del Instituto Nacional de Estadística y Censo (INEC) desde los años sesenta la fecundidad del país ha descendido sin pausa. Para el 2017 la tasa de fecundidad registrada fue de 1,67 hijos por mujer,  por debajo de la tasa de fecundidad de remplazo (2,1 hijos por mujer) [@indicadores][@teletica][@ucr].
+Sin embargo, los pocos niños que nacen en el país, no son el único factor al que se le atribuye  el envejecimiento de la población, desde hace varios años, la tasa de mortalidad ha venido disminuyendo, para el año 2017 la tasa de mortalidad general fue de 4,97 defunciones por cada 1000 habitantes, lo cual se explica en parte, por el descenso en las defunciones de menores de un año, siendo la tasa de mortalidad infantil en el 2017 de 7,9.  Como consecuencia, la esperanza de vida al nacer ha venido en ascenso,  siendo de 77 años para los hombres y 82 para las mujeres, en el 2017 [@indicadores].
+
+Este panorama demográfico conlleva implicaciones sociales y económicas importantes. Cuando un país llega a tener una pirámide poblacional inversa,  se cuenta con menos personas para activar el desarrollo económico del país, lo cual provoca que los sistemas de pensiones y los servicios de salud presenten serias dificultades para sostenerse, pues los ingresos del gobierno se reducen en momentos en que se requiere una mayor inversión en servicios, principalmente el de salud [@cap1][@AL]. 
+
+Si a una sociedad envejecida se le adiciona una económico débil, que es el caso actual de Costa Rica, se dan las condiciones perfectas para una crisis económica, pues los gastos en que se deben incurrir para la atención de adultos mayores pueden agravar la deuda del gobierno, como fue el caso de Portugal en el 2010-2014[@portugal].
+
+Es por ello que en este estudio se analiza uno de las principales causas del envejecimiento poblacional, como lo son los nacimientos en Costa Rica, con el fin de pronosticar para los próximos cinco años cuál es el comportamiento esperado, y brindar recomendaciones en cuanto al tipo de política pública que se debe promover.
+
+\section{2. MARCO DE LA CUESTIÓN}
+
+El envejecimiento de la población es el crecimiento del porcentaje de adultos mayores debido a la disminución del porcentaje de menores [@gilbert]. Este fenómeno ha sido ampliamente analizado, debido a su importancia en la creación de política pública.  Según las convenciones demográficas, un país con 10 y 19% de adultos mayores se  cataloga como envejecido, si está entre 20 y 29%, como muy envejecido; y mayor del 30%, híper envejecido [@una].
+
+La disminución del número de hijos que tienen las mujeres y el aumento en la esperanza de vida modifican de manera importante la estructura por edad de la población [@cap1]. Por lo general, en la naturaleza ningún extremo es deseado, se sabe que una alta fertilidad sostenida en el tiempo puede colapsar los sistemas educativos y el mercado laboral, mientras que caso contrario, se colapsarían los servicios de salud y pensiones [@foreferti]. 
+
+Es bien conocido que todos los procesos demográficos son interdependientes, y como ya se mencionó, existe una fuerte conexión con el desarrollo general y el nivel económico de un país,  allí es donde radica la importancia de estudiar estos procesos [@foreferti].
+
+Al disminuir la mortalidad las personas sobreviven más tiempo, esto incide en un aumento de la población de 65 y más años (Ver Anexo 1). En el caso de Costa Rica, el decremento de la tasa de mortalidad general observada en los últimos años (Ver Anexo 2), ha sido producto de la disminución de la mortalidad de las edades jóvenes y en particular de la mortalidad infantil, esto gracias a la mejora en los servicios de salud, esta es una de las razones por las que se vislumbra una mayor esperanza de vida al nacer (Ver Anexo 3) [@cap1].
+
+Por otro lado, la natalidad depende directamente del número promedio de hijos por mujer. En la década de 1950, el panorama nacional distaba mucho del actual, fue en este período cuando ocurrió el primer *Baby Boom*. En ese entonces, el número anual de nacimientos pasó de ser 34 mil en 1949 a 63 mil en 1963 [@boom], esto sucedió por al aumento en el número de hijos promedio por mujer, que llegó a ser de 7,1 a inicios de la década de los setenta [@cap1]. En años posteriores, cuando las personas nacidas en esa época estaban en edades reproductivas, hubo otra expansión de nacimientos, pero a diferencia del primer *Baby Boom*, el número de hijos promedio por mujer era menor, pasando de 7,1 en 1961 a 3,6 en 1976, es decir la expansión de nacimientos se atribuyó a una mayor cantidad de mujeres con hijos [@cap1].  
+
+Después de los cambios abruptos en los nacimientos de ese período,  el patrón que se ha observado es una disminución sin pausa, datos oficiales confirman que entre el 2008 y el 2017, la tasa de natalidad disminuyó un 9%  [@gilbert].
+
+Desde 1997, ya los expertos en la materia habían advertido que las oleadas demográficas históricas iban a colapsar los sistemas pensiones y los servicios de salud entre los años 2010 a 2023 [@boom]. Contrario a lo que se pronosticaban en 1997, actualmente se prevé que en los años venideros habrá una menor presión sobre el mercado laboral y vivienda, esto a consecuencia de la baja tasa global de fecundidad registrada en los últimos años (Ver Anexo 4) [@boom], siendo la tasa global de fecundidad nacional para el 2017 una de las más bajas del continente (1,67 hijos por mujer) [@ucr].
+Entre las causas directas de la baja de la fecundidad en Costa Rica, el Dr. Luis Rosero Bixby, señala que la caída en la maternidad adolescente y la Ley de Paternidad Responsable, aplicada desde el 2000 fueron factores claves [@ucr]. Otros especialistas apuntan a que las parejas posponen el nacimiento del primer hijo para alcanzar una mayor preparación académica [@teletica], además el acceso, conocimiento y uso de métodos de planificación, así como el deseo expreso de tener menos hijos son factores que pesan mucho en el panorama demográfico actual[@gilbert] [@malasya].
+Como se mencionó anteriormente, la estructura por edad de la población presenta una estrecha vinculación con el desarrollo económico. Dentro de una población se pueden distinguir: la población de menores, población en edad de trabajar y los adultos mayores, dependiendo de la etapa en la que se encuentren las personas, su capacidad de producción y de consumo varía, a este proceso se lo conoce como la **economía del ciclo vital**. En la primera fase de este ciclo las personas crecen, estudian, viven y dependen de los miembros mayores del hogar, en una segunda etapa se da la incorporación al sistema productivo del país, y en la última fase, las personas subsisten de ahorros, pensiones, apoyo de la familia o transferencias del gobierno [@cap1].
+Como consecuencia de los pocos nacimientos en la última década, dentro de unos años, la población en edad de trabajar podría ser insuficiente, es decir no se percibirá el beneficio del *bono demográfico*, pues el volumen de los dependientes (niños y ancianos) será mayor que la población en edad de trabajar. Lo anterior impacta directamente la contribución fiscal, ya que la base de contribuyentes efectivos será menor que la de receptores efectivos de las transferencias del gobierno [@cap1]. Sin embargo este panorama puede ser distinto si en la actualidad las personas ahorran y cotizan al sistema de pensiones para subsistir en su vejez, pues pese al cese de los ingresos laborales, estas personas podrán hacerle frente a sus gastos sin depender directamente de las transferencias del gobierno [@cap1].
+
+Las previsiones económicas que tomen las personas no son el único factor que podría variar el ciclo de la economía vital, la planificación y oferta de buenos programas de salud, educación, empleo y pensiones son claves para hacer frente a este fenómeno, pues el éxito de las personas durante sus años de preparación y de participación en el sistema productivo pueden impactar positivamente la economía nacional futura [@cap1].
+
+El envejecimiento de la población no es único de Costa Rica, a nivel internacional, este fenómeno se están produciendo sin distinguir entre países desarrollados y en desarrollo [@una]. En el caso de América Latina, para el año 2016, no se registraron países hiper envejecidos ni muy envejecidos, pero sí envejecidos, entre esos países se encontraban: Uruguay, Cuba, Chile, Argentina, Costa Rica, Brasil, El Salvador, Panamá, Colombia y Perú [@una].
+
+En los otros continentes, el envejecimiento es mayor, particularmente en los países asiáticos, donde el porcentaje de la población que tiene 65 años o más, pasó de 15% a 20% en aproximadamente 15 años, mientras que en Europa y Estados Unidos este aumento requirió en promedio 26 y 50 años respectivamente, es decir los países asiáticos han tenido menos tiempo para adaptar su economía a su sociedad envejecida [@asiafinanciero]. 
+
+Para el 2050, Japón (42,5%) seguirá encabezando la lista de países híper envejecidos, siguiéndole Corea del Sur (41,5%), España (41,4%), Portugal (41,2%), Hong Kong (40,9%), Grecia (40,8%), Italia (40,7%), Bosnia y Herzegovina (40,5%), Singapur (40,4%) y Cuba (39,7%) [@una]. Para ese año se pronostica que en Costa Rica este porcentaje será de 21%, pasando de ser un país envejecido a muy envejecido [@ucr].
+
+Bajo el contexto anterior los analistas incitan a una adecuada planificación en los diferentes ámbitos.  De hecho uno de los más reconocidos demógrafos, Rosero Bixby, señala que en el 2080 solo habrá dos personas trabajadoras por cada pensionado, es decir, para entonces, las personas trabajadoras deberán aportar cerca del 50% de su salario para mantener el sistema de pensiones [@ucr]. 
+
+Ante este panorama muchos de los países mencionados han creado leyes y políticas preventivas a nivel económico y de seguridad social, pero pocos han hecho hincapié en que los sistemas tradicionales de apoyo familiar están en decadencia, principalmente porque las familias son cada vez más pequeñas, acentuándose el problema con la movilización de los posibles cuidadores a las ciudades, en busca de oportunidades educativas y laborales. Esta es una de las razones por la que se ha encontrado que el número de personas adultas mayores viven solas [@una].
+
+A nivel nacional el enfoque de la política pública para atacar la baja de nacimientos, ha sido la generación de política pública dirigida a mejorar la calidad de vida de las personas adultas mayor, como lo es la *Política Pública sobre Envejecimiento y Vejez en Costa Rica 2011-2021*, la cual cuenta con cinco líneas estratégicas para su aplicación: I. Línea estratégica de protección social, ingresos y prevención de la pobreza, II. Línea estratégica de abandono, abuso y maltrato en contra de las personas adultas mayores, III. Línea estratégica de participación social e integración intergeneracional, IV Línea estratégica de consolidación de derechos y V Línea estratégica de salud integral [@una].
+
+Sin embargo, en otros países como Rusia la política está enfocada en promover la fertilidad,  brindando incentivos por tener un segundo o más hijos; pese a esto un estudio ha encontrado mediante modelos probabilísticos que las políticas pronatalistas no tendrán un impacto significativo en la dinámica futura de la tasa de natalidad como lo tuvo en el año 2007, esto se debe a que la crisis actual y los cambios de coyunturales de este país no se conciben como condiciones propicias para tener hijos. Además los investigadores acotan que se debe hacer frente a la crisis demográfica mediante la promoción de la inmigración [@rusia] [@boomputin].
+
+Dado el contexto anterior es evidente que el pronóstico de los nacimientos es crucial para una toma decisiones sobre el futuro del país, por ello en diferentes estudios de varias regiones del mundo se ha modelado tanto los nacimientos como la tasa de fertilidad global mediante diferentes técnicas de series de tiempo [@ghana][@gaza][@US][@malasya].
+
+En un estudio de los nacimientos de la franja de Gaza, entre los modelos comparados, las redes neuronales fueron las que brindaba estimaciones más precisas, siendo más eficientes que los ARIMA estacionales[@gaza]. Para el pronóstico de la tasa global de fecundidad, en un estudio en Malasia, el modelo más apropiado para el pronóstico fue el ARAR [@malasya], en Estados Unidos se utilizó la técnica de Box-Jenkins para pronosticar la fertilidad marital, nupcialidad, nacimientos y matrimonios, y mencionan que este método presenta importantes ventajas en las estimaciones de eventos como de tasas [@US]. Lo mismo sucedió en un análisis de series de tiempo de los nacimientos , en Ghana, donde un ARIMA estacional fue el presentó mejores medidas de ajuste[@ghana].
+
+Bajo el contexto anterior se pretende analizar los nacimientos mensuales en Costa Rica desde enero de 1988 hasta diciembre 2017, mediante diferentes modelos de series de tiempo, utilizando datos provenientes del Instituto Nacional de Estadística y Censos, con el fin de pronosticar con un horizonte de cinco años. 
+
+
+\section{3. METODOLOGÍA} 
+
+Los datos utilizados para esta investigación fueron obtenidos en la Unidad de Estadísticas Demográficas del INEC[^1], y corresponden a información mensual de la cantidad de nacimientos en Costa Rica desde Enero del año 1988 hasta Diciembre de 2017. Estos datos serán procesados mediante el lenguaje R[^2] y su interfaz RStudio[^3]. Para la manipulación de los datos se utilizarán los paquetes de *R* `readxl`[@readxl], `tidyr`[@tidyr], y `dplyr`[@dplyr], mientras que para el manejo de datos temporales se utilizaron los paquetes `lubridate` [@lubridate], `astsa` [@astsa] y `forecast`[@forecast] para realizar los pronósticos. En cuanto a la visualización, los paquetes `ggplot2` [@ggplot2], `kableExtra` [@kableExtra] y `ggseas`[@ggseas] serán empleados para generar distintos tipos de gráficos.
+  
+Con los datos de los registros administrativos procesados se realizará un análisis descriptivo de la serie para posteriormente realizar una descomposición de la misma. La serie completa será particionada en dos conjuntos, uno servirá de entrenamiento para la construcción de los modelos para ajustar la serie y otro servirá de validación una vez que el modelo sea generado, esto con el fin de conocer qué tan bien se ajustan las estimaciones a los datos reales; siendo los datos correspondientes al periodo Enero 1988 – Diciembre 2016 el conjunto de entrenamiento y de Enero 2017 – Diciembre 2017 para la validación. Se estimarán distintas variantes de los modelos de regresión, de suavizamiento exponencial, ARIMA y redes neuronales.
+
+En el caso de los modelos de regresión, se estimará uno solamente con la tendencia, otro con la tendencia y la estacionalidad, y un tercero que consiste en una variante exponencial, todos ellos estimados mediante la máxima verosimilitud maximizando los coeficientes respecto a los parámetros de la función expresada en (1).
+
+\begin{equation}
+ln(L)=-\frac{T}{2}ln(2\pi)-\frac{T}{2}ln(\sigma^2)-\frac{1}{2\sigma^2}(Y-X\beta)'(Y-X\beta)
+\end{equation}
+
+Para los modelos de suavizamiento exponencial, se estimarán distintas variantes considerando errores aditivos y multiplicativos, sin tendencia y con tendencia aditiva y multiplicativa, y sin estacionalidad y con estacionalidad aditiva y multiplicativa, todo esto además de considerar el amortiguamiento.
+
+La estimación de los modelos ARIMA se abordará de tres maneras: 1) identificando los modelos de forma manual tanto en su parte estacional como en la no estacional, 2) de forma automática mediante la función `auto.arima()` del paquete `forecast` y 3) aplicando un ARIMA con intervención.
+
+La estimación de la red neuronal se hará mediante la función `nnetar()` del paquete `forecast`.
+
+Una vez estimados estos modelos, se seleccionarán los mejores de cada clase, es decir, el mejor modelo de regresión, el mejor de suavizamiento exponencial, el mejor ARIMA entre los identificados, el automático y el ARIMA con intervención; y la red neuronal más apropiada. Dicha selección se hará analizando los criterios de información indicados en las ecuaciones (2), (3) y (4) donde los valores más bajos indican cuál es el mejor modelo, mientras que las medidas de rendimientos utilizadas se especifican en las ecuaciones (5), (6), (7) y (8) donde las más cercanas a cero sirven para indicar cuál modelo es el más adecuado,
+
+\begin{equation}
+AIC=-2logL\left(\hat\theta\right)+2k
+\end{equation}
+
+\begin{equation}
+AICc=-2logL\left(\hat\theta\right)+2k+\frac{2k+1}{n-k-1}
+\end{equation}
+
+\begin{equation}
+BIC=-2logL\left(\hat\theta\right)+k\cdot log(n)
+\end{equation}
+
+\begin{equation}
+MAE=n^{-1}\sum_{t=1}^n \left|y_t-f_t\right|
+\end{equation}
+
+\begin{equation}
+RMSE=\sqrt{n^{-1}\sum_{t=1}^n \left(y_t-f_t\right)^2}
+\end{equation}
+
+\begin{equation}
+MAPE=100n^{-1}\sum_{t=1}^n\frac{\left|y_t-f_t\right|}{\left|y_t\right|}
+\end{equation}
+
+\begin{equation}
+MASE=n^{-1}\sum_{t=1}^n\frac{\left|y_t-f_t\right|}{q}; q=(n-m)^{-1}\sum_{t=2}^n\left|y_t-y_{t-1}\right|
+\end{equation}
+
+donde $k$ es el número de parámetros y $n$ es el número de datos. 
+
+Finalmente se escogerá el modelo más adecuado en relación a la cantidad de nacimientos para posteriormente realizar un pronóstico de los posibles valores que alcanzará esta variable en los próximos dos años, así como una contextualización del fenómeno con respecto a la actualidad. 
+
+[^1]: http://www.inec.go.cr/
+[^2]: https://cran.r-project.org/
+[^3]: https://www.rstudio.com/
+
+\section{4. RESULTADOS} 
+
+```{r, results='hide'}
+load("Funciones.RData")
+
+paquetes <- c("tidyr", "lubridate", "ggplot2", "ggpmisc",
+              "ggseas", "readxl", "astsa", "forecast", 
+              "formattable", "gridExtra", "dplyr")
+
+requeridos(paquetes)
+```
+
+```{r}
+base <- read_excel("nacimientos.xlsx") %>% 
+  gather(año, nacimientos, -mes) %>% 
+  unite(fecha, año, mes, sep="-") %>% 
+  mutate(fecha=ymd(fecha),
+         año=year(fecha))
+
+TS <- ts(base$nacimientos, start = c(1988, 1), end = c(2017, 12), frequency = 12)
+```
+
+```{r}
+#particion de la serie
+train <- filter(base, year(fecha)<2017)
+train <- ts(train$nacimientos, start=c(1988, 1), frequency = 12)
+test <- filter(base, year(fecha)>=2017)
+test <- ts(test$nacimientos, start=c(2017, 1), frequency = 12)
+train.serie <- window(train, 1988)
+test.serie <- window(test, 2017)
+serie.completa <- window(TS, start=1988)
+```
+
+
+**OJO: PONER PÁRRAFO INTRODUCTORIO**
+
+Dado que las certificaciones de nacimientos se realizan diariamente, conviene analizar su comportamiento de manera mensual de una manera más general. El gráfico 1 muestra picos y valles pronunciados a lo largo de todo el periodo. A modo de visualización, se ajustó un suavizamiento de Loess, o regresión local, para buscar señales de tendencia y concavidad en los datos temporales. La línea roja punteada se ubica aproximadamente en el mes de Abril del año 2001, pues a partir de ese punto la regresión local muestra un ligero cambio en la concavidad. Una primera impresión muestra indicios de estacionalidad.
+
+```{r}
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 0.9) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  geom_vline(xintercept = 2001.09, linetype="dashed", color = "red")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 1: Nacimientos en Costa Rica para el periodo 1989 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1, 10, 10, 10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(1989, 1996, 2003, 2010, 2017))
+```
+
+
+```{r}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(nacimientos) %>% 
+  mutate(mes=factor(mes, labels=c("Enero", "Febrero",
+                                  "Marzo", "Abril", 
+                                  "Mayo", "Junio",
+                                  "Julio", "Agosto",
+                                  "Setiembre", "Octubre",
+                                  "Noviembre", "Diciembre"))) %>% 
+  ggplot(., aes(x=año, y=nacimientos)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 0.9) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = -0.5, size=2.8) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1, size=2.8) +
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 2: Nacimientos esn Costa Rica en el periodo 1989 - 2017 según mes") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  #ylim(7, 14) +
+  scale_x_discrete(expand = c(0,0), limits=c(1989, 1996, 2003, 2010, 2017))
+```
+
+
+Mediante un análisis visual,el gráfico 2 parece respaldar el supuesto de que los nacimientos poseen un efecto estacional, pues de todos los periodos, los meses de Setiembre y Octubre poseen un nivel medio más alto que todos los demás meses; además, el nivel parece se más bajo en cada mes a partir del 2001. Este hecho coincide con lo observado en el gráfico 1.
+
+```{r}
+base %>% 
+  mutate(nacimientos=BoxCox(nacimientos, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = nacimientos),
+         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 0.9) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 3: Descomposición de la serie de Nacimientos en Costa Rica\nen el periodo 1989 - 2017") +
+  labs(caption="Fuente: UED-INEC") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(1989, 1996, 2003, 2010, 2017))
+```
+
+La descomposición de la serie se hará de forma aditiva debido a que en el gráfico 1 no se observan grandes cambios en la variabilidad a lo largo del tiempo. El gráfico 3 muestra que la tendencia desciende a lo largo del tiempo, especialmente a mitad del pediodo, mientras que parece haber estacionalidad en los últimos meses del año. Además, el componente aleatorio muestra como los errores no son constantes a lo largo de todo el período. 
+
+Tras tener un panorama más claro del comportamiento de la serie mediante el análisis descriptivo anterior, es importante realizar las estimaciones de los modelos. Para las estimación de los mismos y todos los aspectos relacionados, se dividió la base de datos en dos subconjuntos: 1) la base de entrenamiento son los datos desde el año 1989 y hasta el 2016 inclusive, y 2) la base de validación, que corresponde a los datos del año 2017.
+
+La primera estimación hecha es la que corresponde a los modelos de regresión. Las tres variantes descritas en el apartado metodológico de este artículo son calculadas para luego contrastarlos mediante las medidas de rendimiento y criterios de información, los resultados pueden verse en cuadro 1 de la sección de anexos. El mejor modelo en este caso es el de variante exponencial, expresado mediante la ecuación (9), pues es el que cuenta con mejores medidas en el conjunto de entrenamiento y en el de  validación.
+
+```{r, eval=FALSE}
+mod1 <- tslm(train.serie~trend)
+mod2 <- tslm(train.serie~trend + season)
+mod3 <- tslm(train.serie~trend + season, lambda = 0) #exponencial
+```
+
+```{r, eval=FALSE}
+#Medidas de los modelos de regresión
+l <- list()
+mods <- list(mod1, mod2, mod3)
+nombres <- c("Regresion T", "Regresion T+E", "Regresión exponencial")
+for(i in 1:length(mods)){
+  l[[i]] <- medidas.reg(mods[[i]], test.serie, nombres[i], 60)
+  l
+}
+medidas1 <- do.call("rbind", l)
+#tabla(medidas1, "entrenamiento")
+#tabla(medidas1, "validacion")
+#tabla.latex(medidas1)
+```
+
+\begin{equation}
+\begin{split}
+&log(\hat y_t)=8.8558-0.0005t-0.1428s_2-0.0639s_3-0.0796s_4-0.0345s_5-0.0784s_6\\
+               &\qquad-0.0443s_7+0.0074s_8+0.0565s_9+0.0771s_{10}+0.0299s_{11}-0.0199s_{12}
+\end{split}
+\end{equation}
+
+El segundo gran grupo de estimaciones corresponde a los modelos de suavizamiento exponencial. Para todas las variantes mencionadas en el apartado metodológico, se calcularon las medidas de rendimiento y los criterios de información para cada uno de los modelos, dichos resultados pueden verse en el cuadro 2 presente en la sección de anexos. Tras esta comparación, el mejor modelo de suavizamiento exponencial es que tiene errores, tendencia y estacionalidad multiplicativa descrito en la ecuación (10), pues presenta mejores medidas de rendimiento en el set de validación y medidas cercanas a las óptimas en el set de entrenamiento. 
+
+```{r}
+l <- list()
+mods <- list(modelos(train.serie, "A"), modelos(train.serie, "M"))
+for(i in 1:length(mods)){
+  l[[i]] <- medidas.ets(mods[[i]], test.serie, 60)
+  l
+}
+medidas2 <- do.call("rbind", l)
+#tabla(medidas2, "entrenamiento")
+#tabla(medidas2, "validacion")
+#tabla.latex(medidas2)
+```
+
+\begin{equation}
+\hat y_{t+h|t}=l_tb_t^hs_{t-m+h_m^+}
+\end{equation}
+
+Donde $l_t=0.1697\left(\frac{y_t}{s_{t-m}}\right)+(1-0.1697)l_{t-1}b_{t-1}$, $b_t=0.0001\left(\frac{l_t}{l_{t-1}}\right)+(1-0.0001)b_{t-1}$ y $s_t=0.1661\left(\frac{y_t}{l_{t-1}b_{t-1}}\right)+(1-\gamma)s_{t-m}$.
+
+Antes de estimar los modelos ARIMA es necesario realizar una inspección en base a los autocorrelogramas, y para esto se verifica la estacionaridad de la serie, es decir, que el promedio y la varianza de la serie se mantengan a lo largo del tiempo. Con este fin es que se analiza el gráfico 4, en el cual se puede ver que para volver la serie estacionaria es necesario aplicar el logaritmo y hacer una doble diferenciación cada 12 meses. El gráfico 5 muestra los autocorrelogramas parcial y total para la serie estacionaria, el cual parece sugerir que se tiene un MA(3) tanto en la no parte estacional y un MA(1) en la  estacional, sin embargo ante la poca claridad de este criterio conviene realizar una sobreparametrización para encontrar el modelo más adecuado.
+
+```{r}
+data.frame(fecha=seq(ymd("1988-01-01"), ymd("2016-12-01"), by="months"),
+           Original=train.serie,
+           Logaritmo=log(train.serie),
+           `Logaritmo.y.diferenciacion(12)`=c(rep(NA,12), diff(log(train.serie),12)),
+           `Logaritmo.y.doble.diferenciacion(12)`=c(rep(NA, 13), diff(diff(log(train.serie),12),1))) %>% 
+  gather(Serie, valor, -fecha) %>% 
+  mutate(Serie=gsub('\\.', " ", Serie),) %>%
+  mutate(Serie=factor(Serie, levels=c("Original", "Logaritmo", 
+                                      "Logaritmo y diferenciacion 12 ", "Logaritmo y doble diferenciacion 12 "))) %>% 
+  ggplot(., aes(x=fecha, y=valor))+
+  facet_wrap(~Serie, scales="free")+
+  geom_line(color = "#00AFBB", size = 0.3)+
+  #geom_vline(xintercept = c(ymd("2005-06-01"), ymd("2010-11-01")), 
+  #           linetype="dashed", color = c("red", "blue"))+
+  #annotate("rect", xmin = ymd("2012-06-01"), xmax = ymd("2017-12-01"), 
+  #         ymin = 0, ymax = Inf, 
+  #         alpha = 0.2, fill="green", linetype="dashed")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 4: Nacimientos en Costa Rica en el periodo 1988 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="Defunciones (según escala)",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+```{r, eval=FALSE}
+acf2(diff(diff(log(train.serie),12),1), main="Grafico 5: Autocorrelograma de la serie de nacimientos de Costa Rica 1988-2017")
+```
+
+\begin{figure}[!h]
+\centering
+\includegraphics{autocorrelograma.png}
+\end{figure}
+
+Para el proceso de sobreparametrización, se especifican los valores tanto en la parte estacional como en la no estacional, y a partir de esto se obtienen las probabilidades asociadas a los coeficientes y se descartan aquellos modelos cuyos coeficientes no sean significativamente distintos de cero. Al ser este un proceso iterativo, se comparan 184 modelos ARIMA, de los cuales el más adecuado es el $ARIMA(3,1,4)(1,1,3)_{12}$ mostrado en la ecuación (11). Los resultados de los mejores cinco modelos ARIMA pueden encontrarse en el cuadro 3 en la sección de anexos.
+
+```{r}
+#load("E:/GitHub/Academico/Articulo final/Arimas nacimientos absolutos.RData")
+load("C:/Users/Dell/OneDrive/Academico/Proyectos/GitHub/Academico/Articulo final/Arimas nacimientos absolutos.RData")
+```
+
+\begin{equation}
+\begin{split}
+&y_t=-0.2015y_{t-1}+0.0872y_{t-2}+0.9398y_{t-3}-0.5642u_{t-1}-0.2931u_{t-2}-0.8318u_{t-3}+0.6892u_{t-4}\\
+               &\qquad+0.8091y_{t-12}-1.5892u_{t-12}+0.5072u_{t-24}+0.1520u_{t-36}+u_t
+\end{split}
+\end{equation}
+
+Además de los modelos ARIMA estimados previamente, es importante considerar intervenir la serie en cierto tramos. El gráfico 4 indica que, según el criterio del BIC se deben utilizar una intervención en el año 2001. Al estimar los modelos con intervención, el mejor es un  $ARIMA(5,1,3)(1,1,3)_{12}$, descrito en la ecuación (12), el cual es inferior al modelo $ARIMA(3,1,4)(1,1,3)$ sin intervención estimado previamente. Los cinco mejores modelos ARIMA con intervención pueden verse en el cuadro 4 en la sección de anexos.
+
+```{r, results='hide'}
+break_point <- strucchange::breakpoints(TS ~ 1)
+df <- data.frame(cbind(0:5,summary(break_point)$RSS[2,]))
+colnames(df) <- c("Puntos de corte","BIC")
+#sapply(df,class)
+g1 <- ggplot(df,aes(x=`Puntos de corte`,y=BIC))+geom_line()+geom_point()+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 6: Número de intervenciones para la serie de nacimientos\nen el periodo 1988 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="BIC",
+       x="Puntos de corte") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) #+
+  #ylim(7,12) +
+  #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+```
+
+```{r, eval=FALSE}
+2
+```
+
+
+```{r}
+g2 <- autoplot(TS)+
+autolayer(fitted(break_point, breaks = 1))+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1), legend.position = "none") +
+  ggtitle("") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) #+
+  #ylim(7,12) +
+  #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+```
+
+```{r}
+grid.arrange(g1,g2, top = "")
+```
+
+
+
+```{r, results='hide'}
+l1 <- length(seq(ymd("1988-01-01"), ymd("1996-12-01"), by="months"))
+l2 <- length(seq(ymd("1997-01-01"), ymd("2000-10-01"), by="months"))
+l3 <- length(seq(ymd("2000-11-01"), ymd("2017-12-01"), by="months"))
+level <- c(rep(0, l1), rep(1, l2), rep(2, l3))
+dummy1 <- model.matrix(~as.factor(level))[, -1]
+
+#dummy2 <- c(rep(0, length(level)))
+#dummy2[24] <- 1
+```
+
+```{r}
+dummy1.1 <- dummy1[1:348,]
+dummy1.2 <- dummy1[349:360,]
+```
+
+\begin{equation}
+\begin{split}
+&y_t=-0.9419y_{t-1}-0.5431y_{t-2}+0.5775y_{t-3}+0.3603y_{t-4}+0.1253y_{t-5}+0.1565u_{t-1}\\
+               &\qquad-0.1884u_{t-2}-0.9682u_{t-3}+0.8172y_{t-12}-1.6209u_{t-12}+0.5100u_{t-24}\\
+               &\qquad+0.1775u_{t-36}+u_t
+\end{split}
+\end{equation}
+
+El último modelo a estimar consiste en una red neuronal con dos capas ocultas estimada mediante la función `nnetar()` del paquete `forecast`. Los resultados de las comparaciones de los cuatro modelos y la visualización de la red se muestran a continuación:
+
+```{r}
+red <- nnetar(train.serie)
+```
+
+```{r}
+#Medidas entrenamiento
+neural.medidas <- data.frame(Modelo=c("NNAR(24,1,12)[12]", "NNAR(24,1,12)[12] Validacion"),
+                             AIC=c(0, NA), AICc=c(0, NA), BIC=c(0, NA),
+                             round(accuracy(forecast(red, h=60, PI=TRUE), test.serie), 4)) %>% 
+  select(Modelo, AIC, AICc, BIC, MAE, MAPE, RMSE, MASE)
+
+```
+
+```{r}
+regresion <- tslm(train.serie~trend + season, lambda = 0)
+exponencial <- ets(train.serie, "MMM")
+arima <- Arima(train.serie, c(3,1,4), c(1,1,3), include.mean = TRUE)
+
+#medidas.reg(regresion, test.serie, "Regresion")
+#medidas.ets(list(exponencial), test.serie)
+#arimas.int[97:98,]
+
+medidas.arima3 <- function(modelo, testing, horizonte, regre=NULL){
+  
+  ##Nombre del modelo
+  nombre <- capture.output(modelo)
+  nombre <- substr(nombre[2],1, 1000000L)
+  
+  ##criterios de informacion
+  data <- capture.output(summary(modelo))
+  data <- data[grepl("AIC", data)==T]
+  informacion <- strsplit(data, " ")
+  pos <- which(sapply(informacion, nchar)>0)
+  informacion <- informacion[[1]][pos]
+  informacion <- do.call("rbind", strsplit(informacion, "=")) %>% 
+    data.frame() 
+  colnames(informacion) <- c("Medida", "Valor")
+  informacion <- informacion %>% 
+    mutate(Valor=as.numeric(as.character(Valor))) %>% 
+    spread(Medida, Valor) %>% 
+    data.frame(Modelo=nombre)
+  
+  ##medidas de rendimiento
+  if(is.null(regre)){
+    rendimiento <- data.frame(Modelo=c(nombre, paste(nombre, "Validacion")), 
+                              accuracy(forecast(modelo, horizonte, xreg=NULL), testing))
+  }
+  if(!is.null(regre)){
+    rendimiento <- data.frame(Modelo=c(nombre, paste(nombre, "Validacion")), 
+                              accuracy(forecast(modelo, horizonte, xreg=regre), testing))
+  }
+  
+  merge(informacion, rendimiento, by="Modelo", all=TRUE) %>% 
+    select(Modelo, AIC, AICc, BIC, MAE, MAPE, RMSE, MASE)
+}
+
+medidas.finales <- do.call("rbind", list(medidas.reg(regresion, test.serie, "Regresion", 60),
+                                         medidas.ets(list(exponencial), test.serie, 60),
+                                         mutate_if(medidas.arima3(arima, test.serie, 60), is.numeric, round, 2),
+                                         mutate_if(neural.medidas, is.numeric, round, 2)))
+row.names(medidas.finales) <- NULL
+
+
+#tabla(medidas.finales, "entrenamiento")
+#tabla(medidas.finales, "validacion")
+#tabla(medidas.finales)
+```
+
+\begin{table}[!h]
+\centering
+\caption{Criterios de información y medidas de rendimiento de los mejores modelos}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & RMSE & MASE\\
+\midrule
+Regresion & \textcolor{red}{-2201.01} & \textcolor{red}{-2199.75} & \textcolor{red}{-2147.08} & \textcolor{black}{200.35} & \textcolor{black}{3.17} & \textcolor{black}{259.43} & \textcolor{black}{0.85}\\
+Regresion Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{184.07} & \textcolor{black}{3.24} & \textcolor{black}{241.68} & \textcolor{black}{0.78}\\
+(M,M,M) & \textcolor{black}{5852.27} & \textcolor{black}{5854.12} & \textcolor{black}{5917.76} & \textcolor{black}{178.67} & \textcolor{black}{2.83} & \textcolor{black}{232.62} & \textcolor{black}{0.76}\\
+(M,M,M)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{178.72} & \textcolor{blue}{3.12} & \textcolor{black}{205.27} & \textcolor{blue}{0.76}\\
+ARIMA(3,1,4)(1,1,3)[12] & \textcolor{black}{4607.83} & \textcolor{black}{4608.8} & \textcolor{black}{4653.6} & \textcolor{black}{161.07} & \textcolor{black}{2.56} & \textcolor{black}{214.29} & \textcolor{black}{0.68}\\
+ARIMA(3,1,4)(1,1,3)[12]  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{185.5} & \textcolor{black}{3.24} & \textcolor{blue}{204.55} & \textcolor{black}{0.79}\\
+NNAR(24,1,12)[12] & \textcolor{black}{0} & \textcolor{black}{0} & \textcolor{black}{0} & \textcolor{red}{10.49} & \textcolor{red}{0.17} & \textcolor{red}{14.26} & \textcolor{red}{0.04}\\
+NNAR(24,1,12)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{218.37} & \textcolor{black}{3.88} & \textcolor{black}{254.5} & \textcolor{black}{0.93}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-40\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+Para los datos de entrenamiento, la red neuronal es el modelo que ofrece mejores resultados, sin embargo esta no es capaz de obtener un buen ajuste en el conjunto de validación pues sus medidas de rendimiento son las peores de los cuatro modelos. El modelo $ARIMA(3,1,4)(1,1,3)$ ofrece los mejores resultados en el conjunto de entrenamiento después de la red neuronal, y además cuenta con medidas muy competentes en el conjunto de validación, debido a este equilibrio es que se selcciona dicho modelo para realizar el pronóstico para los siguientes 60 periodos como se muestra a continuación:
+
+```{r, results='asis'}
+modfinal <- Arima(serie.completa, c(3,1,4), c(1,1,3), include.mean = TRUE)
+pron <- forecast(modfinal, h=60)
+basegraf <- data.frame(fecha=seq(ymd("1988-01-01"), ymd("2022-12-01"), by="months"),
+                       Original=c(serie.completa, rep(NA,60)),
+                       Arima=c(pron$fitted, 
+                               pron$mean),
+                       LIred=c(rep(NA, 360), pron$lower[,2]),
+                       LSred=c(rep(NA, 360), pron$upper[,2])) %>% 
+  gather(Serie, numero, -c(fecha, LIred, LSred)) %>% 
+  mutate(Serie=factor(Serie, levels = c("Original", "Regresion", "Exponencial", "Arima", "Autoarima")))
+
+basegraf %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=numero, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1"))+
+  geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+```{r, eval=FALSE}
+kable(do.call("cbind", list(Periodo= row.names(bas[1:30,]), data.frame(bas[1:30,]),
+                      data.frame(Periodo = row.names(bas[31:60,]), bas[31:60,]))), 
+      "latex", escape = F, booktabs = T, linesep = "")
+```
+
+\begin{table}[!h]
+\centering
+\caption{Pronóstico de los nacimientos para el periodo 2018-2022 e intervalos de confianza de 95 por ciento}
+\begin{tabular}{llrrrlrrr}
+\toprule
+  & Periodo & Pronostico & LI & LS & Periodo & Pronostico & LI & LS\\
+\midrule
+Ene 2018 & Ene 2018 & 5490 & 5054 & 5926 & Jul 2020 & 5683 & 5095 & 6272\\
+Feb 2018 & Feb 2018 & 5039 & 4591 & 5488 & Ago 2020 & 5831 & 5242 & 6420\\
+Mar 2018 & Mar 2018 & 5532 & 5077 & 5987 & Sep 2020 & 6177 & 5586 & 6768\\
+Abr 2018 & Abr 2018 & 5452 & 4985 & 5919 & Oct 2020 & 6254 & 5662 & 6846\\
+May 2018 & May 2018 & 5673 & 5199 & 6148 & Nov 2020 & 5967 & 5375 & 6559\\
+Jun 2018 & Jun 2018 & 5322 & 4843 & 5801 & Dic 2020 & 6027 & 5433 & 6621\\
+Jul 2018 & Jul 2018 & 5621 & 5133 & 6108 & Ene 2021 & 5618 & 5017 & 6219\\
+Ago 2018 & Ago 2018 & 5920 & 5428 & 6412 & Feb 2021 & 5008 & 4406 & 5610\\
+Sep 2018 & Sep 2018 & 6165 & 5669 & 6660 & Mar 2021 & 5616 & 5011 & 6221\\
+Oct 2018 & Oct 2018 & 6210 & 5709 & 6712 & Abr 2021 & 5532 & 4927 & 6138\\
+Nov 2018 & Nov 2018 & 6030 & 5526 & 6535 & May 2021 & 5596 & 4990 & 6203\\
+Dic 2018 & Dic 2018 & 5937 & 5430 & 6443 & Jun 2021 & 5366 & 4758 & 5974\\
+Ene 2019 & Ene 2019 & 5617 & 5081 & 6152 & Jul 2021 & 5629 & 5020 & 6237\\
+Feb 2019 & Feb 2019 & 5083 & 4544 & 5623 & Ago 2021 & 5782 & 5173 & 6392\\
+Mar 2019 & Mar 2019 & 5511 & 4968 & 6055 & Sep 2021 & 6175 & 5564 & 6786\\
+Abr 2019 & Abr 2019 & 5501 & 4951 & 6051 & Oct 2021 & 6174 & 5563 & 6785\\
+May 2019 & May 2019 & 5663 & 5111 & 6215 & Nov 2021 & 5959 & 5347 & 6571\\
+Jun 2019 & Jun 2019 & 5296 & 4741 & 5851 & Dic 2021 & 6038 & 5425 & 6651\\
+Jul 2019 & Jul 2019 & 5668 & 5108 & 6227 & Ene 2022 & 5534 & 4913 & 6155\\
+Ago 2019 & Ago 2019 & 5907 & 5346 & 6468 & Feb 2022 & 5004 & 4381 & 5627\\
+Sep 2019 & Sep 2019 & 6171 & 5607 & 6735 & Mar 2022 & 5629 & 5004 & 6254\\
+Oct 2019 & Oct 2019 & 6277 & 5710 & 6844 & Abr 2022 & 5469 & 4843 & 6095\\
+Nov 2019 & Nov 2019 & 6005 & 5438 & 6573 & May 2022 & 5605 & 4978 & 6233\\
+Dic 2019 & Dic 2019 & 5990 & 5420 & 6560 & Jun 2022 & 5353 & 4725 & 5982\\
+Ene 2020 & Ene 2020 & 5656 & 5078 & 6235 & Jul 2022 & 5554 & 4925 & 6183\\
+Feb 2020 & Feb 2020 & 5050 & 4471 & 5629 & Ago 2022 & 5776 & 5145 & 6406\\
+Mar 2020 & Mar 2020 & 5564 & 4982 & 6146 & Sep 2022 & 6127 & 5496 & 6758\\
+Abr 2020 & Abr 2020 & 5558 & 4973 & 6142 & Oct 2022 & 6092 & 5461 & 6724\\
+May 2020 & May 2020 & 5626 & 5041 & 6211 & Nov 2022 & 5981 & 5348 & 6614\\
+Jun 2020 & Jun 2020 & 5334 & 4746 & 5921 & Dic 2022 & 5995 & 5362 & 6629\\
+\bottomrule
+   \multicolumn{9} {p{\dimexpr \textwidth-40\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+\section{5. CONCLUSIONES Y RECOMENDACIONES}
+
+Entre los hallazgos más importantes, se encuentra que la entrada de la Ley de Paternidad responsable, aplicada desde el 2000 fue uno de los factores más influyentes para el descenso de la natalidad. Además, se encontró que los nacimientos poseen patrones estacionales marcados, siendo los meses de setiembre y octubre los que presentan mayores nacimientos registrados, producto de las fiestas de fin y principio de año del país (Rodríguez 2015).
+
+Se pronosticaron los nacimientos de Costa Rica hasta el año 2022, con un $ARIMA(3,1,4)(1,1,3)$, este modelo permite un alto nivel de precisión en la predicción los nacimientos y las mejores medidas de ajuste. El pronóstico revela que el número de nacimientos seguirán decreciendo. Por ende si los nacimientos siguen disminuyendo tal y como indica el modelo, y la esperanza de vida siga en aumento como se ha observado en la última década,  eventualmente la población de Costa Rica envejecerá y los jóvenes serán menos,  por tanto se invita a las autoridades a tomar diferentes medidas en diferentes ámbitos como: la inclusión del adulto mayor en el mercado laboral, mejoría de servicios de salud y política migratoria, promoción de ahorros en la población, así como inversión en investigaciones sobre envejecimiento que dirijan la toma decisiones.
+
+A continuación se resumen algunas recomendaciones concretas recopiladas de la bibliografía consultada [@asiafinanciero][@cap1][@portugal][@una][@AL]:
+
+*	Incluir políticas para proteger a los adultos mayores y mejorar su calidad de vida,
+*	mejorar las redes de seguridad social,
+*	ofrecer beneficios mínimos garantizados a los inmigrantes, 
+*	facilitar las condiciones a los trabajadores de más edad para que participen en la fuerza laboral, 
+*	atraer más inversión extranjera directa, impulsar la inversión interna y expandir su capacidad para adoptar nuevas tecnologías,
+*	promover políticas que permitan el acceso a empleos formales y bien remunerados. 
+*	aumentar fuerza trabajo mujeres, promoviendo redes formales de trabajo y el cuidado de otros miembros del hogar, ya sea de menores o personas adultas mayores,
+*	no imponer una edad de pensionarse tan temprana, para sí mejorar la sostenibilidad del sistema de pensiones,
+*	propiciar el ahorro, 
+*	favorece una adecuada planificación gerontológica,
+*	incentivar la promoción,  prevención, atención, curación y la rehabilitación en relación con estilos de vida saludable a auto cuidado,
+*	impulsar investigaciones sobre la salud, causas de muerte, pobreza en la vejez,
+*	estudiar las características de las futuras personas jubiladas, pues dada la alta escolaridad del país, se esperaría mayor cantidad de profesionales, lo que implica pensiones más caras,
+*	adaptar estructuras y servicios para que sean accesibles a todas las personas de edad, 
+
+Cabe resaltar que la creación de políticas tomando en cuenta el envejecimiento poblacional,  puede mitigar las consecuencias negativas para el futuro desarrollo del país, además se pueden obtener avances en la ciencia, la tecnología desarrollada para la adecuación de los servicios [@AL] . Es importante recordar que tener pocas personas en edad de trabajar, también tiene sus ventajas, entre las que se destacan la disminución de la saturación en el mercado laboral y de vivienda [@boom].
+
+No obstante, si se ignoran las proyecciones sobre el envejecimiento de la población, la crisis fisca actual, en vez de mejorar puede acentuarse como está sucediendo en otros países, como Rusia [@boomputin].
+
+Asimismo, se considera importante visibilizar este fenómeno para que la población tome previsiones, ya que en la actualidad no hay suficiente conciencia, un ejemplo claro de ello es que hoy en día hay más pediatras que geriatras, a pesar de que la pirámide poblacional puede invertirse en un futuro cercano [@una].
+
+Para futuras investigaciones se recomienda analizar de forma multivariadas las diferentes series demográficas, para así obtener un panorama integral, pues como se me mencionó, estos procesos son interdependientes. Algunos indicadores que se pueden incluir son: la tasa de natalidad, global de fecundidad, mortalidad general, mortalidad infantil, la esperanza de vida al nacer y a los 65 años, tasa de dependencia, y la población de 65 años o más.
+
+
+\section{6. ANEXOS}
+
+
+
+```{r}
+#Gráfico 1.1: Población total del país y población de 65 años y más 
+library(readxl)
+Poblaciones <- read_excel("Archivos/Poblaciones.xlsx")
+
+total <- Poblaciones %>% 
+  gather(año, poblacion, -Edad) %>% 
+  group_by(año) %>% 
+  summarise(Total=sum(poblacion))
+
+mayores <- Poblaciones %>% 
+  gather(año, poblacion, -Edad) %>% 
+  filter(Edad>=65) %>% 
+  group_by(año) %>% 
+  summarise(`65+`=sum(poblacion))
+
+d <- merge(total, mayores, by="año") %>% 
+  gather(Población, poblacion, -año) %>% 
+  mutate(año=as.numeric(año))
+
+library(scales)
+a1 <- ggplot(d, aes(x=año, y=poblacion, colour=Población))+
+  geom_line(size = 0.9)+
+  #guides(colour=FALSE)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Anexo 1: Población total y mayores de 65 años\nen Costa Rica para el periodo 1988 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="Población",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1, 10, 10, 10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(1988, 1996, 2003, 2010, 2017))+
+  scale_y_continuous(labels = comma)
+
+
+
+
+
+
+```
+
+```{r}
+#Gráfico 1.2: Esperanza de vida general y la EV de los de 65 años diferenciada por sexo.
+
+
+load("C:/Users/Dell/OneDrive/Academico/Proyectos/GitHub/Academico/Articulo final/Archivos/Tablas de vida/tablas.RData")
+a2 <- tablas %>% 
+  unite(Esperanza, c(Sexo, Edad),-c(EV, año), sep=" ") %>% 
+ggplot(., aes(x=año, y=EV, colour=Esperanza))+
+  geom_line(size = 0.9)+
+  #guides(colour=FALSE)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Anexo 3: Esperanza de vida al nacer y para mayores de 65 años\nen Costa Rica para el periodo 1988 - 2017 según sexo") +
+  labs(caption="Fuente: UED-INEC",
+       y="Esperanza de vida (años)",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1, 10, 10, 10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(1995, 2003, 2010, 2018))+
+  scale_y_continuous(labels = comma)
+
+
+
+
+```
+
+```{r}
+#Gráfico 1.2: Tasa de mortalidad infantil y la general o por edad (Evalúelo).
+Indicadores <- read_excel("Archivos/Indicadores.xlsx", 
+    col_types = c("numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric"))
+a3 <- Indicadores %>%
+  select(Año, `Tasa de mortalidad infantil`, `Tasa bruta de mortalidad`) %>% 
+  gather(Tasa, valor, -Año) %>% 
+  filter(Año>=1988) %>% 
+  ggplot(., aes(x=Año, y=valor, colour=Tasa))+
+  geom_line(size = 0.9)+
+  #guides(colour=FALSE)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Anexo 2: Tasa bruta de mortalidad y de mortalidad infantil\nen Costa Rica para el periodo 1988 - 2017 según sexo") +
+  labs(caption="Fuente: UED-INEC",
+       y="Tasa (por cada 1000 habitantes/nacimientos)",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1, 10, 10, 10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(1995, 2003, 2010, 2018))+
+  scale_y_continuous(labels = comma)
+```
+
+```{r}
+##Gráfico 1.3: Tasa global de fecundidad
+a4 <- Indicadores %>%
+  select(Año, `Tasa global de fecundidad`) %>% 
+  filter(Año>=1988) %>% 
+  ggplot(., aes(x=Año, y=`Tasa global de fecundidad`))+
+  geom_line(color = "#00AFBB", size = 0.9)+
+  #guides(colour=FALSE)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Anexo 4: Tasa global de fecundidad\nen Costa Rica para el periodo 1988 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="Tasa",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1, 10, 10, 10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(1995, 2003, 2010, 2016))+
+  scale_y_continuous(labels = comma)
+```
+
+```{r}
+a1;a2;a3;a4
+```
+
+```{r}
+library(devtools)
+source_url('https://gist.githubusercontent.com/fawda123/7471137/raw/466c1474d0a505ff044412703516c34f1a4684a5/nnet_plot_update.r')
+wts1<-red$model[[1]]$wts
+struct1<-red$model[[1]]$n
+plot.nnet(wts1,struct=struct1)
+title("Anexo 5: Estructura de la red")
+```
+
+
+```{r, eval=FALSE}
+####                       MEDIDAS DE MODELOS DE REGRESION
+
+```
+
+\begin{table}[!h]
+\centering
+\caption{Criterios de información y medidas de rendimiento de modelos de regresión}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & RMSE & MASE\\
+\midrule
+Regresion T & \textcolor{black}{4275.01} & \textcolor{black}{4275.08} & \textcolor{black}{4286.57} & \textcolor{black}{371.4} & \textcolor{black}{5.9} & \textcolor{black}{461.11} & \textcolor{black}{1.58}\\
+Regresion T Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{209.29} & \textcolor{black}{3.79} & \textcolor{black}{297.9} & \textcolor{black}{0.89}\\
+Regresion T+E & \textcolor{black}{3903.04} & \textcolor{black}{3904.3} & \textcolor{black}{3956.97} & \textcolor{black}{202.26} & \textcolor{black}{3.21} & \textcolor{black}{261.8} & \textcolor{black}{0.86}\\
+Regresion T+E Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{202.23} & \textcolor{black}{3.53} & \textcolor{black}{259.71} & \textcolor{black}{0.86}\\
+Regresión exponencial & \textcolor{red}{-2201.01} & \textcolor{red}{-2199.75} & \textcolor{red}{-2147.08} & \textcolor{red}{200.35} & \textcolor{red}{3.17} & \textcolor{red}{259.43} & \textcolor{red}{0.85}\\
+Regresión exponencial Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{184.07} & \textcolor{blue}{3.24} & \textcolor{blue}{241.68} & \textcolor{blue}{0.78}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-40\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+```{r, eval=FALSE}
+###                     MEDIDAS DE SUAVIZAMIENTO EXPONENCIAL
+
+```
+
+\begin{table}[!h]
+\centering
+\caption{Criterios de información y medidas de rendimiento de modelos de suavizamiento exponencial}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & MASE & RMSE\\
+\midrule
+(A,N,N) & \textcolor{black}{6299.32} & \textcolor{black}{6299.39} & \textcolor{black}{6310.88} & \textcolor{black}{350.77} & \textcolor{black}{5.58} & \textcolor{black}{1.49} & \textcolor{black}{453.06}\\
+(A,N,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{354.73} & \textcolor{black}{6.47} & \textcolor{black}{1.51} & \textcolor{black}{455.58}\\
+(A,A,N) & \textcolor{black}{6303.37} & \textcolor{black}{6303.55} & \textcolor{black}{6322.63} & \textcolor{black}{351.08} & \textcolor{black}{5.58} & \textcolor{black}{1.49} & \textcolor{black}{453.09}\\
+(A,A,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{344.31} & \textcolor{black}{6.29} & \textcolor{black}{1.46} & \textcolor{black}{449.82}\\
+(A,Ad,N) & \textcolor{black}{6305.34} & \textcolor{black}{6305.58} & \textcolor{black}{6328.45} & \textcolor{black}{351.09} & \textcolor{black}{5.59} & \textcolor{black}{1.49} & \textcolor{black}{453.07}\\
+(A,Ad,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{354.72} & \textcolor{black}{6.46} & \textcolor{black}{1.51} & \textcolor{black}{455.55}\\
+(A,N,A) & \textcolor{black}{5877.44} & \textcolor{black}{5878.88} & \textcolor{black}{5935.22} & \textcolor{black}{180.5} & \textcolor{black}{2.86} & \textcolor{black}{0.77} & \textcolor{black}{238.74}\\
+(A,N,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{190.54} & \textcolor{black}{3.32} & \textcolor{black}{0.81} & \textcolor{black}{222.89}\\
+(A,A,A) & \textcolor{black}{5883.11} & \textcolor{black}{5884.97} & \textcolor{black}{5948.6} & \textcolor{black}{179.67} & \textcolor{black}{2.84} & \textcolor{black}{0.76} & \textcolor{black}{239.32}\\
+(A,A,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{185.74} & \textcolor{black}{3.24} & \textcolor{black}{0.79} & \textcolor{black}{215.64}\\
+(A,Ad,A) & \textcolor{black}{5885.61} & \textcolor{black}{5887.69} & \textcolor{black}{5954.95} & \textcolor{black}{180.47} & \textcolor{black}{2.86} & \textcolor{black}{0.77} & \textcolor{black}{239.49}\\
+(A,Ad,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{190.4} & \textcolor{black}{3.32} & \textcolor{black}{0.81} & \textcolor{black}{222.72}\\
+(M,N,N) & \textcolor{black}{6276.83} & \textcolor{black}{6276.9} & \textcolor{black}{6288.38} & \textcolor{black}{351.23} & \textcolor{black}{5.59} & \textcolor{black}{1.49} & \textcolor{black}{453.13}\\
+(M,N,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{356.24} & \textcolor{black}{6.49} & \textcolor{black}{1.51} & \textcolor{black}{456.75}\\
+(M,M,N) & \textcolor{black}{6280.83} & \textcolor{black}{6281.01} & \textcolor{black}{6300.09} & \textcolor{black}{350.96} & \textcolor{black}{5.59} & \textcolor{black}{1.49} & \textcolor{black}{453.46}\\
+(M,M,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{385.58} & \textcolor{black}{7} & \textcolor{black}{1.64} & \textcolor{black}{474.12}\\
+(M,Md,N) & \textcolor{black}{6282.39} & \textcolor{black}{6282.64} & \textcolor{black}{6305.51} & \textcolor{black}{351.33} & \textcolor{black}{5.6} & \textcolor{black}{1.49} & \textcolor{black}{453.76}\\
+(M,Md,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{356.7} & \textcolor{black}{6.5} & \textcolor{black}{1.51} & \textcolor{black}{457.05}\\
+(M,N,M) & \textcolor{red}{5849.68} & \textcolor{red}{5851.13} & \textcolor{red}{5907.47} & \textcolor{black}{179.01} & \textcolor{black}{2.84} & \textcolor{black}{0.76} & \textcolor{black}{233.26}\\
+(M,N,M)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{184.12} & \textcolor{black}{3.22} & \textcolor{black}{0.78} & \textcolor{black}{214.78}\\
+(M,M,M) & \textcolor{black}{5852.27} & \textcolor{black}{5854.12} & \textcolor{black}{5917.76} & \textcolor{black}{178.67} & \textcolor{black}{2.83} & \textcolor{black}{0.76} & \textcolor{red}{232.62}\\
+(M,M,M)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{178.72} & \textcolor{blue}{3.12} & \textcolor{blue}{0.76} & \textcolor{blue}{205.27}\\
+(M,Md,M) & \textcolor{black}{5866.79} & \textcolor{black}{5868.87} & \textcolor{black}{5936.13} & \textcolor{red}{177.42} & \textcolor{red}{2.81} & \textcolor{red}{0.75} & \textcolor{black}{237.63}\\
+(M,Md,M)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{183.23} & \textcolor{black}{3.2} & \textcolor{black}{0.78} & \textcolor{black}{217.41}\\
+(M,N,A) & \textcolor{black}{5864.33} & \textcolor{black}{5865.77} & \textcolor{black}{5922.11} & \textcolor{black}{179.49} & \textcolor{black}{2.84} & \textcolor{black}{0.76} & \textcolor{black}{238.57}\\
+(M,N,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{190.26} & \textcolor{black}{3.31} & \textcolor{black}{0.81} & \textcolor{black}{221.44}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-40\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+```{r, eval=FALSE}
+
+medidas3.1 <- subset(arimas, Modelo == c("ARIMA(3,1,4)(1,1,3)[12] ", "ARIMA(3,1,4)(1,1,3)[12]  Validacion"))
+medidas3.1$Modelo <- factor(medidas3.1$Modelo)
+medidas3.2 <- subset(arimas, Modelo == c("ARIMA(1,1,0)(2,1,0)[12] ", "ARIMA(1,1,0)(2,1,0)[12]  Validacion"))
+medidas3.2$Modelo <- factor(medidas3.2$Modelo)
+medidas3.3 <- subset(arimas, Modelo == c("ARIMA(5,1,3)(5,1,3)[12] ", "ARIMA(5,1,3)(5,1,3)[12]  Validacion"))
+medidas3.3$Modelo <- factor(medidas3.3$Modelo)
+medidas3.4 <- subset(arimas, Modelo == c("ARIMA(0,1,1)(2,1,0)[12] ", "ARIMA(0,1,1)(2,1,0)[12]  Validacion"))
+medidas3.4$Modelo <- factor(medidas3.4$Modelo)
+medidas3.5 <- subset(arimas, Modelo == c("ARIMA(3,1,1)(0,1,0)[12] ", "ARIMA(3,1,1)(0,1,0)[12]  Validacion"))
+medidas3.5$Modelo <- factor(medidas3.5$Modelo)
+medidas.finales.arima <- do.call("rbind", list(medidas3.1, medidas3.2, medidas3.3,medidas3.4, medidas3.5))
+medidas.finales.arima$Modelo <- factor(medidas.finales.arima$Modelo)
+
+tabla(medidas3.4, "entrenamiento")
+tabla(medidas3.4, "validacion")
+
+tabla.latex(medidas.finales.arima)
+
+```
+
+\begin{table}[!h]
+\centering
+\caption{Criterios de información y medidas de rendimiento de modelos ARIMA}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & RMSE & MASE\\
+\midrule
+ARIMA(3,1,4)(1,1,3)[12] & \textcolor{red}{4607.83} & \textcolor{red}{4608.8} & \textcolor{red}{4653.6} & \textcolor{red}{161.07} & \textcolor{red}{2.56} & \textcolor{red}{214.29} & \textcolor{red}{0.68}\\
+ARIMA(3,1,4)(1,1,3)[12]  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{185.5} & \textcolor{black}{3.24} & \textcolor{black}{204.55} & \textcolor{black}{0.79}\\
+ARIMA(1,1,0)(2,1,0)[12] & \textcolor{black}{4751.59} & \textcolor{black}{4751.71} & \textcolor{black}{4766.85} & \textcolor{black}{206.66} & \textcolor{black}{3.29} & \textcolor{black}{280.3} & \textcolor{black}{0.88}\\
+ARIMA(1,1,0)(2,1,0)[12]  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{144.65} & \textcolor{blue}{2.58} & \textcolor{black}{178.66} & \textcolor{blue}{0.61}\\
+ARIMA(5,1,3)(5,1,3)[12] & \textcolor{black}{4617.04} & \textcolor{black}{4618.97} & \textcolor{black}{4681.88} & \textcolor{black}{162.14} & \textcolor{black}{2.59} & \textcolor{black}{217.88} & \textcolor{black}{0.69}\\
+ARIMA(5,1,3)(5,1,3)[12]  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{172.1} & \textcolor{black}{3.02} & \textcolor{black}{196.07} & \textcolor{black}{0.73}\\
+ARIMA(0,1,1)(2,1,0)[12] & \textcolor{black}{4680.15} & \textcolor{black}{4680.27} & \textcolor{black}{4695.41} & \textcolor{black}{187.03} & \textcolor{black}{2.99} & \textcolor{black}{251.5} & \textcolor{black}{0.79}\\
+ARIMA(0,1,1)(2,1,0)[12]  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{145.15} & \textcolor{blue}{2.58} & \textcolor{blue}{174.15} & \textcolor{black}{0.62}\\
+ARIMA(3,1,1)(0,1,0)[12] & \textcolor{black}{4742.15} & \textcolor{black}{4742.33} & \textcolor{black}{4761.22} & \textcolor{black}{206.04} & \textcolor{black}{3.3} & \textcolor{black}{275.34} & \textcolor{black}{0.88}\\
+ARIMA(3,1,1)(0,1,0)[12]  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{145.79} & \textcolor{black}{2.62} & \textcolor{black}{181.57} & \textcolor{black}{0.62}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-40\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+```{r, eval=FALSE}
+
+medidas3.1 <- subset(arimas.int, Modelo == c("Regression with ARIMA(5,1,3)(1,1,3)[12] errors ", "Regression with ARIMA(5,1,3)(1,1,3)[12] errors  Validacion"))
+medidas3.1$Modelo <- factor(medidas3.1$Modelo)
+medidas3.2 <- subset(arimas.int, Modelo == c("Regression with ARIMA(1,1,0)(2,1,0)[12] errors ", "Regression with ARIMA(1,1,0)(2,1,0)[12] errors  Validacion"))
+medidas3.2$Modelo <- factor(medidas3.2$Modelo)
+medidas3.3 <- subset(arimas.int, Modelo == c("Regression with ARIMA(5,1,3)(2,1,2)[12] errors ", "Regression with ARIMA(5,1,3)(2,1,2)[12] errors  Validacion"))
+medidas3.3$Modelo <- factor(medidas3.3$Modelo)
+medidas3.4 <- subset(arimas.int, Modelo == c("Regression with ARIMA(6,1,6)(1,1,1)[12] errors ", "Regression with ARIMA(6,1,6)(1,1,1)[12] errors  Validacion"))
+medidas3.4$Modelo <- factor(medidas3.4$Modelo)
+medidas3.5 <- subset(arimas.int, Modelo == c("Regression with ARIMA(5,1,3)(2,1,3)[12] errors ", "Regression with ARIMA(5,1,3)(2,1,3)[12] errors  Validacion"))
+medidas3.5$Modelo <- factor(medidas3.5$Modelo)
+medidas.finales.arima <- do.call("rbind", list(medidas3.1, medidas3.2, medidas3.3,medidas3.4, medidas3.5))
+medidas.finales.arima$Modelo <- factor(medidas.finales.arima$Modelo)
+
+tabla(medidas3.4, "entrenamiento")
+tabla(medidas3.4, "validacion")
+
+tabla.latex(medidas.finales.arima)
+```
+
+\begin{table}[!h]
+\centering
+\caption{Criterios de información y medidas de rendimiento de modelos ARIMA con intervención}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & RMSE & MASE\\
+\midrule
+ARIMA(5,1,3)(1,1,3)[12]& \textcolor{red}{4609.85} & \textcolor{red}{4611.36} & \textcolor{red}{4667.07} & \textcolor{black}{157.82} & \textcolor{black}{2.51} & \textcolor{black}{210.83} & \textcolor{red}{0.67}\\
+ARIMA(5,1,3)(1,1,3)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{214.34} & \textcolor{black}{3.73} & \textcolor{black}{260.65} & \textcolor{black}{0.91}\\
+ARIMA(1,1,0)(2,1,0)[12] errors & \textcolor{black}{4755.5} & \textcolor{black}{4755.76} & \textcolor{black}{4778.39} & \textcolor{black}{206.67} & \textcolor{black}{3.29} & \textcolor{black}{280.25} & \textcolor{black}{0.88}\\
+ARIMA(1,1,0)(2,1,0)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{144.74} & \textcolor{blue}{2.58} & \textcolor{blue}{178.69} & \textcolor{blue}{0.61}\\
+ARIMA(5,1,3)(2,1,2)[12] errors & \textcolor{black}{4610.16} & \textcolor{black}{4611.67} & \textcolor{black}{4667.38} & \textcolor{red}{157.24} & \textcolor{red}{2.5} & \textcolor{red}{210.5} & \textcolor{red}{0.67}\\
+ARIMA(5,1,3)(2,1,2)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{217.41} & \textcolor{black}{3.78} & \textcolor{black}{265.1} & \textcolor{black}{0.92}\\
+ARIMA(6,1,6)(1,1,1)[12] errors & \textcolor{black}{4611.29} & \textcolor{black}{4613.23} & \textcolor{black}{4676.13} & \textcolor{black}{158.19} & \textcolor{black}{2.52} & \textcolor{black}{211.14} & \textcolor{red}{0.67}\\
+ARIMA(6,1,6)(1,1,1)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{193.66} & \textcolor{black}{3.39} & \textcolor{black}{218.78} & \textcolor{black}{0.82}\\
+ARIMA(5,1,3)(2,1,3)[12] errors & \textcolor{black}{4612.83} & \textcolor{black}{4614.54} & \textcolor{black}{4673.85} & \textcolor{black}{160.23} & \textcolor{black}{2.55} & \textcolor{black}{213.06} & \textcolor{black}{0.68}\\
+ARIMA(5,1,3)(2,1,3)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{200.97} & \textcolor{black}{3.51} & \textcolor{black}{235.92} & \textcolor{black}{0.85}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-40\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\section{7. REFERENCIAS}    
