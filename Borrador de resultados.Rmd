@@ -103,8 +103,7 @@ no_estacional_bajo; no_estacional_alto; estacional_bajo; estacional_alto
 
 ```{r}
 set.seed(16051989)
-dat <- rnorm(100, 1000, 25)
-dat <- rpois(100, 100)
+dat <- rnorm(100, 10, 1)
 # no_estacional_bajo <- no_estacional_bajo[sample(1:nrow(no_estacional_bajo), 2, replace = FALSE),]
 # no_estacional_alto <- no_estacional_alto[sample(1:nrow(no_estacional_alto), 2, replace = FALSE),]
 # proceso_no_estacional <- do.call(rbind, list(no_estacional_bajo, no_estacional_alto))
@@ -386,10 +385,86 @@ lapply(list(comparacion_no_estacional_bajo,
 
 # Series reales
 
+```{r}
+comparacion <- function(data, proporcion, proceso, periodicidad, paralelo,...){
+    require(parallel)
+    require(tidyr)
+    require(dplyr)
+    corte <- round(length(data)*proporcion, 0)
+    train <<- subset(data, end=corte)
+    test <<- subset(data, start=corte+1)
+    haa <- auto.arima(train)
+    op <- popstudy::op.arima(arima_process=proceso,
+                       seasonal_periodicity = periodicidad,
+                       time_serie = data,
+                       horiz = 50,
+                       prop = proporcion,
+                       parallelize = paralelo
+                       )#https://stackoverflow.com/questions/7233288/non-stationary-seasonal-ar-part-from-css-error-in-r/7236919
+    
+    #arima_estandar <- Arima(y = data, method="ML",...)
+    list(testing=test, haa=haa, op=op#, 
+         #arima_estandar=arima_estandar
+         )
+}
+
+resumen_resultados <- function(x, fecha_inicio, fecha_fin){
+  testing <- x$testing
+  
+  resultados_reales <- lapply(list(x$haa, x$op$best_model), function(x){
+  pronostico <- forecast(x, h=length(testing))$mean %>% 
+    c 
+  medidas <- accuracy(pronostico, testing) %>% 
+    as.data.frame()
+  pronostico <- data.frame(pronostico=pronostico) %>% t %>% 
+    as.data.frame()
+  list(pronostico=pronostico, 
+       medidas=medidas)
+})
+  
+  resultados_reales <- lapply(list(x$haa, x$op$best_model), function(x){
+  pronostico <- forecast(x, h=length(testing))$mean %>% 
+    c 
+  medidas <- accuracy(pronostico, testing) %>% 
+    as.data.frame()
+  pronostico <- data.frame(pronostico=pronostico) %>% t %>% 
+    as.data.frame()
+  list(pronostico=pronostico, 
+       medidas=medidas)
+})
+
+pronostico <-  do.call(rbind, list(resultados_reales[[1]]$pronostico,
+                    resultados_reales[[2]]$pronostico,
+                    data.frame(pronostico=testing) %>% 
+                      t %>% 
+                      as.data.frame()))
+
+names(pronostico) <- seq(ymd(fecha_inicio),ymd(fecha_fin), by = '1 month')
+pronostico <- pronostico %>% 
+  mutate(Serie=c("autoarima", "sobreparametrizacion", "original")) %>% 
+  gather(fecha, valor, -Serie) %>% 
+  mutate(fecha=ymd(fecha))
+
+#####
+
+medidas <- do.call(rbind, list(resultados_reales[[1]]$medidas,
+                    resultados_reales[[2]]$medidas)) %>% 
+  mutate(Serie=c("autoarima", "sobreparametrizacion")) %>% 
+  select(RMSE, MAE, MAPE, Serie) %>% 
+  gather(medida, valor, -Serie) %>% 
+  pivot_wider(names_from = medida, values_from=valor)
+
+list(pronostico=pronostico, 
+     medidas=medidas)
+}
+```
+
+
 ## Tasa de mortalidad infantil interanual, iniciando desde enero de 1989 hasta diciembre de 2017. 
 
 ```{r}
-base <- read_excel(".\\Material de referencia\\Para sección de resultados\\01 - Tasa de mortalidad infantil interanual\\TMIIR.xlsx")
+# base <- read_excel(".\\Material de referencia\\Para sección de resultados\\01 - Tasa de mortalidad infantil interanual\\TMIIR.xlsx")
+base <- read_excel("./Material de referencia/Para sección de resultados/01 - Tasa de mortalidad infantil interanual/TMIIR.xlsx")
 TS <- ts(base$tmii, start = c(1989, 1), end = c(2017, 12), frequency = 12)
 ```
 
@@ -467,11 +542,43 @@ ggsdc(., aes(x = fecha, y = tmii),
   #scale_x_discrete(expand = c(0,0))
 ```
 
+
+```{r}
+TMII <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+resumen_resultados(TMII, fecha_inicio = '2012-03-01', fecha_fin = '2017-12-01')
+resumen_resultados(TMII)$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
 ## Tasa global de fecundidad, iniciando desde enero del 2000 hasta diciembre del 2017. 
 
 
 ```{r}
-base <- read_excel(".\\Material de referencia\\Para sección de resultados\\02 - Tasa global de fecundidad\\nacimientos.xlsx") %>% 
+base <- read_excel("./Material de referencia/Para sección de resultados/02 - Tasa global de fecundidad/nacimientos.xlsx") %>% 
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\02 - Tasa global de fecundidad\\nacimientos.xlsx") %>% 
   gather(año, valor, -mes) %>% 
   mutate(fecha=ymd(paste(año, mes, sep="-"))) %>% 
   select(fecha, valor)
@@ -550,6 +657,36 @@ ggsdc(., aes(x = fecha, y = valor),
         plot.caption=element_text(hjust=0, vjust=0.5,
                                   margin=margin(t=1,10,10,10)))# +
   #scale_x_discrete(expand = c(0,0))
+```
+
+```{r}
+NACIMIENTOS <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+resumen_resultados(NACIMIENTOS, fecha_inicio="2012-01-01", fecha_fin="2017-12-01")
+resumen_resultados(NACIMIENTOS,fecha_inicio="2012-01-01", fecha_fin="2017-12-01")$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
 ```
 
 ## Mortalidad por causa externa, iniciando desde enero del 2000 hasta diciembre del 2017.
@@ -633,10 +770,40 @@ ggsdc(., aes(x = fecha, y = Total),
   #scale_x_discrete(expand = c(0,0))
 ```
 
+```{r}
+EXTERNA <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+resumen_resultados(EXTERNA, fecha_inicio="2014-06-01", fecha_fin="2017-12-01")
+resumen_resultados(EXTERNA, fecha_inicio="2014-06-01", fecha_fin="2017-12-01")$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
 ## Incentivos salariales del sector público, iniciando en enero del 2007 hasta junio del 2018.
 
 ```{r}
-base <- read_excel(".\\Material de referencia\\Para sección de resultados\\04 - Incentivos salariales del sector público\\Datos examen1.xlsx") %>% 
+base <- read_excel("./Material de referencia/Para sección de resultados/04 - Incentivos salariales del sector público/Datos examen1.xlsx") %>% 
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\04 - Incentivos salariales del sector público\\Datos examen1.xlsx") %>% 
   mutate(valor=`Incentivos salariales`,
          fecha=ymd(Fecha)) %>% 
   select(fecha, valor)
@@ -717,10 +884,41 @@ ggsdc(., aes(x = fecha, y = valor),
   #scale_x_discrete(expand = c(0,0))
 ```
 
+
+```{r}
+INCENTIVOS <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+resumen_resultados(INCENTIVOS, fecha_inicio="2013-11-01", fecha_fin="2015-06-01")
+resumen_resultados(INCENTIVOS, fecha_inicio="2013-11-01", fecha_fin="2015-06-01")$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
 ## Intereses y comisiones del sector público, iniciando en enero del 2007 hasta junio del 2018.
 
 ```{r}
-base <- read_excel(".\\Material de referencia\\Para sección de resultados\\05 - Intereses y comisiones del sector público\\Datos examen2.xlsx") %>% 
+base <- read_excel("./Material de referencia/Para sección de resultados/05 - Intereses y comisiones del sector público/Datos examen2.xlsx") %>%
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\05 - Intereses y comisiones del sector público\\Datos examen2.xlsx") %>% 
   mutate(valor=`Intereses y comisiones`,
          fecha=ymd(Fecha)) %>% 
   select(fecha, valor) %>% 
@@ -801,5 +999,38 @@ ggsdc(., aes(x = fecha, y = valor),
                                   margin=margin(t=1,10,10,10)))# +
   #scale_x_discrete(expand = c(0,0))
 ```
+```{r}
+INTERESES$testing
+```
 
+
+```{r}
+INTERESES <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+resumen_resultados(INTERESES, fecha_inicio="2016-08-01", fecha_fin="2018-06-01")
+resumen_resultados(INTERESES, fecha_inicio="2016-08-01", fecha_fin="2018-06-01")$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
 ## Demanda eléctrica, iniciando en enero del 2011 hasta junio del 2018 
