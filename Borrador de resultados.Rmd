@@ -72,7 +72,7 @@ estacional_bajo <- estacional
 
 # Altos
 
-escenarios <- expand.grid(p=2:4, d=0:1, q=2:4,P=2:4, D=0:1, Q=2:4)
+escenarios <- expand.grid(p=2:5, d=0:1, q=2:5,P=2:5, D=0:1, Q=2:5)
 no_estacional <- escenarios %>% 
     select(p:q)
 no_estacional <- no_estacional[rowSums(no_estacional)>0,] %>% 
@@ -95,7 +95,7 @@ no_estacional_bajo; no_estacional_alto; estacional_bajo; estacional_alto
 
 ```{r}
 set.seed(16051989)
-dat <- rnorm(100, 10, 1)
+dat <- rnorm(100, 1000, 25)
 # no_estacional_bajo <- no_estacional_bajo[sample(1:nrow(no_estacional_bajo), 2, replace = FALSE),]
 # no_estacional_alto <- no_estacional_alto[sample(1:nrow(no_estacional_alto), 2, replace = FALSE),]
 # proceso_no_estacional <- do.call(rbind, list(no_estacional_bajo, no_estacional_alto))
@@ -128,7 +128,7 @@ popstudy::descriptive_plot(data = data.frame(Yt=dat), labels = NULL, Yt)
 resultados_no_estacional_bajo <- lapply(pos_no_estacional_bajo, function(x){
   
   pdq <- no_estacional_bajo[x,1:3] %>% unlist 
-  tryCatch({simular.proceso(data=dat, n=500, temporalidad=1,
+  tryCatch({simular.proceso(data=dat, n=200, temporalidad=1,
                   no.estacional=pdq)}, 
            error=function(e) NULL)
   
@@ -139,7 +139,7 @@ resultados_no_estacional_bajo <- resultados_no_estacional_bajo[!sapply(resultado
 resultados_no_estacional_alto <- lapply(pos_no_estacional_alto, function(x){
   
   pdq <- no_estacional_alto[x,1:3] %>% unlist 
-  tryCatch({simular.proceso(data=dat, n=500, temporalidad=1,
+  tryCatch({simular.proceso(data=dat, n=200, temporalidad=1,
                   no.estacional=pdq)}, 
            error=function(e) NULL)
   
@@ -152,7 +152,7 @@ resultados_estacional_bajo <- lapply(pos_estacional_bajo, function(x){
   
   pdq <- estacional_bajo[x,1:3] %>% unlist
   PDQ <- estacional_bajo[x,4:6] %>% unlist
-  tryCatch({simular.proceso(data=dat, n=500, temporalidad=12,
+  tryCatch({simular.proceso(data=dat, n=200, temporalidad=12,
                   no.estacional=pdq,
                   estacional = PDQ)}, 
            error=function(e) NULL)
@@ -165,7 +165,7 @@ resultados_estacional_alto <- lapply(pos_estacional_alto, function(x){
   
   pdq <- estacional_alto[x,1:3] %>% unlist
   PDQ <- estacional_alto[x,4:6] %>% unlist
-  tryCatch({simular.proceso(data=dat, n=500, temporalidad=12,
+  tryCatch({simular.proceso(data=dat, n=200, temporalidad=12,
                   no.estacional=pdq,
                   estacional = PDQ)}, 
            error=function(e) NULL)
@@ -177,188 +177,207 @@ resultados_estacional_alto <- resultados_estacional_alto[!sapply(resultados_esta
 
 # Comparacion de resultados
 
-
-
-```{r}
-op.arima <- function(arima_process = c(p = 1, d = 1, q = 1, 
-                                       P = 1, D = 1, Q = 1), 
+```{r, eval=FALSE}
+op.arima <- function(arima_process = c(p = 1, d = 1, q = 1,
+                                       P = 1, D = 1, Q = 1),
                      seasonal_periodicity,
                      time_serie, reg = NULL, horiz = 12,
                      prop=.8, training_weight=.2, testing_weight=.8,
                      parallelize=FALSE, clusters=detectCores(logical = FALSE),...){
-    
+
     data_partition <- round(length(time_serie)*prop, 0)
     train <<- subset(time_serie, end=data_partition)
     test <<- subset(time_serie, start=data_partition+1)
-    
-    ####################################################################################    
-    arima_model <- function(time_serie, non_seasonal, seasonal, periodic, regr = NULL){
-        
+
+    ####################################################################################
+    arima_model <- function(time_serie, non_seasonal, seasonal, periodic, regr = NULL,...){
+
+        if(is.list(non_seasonal)){
+            non_seasonal <- unlist(non_seasonal)
+        }
+
+        if(is.list(seasonal)){
+            seasonal <- unlist(seasonal)
+        }
+
         seasonal_part <- list(order=seasonal, period=periodic)
         if(is.null(regr)){
             arima_model <- tryCatch({
-                Arima(time_serie, 
-                      order = non_seasonal, 
+                Arima(time_serie,
+                      order = non_seasonal,
                       seasonal = seasonal_part,...)
-            }, 
-            error = function(e) NULL)  
+            },
+            error = function(e) NULL)
         }
-        
+
         if(!is.null(regr)){
             arima_model <-tryCatch({
-                Arima(time_serie, 
-                      order = non_seasonal, 
-                      seasonal = seasonal_part, 
+                Arima(time_serie,
+                      order = non_seasonal,
+                      seasonal = seasonal_part,
                       xreg = regr,...)
-            }, 
-            error = function(e) NULL)   
+            },
+            error = function(e) NULL)
         }
-        
+
         if(!is.null(arima_model)){
             degrees_of_freedom <- arima_model$nobs - length(arima_model$coef)
             t_value <- arima_model$coef/sqrt(diag(arima_model$var.coef))
             prob <- stats::pf(t_value^2, df1 = 1, df2 = degrees_of_freedom, lower.tail = FALSE)
             ifelse(sum(1*prob>0.05)<1, return(arima_model), 1)
         }
-        
+
     }
     ############################################################################################
     #Estimación de las final_measures de model_performance y los criterios de información
     arima_measures <- function(arima_model, testing, horizon, regr = NULL){
-        
+
         ##model_spec del arima_model
         model_spec <- capture.output(arima_model)
         model_spec <- substr(model_spec[2],1, 23)
-        
+
         ##Criterios de model_info
         data <- capture.output(summary(arima_model))
         data <- data[grepl("AIC", data) == T]
         model_info <- strsplit(data, " ")
         pos <- which(sapply(model_info, nchar)>0)
         model_info <- model_info[[1]][pos]
-        model_info <- do.call("rbind", strsplit(model_info, "=")) %>% 
-            data.frame() 
+        model_info <- do.call("rbind", strsplit(model_info, "=")) %>%
+            data.frame()
         colnames(model_info) <- c("Medida", "Valor")
-        model_info <- model_info %>% 
-            mutate(Valor = as.numeric(as.character(Valor))) %>% 
-            spread(Medida, Valor) %>% 
+        model_info <- model_info %>%
+            mutate(Valor = as.numeric(as.character(Valor))) %>%
+            spread(Medida, Valor) %>%
             data.frame(arima_model = model_spec)
-        
+
         ##final_measures de model_performance
-        model_performance <- data.frame(arima_model = c(model_spec, paste(model_spec, "Validacion")), 
+        model_performance <- data.frame(arima_model = c(model_spec, paste(model_spec, "Validacion")),
                                         accuracy(forecast(arima_model, horizon, xreg = regr), testing))
-        merge(model_info, model_performance, by="arima_model", all = TRUE) %>% 
+        merge(model_info, model_performance, by="arima_model", all = TRUE) %>%
             select(arima_model, AIC, AICc, BIC, MAE, RMSE, MASE)
     }
     ############################################################################################
-    
+
     arima_selected <- function(model_table, Wtrain=training_weight, Wtest=testing_weight){
-        
+
         #Elimina posibles arima_models duplicados
         model_table <- model_table %>%
             distinct(arima_model, .keep_all = TRUE)
-        
+
         #Crea variable para agrupar arima_models en train y test
-        model_table <- model_table %>% 
+        model_table <- model_table %>%
             mutate(mod = as.character(c(0, rep(1:(nrow(model_table)-1)%/%2))))
-        
+
         #Crea la variable de puntaje ponderado
-        tabla2 <- model_table %>% 
-            mutate_at(vars(contains("C")), function(x){x-min(x, na.rm=TRUE)}) %>% 
-            mutate_if(is.numeric, function(x) ifelse(is.na(x),0,x)) %>% 
+        tabla2 <- model_table %>%
+            mutate_at(vars(contains("C")), function(x){x-min(x, na.rm=TRUE)}) %>%
+            mutate_if(is.numeric, function(x) ifelse(is.na(x),0,x)) %>%
             mutate(puntaje = AIC+AICc+BIC+MAE+RMSE+MASE,
                    ponde = ifelse(grepl("Validacion", arima_model)==TRUE, Wtest, Wtrain),
                    puntaje = puntaje*ponde)
-        
+
         #Busca el(los) puntaje(s) mínimo(s)
         suppressMessages({
-            minimal_score <- tabla2 %>% 
-                group_by(mod) %>% 
-                summarise(puntaje=sum(puntaje)) %>% 
+            minimal_score <- tabla2 %>%
+                group_by(mod) %>%
+                summarise(puntaje=sum(puntaje)) %>%
                 ungroup
         })
-        
-        #Obtiene la(s) posición(es) con puntaje(s) más bajo(s) 
+
+        #Obtiene la(s) posición(es) con puntaje(s) más bajo(s)
         pos <- minimal_score$mod[which(minimal_score$puntaje==min(minimal_score$puntaje))]
-        
+
         #Devuelve el(los) mejor(es) arima_model(s)
-        model_table %>% 
-            filter(mod %in% pos) %>% 
+        model_table %>%
+            filter(mod %in% pos) %>%
             dplyr::select(arima_model:MASE)
     }
-    
+
     ############################################################################################
-    suppressWarnings({     
+    suppressWarnings({
         #Matriz para la identificacion de los parametros del arima_model
-        valores <- expand.grid(p = 0:arima_process[1], d = 0:arima_process[2], q = 0:arima_process[3], 
+        valores <- expand.grid(p = 0:arima_process[1], d = 0:arima_process[2], q = 0:arima_process[3],
                                P = 0:arima_process[4], D = 0:arima_process[5], Q = 0:arima_process[6])
-        
-        non_seasonal_values <- split(as.matrix(valores[, 1:3]), 
+
+        non_seasonal_values <- split(as.matrix(valores[, 1:3]),
                                      row(valores[, 1:3]))
-        seasonal_values <- split(as.matrix(valores[, 4:6]), 
+        seasonal_values <- split(as.matrix(valores[, 4:6]),
                                  row(valores[, 4:6]))
-        
+
         #Estimación de los arima_models
         if(parallelize==FALSE){
-            arima_models <- mapply(arima_model, 
-                                   non_seasonal=non_seasonal_values, 
-                                   seasonal=seasonal_values, 
-                                   MoreArgs = list(time_serie=train, regr=reg, periodic=seasonal_periodicity), 
+            arima_models <- mapply(arima_model,
+                                   non_seasonal=non_seasonal_values,
+                                   seasonal=seasonal_values,
+                                   MoreArgs = list(time_serie=train, regr=reg, periodic=seasonal_periodicity),
                                    SIMPLIFY = FALSE)
-        }
-        
-        if(parallelize==TRUE){
-            
+        }else({
+
             #Nombres de los objetos a exportar a cada cluster
-            
-            obj <- sapply(as.list(match.call()), paste)
-            pos <- which(names(obj) %in% c("time_serie", "validacion"))
-            
+
+            # obj <- sapply(as.list(match.call()), paste)
+            # pos <- which(names(obj) %in% c("time_serie", "validacion"))
+
             #Generar los cluster
             clp <- makeCluster(clusters, type = "SOCK", useXDR=FALSE)
-            clusterExport(clp, varlist = c(obj[pos], "arima_measures", "arima_model"))
-            
+            #clusterExport(clp, varlist = c(obj[pos], "arima_measures", "arima_model"))
+            clusterEvalQ(clp, expr = {
+                library(forecast)
+            })
+
             #Proceso en parallelize
-            arima_models <- clusterMap(cl=clp, fun = arima_model, 
-                                       non_seasonal=non_seasonal_values, 
-                                       seasonal=seasonal_values, 
-                                       MoreArgs = list(time_serie=train, regr=reg, periodic=seasonal_periodicity), 
+            arima_models <- clusterMap(cl=clp, fun = arima_model,
+                                       non_seasonal=non_seasonal_values,
+                                       seasonal=seasonal_values,
+                                       MoreArgs = list(time_serie=train, regr=reg, periodic=seasonal_periodicity),
                                        SIMPLIFY = FALSE, .scheduling = "dynamic")
             stopCluster(clp)
-            
-        }
-        
+
+        })
+
         #Obtiene las posiciones de la lista donde se pudieron estimar los arima_models
         pos <- which(sapply(lapply(arima_models, class), length)>1)
-        
+
         #Calcula las final_measures de model_performance y los criterios de información
-        final_measures <- do.call("rbind", lapply(arima_models[pos], 
-                                                  arima_measures, 
-                                                  testing = test, 
-                                                  horizon= horiz, 
-                                                  regr = reg)) %>% 
+        final_measures <- do.call("rbind", lapply(arima_models[pos],
+                                                  arima_measures,
+                                                  testing = test,
+                                                  horizon= horiz,
+                                                  regr = reg)) %>%
             mutate_if(is.numeric, round, 2)
         #Devuelve una lista con los arima_models y las final_measures de model_performance
-        final_list <- list(arima_models=arima_models[pos], 
-             final_measures=final_measures, 
-             bests=arima_selected(final_measures, Wtrain = training_weight, Wtest = testing_weight))
-        
-        mod_index <- final_list$bests %>% 
-          row.names %>% 
-          as.numeric %>% 
-          floor %>% 
-          unique %>% 
-          as.character
-        
+        final_list <- list(arima_models=arima_models[pos],
+                           final_measures=final_measures,
+                           bests=arima_selected(final_measures, Wtrain = training_weight, Wtest = testing_weight))
+
+        mod_index <- final_list$bests %>%
+            row.names %>%
+            as.numeric %>%
+            floor %>%
+            unique %>%
+            as.character
+
         final_list$best_model <- eval(parse(text = paste0("final_list$arima_models$", "`", mod_index, "`")))
-        
-        final_list
-        })
+
+        final_list$best_model
+    })
 }
 
+prova <- op.arima(arima_process = c(3,1,3,3,1,3),
+                  seasonal_periodicity = 12,
+                  time_serie = resultados_estacional_bajo[[2]]$datos,
+                  horiz=50,
+                  prop = .8,
+                  reg=NULL,
+                  )
+
+resultados_estacional_bajo
+
+Arima(resultados_estacional_bajo[[2]]$datos, c(1,1,1), c(1,1,1), method = "ML")
 ```
 
 ```{r}
+inicio_comparacion <- Sys.time()
 comparacion <- function(data, proporcion, proceso, periodicidad, paralelo,...){
     require(parallel)
     require(tidyr)
@@ -367,15 +386,18 @@ comparacion <- function(data, proporcion, proceso, periodicidad, paralelo,...){
     train <<- subset(data, end=corte)
     test <<- subset(data, start=corte+1)
     haa <- auto.arima(train)
-    op <- op.arima(arima_process=proceso,
+    op <- popstudy::op.arima(arima_process=proceso,
                        seasonal_periodicity = periodicidad,
                        time_serie = data,
                        horiz = 50,
                        prop = proporcion,
-                       parallelize = paralelo)
+                       parallelize = paralelo,
+                       method="ML"
+                       )#https://stackoverflow.com/questions/7233288/non-stationary-seasonal-ar-part-from-css-error-in-r/7236919
     
-    arima_estandar <- Arima(y = data,...)
-    list(haa=haa, op=op, arima_estandar=arima_estandar)
+    arima_estandar <- Arima(y = data, method="ML",...)
+    list(testing=test, haa=haa, op=op, 
+         arima_estandar=arima_estandar)
 }
 
 comparacion_no_estacional_bajo <- lapply(resultados_no_estacional_bajo, function(x){
@@ -386,14 +408,23 @@ comparacion_no_estacional_bajo <- lapply(resultados_no_estacional_bajo, function
                  paralelo = FALSE,
                  order = c(1,1,1),
                  seasonal = c(0,0,0))
-    list(modelos=list(original = x$modelo,
+    
+    resultados <- list(modelos=list(original = x$modelo,
                       autoarima = res$haa,
                       sobreparametrizacion = res$op$best_model,
                       arima_estandar = res$arima_estandar),
-         resultados_sobreparametrizacion = res$op[1:2])
+         resultados_sobreparametrizacion = res$op[1:2],
+         testing = res$testing)
     
+    resultados$pronosticos <- lapply(resultados$modelos, function(x){
+      pronosticos <- forecast(x, h=50)
+      list(pronosticos=pronosticos,
+           rendimiento=as.data.frame(accuracy(pronosticos, test = resultados$testing)))
+    })
     
+    resultados
 })
+
 
 comparacion_no_estacional_alto <- lapply(resultados_no_estacional_alto, function(x){
     res <- comparacion(data=x$datos, 
@@ -403,11 +434,20 @@ comparacion_no_estacional_alto <- lapply(resultados_no_estacional_alto, function
                  paralelo = FALSE,
                  order = c(1,1,1),
                  seasonal = c(0,0,0))
-    list(modelos=list(original = x$modelo,
+    resultados <- list(modelos=list(original = x$modelo,
                       autoarima = res$haa,
                       sobreparametrizacion = res$op$best_model,
                       arima_estandar = res$arima_estandar),
-         resultados_sobreparametrizacion = res$op[1:2])
+         resultados_sobreparametrizacion = res$op[1:2],
+         testing = res$testing)
+    
+    resultados$pronosticos <- lapply(resultados$modelos, function(x){
+      pronosticos <- forecast(x, h=50)
+      list(pronosticos=pronosticos,
+           rendimiento=as.data.frame(accuracy(pronosticos, test = resultados$testing)))
+    })
+    
+    resultados
     
     
 })
@@ -420,11 +460,20 @@ comparacion_estacional_bajo <- lapply(resultados_estacional_bajo, function(x){
                  paralelo = TRUE,
                  order = c(1,1,1),
                  seasonal = c(1,1,1))
-    list(modelos=list(original = x$modelo,
+    resultados <- list(modelos=list(original = x$modelo,
                       autoarima = res$haa,
                       sobreparametrizacion = res$op$best_model,
                       arima_estandar = res$arima_estandar),
-         resultados_sobreparametrizacion = res$op[1:2])
+         resultados_sobreparametrizacion = res$op[1:2],
+         testing = res$testing)
+    
+    resultados$pronosticos <- lapply(resultados$modelos, function(x){
+      pronosticos <- forecast(x, h=50)
+      list(pronosticos=pronosticos,
+           rendimiento=as.data.frame(accuracy(pronosticos, test = resultados$testing)))
+    })
+    
+    resultados
     
     
 })
@@ -437,17 +486,119 @@ comparacion_estacional_alto <- lapply(resultados_estacional_alto, function(x){
                  paralelo = TRUE,
                  order = c(1,1,1),
                  seasonal = c(1,1,1))
-    list(modelos=list(original = x$modelo,
+    resultados <- list(modelos=list(original = x$modelo,
                       autoarima = res$haa,
                       sobreparametrizacion = res$op$best_model,
                       arima_estandar = res$arima_estandar),
-         resultados_sobreparametrizacion = res$op[1:2])
+         resultados_sobreparametrizacion = res$op[1:2],
+         testing = res$testing)
+    
+    resultados$pronosticos <- lapply(resultados$modelos, function(x){
+      pronosticos <- forecast(x, h=50)
+      list(pronosticos=pronosticos,
+           rendimiento=as.data.frame(accuracy(pronosticos, test = resultados$testing)))
+    })
+    
+    resultados
     
     
 })
+fin_comparacion <- Sys.time()
+fin_comparacion-inicio_comparacion
+# INEC: Time difference of 1.204223 hours
+#comparacion_no_estacional_bajo[[1]]$modelos
 
-comparacion_no_estacional_bajo[[1]]$modelos
+```
 
-resultados_no_estacional_bajo
+```{r}
+comparaciones <- lapply(list(comparacion_no_estacional_bajo, 
+                             comparacion_no_estacional_alto,
+                             comparacion_estacional_bajo, 
+                             comparacion_estacional_alto), function(z){
+                               lapply(z, function(y){
+                                 y$pronosticos %>% 
+                                   lapply(function(x){
+                                     x$rendimiento
+                                   }) %>% 
+                                   do.call(rbind,.) %>% 
+                                   mutate(proceso=sapply(y$modelos, function(x){
+                                     x <- capture.output(x)
+                                     substr(x[2],1, 100L)
+                                   }))
+                               })%>% 
+                                 do.call(rbind, .) %>% 
+                                 na.omit %>% 
+                                 mutate(modelo=row.names(.),
+                                        modelo=sub("[0-9]", "", modelo),
+                                        proceso=sub("with non-zero mean", "", proceso))
+                             }) %>% 
+  do.call(rbind, .) %>% 
+  select(modelo, proceso, MAE, MASE, RMSE) %>% 
+  mutate(MAE=ifelse(modelo=="original", NA, MAE),
+         MASE=ifelse(modelo=="original", NA, MASE),
+         RMSE=ifelse(modelo=="original", NA, RMSE)) %>% 
+  data.frame(row.names = NULL)
+# gather(medida, valor, -c(modelo, proceso)) 
+# pivot_wider(names_from = modelo, values_from=proceso)
+
+comparaciones
+```
+```{r, eval=FALSE}
+modfinal <- Arima(serie.completa, order = c(3,1,4), seasonal = list(order = c(1,0,1), period = 12), 
+                  xreg = dummy[1:348,], method="CSS")
+basegraf <- data.frame(fecha=seq(ymd("1989-01-01"), ymd("2018-12-01"), by="months"),
+                       Original=c(serie.completa, rep(NA,12)),
+                       Arima=c(forecast(modfinal, h=12, xreg = dummy[337:348,])$fitted, 
+                               forecast(modfinal, h=12, xreg = dummy[337:348,])$mean),
+                       LIarima=c(rep(NA, 348), forecast(modfinal, h=12, xreg = dummy[337:348,])$lower[,2]),
+                       LSarima=c(rep(NA, 348), forecast(modfinal, h=12, xreg = dummy[337:348,])$upper[,2])) %>% 
+  gather(Serie, numero, -c(fecha, LIarima, LSarima)) %>% 
+  mutate(Serie=factor(Serie, levels = c("Original", "Regresion", "Exponencial", "Arima", "Autoarima")))
+
+basegraf %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=numero, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1"))+
+  geom_ribbon(aes(x=fecha, ymin=LIarima, ymax=LSarima), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de la TMCE para el 2018") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+```{r, eval=FALSE}
+#Extracción de pronósticos
+lapply(list(comparacion_no_estacional_bajo, 
+            comparacion_no_estacional_alto,
+            comparacion_estacional_bajo, 
+            comparacion_estacional_alto), function(z){
+              
+              
+              
+              resultado <- z %>% 
+                lapply(function(y){
+                  #y$pronosticos$original$pronosticos$mean <- testing_set
+                  testing_set <- y$testing %>% c
+                  y$pronosticos %>% 
+                    sapply(function(x){
+                      x$pronosticos$mean %>% c
+                    }) %>% 
+                    as.data.frame() %>% 
+                    mutate(original=testing_set[1:nrow(.)]) %>% 
+                    na.omit
+                })
+              
+              resultado
+            })
+
 ```
 
