@@ -72,7 +72,7 @@ estacional_bajo <- estacional
 
 # Altos
 
-escenarios <- expand.grid(p=2:5, d=0:1, q=2:5,P=2:5, D=0:1, Q=2:5)
+escenarios <- expand.grid(p=2:4, d=0:1, q=2:4,P=2:4, D=0:1, Q=2:4)
 no_estacional <- escenarios %>% 
     select(p:q)
 no_estacional <- no_estacional[rowSums(no_estacional)>0,] %>% 
@@ -96,6 +96,7 @@ no_estacional_bajo; no_estacional_alto; estacional_bajo; estacional_alto
 ```{r}
 set.seed(16051989)
 dat <- rnorm(100, 1000, 25)
+dat <- rpois(100, 100)
 # no_estacional_bajo <- no_estacional_bajo[sample(1:nrow(no_estacional_bajo), 2, replace = FALSE),]
 # no_estacional_alto <- no_estacional_alto[sample(1:nrow(no_estacional_alto), 2, replace = FALSE),]
 # proceso_no_estacional <- do.call(rbind, list(no_estacional_bajo, no_estacional_alto))
@@ -455,7 +456,7 @@ comparacion_no_estacional_alto <- lapply(resultados_no_estacional_alto, function
 comparacion_estacional_bajo <- lapply(resultados_estacional_bajo, function(x){
     res <- comparacion(data=x$datos, 
                  proporcion = .8, 
-                 proceso=c(6,1,6,6,1,6),
+                 proceso=c(4,1,4,4,1,4),
                  periodicidad = 12,
                  paralelo = TRUE,
                  order = c(1,1,1),
@@ -481,7 +482,7 @@ comparacion_estacional_bajo <- lapply(resultados_estacional_bajo, function(x){
 comparacion_estacional_alto <- lapply(resultados_estacional_alto, function(x){
     res <- comparacion(data=x$datos, 
                  proporcion = .8, 
-                 proceso=c(6,1,6,6,1,6),
+                 proceso=c(4,1,4,4,1,4),
                  periodicidad = 12,
                  paralelo = TRUE,
                  order = c(1,1,1),
