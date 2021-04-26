@@ -551,9 +551,10 @@ TMII <- comparacion(data=TS,
                     paralelo = TRUE,
                     order = c(1,1,1),
                     seasonal = c(1,1,1))
-
+TMII$haa
+TMII$op$best_model
 resumen_resultados(TMII, fecha_inicio = '2012-03-01', fecha_fin = '2017-12-01')
-resumen_resultados(TMII)$pronostico %>% 
+resumen_resultados(TMII, fecha_inicio = '2012-03-01', fecha_fin = '2017-12-01')$pronostico %>% 
   #filter(Serie %in% c("Original", "Arima")) %>% 
   ggplot(., aes(x=fecha, y=valor, colour=Serie))+
   geom_line(size = 0.8)+
@@ -668,6 +669,8 @@ NACIMIENTOS <- comparacion(data=TS,
                     order = c(1,1,1),
                     seasonal = c(1,1,1))
 
+NACIMIENTOS$haa
+NACIMIENTOS$op$best_model
 resumen_resultados(NACIMIENTOS, fecha_inicio="2012-01-01", fecha_fin="2017-12-01")
 resumen_resultados(NACIMIENTOS,fecha_inicio="2012-01-01", fecha_fin="2017-12-01")$pronostico %>% 
   #filter(Serie %in% c("Original", "Arima")) %>% 
@@ -914,6 +917,7 @@ resumen_resultados(INCENTIVOS, fecha_inicio="2013-11-01", fecha_fin="2015-06-01"
   scale_x_date(expand = c(0,0))+
   scale_y_continuous(expand=c(0, 0))
 ```
+
 ## Intereses y comisiones del sector público, iniciando en enero del 2007 hasta junio del 2018.
 
 ```{r}
@@ -999,9 +1003,6 @@ ggsdc(., aes(x = fecha, y = valor),
                                   margin=margin(t=1,10,10,10)))# +
   #scale_x_discrete(expand = c(0,0))
 ```
-```{r}
-INTERESES$testing
-```
 
 
 ```{r}
@@ -1033,4 +1034,5 @@ resumen_resultados(INTERESES, fecha_inicio="2016-08-01", fecha_fin="2018-06-01")
   scale_x_date(expand = c(0,0))+
   scale_y_continuous(expand=c(0, 0))
 ```
+
 ## Demanda eléctrica, iniciando en enero del 2011 hasta junio del 2018 
