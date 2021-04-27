@@ -1,5 +1,14 @@
-\subsection{Introducción}
+La presente investigación ha cubierto las bases fundamentales relacionadas al análisis de series cronológicas. Se ha realizado una recapitulación histórica de esta rama de la estadística y se han puesto en evidencia uno de los principales problemas de las series de tiempo, como lo es la subjetividad del observador en la selección de modelos. Es ante este inconveniente que la investigación buscó siempre proponer un aporte metodológico para la selección de modelos ARIMA y por ende, una mejora en los pronósticos obtenidos a partir de estos modelos.
 
-\subsection{Conclusiones}
+El uso de la sobreparametrización propuesto mediante un algoritmo de selección de modelos ha sido implementado de la forma esperada, pues la evaluación de los resultados al incorporar coeficientes al modelo se puso a prueba tanto en series cronológicas simuladas como en datos reales. El método propuesto implementado en las funciones del lenguaje R permite evaluar una gama más amplia de modelos ARIMA al definir un máximo en la cantidad de parámetros para las partes estacionales y no estacionales de la series cronológicas, pues al definir este máximo se definen todos los posibles escenarios que posteriormente evalúan el aporte de cada nuevo término a los pronósticos. La incorporación de estos nuevos parámetros en los modelos ARIMA son validados mediante pruebas de significancia estadística, particiones de la serie cronológica, medidas de bondad de ajuste de los modelos y sus correspondientes medidas de rendimiento.
 
-\subsection{Recomendaciones}
+Como parte de la investigación, la series cronológicas utilizadas de forma simulada y generadas a partir de registros administrativos muestran como el uso de la sobreparametrización iguala y en muchos casos mejora la calidad de los pronósticos obtenidos en comparación a métodos ya establecidos, como es el caso de la función `auto.arima()`, o estimación de modelos más genéricos con un bajo número de parámetros, como los modelos estándar $ARIMA(1,1,1)$ o $ARIMA(1,1,1)(1,1,1)_{12}$. 
+
+Como puede apreciarse en los resultados, al tener datos que vienen de un proceso con bajo número de parámetros, el uso de la sobreparametrización logra captar de buena manera el comportamiento de la serie y, además, cuando el proceso que gobierna la serie es de un mayor grado, la metodología propuesta, al considerar un mayor espectro paramétrico, es capaz de capturar de buena forma el comportamiento de la serie y conseguir pronósticos con una precisión mayor al de los métodos más tradicionales. Lo anterior representa una mejora en cuanto a la utilización de modelos ARIMA para el pronóstico de series cronológicas, lo cual a su vez aporta herramientas para la toma de decisiones relacionadas a este tipo de análisis.
+
+Una potencial mejora al uso de la sobreparametrización es la inclusión semi-automática de regresores para controlar cambios estructurales de la serie cronológica en estudio, pues estos coeficientes adicionales podrían controlar cambios particulares en la serie y que podrían mejorar la precisión de los pronósticos.
+
+La metodología aquí propuesta se encuentra disponible de manera abierta mediante el paquete de R `popstudy`, el cual fue desarrollado para esta investigación y cuenta con los procedimientos previamente descritos. Se encuentra disponible en un repositorio de Github[^12] y además en el repositorio CRAN[^13], que es la fuente oficial de los paquetes del lenguaje R.
+
+[^12]: https://github.com/cgamboasanabria/popstudy
+[^13]: Publicación pendiente.

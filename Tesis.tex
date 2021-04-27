@@ -1947,13 +1947,66 @@ sobreparametrizacion & 27280.46 & 19346.25 & 39.89648\\
 
 \newpage
 
-\section{CONCLUSIONES Y RECOMENDACIONES}
+\section{CONCLUSIONES}
 
-\subsection{Introducción}
+La presente investigación ha cubierto las bases fundamentales
+relacionadas al análisis de series cronológicas. Se ha realizado una
+recapitulación histórica de esta rama de la estadística y se han puesto
+en evidencia uno de los principales problemas de las series de tiempo,
+como lo es la subjetividad del observador en la selección de modelos. Es
+ante este inconveniente que la investigación buscó siempre proponer un
+aporte metodológico para la selección de modelos ARIMA y por ende, una
+mejora en los pronósticos obtenidos a partir de estos modelos.
 
-\subsection{Conclusiones}
+El uso de la sobreparametrización propuesto mediante un algoritmo de
+selección de modelos ha sido implementado de la forma esperada, pues la
+evaluación de los resultados al incorporar coeficientes al modelo se
+puso a prueba tanto en series cronológicas simuladas como en datos
+reales. El método propuesto implementado en las funciones del lenguaje R
+permite evaluar una gama más amplia de modelos ARIMA al definir un
+máximo en la cantidad de parámetros para las partes estacionales y no
+estacionales de la series cronológicas, pues al definir este máximo se
+definen todos los posibles escenarios que posteriormente evalúan el
+aporte de cada nuevo término a los pronósticos. La incorporación de
+estos nuevos parámetros en los modelos ARIMA son validados mediante
+pruebas de significancia estadística, particiones de la serie
+cronológica, medidas de bondad de ajuste de los modelos y sus
+correspondientes medidas de rendimiento.
 
-\subsection{Recomendaciones}
+Como parte de la investigación, la series cronológicas utilizadas de
+forma simulada y generadas a partir de registros administrativos
+muestran como el uso de la sobreparametrización iguala y en muchos casos
+mejora la calidad de los pronósticos obtenidos en comparación a métodos
+ya establecidos, como es el caso de la función \texttt{auto.arima()}, o
+estimación de modelos más genéricos con un bajo número de parámetros,
+como los modelos estándar \(ARIMA(1,1,1)\) o
+\(ARIMA(1,1,1)(1,1,1)_{12}\).
+
+Como puede apreciarse en los resultados, al tener datos que vienen de un
+proceso con bajo número de parámetros, el uso de la sobreparametrización
+logra captar de buena manera el comportamiento de la serie y, además,
+cuando el proceso que gobierna la serie es de un mayor grado, la
+metodología propuesta, al considerar un mayor espectro paramétrico, es
+capaz de capturar de buena forma el comportamiento de la serie y
+conseguir pronósticos con una precisión mayor al de los métodos más
+tradicionales. Lo anterior representa una mejora en cuanto a la
+utilización de modelos ARIMA para el pronóstico de series cronológicas,
+lo cual a su vez aporta herramientas para la toma de decisiones
+relacionadas a este tipo de análisis.
+
+Una potencial mejora al uso de la sobreparametrización es la inclusión
+semi-automática de regresores para controlar cambios estructurales de la
+serie cronológica en estudio, pues estos coeficientes adicionales
+podrían controlar cambios particulares en la serie y que podrían mejorar
+la precisión de los pronósticos.
+
+La metodología aquí propuesta se encuentra disponible de manera abierta
+mediante el paquete de R \texttt{popstudy}, el cual fue desarrollado
+para esta investigación y cuenta con los procedimientos previamente
+descritos. Se encuentra disponible en un repositorio de
+Github\footnote{\url{https://github.com/cgamboasanabria/popstudy}} y
+además en el repositorio CRAN\footnote{Publicación pendiente.}, que es
+la fuente oficial de los paquetes del lenguaje R.
 
 \newpage
 
@@ -1970,14 +2023,15 @@ sobreparametrizacion & 27280.46 & 19346.25 & 39.89648\\
 \NormalTok{                     seasonal\_periodicity,}
 \NormalTok{                     time\_serie, }\AttributeTok{reg =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{horiz =} \DecValTok{12}\NormalTok{,}
                      \AttributeTok{prop=}\NormalTok{.}\DecValTok{8}\NormalTok{, }\AttributeTok{training\_weight=}\NormalTok{.}\DecValTok{2}\NormalTok{, }\AttributeTok{testing\_weight=}\NormalTok{.}\DecValTok{8}\NormalTok{,}
-                     \AttributeTok{parallelize=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{clusters=}\FunctionTok{detectCores}\NormalTok{(}\AttributeTok{logical =} \ConstantTok{FALSE}\NormalTok{),...)\{}
+                     \AttributeTok{parallelize=}\ConstantTok{FALSE}\NormalTok{,}
+                     \AttributeTok{clusters=}\FunctionTok{detectCores}\NormalTok{(}\AttributeTok{logical =} \ConstantTok{FALSE}\NormalTok{),...)\{}
 
 \NormalTok{    data\_partition }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FunctionTok{length}\NormalTok{(time\_serie)}\SpecialCharTok{*}\NormalTok{prop, }\DecValTok{0}\NormalTok{)}
 \NormalTok{    train }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{subset}\NormalTok{(time\_serie, }\AttributeTok{end=}\NormalTok{data\_partition)}
 \NormalTok{    test }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{subset}\NormalTok{(time\_serie, }\AttributeTok{start=}\NormalTok{data\_partition}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
 
-    \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-\NormalTok{    arima\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(time\_serie, non\_seasonal, seasonal, periodic, }\AttributeTok{regr =} \ConstantTok{NULL}\NormalTok{,...)\{}
+\NormalTok{    arima\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(time\_serie, non\_seasonal, seasonal, periodic, }
+                            \AttributeTok{regr =} \ConstantTok{NULL}\NormalTok{,...)\{}
 
         \ControlFlowTok{if}\NormalTok{(}\FunctionTok{is.list}\NormalTok{(non\_seasonal))\{}
 \NormalTok{            non\_seasonal }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(non\_seasonal)}
@@ -2010,20 +2064,19 @@ sobreparametrizacion & 27280.46 & 19346.25 & 39.89648\\
         \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(arima\_model))\{}
 \NormalTok{            degrees\_of\_freedom }\OtherTok{\textless{}{-}}\NormalTok{ arima\_model}\SpecialCharTok{$}\NormalTok{nobs }\SpecialCharTok{{-}} \FunctionTok{length}\NormalTok{(arima\_model}\SpecialCharTok{$}\NormalTok{coef)}
 \NormalTok{            t\_value }\OtherTok{\textless{}{-}}\NormalTok{ arima\_model}\SpecialCharTok{$}\NormalTok{coef}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(arima\_model}\SpecialCharTok{$}\NormalTok{var.coef))}
-\NormalTok{            prob }\OtherTok{\textless{}{-}}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{pf}\NormalTok{(t\_value}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{df1 =} \DecValTok{1}\NormalTok{, }\AttributeTok{df2 =}\NormalTok{ degrees\_of\_freedom, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{            prob }\OtherTok{\textless{}{-}}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{pf}\NormalTok{(t\_value}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{df1 =} \DecValTok{1}\NormalTok{, }\AttributeTok{df2 =}\NormalTok{ degrees\_of\_freedom, }
+                              \AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
             \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{sum}\NormalTok{(}\DecValTok{1}\SpecialCharTok{*}\NormalTok{prob}\SpecialCharTok{\textgreater{}}\FloatTok{0.05}\NormalTok{)}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{, }\FunctionTok{return}\NormalTok{(arima\_model), }\DecValTok{1}\NormalTok{)}
 \NormalTok{        \}}
 
 \NormalTok{    \}}
-    \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-    \CommentTok{\#Estimación de las final\_measures de model\_performance y los criterios de información}
+
 \NormalTok{    arima\_measures }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(arima\_model, testing, horizon, }\AttributeTok{regr =} \ConstantTok{NULL}\NormalTok{)\{}
 
-        \DocumentationTok{\#\#model\_spec del arima\_model}
 \NormalTok{        model\_spec }\OtherTok{\textless{}{-}} \FunctionTok{capture.output}\NormalTok{(arima\_model)}
 \NormalTok{        model\_spec }\OtherTok{\textless{}{-}} \FunctionTok{substr}\NormalTok{(model\_spec[}\DecValTok{2}\NormalTok{],}\DecValTok{1}\NormalTok{, }\DecValTok{23}\NormalTok{)}
 
-        \DocumentationTok{\#\#Criterios de model\_info}
+     
 \NormalTok{        data }\OtherTok{\textless{}{-}} \FunctionTok{capture.output}\NormalTok{(}\FunctionTok{summary}\NormalTok{(arima\_model))}
 \NormalTok{        data }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{grepl}\NormalTok{(}\StringTok{"AIC"}\NormalTok{, data) }\SpecialCharTok{==}\NormalTok{ T]}
 \NormalTok{        model\_info }\OtherTok{\textless{}{-}} \FunctionTok{strsplit}\NormalTok{(data, }\StringTok{" "}\NormalTok{)}
@@ -2037,33 +2090,33 @@ sobreparametrizacion & 27280.46 & 19346.25 & 39.89648\\
             \FunctionTok{spread}\NormalTok{(Medida, Valor) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{arima\_model =}\NormalTok{ model\_spec)}
 
-        \DocumentationTok{\#\#final\_measures de model\_performance}
-\NormalTok{        model\_performance }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{arima\_model =} \FunctionTok{c}\NormalTok{(model\_spec, }\FunctionTok{paste}\NormalTok{(model\_spec, }\StringTok{"Validacion"}\NormalTok{)),}
-                                        \FunctionTok{accuracy}\NormalTok{(}\FunctionTok{forecast}\NormalTok{(arima\_model, horizon, }\AttributeTok{xreg =}\NormalTok{ regr), testing))}
+\NormalTok{        model\_performance }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{arima\_model =} \FunctionTok{c}\NormalTok{(model\_spec, }
+                                                        \FunctionTok{paste}\NormalTok{(model\_spec,}
+                                                              \StringTok{"Validacion"}\NormalTok{)),}
+                                        \FunctionTok{accuracy}\NormalTok{(}\FunctionTok{forecast}\NormalTok{(arima\_model, horizon, }
+                                                          \AttributeTok{xreg =}\NormalTok{ regr),}
+\NormalTok{                                                 testing))}
         \FunctionTok{merge}\NormalTok{(model\_info, model\_performance, }\AttributeTok{by=}\StringTok{"arima\_model"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{select}\NormalTok{(arima\_model, AIC, AICc, BIC, MAE, RMSE, MASE)}
 \NormalTok{    \}}
-    \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
 
-\NormalTok{    arima\_selected }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(model\_table, }\AttributeTok{Wtrain=}\NormalTok{training\_weight, }\AttributeTok{Wtest=}\NormalTok{testing\_weight)\{}
+\NormalTok{    arima\_selected }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(model\_table, }\AttributeTok{Wtrain=}\NormalTok{training\_weight, }
+                               \AttributeTok{Wtest=}\NormalTok{testing\_weight)\{}
 
-        \CommentTok{\#Elimina posibles arima\_models duplicados}
 \NormalTok{        model\_table }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{distinct}\NormalTok{(arima\_model, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{)}
 
-        \CommentTok{\#Crea variable para agrupar arima\_models en train y test}
 \NormalTok{        model\_table }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mod =} \FunctionTok{as.character}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(model\_table)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}\SpecialCharTok{\%/\%}\DecValTok{2}\NormalTok{))))}
 
-        \CommentTok{\#Crea la variable de puntaje ponderado}
 \NormalTok{        tabla2 }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{mutate\_at}\NormalTok{(}\FunctionTok{vars}\NormalTok{(}\FunctionTok{contains}\NormalTok{(}\StringTok{"C"}\NormalTok{)), }\ControlFlowTok{function}\NormalTok{(x)\{x}\SpecialCharTok{{-}}\FunctionTok{min}\NormalTok{(x, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{)\}) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{mutate\_if}\NormalTok{(is.numeric, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x),}\DecValTok{0}\NormalTok{,x)) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{mutate}\NormalTok{(}\AttributeTok{puntaje =}\NormalTok{ AIC}\SpecialCharTok{+}\NormalTok{AICc}\SpecialCharTok{+}\NormalTok{BIC}\SpecialCharTok{+}\NormalTok{MAE}\SpecialCharTok{+}\NormalTok{RMSE}\SpecialCharTok{+}\NormalTok{MASE,}
-                   \AttributeTok{ponde =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Validacion"}\NormalTok{, arima\_model)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{, Wtest, Wtrain),}
+                   \AttributeTok{ponde =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Validacion"}\NormalTok{, arima\_model)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{,}
+\NormalTok{                                  Wtest, Wtrain),}
                    \AttributeTok{puntaje =}\NormalTok{ puntaje}\SpecialCharTok{*}\NormalTok{ponde)}
 
-        \CommentTok{\#Busca el(los) puntaje(s) mínimo(s)}
         \FunctionTok{suppressMessages}\NormalTok{(\{}
 \NormalTok{            minimal\_score }\OtherTok{\textless{}{-}}\NormalTok{ tabla2 }\SpecialCharTok{\%\textgreater{}\%}
                 \FunctionTok{group\_by}\NormalTok{(mod) }\SpecialCharTok{\%\textgreater{}\%}
@@ -2071,48 +2124,43 @@ sobreparametrizacion & 27280.46 & 19346.25 & 39.89648\\
 \NormalTok{                ungroup}
 \NormalTok{        \})}
 
-        \CommentTok{\#Obtiene la(s) posición(es) con puntaje(s) más bajo(s)}
-\NormalTok{        pos }\OtherTok{\textless{}{-}}\NormalTok{ minimal\_score}\SpecialCharTok{$}\NormalTok{mod[}\FunctionTok{which}\NormalTok{(minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje}\SpecialCharTok{==}\FunctionTok{min}\NormalTok{(minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje))]}
+\NormalTok{        pos }\OtherTok{\textless{}{-}}\NormalTok{ minimal\_score}\SpecialCharTok{$}\NormalTok{mod[}\FunctionTok{which}\NormalTok{(}
+\NormalTok{          minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje}\SpecialCharTok{==}\FunctionTok{min}\NormalTok{(minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje))]}
 
-        \CommentTok{\#Devuelve el(los) mejor(es) arima\_model(s)}
 \NormalTok{        model\_table }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{filter}\NormalTok{(mod }\SpecialCharTok{\%in\%}\NormalTok{ pos) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{            dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(arima\_model}\SpecialCharTok{:}\NormalTok{MASE)}
 \NormalTok{    \}}
 
-    \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
     \FunctionTok{suppressWarnings}\NormalTok{(\{}
-        \CommentTok{\#Matriz para la identificacion de los parametros del arima\_model}
-\NormalTok{        valores }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{p =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{1}\NormalTok{], }\AttributeTok{d =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{2}\NormalTok{], }\AttributeTok{q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{3}\NormalTok{],}
-                               \AttributeTok{P =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{4}\NormalTok{], }\AttributeTok{D =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{5}\NormalTok{], }\AttributeTok{Q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{6}\NormalTok{])}
+\NormalTok{        valores }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{p =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{1}\NormalTok{], }
+                               \AttributeTok{d =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{2}\NormalTok{], }
+                               \AttributeTok{q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{3}\NormalTok{],}
+                               \AttributeTok{P =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{4}\NormalTok{], }
+                               \AttributeTok{D =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{5}\NormalTok{], }
+                               \AttributeTok{Q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{6}\NormalTok{])}
 
 \NormalTok{        non\_seasonal\_values }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(valores[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]),}
                                      \FunctionTok{row}\NormalTok{(valores[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]))}
 \NormalTok{        seasonal\_values }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(valores[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]),}
                                  \FunctionTok{row}\NormalTok{(valores[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]))}
 
-        \CommentTok{\#Estimación de los arima\_models}
         \ControlFlowTok{if}\NormalTok{(parallelize}\SpecialCharTok{==}\ConstantTok{FALSE}\NormalTok{)\{}
 \NormalTok{            arima\_models }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(arima\_model,}
                                    \AttributeTok{non\_seasonal=}\NormalTok{non\_seasonal\_values,}
                                    \AttributeTok{seasonal=}\NormalTok{seasonal\_values,}
-                                   \AttributeTok{MoreArgs =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time\_serie=}\NormalTok{train, }\AttributeTok{regr=}\NormalTok{reg, }\AttributeTok{periodic=}\NormalTok{seasonal\_periodicity),}
+                                   \AttributeTok{MoreArgs =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time\_serie=}\NormalTok{train, }
+                                                   \AttributeTok{regr=}\NormalTok{reg, }
+                                      \AttributeTok{periodic=}\NormalTok{seasonal\_periodicity),}
                                    \AttributeTok{SIMPLIFY =} \ConstantTok{FALSE}\NormalTok{)}
 \NormalTok{        \}}\ControlFlowTok{else}\NormalTok{(\{}
 
-            \CommentTok{\#Nombres de los objetos a exportar a cada cluster}
-
-            \CommentTok{\# obj \textless{}{-} sapply(as.list(match.call()), paste)}
-            \CommentTok{\# pos \textless{}{-} which(names(obj) \%in\% c("time\_serie", "validacion"))}
-
-            \CommentTok{\#Generar los cluster}
 \NormalTok{            clp }\OtherTok{\textless{}{-}} \FunctionTok{makeCluster}\NormalTok{(clusters, }\AttributeTok{type =} \StringTok{"SOCK"}\NormalTok{, }\AttributeTok{useXDR=}\ConstantTok{FALSE}\NormalTok{)}
-            \CommentTok{\#clusterExport(clp, varlist = c(obj[pos], "arima\_measures", "arima\_model"))}
+
             \FunctionTok{clusterEvalQ}\NormalTok{(clp, }\AttributeTok{expr =}\NormalTok{ \{}
                 \FunctionTok{library}\NormalTok{(forecast)}
 \NormalTok{            \})}
 
-            \CommentTok{\#Proceso en parallelize}
 \NormalTok{            arima\_models }\OtherTok{\textless{}{-}} \FunctionTok{clusterMap}\NormalTok{(}\AttributeTok{cl=}\NormalTok{clp, }\AttributeTok{fun =}\NormalTok{ arima\_model,}
                                        \AttributeTok{non\_seasonal=}\NormalTok{non\_seasonal\_values,}
                                        \AttributeTok{seasonal=}\NormalTok{seasonal\_values,}
@@ -2122,17 +2170,15 @@ sobreparametrizacion & 27280.46 & 19346.25 & 39.89648\\
 
 \NormalTok{        \})}
 
-        \CommentTok{\#Obtiene las posiciones de la lista donde se pudieron estimar los arima\_models}
 \NormalTok{        pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(arima\_models, class), length)}\SpecialCharTok{\textgreater{}}\DecValTok{1}\NormalTok{)}
 
-        \CommentTok{\#Calcula las final\_measures de model\_performance y los criterios de información}
 \NormalTok{        final\_measures }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind"}\NormalTok{, }\FunctionTok{lapply}\NormalTok{(arima\_models[pos],}
 \NormalTok{                                                  arima\_measures,}
                                                   \AttributeTok{testing =}\NormalTok{ test,}
                                                   \AttributeTok{horizon=}\NormalTok{ horiz,}
                                                   \AttributeTok{regr =}\NormalTok{ reg)) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{mutate\_if}\NormalTok{(is.numeric, round, }\DecValTok{2}\NormalTok{)}
-        \CommentTok{\#Devuelve una lista con los arima\_models y las final\_measures de model\_performance}
+        
 \NormalTok{        final\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{arima\_models=}\NormalTok{arima\_models[pos],}
                            \AttributeTok{final\_measures=}\NormalTok{final\_measures,}
                            \AttributeTok{bests=}\FunctionTok{arima\_selected}\NormalTok{(final\_measures, }\AttributeTok{Wtrain =}\NormalTok{ training\_weight, }\AttributeTok{Wtest =}\NormalTok{ testing\_weight))}
@@ -2144,7 +2190,8 @@ sobreparametrizacion & 27280.46 & 19346.25 & 39.89648\\
 \NormalTok{            unique }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{            as.character}
 
-\NormalTok{        final\_list}\SpecialCharTok{$}\NormalTok{best\_model }\OtherTok{\textless{}{-}} \FunctionTok{eval}\NormalTok{(}\FunctionTok{parse}\NormalTok{(}\AttributeTok{text =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"final\_list$arima\_models$"}\NormalTok{, }\StringTok{"\textasciigrave{}"}\NormalTok{, mod\_index, }\StringTok{"\textasciigrave{}"}\NormalTok{)))}
+\NormalTok{        final\_list}\SpecialCharTok{$}\NormalTok{best\_model }\OtherTok{\textless{}{-}} \FunctionTok{eval}\NormalTok{(}\FunctionTok{parse}\NormalTok{(}\AttributeTok{text =} \FunctionTok{paste0}\NormalTok{(}
+          \StringTok{"final\_list$arima\_models$"}\NormalTok{, }\StringTok{"\textasciigrave{}"}\NormalTok{, mod\_index, }\StringTok{"\textasciigrave{}"}\NormalTok{)))}
 
 \NormalTok{        final\_list}
 \NormalTok{    \})}

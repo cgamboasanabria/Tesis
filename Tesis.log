@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.13)  26 APR 2021 20:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.13)  27 APR 2021 08:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1292,7 +1292,7 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 [18] [19] [20]
-<Tesis_files/figure-latex/datos_simulados-1.jpeg, id=646, 469.755pt x 325.215pt
+<Tesis_files/figure-latex/datos_simulados-1.jpeg, id=631, 469.755pt x 325.215pt
 >
 File: Tesis_files/figure-latex/datos_simulados-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/datos_simulados-1.jpeg>
@@ -1302,7 +1302,7 @@ on input line 1457.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/series_simuladas-1.jpeg, id=648, 469.755pt x 325.215p
+<Tesis_files/figure-latex/series_simuladas-1.jpeg, id=633, 469.755pt x 325.215p
 t>
 File: Tesis_files/figure-latex/series_simuladas-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/series_simuladas-1.jpeg>
@@ -1354,7 +1354,7 @@ Overfull \hbox (20.07953pt too wide) in paragraph at lines 1540--1540
  []
 
 [23]
-<Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg, id=685, 469.755pt x 325.215pt
+<Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg, id=670, 469.755pt x 325.215pt
 >
 File: Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg>
@@ -1365,7 +1365,7 @@ on input line 1606.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [24]
-<Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg, id=699, 469.755pt x 325.215p
+<Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg, id=684, 469.755pt x 325.215p
 t>
 File: Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg>
@@ -1375,7 +1375,7 @@ Package pdftex.def Info: Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg  used
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=702, 469.755pt x 32
+<Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=687, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg Graphic file (type
  jpg)
@@ -1389,7 +1389,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg, id=705, 469.755pt x 325.21
+<Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg, id=690, 469.755pt x 325.21
 5pt>
 File: Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg Graphic file (type jpg
 )
@@ -1403,7 +1403,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [25 <./Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg>] [26 <./Tesis_files/fig
 ure-latex/tmiiplotperiodos-1.jpeg> <./Tesis_files/figure-latex/tmiiplotdescompo
 sicion-1.jpeg>] [27 <./Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg>]
-<Tesis_files/figure-latex/externaplotgeneral-1.jpeg, id=728, 469.755pt x 325.21
+<Tesis_files/figure-latex/externaplotgeneral-1.jpeg, id=712, 469.755pt x 325.21
 5pt>
 File: Tesis_files/figure-latex/externaplotgeneral-1.jpeg Graphic file (type jpg
 )
@@ -1412,7 +1412,7 @@ Package pdftex.def Info: Tesis_files/figure-latex/externaplotgeneral-1.jpeg  us
 ed on input line 1723.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [28 <./Tesis_files/figure-latex/externaplotgeneral-1.jpeg>]
-<Tesis_files/figure-latex/externasplotperiodos-1.jpeg, id=739, 469.755pt x 325.
+<Tesis_files/figure-latex/externasplotperiodos-1.jpeg, id=724, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/externasplotperiodos-1.jpeg Graphic file (type j
 pg)
@@ -1420,7 +1420,7 @@ pg)
 Package pdftex.def Info: Tesis_files/figure-latex/externasplotperiodos-1.jpeg  
 used on input line 1740.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/externasplotdescomposicion-1.jpeg, id=741, 469.755pt 
+<Tesis_files/figure-latex/externasplotdescomposicion-1.jpeg, id=726, 469.755pt 
 x 325.215pt>
 File: Tesis_files/figure-latex/externasplotdescomposicion-1.jpeg Graphic file (
 type jpg)
@@ -1431,7 +1431,7 @@ jpeg  used on input line 1752.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/externasplotpronostico-1.jpeg, id=744, 469.755pt x 32
+<Tesis_files/figure-latex/externasplotpronostico-1.jpeg, id=729, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/externasplotpronostico-1.jpeg Graphic file (type
  jpg)
@@ -1445,7 +1445,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [29 <./Tesis_files/figure-latex/externasplotperiodos-1.jpeg>] [30 <./Tesis_file
 s/figure-latex/externasplotdescomposicion-1.jpeg> <./Tesis_files/figure-latex/e
 xternasplotpronostico-1.jpeg>]
-<Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg, id=756, 469.755pt x 325
+<Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg, id=741, 469.755pt x 325
 .215pt>
 File: Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg Graphic file (type 
 jpg)
@@ -1453,7 +1453,7 @@ jpg)
 Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg 
  used on input line 1809.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg, id=757, 469.755pt x 32
+<Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg, id=742, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg Graphic file (type
  jpg)
@@ -1464,7 +1464,7 @@ Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg, id=759, 469.755p
+<Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg, id=744, 469.755p
 t x 325.215pt>
 File: Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg Graphic file
  (type jpg)
@@ -1485,7 +1485,7 @@ de ellos me-dian-te la fun-ción
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/incentivosplotpronostico-1.jpeg, id=766, 469.755pt x 
+<Tesis_files/figure-latex/incentivosplotpronostico-1.jpeg, id=751, 469.755pt x 
 325.215pt>
 File: Tesis_files/figure-latex/incentivosplotpronostico-1.jpeg Graphic file (ty
 pe jpg)
@@ -1499,7 +1499,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [32 <./Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg> <./Tesis_files/f
 igure-latex/incentivosplotdescomposicion-1.jpeg>] [33 <./Tesis_files/figure-lat
 ex/incentivosplotpronostico-1.jpeg>]
-<Tesis_files/figure-latex/interesesplotgeneral-1.jpeg, id=778, 469.755pt x 325.
+<Tesis_files/figure-latex/interesesplotgeneral-1.jpeg, id=763, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/interesesplotgeneral-1.jpeg Graphic file (type j
 pg)
@@ -1507,7 +1507,7 @@ pg)
 Package pdftex.def Info: Tesis_files/figure-latex/interesesplotgeneral-1.jpeg  
 used on input line 1899.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/interesesplotperiodos-1.jpeg, id=779, 469.755pt x 325
+<Tesis_files/figure-latex/interesesplotperiodos-1.jpeg, id=764, 469.755pt x 325
 .215pt>
 File: Tesis_files/figure-latex/interesesplotperiodos-1.jpeg Graphic file (type 
 jpg)
@@ -1518,7 +1518,7 @@ Package pdftex.def Info: Tesis_files/figure-latex/interesesplotperiodos-1.jpeg
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg, id=781, 469.755pt
+<Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg, id=766, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg Graphic file 
 (type jpg)
@@ -1539,7 +1539,7 @@ os in-tere-ses y co-mi-sio-nes del sec-tor
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/interesesplotpronostico-1.jpeg, id=788, 469.755pt x 3
+<Tesis_files/figure-latex/interesesplotpronostico-1.jpeg, id=773, 469.755pt x 3
 25.215pt>
 File: Tesis_files/figure-latex/interesesplotpronostico-1.jpeg Graphic file (typ
 e jpg)
@@ -1552,113 +1552,108 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [35 <./Tesis_files/figure-latex/interesesplotperiodos-1.jpeg> <./Tesis_files/fi
 gure-latex/interesesplotdescomposicion-1.jpeg>] [36 <./Tesis_files/figure-latex
-/interesesplotpronostico-1.jpeg>]
+/interesesplotpronostico-1.jpeg>] [37]
 
 Package caption Warning: \captionsetup{type*=...} or \captionof
-(caption)                outside box or environment on input line 1964.
+(caption)                outside box or environment on input line 2017.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 1964.
+(caption)                particular \caption on input line 2017.
 See the caption package documentation for explanation.
 
 Package hyperref Info: bookmark level for unknown chunk defaults to 0 on input 
-line 1964.
+line 2017.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1968.
-
-LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 1979.
-
-
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2021.
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-2147.
+2194.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Underfull \vbox (badness 10000) detected at line 2153
- []
-
-[37]
-Underfull \vbox (badness 10000) detected at line 2153
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2153
+Underfull \vbox (badness 10000) detected at line 2200
  []
 
 [38]
-Underfull \vbox (badness 10000) detected at line 2153
+Underfull \vbox (badness 10000) detected at line 2200
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2153
+Underfull \vbox (badness 10000) detected at line 2200
  []
 
 [39]
-Underfull \vbox (badness 10000) detected at line 2153
+Underfull \vbox (badness 10000) detected at line 2200
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2153
+Underfull \vbox (badness 10000) detected at line 2200
  []
 
 [40]
-Underfull \vbox (badness 10000) detected at line 2153
+Underfull \vbox (badness 10000) detected at line 2200
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2153
+Underfull \vbox (badness 10000) detected at line 2200
  []
 
 [41]
+Underfull \vbox (badness 10000) detected at line 2200
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2200
+ []
+
+[42]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 2157.
+(caption)                particular \caption on input line 2204.
 See the caption package documentation for explanation.
 
 
-Underfull \vbox (badness 3000) detected at line 2201
+Underfull \vbox (badness 3557) detected at line 2248
  []
 
-[42] [43]
-Underfull \hbox (badness 1072) in paragraph at lines 2252--2257
+[43] [44]
+Underfull \hbox (badness 1072) in paragraph at lines 2299--2304
 [][]\T1/lmr/m/n/10 Calderón, C. E. (2012). Es-ta-dís-ti-ca pa-ra Es-tu-dian-tes
  de Ad-mi-nis-tra-ción de Em-pre-sas de
  []
 
 
-Underfull \hbox (badness 1742) in paragraph at lines 2252--2257
+Underfull \hbox (badness 1742) in paragraph at lines 2299--2304
 \T1/lmr/m/n/10 la Uni-ver-si-dad Na-cio-nal del Ca-llao. \T1/lmr/m/it/10 Edi-to
 -rial San Mar-cos, 2da Edi-ción, Li-ma Pe-rú\T1/lmr/m/n/10 .
  []
 
-[44]
+[45]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-313.
+360.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Underfull \hbox (badness 4543) in paragraph at lines 2311--2315
+Underfull \hbox (badness 4543) in paragraph at lines 2358--2362
 [][]\T1/lmr/m/n/10 Hernández, O. (2011a). \T1/lmr/m/it/10 In-tro-duc-ción a las
  Se-ries Cro-no-ló-gi-cas \T1/lmr/m/n/10 (1.\TS1/lmr/m/n/10 ª \T1/lmr/m/n/10 ed
 .). Re-cu-pe-ra-do
  []
 
 
-Underfull \hbox (badness 4846) in paragraph at lines 2316--2320
+Underfull \hbox (badness 4846) in paragraph at lines 2363--2367
 [][]\T1/lmr/m/n/10 Hernández, O. (2011b). \T1/lmr/m/it/10 In-tro-duc-ción a las
  Se-ries Cro-no-ló-gi-cas\T1/lmr/m/n/10 . Re-cu-pe-ra-do de [][]$http :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2316--2320
+Underfull \hbox (badness 10000) in paragraph at lines 2363--2367
 \T1/lmr/m/n/10 / / www . editorial . ucr . ac . cr / ciencias -[] naturales -[]
  y -[] exactas / item / 1985 -[] introduccion -[] a -[] las -[] series -[]
  []
 
-[45] [46] [47] (./Tesis.aux
+[46] [47] [48] (./Tesis.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
@@ -1666,18 +1661,24 @@ LaTeX Info: Redefining \% on input line 25.
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `Tesis.out' has not changed.
-(rerunfilecheck)             Checksum: 872EB48A3D837D85E8618B358D27BA95;8813.
+(rerunfilecheck)             Checksum: 4BD80B97E372276E639F705D9A0B8560;8345.
  ) 
 Here is how much of TeX's memory you used:
- 27763 strings out of 480913
- 506102 string characters out of 5903860
+ 27755 strings out of 480913
+ 505976 string characters out of 5903860
  843566 words of memory out of 5000000
- 44212 multiletter control sequences out of 15000+600000
- 477036 words of font info for 80 fonts, out of 8000000 for 9000
+ 44206 multiletter control sequences out of 15000+600000
+ 476397 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  87i,17n,88p,1194b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.8} has been referenced but does not exi
-st, replaced by a fixed one
+pdfTeX warning (dest): name{Hfootnote.10} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Hfootnote.9} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Hfootnote.8} has been referenced but does not exist
+, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.7} has been referenced but does not exist
 , replaced by a fixed one
@@ -1728,15 +1729,13 @@ ll/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/User
 s/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><c:/U
 sers/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c
 :/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pf
-b><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko
-10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/
-lmtt10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public
-/lm/lmtti10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
-ublic/amsfonts/symbols/msbm10.pfb>
-Output written on Tesis.pdf (54 pages, 21996325 bytes).
+b><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt1
+0.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsf
+onts/symbols/msbm10.pfb>
+Output written on Tesis.pdf (55 pages, 21948496 bytes).
 PDF statistics:
- 1063 PDF objects out of 1200 (max. 8388607)
- 954 compressed objects within 10 object streams
+ 1050 PDF objects out of 1200 (max. 8388607)
+ 942 compressed objects within 10 object streams
  212 named destinations out of 1000 (max. 500000)
- 511 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 487 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -177,7 +177,7 @@ César Andrés Gamboa Sanabria\\
 
 \newpage
 
-\section{CONCLUSIONES Y RECOMENDACIONES}
+\section{CONCLUSIONES}
 
 ```{r, child="05-Conclusiones.Rmd"}
 ```
