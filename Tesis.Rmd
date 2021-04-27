@@ -54,8 +54,9 @@ knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
                       dev="jpeg", out.width = '100%', out.height='100%', fig.pos="!h",
                       echo=FALSE)
 
-library(carlians)
-requeridos(knitr, ggplot2, tidyr, dplyr, kableExtra)
+carlians::requeridos(knitr, kableExtra, readxl, gridExtra, ggpubr, ggplot2, lubridate, 
+                     ggseas, astsa, ggpmisc, forecast, 
+                     tidyr, popstudy, dplyr)
 
 oldSource <- knit_hooks$get("source")
 knit_hooks$set(source = function(x, options) {

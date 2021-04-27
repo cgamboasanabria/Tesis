@@ -1410,50 +1410,540 @@ encuentra en el \ref{simula_series}.
 
 \subsection{Introducción}
 
-El método propuesto se probará comparándose con los resultados de seis
-series con distintas temporalidades: mortalidad infantil, mortalidad por
-causa externa, nacimientos, demanda eléctrica, intereses y comisiones
-del sector público e incentivos salariales del sector público.
+La metodología propuesta será puesta a prueba en una primera etapa con
+series cronológicas simuladas a partir de distintos modelos. Los
+resultados obtenidos al utilizar la sobreparametrización serán
+contrastados con otros dos métodos: La función \texttt{auto.arima()} de
+R y un modelo ARIMA estándar, que se trata de un \(ARIMA(1,1,1)\) en el
+caso de series no estacionales, y un \(ARIMA(1,1,1)(1,1,1)_{12}\) sobre
+los datos simulados de series mensuales.
 
-\subsection{Datos simulados}
+De forma similar, en la segunda parte de este capítulo se comparan los
+resultados obtenidos mediante la sobreparametrización con los obtenidos
+utilizando la función \texttt{auto.arima()} de R, aplicado a series
+cronológicas costarricenses.
 
-\subsubsection{Comparación en datos simulados - Sobreparametrización vs auto.arima}
+Los paquetes utilizados para la obtención de estos resultados, aparte de
+los ya mencionados, son \texttt{knitr}
+(\protect\hyperlink{ref-knitr}{Xie, 2014}), \texttt{kableExtra}
+(\protect\hyperlink{ref-kableExtra}{Zhu, 2021}), \texttt{readxl}
+(\protect\hyperlink{ref-readxl}{Wickham \& Bryan, 2019}),
+\texttt{gridExtra} (\protect\hyperlink{ref-gridExtra}{Auguie, 2017}),
+\texttt{ggpubr} (\protect\hyperlink{ref-ggpubr}{Kassambara, 2020}),
+\texttt{ggplot2} (\protect\hyperlink{ref-ggplot2}{Wickham, 2016}),
+\texttt{lubridate} (\protect\hyperlink{ref-lubridate}{Grolemund \&
+Wickham, 2011}), \texttt{ggseas} (\protect\hyperlink{ref-ggseas}{Ellis,
+2018}), \texttt{ggpmisc} (\protect\hyperlink{ref-ggpmisc}{Aphalo, 2021})
+y \texttt{forecast} (\protect\hyperlink{ref-forecast}{Rob J. Hyndman \&
+Khandakar, 2008}).
 
-\subsection{Estimaciones en datos costarricenses}
+\subsection{Análisis de simulación en series cronológicas}
 
-En el campo demográfico, por ejemplo, las estadísticas vitales son
-sistematizadas y divulgadas año tras año, por tanto, revelan los cambios
-acontecidos durante este periodo. Esta información junto con la
-proveniente de los censos de población constituye la base para construir
-los diferentes índices, tasas y otros indicadores que revelan la
-situación demográfica del país, información de gran relevancia para la
-planificación nacional, regional y local en diversos campos. Uno de
-estos principales campos de acción es la salud pública, para la cual la
-tasa de mortalidad infantil se considera uno de los indicadores
-prioritarios dado que refleja no solo las condiciones de salud de la
-población infante, sino también los niveles de desarrollo del país, pues
-depende de la calidad de la atención de la salud, principalmente de la
-prenatal y perinatal, así como de las condiciones de saneamiento. Por
-tanto, su continuo monitoreo es fundamental para diseñar, implementar y
-evaluar políticas de salud pública orientadas a disminuir y erradicar
-aquellas que son prevenibles
-(\protect\hyperlink{ref-calidad_vitales}{INEC, 2017}).
+Como se mencionó en el capítulo anterior, se utiliza la función
+\ref{simula_series} para generar las distintas series cronológicas que
+evaluarán el método. El primer insumo de esta función consiste en una
+muestra de valores aleatorios; en este caso se seleccionaron 100 valores
+de una distribución \(N(10,1)\) para generar series de 200
+observaciones. Los valores paramétricos de los modelos ARIMA fueron
+seleccionados de manera aleatoria. Los valores iniciales para obtener
+las series cronológicas simuladas se resumen en la figura
+\ref{fig:datos_simulados}; donde las región azul oscuro representa la
+densidad de datos entre los percentiles 25 y 75, las líneas punteadas de
+color naranja marcan la cantidad de desviaciones estándar que los datos
+se alejan del promedio, y las líneas punteadas de color azul marcan los
+puntos de corte mínimo, percentiles 25, 50 y 75, y el máximo.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/datos_simulados-1} \caption{Valores de referencia para la simulación de series cronológicas}\label{fig:datos_simulados}
+\end{figure}
+
+Por su lado, se simularon un total de ocho series cronológicas, cuyo
+comportamiento y proceso gobernante se muestran en la figura
+\ref{fig:series_simuladas}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/series_simuladas-1} \caption{Series cronológicas simuladas}\label{fig:series_simuladas}
+\end{figure}
+
+El cuadro \ref{tab:comparaciones} muestra los valores del MAE, MASE y
+RMSE para cada proceso estimado y, además, muestra el proceso de origen
+de las series cronológicas simuladas. Al aplicar la función
+\texttt{auto.arima()} y la sobreparametrización sobre una serie
+cronológica generada a partir de un \(ARIMA(1,0,0)\), se obtienen los
+mismos resultados, y esto son ligeramente inferiores a los obtenidos
+mediante un \(ARIMA(1,1,1)\). Al generar datos a partir de un
+\(ARIMA(1,0,1)\) los mejores pronósticos se obtienen tanto con el
+\texttt{auto.arima()} como con la sobreparametrización, pues ambos son
+superiores a los obtenidos mediante un \(ARIMA(1,1,1)\). Al ir
+incorporando términos en las series no estacionales, como es el caso de
+los datos simulados a partir de un \(ARIMA(2,0,3)\), los mejores
+pronósticos se obtienen mediante el uso de la sobreparametrización, pues
+la magnitud de sus errores son siempre menores.
+
+Cuando se consideran series cronológicas estacionales, se presenta un
+comportamiento similar a lo previamente descrito. Al tener una baja
+cantidad de parámetros en los datos simulados de un proceso estacional
+\(ARIMA(0,0,1)(0,1,1)_{12}\), la sobreparametrización iguala los
+resultados obtenidos mediante la función \texttt{auto.arima()}; y
+además, cuando se incorporan más parámetros al modelo generador de los
+dato como en el caso del \(ARIMA(2,1,4)(3,0,3)_{12}\), la
+sobreparametrización logra captar de mejor manera el comportamiento de
+los datos, obteniendo así menores mediciones del error, es decir, los
+pronósticos se acercan más a los datos reales.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-10}\label{tab:comparaciones}Medidas de rendimiento según método de estimación}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{5}{7}\selectfont
+\begin{tabu} to \linewidth {>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Proceso original & Método & Proceso & MAE & MASE & RMSE\\
+\midrule
+ & auto.arima & ARIMA(1,0,0) & 0.4942305 & 0.5528034 & 0.6402943\\
+\cmidrule{2-6}
+ & Sobreparametrización & ARIMA(1,0,0) & 0.4942305 & 0.5528034 & 0.6402943\\
+\cmidrule{2-6}
+\multirow{-3}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,0)} & ARIMA estándar & ARIMA(1,1,1) & 0.4765113 & 0.5329843 & 0.6543140\\
+\cmidrule{1-6}
+ & auto.arima & ARIMA(0,0,1) & 0.8070104 & 0.5896820 & 1.1022758\\
+\cmidrule{2-6}
+ & Sobreparametrización & ARIMA(0,0,1) & 0.8070104 & 0.5896820 & 1.1022758\\
+\cmidrule{2-6}
+\multirow{-3}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,1)} & ARIMA estándar & ARIMA(1,1,1) & 1.0726758 & 0.7838035 & 1.1821687\\
+\cmidrule{1-6}
+ & auto.arima & ARIMA(2,0,2) & 0.5128772 & 1.1656878 & 0.6699120\\
+\cmidrule{2-6}
+ & Sobreparametrización & ARIMA(5,1,1) & 0.4933922 & 1.1214016 & 0.6197431\\
+\cmidrule{2-6}
+\multirow{-3}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,0,3)} & ARIMA estándar & ARIMA(1,1,1) & 0.5390294 & 1.2251276 & 0.6233500\\
+\cmidrule{1-6}
+ & auto.arima & ARIMA(2,0,3) & 0.5454557 & 1.1463361 & 0.7156326\\
+\cmidrule{2-6}
+ & Sobreparametrización & ARIMA(4,0,2) & 0.4570216 & 0.9604820 & 0.6649190\\
+\cmidrule{2-6}
+\multirow{-3}{2.5cm}{\raggedleft\arraybackslash ARIMA(4,0,2)} & ARIMA estándar & ARIMA(1,1,1) & 0.6131072 & 1.2885133 & 0.6860296\\
+\cmidrule{1-6}
+ & auto.arima & ARIMA(0,0,1)(0,1,1)[12] & 0.3877273 & 0.0547085 & 0.8137802\\
+\cmidrule{2-6}
+ & Sobreparametrización & ARIMA(0,0,1)(0,1,1)[12] & 0.3877273 & 0.0547085 & 0.8137802\\
+\cmidrule{2-6}
+\multirow{-3}{2.5cm}{\raggedleft\arraybackslash ARIMA(0,0,1)(0,1,1)[12]} & ARIMA estándar & ARIMA(1,1,1)(1,1,1)[12] & 0.3941180 & 0.0556102 & 0.9030985\\
+\cmidrule{1-6}
+ & auto.arima & ARIMA(2,0,4)(0,0,2)[12] & 3.6020919 & 0.1811366 & 4.8015578\\
+\cmidrule{2-6}
+ & Sobreparametrización & ARIMA(2,1,3)(0,1,3)[12] & 3.5539765 & 0.1787170 & 4.7836465\\
+\cmidrule{2-6}
+\multirow{-3}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,1,4)(3,0,3)[12]} & ARIMA estándar & ARIMA(1,1,1)(1,1,1)[12] & 9.6771221 & 0.4866286 & 14.3620737\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\subsection{Estimaciones en series cronológicas costarricenses reales}
 
 \subsubsection{Tasa de mortalidad infantil interanual}
 
-\subsubsection{Tasa global de fecundidad}
+La Tasa de Mortalidad Infantil (TMI) es uno de los indicadores
+demográficos más importantes, pues es utilizado como un parámetro de
+referencia sobre la calidad del sistema de salud, tanto a nivel nacional
+como regional. Si bien este indicador se construye relacionando las
+defunciones de menores de un año con el total de nacimientos, también
+involucra de manera implícita otras condiciones tales como las
+económicas, sociales y culturales, así como la efectividad en los
+métodos preventivos y curativos de esta categoría poblacional
+(\protect\hyperlink{ref-leon}{León, 1998}). Debido a esto, el
+fallecimiento de un niño menor de un año se traduce en una falla del
+sistema de salud, por lo que estos casos son sujetos de estudio con el
+fin de conocer las causas que desencadenaron el evento.
+
+En algunos países en vías de desarrollo de Asia, África y América
+Latina, la mortalidad infantil alcanza valores elevados pues la
+desnutrición, ausencia de asistencia médica y mala calidad de las
+condiciones sanitarias son, a diferencia de los países más
+desarrollados, algo muy común (\protect\hyperlink{ref-donoso}{Donoso,
+2004}). En el caso de Costa Rica, la unidad de estadísticas demográficas
+del Instituto Nacional de Estadística y Censos\footnote{\url{http://www.inec.go.cr/}}
+(INEC) es el ente encargado de reportar este indicador con el fin de dar
+seguimiento y control al comportamiento del mismo a lo largo del tiempo
+con el objetivo de llegar a los niveles más bajos posibles.
+
+En el INEC, cada mes se publica el boletín de la TMI interanual (TMII),
+que analiza la TMI de un mes y los 11 meses previos para comparar los
+periodos correspondientes (\protect\hyperlink{ref-infantiles}{INEC,
+2004}). Este apartado busca hacer un análisis de la TMII para los 12
+periodos desde el año 1989 y hasta 2017, y no de manera mensual simple,
+pues dada la volatilidad del fenómeno de estudio, hacer un estudio
+interanual permite analizar de una mejor manera los cambios entre
+periodos. Es decir, se analizará la TMII desde el periodo Febrero 1989
+-- Enero 1990 hasta el periodo Enero 2017 -- Diciembre 2017.
+
+La importancia de este proceso, aparte de servir de parámetro para
+evaluar el sistema de salud, está en su estrecha relación con las
+proyecciones de población, pues como se mencionó previamente, la TMII
+analiza la mortalidad en el grupo de edad de menores de un año, que es
+el primer grupo al generar tablas de mortalidad, ya sea de la forma
+clásica o mediante la mortalidad óptima
+(\protect\hyperlink{ref-mortalidad_optima}{Villalón, 2006}). Uno de los
+métodos más conocidos para realizar estas estimaciones es el método de
+los componentes de cambio demográfico, que son la fecundidad, la
+mortalidad y la migración. En el caso de la mortalidad, uno de los
+puntos de partida es la estimación de las tasas de mortalidad por grupos
+de edad, siendo de particular interés la de menores de cinco años, pues
+esta a su vez se subdivide en los grupos de menores de un año y el de
+uno a cuatro años. Conocer el comportamiento de la mortalidad infantil
+es importante porque es en este grupo de edad en el que pueden existir
+cambios muy bruscos en la mortalidad y la fecundidad
+(\protect\hyperlink{ref-Rincon}{Rincon, 2000}).
+
+Dado que la medición de la TMII se hace partiendo de un determinado mes
+y a partir de éste se consideran los 11 meses anteriores, el primer
+valor de la base de datos fue medido a partir de Enero de 2000, que
+corresponde al período interanual Febrero 1999 -- Enero 2000. Todos los
+periodos siguientes se muestran en la figura \ref{fig:tmiiplotgeneral}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotgeneral-1} \caption{Tasa de Mortalidad Infantil Interanual 1989 - 2017}\label{fig:tmiiplotgeneral}
+\end{figure}
+
+La serie muestra picos y valles pronunciados a lo largo de todo el
+periodo. A modo de visualización, se ajustó un suavizamiento de Loess
+para buscar señales de tendencia y concavidad en los datos temporales.
+La línea roja punteada se ubica aproximadamente en el mes de Julio del
+año 2000, pues a partir de ese punto el suavizamiento de Loess muestra
+un ligero cambio en la concavidad, lo cual sugiere que a partir ese
+punto será más difícil que la TMII vuelva a alcanzar valores similares a
+los mostrados al inicio de la serie. Además, al presentarse dos caídas y
+subidas abruptas en la TMII, esta tiende a estabilizarse.
+
+Mediante un análisis visual, la figura \ref{fig:tmiiplotperiodos} parece
+respaldar el supuesto de que la mortalidad no posee efectos estacionales
+determinantes, pues para cada uno de los 12 períodos, en ninguno parecen
+existir mayores diferencias. El efecto que se mantiene en cada uno de
+los períodos es el de la tendencia, pues en cada uno ésta sigue
+descendiendo con el pasar de los años. Este hecho coincide con lo
+observado en la figura \ref{fig:tmiiplotgeneral}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotperiodos-1} \caption{Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos}\label{fig:tmiiplotperiodos}
+\end{figure}
+
+Para hacer la descomposición de la serie se hizo una transformación de
+Box-Cox con \(\lambda=1\) para aplicarla de manera multiplicativa. Esto
+se debe a que en la figura \ref{fig:tmiiplotgeneral} pueden observarse
+cambios considerables en la variabilidad de la serie a lo largo del
+tiempo. la figura \ref{fig:tmiiplotdescomposicion} muestra, como se
+mencionó previamente, una tendencia decreciente y una estacionalidad que
+no es reiterada a lo largo del tiempo. Además, el componente aleatorio
+muestra como los errores no son constantes durante todo el período.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotdescomposicion-1} \caption{Descomposición de la TMII en el periodo 2000 - 2017}\label{fig:tmiiplotdescomposicion}
+\end{figure}
+
+Tras tener un panorama más claro del comportamiento de la serie mediante
+el análisis descriptivo anterior, se modela la serie mediante la función
+\texttt{auto.arima()}, teniendo como mejor modelo un
+\(ARIMA(2,1,0)(0,0,1)\); y utilizando la sobreparametrización se tiene
+como mejor modelo un \(ARIMA(4,1,0)(4,1,0)\). El cuadro
+\ref{tab:tmiimedidas} muestra como el uso de la sobreparametrización
+ofrece pronósticos más cercanos al valor real, y aunque los pronósticos
+están lejos de ser perfectos, el método propuesto logra reproducir de
+mejor manera el comportamiento de los datos, tal y como se muestra en la
+figura \ref{fig:tmiiplotpronostico}
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-13}\label{tab:tmiimedidas}Medidas de rendimiento según método de estimación para la TMII}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Método & RMSE & MAE & MAPE\\
+\midrule
+autoarima & 1.1481936 & 1.0192497 & 12.683182\\
+sobreparametrizacion & 0.3495541 & 0.2839742 & 3.418392\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotpronostico-1} \caption{Pronósticos de la TMII según método de estimación}\label{fig:tmiiplotpronostico}
+\end{figure}
 
 \subsubsection{Mortalidad por causa externa}
 
+La violencia es un acto tan antiguo como el mundo, sin embargo, la
+evolución de esta en conjunto con el crecimiento de su relación con las
+defunciones registradas en una población la vuelven un problema de salud
+pública. En base a la clasificación Internacional de Enfermedades
+(\protect\hyperlink{ref-CIE10}{OPS, 2016}) de la de la Organización
+Mundial de la Salud\footnote{\url{https://www.paho.org/salud-en-las-americas-2017/?lang=es}{]}},
+las defunciones pueden clasificarse en cuatro grandes grupos, siendo el
+más importante el de las causas naturales, el cual incluye enfermedades
+congénitas, cardiopatías u otras relacionadas con la vejez. En menor
+cuantía se encuentran las causas de muerte ignoradas, las cuales se dan
+cuando la causa de muerte es desconocida y de intención indeterminada; y
+de forma similar se encuentran las causas de muerte que se mantienen en
+estudio, bien sea por parte de la morgue o de algún otro organismo, esta
+última tiene pocos registros conforme más se retrocede en el tiempo.
+
+El otro gran grupo, aunque considerablemente menor que las causas
+naturales, son las causas externas, las cuales son objeto de análisis en
+este apartado. Este grupo puede a su vez ser clasificado en homicidios,
+suicidios y las muertes accidentales, esta última comprende los
+accidentes de tránsito, las muertes por caídas, personas ahogadas,
+víctimas de incendios, terraplenes u otros similares. Aunado a estas
+categorías se encuentran también las causas indeterminadas, las cuales
+se diferencian a las ignoradas en que se sabe que se debe a una causa
+externa pero no se conoce con certeza a cuál categoría pertenece o aún
+está en investigación, tal es el caso de una persona que fallece debido
+a una alta ingesta de drogas o estupefacientes; bien pudo haber
+consumido intencionalmente hasta morir, lo cual sería un suicidio, o
+bien el consumo excesivo se debió a un accidente.
+
+En Costa Rica para el año 2011, las muertes por causas externas ocuparon
+el tercer lugar, siendo solo superadas por las enfermedades del sistema
+circulatorio, en particular las enfermedades cardiovasculares, y los
+tumores, ambos casos mostraron una tendencia ascendente
+(\protect\hyperlink{ref-nacion}{Nación, 2013}). Es debido a los elevados
+costos económicos y sociales
+(\protect\hyperlink{ref-ccpexternas}{Cardona, 2013}) que se aborda la
+imperiosa necesidad comprender el comportamiento de las defunciones
+debido a las causas externas con el fin de contar con un punto de
+partida para la elaboración de políticas públicas que busquen reducir al
+mínimo este tipo de eventos.
+
+Dado que los registros de defunciones por causa externa se realizan
+diariamente, conviene analizar su comportamiento de manera mensual desde
+inicios del milenio de una manera más general, dicho comportamiento
+puede observarse en la figura \ref{fig:externaplotgeneral}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externaplotgeneral-1} \caption{Mortalidad por causa externa 2000 - 2017}\label{fig:externaplotgeneral}
+\end{figure}
+
+Es importante recalcar que, entre Junio del año 2012 y Diciembre del año
+2017, el aumento en la tasa de cambio de la cantidad de defunciones
+debido a causas externas coincide con el aumento de la flotilla de
+motocicletas, pues en un período de cinco años esta cifra creció en un
+189\% (\protect\hyperlink{ref-motos}{Vázquez, 2017}). Conviene entonces
+verificar el comportamiento a lo interno de la serie en referencias a
+las categorías de las causas externas.
+
+De la figura \ref{fig:externasplotperiodos} puede notarse que cada mes
+tiene sus picos y valles durante cada mes a lo largo del periodo, siendo
+los meses de Enero, Abril y Diciembre los que presentaron valores
+ligeramente más altos entre los años 2000 y 2017.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externasplotperiodos-1} \caption{Mortalidad por causa externa 2000 - 2017 según mes}\label{fig:externasplotperiodos}
+\end{figure}
+
+La descomposición de la serie se hará de forma aditiva debido a que en
+el gráfico 1 no se observan grandes cambios en la variabilidad a lo
+largo del tiempo. La figura \ref{fig:externasplotdescomposicion} muestra
+que la tendencia se mantiene casi constante a lo largo del tiempo,
+mientras que parece haber estacionalidad en ciertos lapsos de la segunda
+mitad del año. Además, el componente aleatorio muestra como los errores
+no son constantes a lo largo de todo el período.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externasplotdescomposicion-1} \caption{Descomposición de las defunciones por causa externa en el periodo 2000-2017}\label{fig:externasplotdescomposicion}
+\end{figure}
+
+De manera similar a lo hecho para pronosticar la TMII, se ajusta un
+modelo utilizando la función \texttt{auto.arima()}, siendo el modelo
+sugerido un \(ARIMA(1,1,1)\); mientras que la sobreparametrización
+propone como mejor modelo un \(ARIMA(2,0,1)(0,1,1)_{12}\). El cuadro
+\ref{tab:externasmedidas} muestra las medidas de rendimiento obtenidas
+de los pronósticos realizados con cada método, los cuáles son mejores al
+utilizar la sobreparametrización; este hecho también se observa
+gráficamente mediante la figura \ref{fig:externasplotpronostico}
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-15}\label{tab:externasmedidas}Medidas de rendimiento según método de estimación para la Mortalidad por causa externa}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Método & RMSE & MAE & MAPE\\
+\midrule
+autoarima & 0.7555003 & 0.6508858 & 14.35132\\
+sobreparametrizacion & 0.7058923 & 0.6011625 & 13.27879\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externasplotpronostico-1} \caption{Pronósticos de la TMII según método de estimación}\label{fig:externasplotpronostico}
+\end{figure}
+
 \subsubsection{Incentivos salariales del sector público}
+
+Los incentivos salariales son retribuciones que de conformidad con la
+legislación vigente se asignan al servidor por sus características
+laborales que complementan las remuneraciones básicas. Los incentivos se
+reconocen tanto a profesionales como a no profesionales, facultados por
+disposiciones jurídicas que así lo autorizan. Algunos de estos
+incentivos son: anualidades, dedicación exclusiva, salario escolar,
+carrera profesional, carrera técnica, zonaje, desarraigo,
+regionalización, riesgo policial, riesgo penitenciario, riesgo de
+seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros.
+Esta serie cronológica representa los incentivos salariales en millones
+de colones del sector público de Costa Rica de enero 2007 a junio 2015.
+
+De manera análoga a las secciones anteriores, la figura
+\ref{fig:incentivosplotgeneral} muestra el comportamiento general de la
+serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio
+de concavidad a partir de Julio 2008, lo cual sugiere que a partir de
+este momento los incentivos salariales vuelvan a alcanzar valores
+similares a los mostrados al inicio de la serie. La figura
+\ref{fig:incentivosplotperiodos} muestra cómo hay un crecimiento
+sostenido de los incentivos en cada mes a lo largo de todo el periodo.
+Sin embargo, este crecimiento se da a una tasa mucho mayor en la época
+de fin y principio de año.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotgeneral-1} \caption{Incentivos salariales en el sector público 2007 - 2018}\label{fig:incentivosplotgeneral}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotperiodos-1} \caption{Incentivos salariales en el sector público 2007 - 2018 según mes}\label{fig:incentivosplotperiodos}
+\end{figure}
+
+En la figura \ref{fig:incentivosplotdescomposicion} se muestra la
+descomposición de la serie en sus distintos componentes. Pueden
+observarse, además de un crecimiento a lo largo del tiempo, los picos y
+las caídas en la parte estacional, esto hace referencia a los meses de
+Diciembre y Enero; cuando no se está en este periodo los incentivos
+poseen un comportamiento más estable. El componente aleatorio muestra
+indicios de que la variabilidad de la serie no es homogénea, sino que
+cambia conforme pasa el tiempo.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotdescomposicion-1} \caption{Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018}\label{fig:incentivosplotdescomposicion}
+\end{figure}
+
+Nuevamente, se ajustaron dos modelos ARIMA, el primero de ellos mediante
+la función \texttt{auto.arima()}, siendo el modelo sugerido un
+\(ARIMA(0,0,1)(1,1,0)_{12}\);y el segudo modelo sugerido, utilizando la
+sobreparametrización, es un \(ARIMA(2,1,0)(1,2,0)_{12}\). Tanto el
+cuadro \ref{tab:incentivosmedidas} como la figura
+\ref{fig:incentivosplotpronostico} muestran que nuevamente los
+pronósticos obtenidos son superiores utilizando la sobreparametrización.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-17}\label{tab:incentivosmedidas}Medidas de rendimiento según método de estimación para los incentivos salariales}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Método & RMSE & MAE & MAPE\\
+\midrule
+autoarima & 5212.797 & 3701.074 & 4.498137\\
+sobreparametrizacion & 3476.907 & 2846.975 & 4.000943\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotpronostico-1} \caption{Pronósticos de los incentivos salariales según método de estimación}\label{fig:incentivosplotpronostico}
+\end{figure}
 
 \subsubsection{Intereses y comisiones del sector público}
 
-\subsubsection{Demanda eléctrica}
+Finalmente, se utiliza para este análisis la serie cronológica de los
+intereses y comisiones del sector público, que comprenden el pago de los
+intereses de la deuda del gobierno, esto es, las erogaciones de
+intereses y comisiones destinadas por las instituciones públicas para
+cubrir el pago a favor de terceras personas, físicas o jurídicas, del
+sector privado o del sector público, residentes en el territorio
+nacional o en el exterior, por la utilización en un determinado plazo de
+recursos financieros provenientes de los conceptos de emisión y
+colocación de títulos valores, contratación de préstamos directos,
+créditos de proveedores, depósitos a plazo y a la vista, intereses por
+deudas de avales asumidos, entre otros pasivos de la entidad tranzados
+en el país o en el exterior. Incluye el pago por concepto de otras
+obligaciones contraídas entre las partes, que no provienen de las
+actividades normales de financiamiento. Además, los intereses y
+comisiones por las operaciones normales de los bancos comerciales del
+sector público, así como las diferencias por tipo de cambio por
+operaciones financieras; y también el pago de intereses moratorios
+correspondientes a la deuda pública.
 
-\subsubsection{Comparación en datos reales - Sobreparametrización vs auto.arima}
+Para iniciar el análisis exploratorio de esta serie, la figura
+\ref{fig:interesesplotgeneral} muestra que hay un ligero cambio de
+concavidad a partir de Julio 2010, esto sugiere que a partir de este
+momento los intereses y comisiones inician una tendencia al alza, la
+cual se sostiene hasta Junio del 2018. Por su parte, la figura
+\ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento
+sostenido de los intereses y comisiones del sector público al final de
+cada trimestre durante todo el periodo, mientras que se mantiene casi
+constante durante los primeros dos meses de cada trimestre. La caída más
+pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento
+más rápida parece darse al final del primer trimestre. Además, en la
+figura \ref{fig:interesesplotdescomposicion} se muestra la
+descomposición de la serie en sus distintos componentes. Puede
+observarse, además de un crecimiento a lo largo del tiempo posterior a
+una disminución, los picos y las caídas en la parte estacional, esto en
+cuanto a los cierres trimestrales previamente mencionados. El componente
+aleatorio muestra indicios de que la variabilidad de la serie no es
+homogénea, sino que cambia conforme pasa el tiempo, pues durante un
+tiempo se mantuvo relativamente estable pero luego presenta algunos
+cambios.
 
-\subsection{Discusión de los resultados}
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotgeneral-1} \caption{Intereses y comisiones del sector público en el periodo 2007-2018}\label{fig:interesesplotgeneral}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotperiodos-1} \caption{Intereses y comisiones del sector público en el periodo 2007-2018 según mes}\label{fig:interesesplotperiodos}
+\end{figure}
+
+En la figura \ref{fig:interesesplotdescomposicion} se muestra la
+descomposición de la serie en sus distintos componentes. Pueden
+observarse, además de un crecimiento a lo largo del tiempo posterior a
+una disminución, los picos y las caídas en la parte estacional. El
+componente aleatorio muestra indicios de que la variabilidad de la serie
+no es homogénea, sino que cambia conforme pasa el tiempo, pues durante
+un tiempo se mantuvo relativamente estable pero luego presenta algunos
+cambios.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotdescomposicion-1} \caption{Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018}\label{fig:interesesplotdescomposicion}
+\end{figure}
+
+Por último, los modelos ajustados para pronosticar los intereses y
+comisiones del sector público con un \(ARIMA(0,0,1)(0,1,0)_{12}\) para
+el caso de la función \texttt{auto.arima()}; y un
+\(ARIMA(0,1,2)(0,1,0)_{12}\) En este caso, la sobreparametrización es
+superior en dos de las tres medidas de rendimiento tal y como muestra el
+cuadro \ref{tab:interesesmedidas}, mientras que la figura
+\ref{fig:interesesplotpronostico} muestra de manera gráfica los
+pronósticos obtenidos, que son bastante similares pues ambos modelos
+difieren solamente en un parámetro para la parte estacional.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-19}\label{tab:interesesmedidas}Medidas de rendimiento según método de estimación para los intereses y comisiones del sector público}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Método & RMSE & MAE & MAPE\\
+\midrule
+autoarima & 27737.53 & 19562.58 & 35.66424\\
+sobreparametrizacion & 27280.46 & 19346.25 & 39.89648\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotpronostico-1} \caption{Pronósticos de los intereses y comisiones del sector público según método de estimación}\label{fig:interesesplotpronostico}
+\end{figure}
 
 \newpage
 
@@ -1475,183 +1965,189 @@ aquellas que son prevenibles
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{op.arima }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{arima\_process =} \FunctionTok{c}\NormalTok{(}\AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{d =} \DecValTok{1}\NormalTok{, }\AttributeTok{q =} \DecValTok{1}\NormalTok{, }
-                                       \AttributeTok{P =} \DecValTok{1}\NormalTok{, }\AttributeTok{D =} \DecValTok{1}\NormalTok{, }\AttributeTok{Q =} \DecValTok{1}\NormalTok{), }
+\NormalTok{op.arima }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{arima\_process =} \FunctionTok{c}\NormalTok{(}\AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{d =} \DecValTok{1}\NormalTok{, }\AttributeTok{q =} \DecValTok{1}\NormalTok{,}
+                                       \AttributeTok{P =} \DecValTok{1}\NormalTok{, }\AttributeTok{D =} \DecValTok{1}\NormalTok{, }\AttributeTok{Q =} \DecValTok{1}\NormalTok{),}
 \NormalTok{                     seasonal\_periodicity,}
 \NormalTok{                     time\_serie, }\AttributeTok{reg =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{horiz =} \DecValTok{12}\NormalTok{,}
                      \AttributeTok{prop=}\NormalTok{.}\DecValTok{8}\NormalTok{, }\AttributeTok{training\_weight=}\NormalTok{.}\DecValTok{2}\NormalTok{, }\AttributeTok{testing\_weight=}\NormalTok{.}\DecValTok{8}\NormalTok{,}
-                     \AttributeTok{parallelize=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{clusters=}\FunctionTok{detectCores}\NormalTok{(}\AttributeTok{logical =} \ConstantTok{FALSE}\NormalTok{))\{}
-    
+                     \AttributeTok{parallelize=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{clusters=}\FunctionTok{detectCores}\NormalTok{(}\AttributeTok{logical =} \ConstantTok{FALSE}\NormalTok{),...)\{}
+
 \NormalTok{    data\_partition }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FunctionTok{length}\NormalTok{(time\_serie)}\SpecialCharTok{*}\NormalTok{prop, }\DecValTok{0}\NormalTok{)}
 \NormalTok{    train }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{subset}\NormalTok{(time\_serie, }\AttributeTok{end=}\NormalTok{data\_partition)}
 \NormalTok{    test }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{subset}\NormalTok{(time\_serie, }\AttributeTok{start=}\NormalTok{data\_partition}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
-    
-\NormalTok{    arima\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(time\_serie, non\_seasonal, seasonal, }
-\NormalTok{                            periodic, }\AttributeTok{regr =} \ConstantTok{NULL}\NormalTok{)\{}
-        
+
+    \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\NormalTok{    arima\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(time\_serie, non\_seasonal, seasonal, periodic, }\AttributeTok{regr =} \ConstantTok{NULL}\NormalTok{,...)\{}
+
+        \ControlFlowTok{if}\NormalTok{(}\FunctionTok{is.list}\NormalTok{(non\_seasonal))\{}
+\NormalTok{            non\_seasonal }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(non\_seasonal)}
+\NormalTok{        \}}
+
+        \ControlFlowTok{if}\NormalTok{(}\FunctionTok{is.list}\NormalTok{(seasonal))\{}
+\NormalTok{            seasonal }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(seasonal)}
+\NormalTok{        \}}
+
 \NormalTok{        seasonal\_part }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{order=}\NormalTok{seasonal, }\AttributeTok{period=}\NormalTok{periodic)}
         \ControlFlowTok{if}\NormalTok{(}\FunctionTok{is.null}\NormalTok{(regr))\{}
 \NormalTok{            arima\_model }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(\{}
-                \FunctionTok{Arima}\NormalTok{(time\_serie, }
-                      \AttributeTok{order =}\NormalTok{ non\_seasonal, }
-                      \AttributeTok{seasonal =}\NormalTok{ seasonal\_part)}
-\NormalTok{            \}, }
-            \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{)  }
+                \FunctionTok{Arima}\NormalTok{(time\_serie,}
+                      \AttributeTok{order =}\NormalTok{ non\_seasonal,}
+                      \AttributeTok{seasonal =}\NormalTok{ seasonal\_part,...)}
+\NormalTok{            \},}
+            \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{)}
 \NormalTok{        \}}
-        
+
         \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(regr))\{}
 \NormalTok{            arima\_model }\OtherTok{\textless{}{-}}\FunctionTok{tryCatch}\NormalTok{(\{}
-                \FunctionTok{Arima}\NormalTok{(time\_serie, }
-                      \AttributeTok{order =}\NormalTok{ non\_seasonal, }
-                      \AttributeTok{seasonal =}\NormalTok{ seasonal\_part, }
-                      \AttributeTok{xreg =}\NormalTok{ regr)}
-\NormalTok{            \}, }
-            \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{)   }
+                \FunctionTok{Arima}\NormalTok{(time\_serie,}
+                      \AttributeTok{order =}\NormalTok{ non\_seasonal,}
+                      \AttributeTok{seasonal =}\NormalTok{ seasonal\_part,}
+                      \AttributeTok{xreg =}\NormalTok{ regr,...)}
+\NormalTok{            \},}
+            \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{)}
 \NormalTok{        \}}
-        
+
         \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(arima\_model))\{}
 \NormalTok{            degrees\_of\_freedom }\OtherTok{\textless{}{-}}\NormalTok{ arima\_model}\SpecialCharTok{$}\NormalTok{nobs }\SpecialCharTok{{-}} \FunctionTok{length}\NormalTok{(arima\_model}\SpecialCharTok{$}\NormalTok{coef)}
 \NormalTok{            t\_value }\OtherTok{\textless{}{-}}\NormalTok{ arima\_model}\SpecialCharTok{$}\NormalTok{coef}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(arima\_model}\SpecialCharTok{$}\NormalTok{var.coef))}
-\NormalTok{            prob }\OtherTok{\textless{}{-}}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{pf}\NormalTok{(t\_value}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{df1 =} \DecValTok{1}\NormalTok{, }\AttributeTok{df2 =}\NormalTok{ degrees\_of\_freedom, }
-                              \AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{            prob }\OtherTok{\textless{}{-}}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{pf}\NormalTok{(t\_value}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{df1 =} \DecValTok{1}\NormalTok{, }\AttributeTok{df2 =}\NormalTok{ degrees\_of\_freedom, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
             \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{sum}\NormalTok{(}\DecValTok{1}\SpecialCharTok{*}\NormalTok{prob}\SpecialCharTok{\textgreater{}}\FloatTok{0.05}\NormalTok{)}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{, }\FunctionTok{return}\NormalTok{(arima\_model), }\DecValTok{1}\NormalTok{)}
 \NormalTok{        \}}
-        
-\NormalTok{    \}}
 
+\NormalTok{    \}}
+    \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+    \CommentTok{\#Estimación de las final\_measures de model\_performance y los criterios de información}
 \NormalTok{    arima\_measures }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(arima\_model, testing, horizon, }\AttributeTok{regr =} \ConstantTok{NULL}\NormalTok{)\{}
-        
+
+        \DocumentationTok{\#\#model\_spec del arima\_model}
 \NormalTok{        model\_spec }\OtherTok{\textless{}{-}} \FunctionTok{capture.output}\NormalTok{(arima\_model)}
 \NormalTok{        model\_spec }\OtherTok{\textless{}{-}} \FunctionTok{substr}\NormalTok{(model\_spec[}\DecValTok{2}\NormalTok{],}\DecValTok{1}\NormalTok{, }\DecValTok{23}\NormalTok{)}
-        
+
+        \DocumentationTok{\#\#Criterios de model\_info}
 \NormalTok{        data }\OtherTok{\textless{}{-}} \FunctionTok{capture.output}\NormalTok{(}\FunctionTok{summary}\NormalTok{(arima\_model))}
 \NormalTok{        data }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{grepl}\NormalTok{(}\StringTok{"AIC"}\NormalTok{, data) }\SpecialCharTok{==}\NormalTok{ T]}
 \NormalTok{        model\_info }\OtherTok{\textless{}{-}} \FunctionTok{strsplit}\NormalTok{(data, }\StringTok{" "}\NormalTok{)}
 \NormalTok{        pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(model\_info, nchar)}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)}
 \NormalTok{        model\_info }\OtherTok{\textless{}{-}}\NormalTok{ model\_info[[}\DecValTok{1}\NormalTok{]][pos]}
-\NormalTok{        model\_info }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind"}\NormalTok{, }\FunctionTok{strsplit}\NormalTok{(model\_info, }\StringTok{"="}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-            \FunctionTok{data.frame}\NormalTok{() }
+\NormalTok{        model\_info }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind"}\NormalTok{, }\FunctionTok{strsplit}\NormalTok{(model\_info, }\StringTok{"="}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{data.frame}\NormalTok{()}
         \FunctionTok{colnames}\NormalTok{(model\_info) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Medida"}\NormalTok{, }\StringTok{"Valor"}\NormalTok{)}
-\NormalTok{        model\_info }\OtherTok{\textless{}{-}}\NormalTok{ model\_info }\SpecialCharTok{\%\textgreater{}\%} 
-            \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Valor =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(Valor))) }\SpecialCharTok{\%\textgreater{}\%} 
-            \FunctionTok{spread}\NormalTok{(Medida, Valor) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{        model\_info }\OtherTok{\textless{}{-}}\NormalTok{ model\_info }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Valor =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(Valor))) }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{spread}\NormalTok{(Medida, Valor) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{arima\_model =}\NormalTok{ model\_spec)}
-        
-\NormalTok{        model\_performance }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{arima\_model =} \FunctionTok{c}\NormalTok{(model\_spec, }
-                                                        \FunctionTok{paste}\NormalTok{(model\_spec, }
-                                                              \StringTok{"Validacion"}\NormalTok{)), }
-                                        \FunctionTok{accuracy}\NormalTok{(}\FunctionTok{forecast}\NormalTok{(arima\_model, }
-\NormalTok{                                                          horizon, }
-                                                          \AttributeTok{xreg =}\NormalTok{ regr), }
-\NormalTok{                                                 testing))}
-        \FunctionTok{merge}\NormalTok{(model\_info, model\_performance, }\AttributeTok{by=}\StringTok{"arima\_model"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+
+        \DocumentationTok{\#\#final\_measures de model\_performance}
+\NormalTok{        model\_performance }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{arima\_model =} \FunctionTok{c}\NormalTok{(model\_spec, }\FunctionTok{paste}\NormalTok{(model\_spec, }\StringTok{"Validacion"}\NormalTok{)),}
+                                        \FunctionTok{accuracy}\NormalTok{(}\FunctionTok{forecast}\NormalTok{(arima\_model, horizon, }\AttributeTok{xreg =}\NormalTok{ regr), testing))}
+        \FunctionTok{merge}\NormalTok{(model\_info, model\_performance, }\AttributeTok{by=}\StringTok{"arima\_model"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{select}\NormalTok{(arima\_model, AIC, AICc, BIC, MAE, RMSE, MASE)}
 \NormalTok{    \}}
-    
-\NormalTok{    arima\_selected }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(model\_table, }
-                               \AttributeTok{Wtrain=}\NormalTok{training\_weight, }
-                               \AttributeTok{Wtest=}\NormalTok{testing\_weight)\{}
-        
+    \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
 
+\NormalTok{    arima\_selected }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(model\_table, }\AttributeTok{Wtrain=}\NormalTok{training\_weight, }\AttributeTok{Wtest=}\NormalTok{testing\_weight)\{}
+
+        \CommentTok{\#Elimina posibles arima\_models duplicados}
 \NormalTok{        model\_table }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{distinct}\NormalTok{(arima\_model, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{)}
-        
 
-\NormalTok{        model\_table }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%} 
+        \CommentTok{\#Crea variable para agrupar arima\_models en train y test}
+\NormalTok{        model\_table }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mod =} \FunctionTok{as.character}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(model\_table)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}\SpecialCharTok{\%/\%}\DecValTok{2}\NormalTok{))))}
-        
 
-\NormalTok{        tabla2 }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%} 
-            \FunctionTok{mutate\_at}\NormalTok{(}\FunctionTok{vars}\NormalTok{(}\FunctionTok{contains}\NormalTok{(}\StringTok{"C"}\NormalTok{)), }\ControlFlowTok{function}\NormalTok{(x)\{x}\SpecialCharTok{{-}}\FunctionTok{min}\NormalTok{(x, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{)\}) }\SpecialCharTok{\%\textgreater{}\%} 
-            \FunctionTok{mutate\_if}\NormalTok{(is.numeric, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x),}\DecValTok{0}\NormalTok{,x)) }\SpecialCharTok{\%\textgreater{}\%} 
+        \CommentTok{\#Crea la variable de puntaje ponderado}
+\NormalTok{        tabla2 }\OtherTok{\textless{}{-}}\NormalTok{ model\_table }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{mutate\_at}\NormalTok{(}\FunctionTok{vars}\NormalTok{(}\FunctionTok{contains}\NormalTok{(}\StringTok{"C"}\NormalTok{)), }\ControlFlowTok{function}\NormalTok{(x)\{x}\SpecialCharTok{{-}}\FunctionTok{min}\NormalTok{(x, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{)\}) }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{mutate\_if}\NormalTok{(is.numeric, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x),}\DecValTok{0}\NormalTok{,x)) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{mutate}\NormalTok{(}\AttributeTok{puntaje =}\NormalTok{ AIC}\SpecialCharTok{+}\NormalTok{AICc}\SpecialCharTok{+}\NormalTok{BIC}\SpecialCharTok{+}\NormalTok{MAE}\SpecialCharTok{+}\NormalTok{RMSE}\SpecialCharTok{+}\NormalTok{MASE,}
-                   \AttributeTok{ponde =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Validacion"}\NormalTok{, }
-\NormalTok{                                        arima\_model)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{,}
-\NormalTok{                                  Wtest, }
-\NormalTok{                                  Wtrain),}
+                   \AttributeTok{ponde =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Validacion"}\NormalTok{, arima\_model)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{, Wtest, Wtrain),}
                    \AttributeTok{puntaje =}\NormalTok{ puntaje}\SpecialCharTok{*}\NormalTok{ponde)}
-        
 
+        \CommentTok{\#Busca el(los) puntaje(s) mínimo(s)}
         \FunctionTok{suppressMessages}\NormalTok{(\{}
-\NormalTok{            minimal\_score }\OtherTok{\textless{}{-}}\NormalTok{ tabla2 }\SpecialCharTok{\%\textgreater{}\%} 
-                \FunctionTok{group\_by}\NormalTok{(mod) }\SpecialCharTok{\%\textgreater{}\%} 
-                \FunctionTok{summarise}\NormalTok{(}\AttributeTok{puntaje=}\FunctionTok{sum}\NormalTok{(puntaje)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{            minimal\_score }\OtherTok{\textless{}{-}}\NormalTok{ tabla2 }\SpecialCharTok{\%\textgreater{}\%}
+                \FunctionTok{group\_by}\NormalTok{(mod) }\SpecialCharTok{\%\textgreater{}\%}
+                \FunctionTok{summarise}\NormalTok{(}\AttributeTok{puntaje=}\FunctionTok{sum}\NormalTok{(puntaje)) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{                ungroup}
 \NormalTok{        \})}
 
-\NormalTok{        pos }\OtherTok{\textless{}{-}}\NormalTok{ minimal\_score}\SpecialCharTok{$}\NormalTok{mod[}\FunctionTok{which}\NormalTok{(minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje}\SpecialCharTok{==}\FunctionTok{min}\NormalTok{(}
-\NormalTok{            minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje))]}
+        \CommentTok{\#Obtiene la(s) posición(es) con puntaje(s) más bajo(s)}
+\NormalTok{        pos }\OtherTok{\textless{}{-}}\NormalTok{ minimal\_score}\SpecialCharTok{$}\NormalTok{mod[}\FunctionTok{which}\NormalTok{(minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje}\SpecialCharTok{==}\FunctionTok{min}\NormalTok{(minimal\_score}\SpecialCharTok{$}\NormalTok{puntaje))]}
 
-\NormalTok{        model\_table }\SpecialCharTok{\%\textgreater{}\%} 
-            \FunctionTok{filter}\NormalTok{(mod }\SpecialCharTok{\%in\%}\NormalTok{ pos) }\SpecialCharTok{\%\textgreater{}\%} 
+        \CommentTok{\#Devuelve el(los) mejor(es) arima\_model(s)}
+\NormalTok{        model\_table }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{filter}\NormalTok{(mod }\SpecialCharTok{\%in\%}\NormalTok{ pos) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{            dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(arima\_model}\SpecialCharTok{:}\NormalTok{MASE)}
 \NormalTok{    \}}
-    
-    \FunctionTok{suppressWarnings}\NormalTok{(\{     }
 
-\NormalTok{        valores }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{p =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{1}\NormalTok{], }
-                               \AttributeTok{d =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{2}\NormalTok{], }
-                               \AttributeTok{q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{3}\NormalTok{], }
-                               \AttributeTok{P =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{4}\NormalTok{], }
-                               \AttributeTok{D =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{5}\NormalTok{], }
-                               \AttributeTok{Q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{6}\NormalTok{])}
-        
-\NormalTok{        non\_seasonal\_values }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(valores[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]), }
+    \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+    \FunctionTok{suppressWarnings}\NormalTok{(\{}
+        \CommentTok{\#Matriz para la identificacion de los parametros del arima\_model}
+\NormalTok{        valores }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{p =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{1}\NormalTok{], }\AttributeTok{d =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{2}\NormalTok{], }\AttributeTok{q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{3}\NormalTok{],}
+                               \AttributeTok{P =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{4}\NormalTok{], }\AttributeTok{D =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{5}\NormalTok{], }\AttributeTok{Q =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{arima\_process[}\DecValTok{6}\NormalTok{])}
+
+\NormalTok{        non\_seasonal\_values }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(valores[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]),}
                                      \FunctionTok{row}\NormalTok{(valores[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]))}
-\NormalTok{        seasonal\_values }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(valores[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]), }
+\NormalTok{        seasonal\_values }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(valores[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]),}
                                  \FunctionTok{row}\NormalTok{(valores[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]))}
-        
 
+        \CommentTok{\#Estimación de los arima\_models}
         \ControlFlowTok{if}\NormalTok{(parallelize}\SpecialCharTok{==}\ConstantTok{FALSE}\NormalTok{)\{}
-\NormalTok{            arima\_models }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(arima\_model, }
-                                   \AttributeTok{non\_seasonal=}\NormalTok{non\_seasonal\_values, }
-                                   \AttributeTok{seasonal=}\NormalTok{seasonal\_values, }
-                                   \AttributeTok{MoreArgs =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time\_serie=}\NormalTok{train, }\AttributeTok{regr=}\NormalTok{reg, }
-                                                   \AttributeTok{periodic=}\NormalTok{seasonal\_periodicity), }
+\NormalTok{            arima\_models }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(arima\_model,}
+                                   \AttributeTok{non\_seasonal=}\NormalTok{non\_seasonal\_values,}
+                                   \AttributeTok{seasonal=}\NormalTok{seasonal\_values,}
+                                   \AttributeTok{MoreArgs =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time\_serie=}\NormalTok{train, }\AttributeTok{regr=}\NormalTok{reg, }\AttributeTok{periodic=}\NormalTok{seasonal\_periodicity),}
                                    \AttributeTok{SIMPLIFY =} \ConstantTok{FALSE}\NormalTok{)}
-\NormalTok{        \}}
-        
-        \ControlFlowTok{if}\NormalTok{(parallelize}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{)\{}
-            
+\NormalTok{        \}}\ControlFlowTok{else}\NormalTok{(\{}
 
-            
-\NormalTok{            obj }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{match.call}\NormalTok{()), paste)}
-\NormalTok{            pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{names}\NormalTok{(obj) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"time\_serie"}\NormalTok{, }\StringTok{"validacion"}\NormalTok{))}
-            
+            \CommentTok{\#Nombres de los objetos a exportar a cada cluster}
 
+            \CommentTok{\# obj \textless{}{-} sapply(as.list(match.call()), paste)}
+            \CommentTok{\# pos \textless{}{-} which(names(obj) \%in\% c("time\_serie", "validacion"))}
+
+            \CommentTok{\#Generar los cluster}
 \NormalTok{            clp }\OtherTok{\textless{}{-}} \FunctionTok{makeCluster}\NormalTok{(clusters, }\AttributeTok{type =} \StringTok{"SOCK"}\NormalTok{, }\AttributeTok{useXDR=}\ConstantTok{FALSE}\NormalTok{)}
-            \FunctionTok{clusterExport}\NormalTok{(clp, }\AttributeTok{varlist =} \FunctionTok{c}\NormalTok{(obj[pos], }
-                                           \StringTok{"arima\_measures"}\NormalTok{, }
-                                           \StringTok{"arima\_model"}\NormalTok{))}
-            
+            \CommentTok{\#clusterExport(clp, varlist = c(obj[pos], "arima\_measures", "arima\_model"))}
+            \FunctionTok{clusterEvalQ}\NormalTok{(clp, }\AttributeTok{expr =}\NormalTok{ \{}
+                \FunctionTok{library}\NormalTok{(forecast)}
+\NormalTok{            \})}
 
-\NormalTok{            arima\_models }\OtherTok{\textless{}{-}} \FunctionTok{clusterMap}\NormalTok{(}\AttributeTok{cl=}\NormalTok{clp, }\AttributeTok{fun =}\NormalTok{ arima\_model, }
-                                       \AttributeTok{non\_seasonal=}\NormalTok{non\_seasonal\_values, }
-                                       \AttributeTok{seasonal=}\NormalTok{seasonal\_values, }
-                                       \AttributeTok{MoreArgs =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time\_serie=}\NormalTok{train, }
-                                                       \AttributeTok{regr=}\NormalTok{reg, }
-                                                       \AttributeTok{periodic=}\NormalTok{seasonal\_periodicity), }
+            \CommentTok{\#Proceso en parallelize}
+\NormalTok{            arima\_models }\OtherTok{\textless{}{-}} \FunctionTok{clusterMap}\NormalTok{(}\AttributeTok{cl=}\NormalTok{clp, }\AttributeTok{fun =}\NormalTok{ arima\_model,}
+                                       \AttributeTok{non\_seasonal=}\NormalTok{non\_seasonal\_values,}
+                                       \AttributeTok{seasonal=}\NormalTok{seasonal\_values,}
+                                       \AttributeTok{MoreArgs =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time\_serie=}\NormalTok{train, }\AttributeTok{regr=}\NormalTok{reg, }\AttributeTok{periodic=}\NormalTok{seasonal\_periodicity),}
                                        \AttributeTok{SIMPLIFY =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{.scheduling =} \StringTok{"dynamic"}\NormalTok{)}
             \FunctionTok{stopCluster}\NormalTok{(clp)}
-            
-\NormalTok{        \}}
-        
 
+\NormalTok{        \})}
+
+        \CommentTok{\#Obtiene las posiciones de la lista donde se pudieron estimar los arima\_models}
 \NormalTok{        pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(arima\_models, class), length)}\SpecialCharTok{\textgreater{}}\DecValTok{1}\NormalTok{)}
-        
 
-\NormalTok{        final\_measures }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind"}\NormalTok{, }\FunctionTok{lapply}\NormalTok{(arima\_models[pos], }
-\NormalTok{                                                  arima\_measures, }
-                                                  \AttributeTok{testing =}\NormalTok{ test, }
-                                                  \AttributeTok{horizon=}\NormalTok{ horiz, }
-                                                  \AttributeTok{regr =}\NormalTok{ reg)) }\SpecialCharTok{\%\textgreater{}\%} 
+        \CommentTok{\#Calcula las final\_measures de model\_performance y los criterios de información}
+\NormalTok{        final\_measures }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind"}\NormalTok{, }\FunctionTok{lapply}\NormalTok{(arima\_models[pos],}
+\NormalTok{                                                  arima\_measures,}
+                                                  \AttributeTok{testing =}\NormalTok{ test,}
+                                                  \AttributeTok{horizon=}\NormalTok{ horiz,}
+                                                  \AttributeTok{regr =}\NormalTok{ reg)) }\SpecialCharTok{\%\textgreater{}\%}
             \FunctionTok{mutate\_if}\NormalTok{(is.numeric, round, }\DecValTok{2}\NormalTok{)}
+        \CommentTok{\#Devuelve una lista con los arima\_models y las final\_measures de model\_performance}
+\NormalTok{        final\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{arima\_models=}\NormalTok{arima\_models[pos],}
+                           \AttributeTok{final\_measures=}\NormalTok{final\_measures,}
+                           \AttributeTok{bests=}\FunctionTok{arima\_selected}\NormalTok{(final\_measures, }\AttributeTok{Wtrain =}\NormalTok{ training\_weight, }\AttributeTok{Wtest =}\NormalTok{ testing\_weight))}
 
-        \FunctionTok{list}\NormalTok{(}\AttributeTok{arima\_models=}\NormalTok{arima\_models[pos], }
-             \AttributeTok{final\_measures=}\NormalTok{final\_measures, }
-             \AttributeTok{bests=}\FunctionTok{arima\_selected}\NormalTok{(final\_measures, }
-                                  \AttributeTok{Wtrain =}\NormalTok{ training\_weight, }
-                                  \AttributeTok{Wtest =}\NormalTok{ testing\_weight))\})}
+\NormalTok{        mod\_index }\OtherTok{\textless{}{-}}\NormalTok{ final\_list}\SpecialCharTok{$}\NormalTok{bests }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{            row.names }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{            as.numeric }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{            floor }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{            unique }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{            as.character}
+
+\NormalTok{        final\_list}\SpecialCharTok{$}\NormalTok{best\_model }\OtherTok{\textless{}{-}} \FunctionTok{eval}\NormalTok{(}\FunctionTok{parse}\NormalTok{(}\AttributeTok{text =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"final\_list$arima\_models$"}\NormalTok{, }\StringTok{"\textasciigrave{}"}\NormalTok{, mod\_index, }\StringTok{"\textasciigrave{}"}\NormalTok{)))}
+
+\NormalTok{        final\_list}
+\NormalTok{    \})}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -1663,27 +2159,36 @@ aquellas que son prevenibles
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{ts.sim }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, n, temporalidad, }
-\NormalTok{                            no.estacional, estacional, }
+\NormalTok{                            no.estacional, }\AttributeTok{estacional=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{), }
                             \AttributeTok{p=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{q=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{P=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{Q=}\ConstantTok{NULL}\NormalTok{)\{}
   
   \FunctionTok{require}\NormalTok{(forecast)}
   \FunctionTok{tryCatch}\NormalTok{(\{}
-\NormalTok{    coeficientes }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(p, q, P, Q)}
-\NormalTok{    coeficientes.simulados }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\FunctionTok{c}\NormalTok{(no.estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)], }
-\NormalTok{                                       estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)]), }
-                                     \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sample}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{), x))}
+\NormalTok{      coeficientes }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(p, q, P, Q)}
+\NormalTok{      coeficientes.simulados }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\FunctionTok{c}\NormalTok{(no.estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)], }
+\NormalTok{                                         estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)]), }
+                                       \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sample}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{), x))}
+      
 \NormalTok{    pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(coeficientes, is.null)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{    pos2 }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(coeficientes.simulados, length)}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)}
     
 \NormalTok{    coeficientes[pos] }\OtherTok{\textless{}{-}}\NormalTok{ coeficientes.simulados[pos]}
-    \FunctionTok{names}\NormalTok{(coeficientes) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"q"}\NormalTok{, }\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{)}
     
-\NormalTok{    modelo }\OtherTok{\textless{}{-}} \FunctionTok{Arima}\NormalTok{(}\FunctionTok{ts}\NormalTok{(}\AttributeTok{data=}\NormalTok{data, }\AttributeTok{freq=}\NormalTok{temporalidad), }
+    \FunctionTok{names}\NormalTok{(coeficientes) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"q"}\NormalTok{, }\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{)}
+\NormalTok{    coeficientes }\OtherTok{\textless{}{-}}\NormalTok{ coeficientes[pos2]}
+    
+    \ControlFlowTok{if}\NormalTok{(}\ConstantTok{TRUE} \SpecialCharTok{\%in\%}\NormalTok{ (}\FunctionTok{c}\NormalTok{(}\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{) }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(coeficientes)))\{}
+\NormalTok{        modelo }\OtherTok{\textless{}{-}} \FunctionTok{Arima}\NormalTok{(}\FunctionTok{ts}\NormalTok{(}\AttributeTok{data=}\NormalTok{data, }\AttributeTok{freq=}\NormalTok{temporalidad), }
                     \AttributeTok{order =}\NormalTok{ no.estacional, }
                     \AttributeTok{seasonal =}\NormalTok{ estacional,}
-                    \AttributeTok{fixed=}\FunctionTok{c}\NormalTok{(}\AttributeTok{phi=}\NormalTok{coeficientes}\SpecialCharTok{$}\NormalTok{p, }
-                            \AttributeTok{theta=}\NormalTok{coeficientes}\SpecialCharTok{$}\NormalTok{q, }
-                            \AttributeTok{Phi=}\NormalTok{coeficientes}\SpecialCharTok{$}\NormalTok{P, }
-                            \AttributeTok{Theta=}\NormalTok{coeficientes}\SpecialCharTok{$}\NormalTok{Q))}
+                    \AttributeTok{fixed=}\FunctionTok{c}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(coeficientes)))}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{(\{}
+\NormalTok{        modelo }\OtherTok{\textless{}{-}} \FunctionTok{Arima}\NormalTok{(}\FunctionTok{ts}\NormalTok{(}\AttributeTok{data=}\NormalTok{data, }\AttributeTok{freq=}\NormalTok{temporalidad), }
+                    \AttributeTok{order =}\NormalTok{ no.estacional, }
+                    \AttributeTok{seasonal =}\NormalTok{ estacional,}
+                    \AttributeTok{fixed=}\FunctionTok{c}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(coeficientes), }\ConstantTok{NA}\NormalTok{))}
+\NormalTok{    \})}
+    
 \NormalTok{    datos }\OtherTok{\textless{}{-}} \FunctionTok{simulate}\NormalTok{(modelo, }\AttributeTok{nsim=}\NormalTok{(n}\SpecialCharTok{+}\FunctionTok{length}\NormalTok{(data)))}
     
 \NormalTok{    datos }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(datos, }\AttributeTok{start=}\FunctionTok{length}\NormalTok{(data)}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
@@ -1709,6 +2214,16 @@ de \url{https://arxiv.org/ftp/arxiv/papers/1302/1302.6613.pdf}
 \leavevmode\hypertarget{ref-stationary_def}{}%
 Agrawal, R., \& Adhikari, R. (2013). An introductory study on time
 series modeling and forecasting. \emph{Nova York: CoRR}.
+
+\leavevmode\hypertarget{ref-ggpmisc}{}%
+Aphalo, P. J. (2021). \emph{ggpmisc: Miscellaneous Extensions to
+'ggplot2'}. Recuperado de
+\url{https://CRAN.R-project.org/package=ggpmisc}
+
+\leavevmode\hypertarget{ref-gridExtra}{}%
+Auguie, B. (2017). \emph{gridExtra: Miscellaneous Functions for "Grid"
+Graphics}. Recuperado de
+\url{https://CRAN.R-project.org/package=gridExtra}
 
 \leavevmode\hypertarget{ref-pearson}{}%
 Benesty, J., \& Chen, Y. and C., J.and Huang. (2009). Pearson
@@ -1746,6 +2261,12 @@ Time? A Test for Seasonal Stability. \emph{Journal of Business \&
 Economic Statistics}, \emph{13}(3), 237-252. Recuperado de
 \url{http://www.jstor.org/stable/1392184}
 
+\leavevmode\hypertarget{ref-ccpexternas}{}%
+Cardona, G. ;. F., D.; Escané. (2013). Mortalidad por causas externas:
+Un problema de salud pública. Argentina, Chile y Colombia. 2000-2008.
+\emph{Revista electrónica semestral}, \emph{10}(2). Recuperado de
+\url{https://www.researchgate.net/publication/274885475_Mortalidad_por_causa_externas_un_problema_de_salud_publica_Argentina_Chile_y_Colombia_2000-2008}
+
 \leavevmode\hypertarget{ref-Cochrane}{}%
 Cochrane, J. H. (1997). \emph{Time Series for Macroeconomics and
 Finance}. Recuperado de
@@ -1757,6 +2278,17 @@ forecasting. \emph{International Journal of Forecasting}, \emph{22}(3),
 443-473.
 https://doi.org/\url{https://doi.org/10.1016/j.ijforecast.2006.01.001}
 
+\leavevmode\hypertarget{ref-donoso}{}%
+Donoso, E. (2004). Desigualdad en mortalidad infantil entre las comunas
+de la provincia de Santiago. \emph{Revista médica de Chile}, \emph{132},
+461-466. Recuperado de
+\url{https://scielo.conicyt.cl/scielo.php?script=sci_arttext\&pid=S0034-98872004000400008\&nrm=iso}
+
+\leavevmode\hypertarget{ref-ggseas}{}%
+Ellis, P. (2018). \emph{ggseas: 'stats' for Seasonal Adjustment on the
+Fly with 'ggplot2'}. Recuperado de
+\url{https://CRAN.R-project.org/package=ggseas}
+
 \leavevmode\hypertarget{ref-Lombardo}{}%
 Flaherty, J., \& Lombardo, R. (2000, enero). \emph{Modelling Private New
 Housing Starts in Australia}. Recuperado de
@@ -1765,6 +2297,11 @@ Housing Starts in Australia}. Recuperado de
 \leavevmode\hypertarget{ref-fuller1995introduction}{}%
 Fuller, W. A. (1995). \emph{Introduction to Statistical Time Series}.
 Recuperado de \url{https://books.google.co.cr/books?id=wyRhjmAPQIYC}
+
+\leavevmode\hypertarget{ref-lubridate}{}%
+Grolemund, G., \& Wickham, H. (2011). Dates and Times Made Easy with
+{lubridate}. \emph{Journal of Statistical Software}, \emph{40}(3), 1-25.
+Recuperado de \url{https://www.jstatsoft.org/v40/i03/}
 
 \leavevmode\hypertarget{ref-Hamzacebi}{}%
 Hamzaçebi, C. (2008). Improving Artificial Neural Networks' Performance
@@ -1796,21 +2333,30 @@ Hyndman, R. J., \& Athanasopoulos, G. (2018b). \emph{Forecasting:
 principles and practice}. Recuperado de
 \url{https://books.google.co.cr/books?id=_bBhDwAAQBAJ}
 
+\leavevmode\hypertarget{ref-forecast}{}%
+Hyndman, Rob J., \& Khandakar, Y. (2008). Automatic time series
+forecasting: the forecast package for {R}. \emph{Journal of Statistical
+Software}, \emph{26}(3), 1-22. Recuperado de
+\url{https://www.jstatsoft.org/article/view/v027i03}
+
 \leavevmode\hypertarget{ref-auto.arima}{}%
 Hyndman, R., \& Khandakar, Y. (2008). Automatic Time Series Forecasting:
 The forecast Package for R. \emph{Journal of Statistical Software,
 Articles}, \emph{27}(3), 1-22.
 \url{https://doi.org/10.18637/jss.v027.i03}
 
-\leavevmode\hypertarget{ref-calidad_vitales}{}%
-INEC. (2017). \emph{Población, nacimientos, defunciones y matrimonios}.
-Recuperado de
-\url{http://inec.cr/sites/default/files/documetos-biblioteca-virtual/repoblacev2017_0.pdf}
+\leavevmode\hypertarget{ref-infantiles}{}%
+INEC. (2004). \emph{Documento Metodológico de Defunciones Infantiles}.
+INEC.
 
 \leavevmode\hypertarget{ref-bayes}{}%
 Jammalamadaka, S. R., Qiu, J., \& Ning, N. (2018). \emph{Multivariate
 Bayesian Structural Time Series Model}. Recuperado de
 \url{https://arxiv.org/pdf/1801.03222.pdf}
+
+\leavevmode\hypertarget{ref-ggpubr}{}%
+Kassambara, A. (2020). \emph{ggpubr: 'ggplot2' Based Publication Ready
+Plots}. Recuperado de \url{https://CRAN.R-project.org/package=ggpubr}
 
 \leavevmode\hypertarget{ref-kedem}{}%
 Kedem, B., \& Fokianos, K. (2005). \emph{Regression Models for Time
@@ -1820,6 +2366,20 @@ Series Analysis}. Recuperado de
 \leavevmode\hypertarget{ref-Lee}{}%
 Lee, J. (s.~f.). Univariate time series modeling and forecasting
 (Box-Jenkins Method). \emph{Econ 413, lecture 4}.
+
+\leavevmode\hypertarget{ref-leon}{}%
+León, B. ;. E., R.; Gallegos. (1998). {Mortalidad infantil: Análisis de
+un decenio}. \emph{{Revista Cubana de Medicina General Integral}},
+\emph{14}, 606-610. Recuperado de
+\url{http://scielo.sld.cu/scielo.php?script=sci_arttext\&pid=S0864-21251998000600017\&nrm=iso}
+
+\leavevmode\hypertarget{ref-nacion}{}%
+Nación. (2013). Morbilidad y mortalidad en Costa Rica. \emph{La Nacion}.
+Recuperado de \url{https://bit.ly/2xWUeXU}
+
+\leavevmode\hypertarget{ref-CIE10}{}%
+OPS. (2016). \emph{Clasificación Estadística Internacional de
+Enfermedades y Problemas Relacionados con la Salud}. OMS.
 
 \leavevmode\hypertarget{ref-Osborn2009SEASONALITYAT}{}%
 Osborn, D. R., Chui, A. P. L., Smith, J., \& Birchenhall, C. (2009).
@@ -1835,6 +2395,9 @@ Computing}. Recuperado de \url{https://www.R-project.org/}
 Rezaee, Z., Aliabadi, S., Dorestani, A., \& Rezaee, N. J. (2020).
 Application of Time Series Models in Business Research: Correlation,
 Association, Causation. \emph{Sustainability}, \emph{12}(12), 4833.
+
+\leavevmode\hypertarget{ref-Rincon}{}%
+Rincon, M. (2000). \emph{Métodos para proyecciones demográficas}.
 
 \leavevmode\hypertarget{ref-supenprodc}{}%
 Rosero-Bixby, L. (2018). \emph{Producto C para SUPEN. Proyección de la
@@ -1859,6 +2422,22 @@ Tadayon, M., \& Iwashita, Y. (2020). \emph{Comprehensive Analysis of
 Time Series Forecasting Using Neural Networks}. Recuperado de
 \url{https://arxiv.org/pdf/2001.09547.pdf}
 
+\leavevmode\hypertarget{ref-motos}{}%
+Vázquez, J. (2017). En 5 años flotilla de motos se disparó en un 189 por
+ciento. \emph{CR Hoy}. Recuperado de \url{https://bit.ly/2QmQQfE}
+
+\leavevmode\hypertarget{ref-mortalidad_optima}{}%
+Villalón, S. ;. O., G.; Vera. (2006). \emph{Tabla de vida por método de
+mortalidad óptima}. INE.
+
+\leavevmode\hypertarget{ref-ggplot2}{}%
+Wickham, H. (2016). \emph{ggplot2: Elegant Graphics for Data Analysis}.
+Recuperado de \url{https://ggplot2.tidyverse.org}
+
+\leavevmode\hypertarget{ref-readxl}{}%
+Wickham, H., \& Bryan, J. (2019). \emph{readxl: Read Excel Files}.
+Recuperado de \url{https://CRAN.R-project.org/package=readxl}
+
 \leavevmode\hypertarget{ref-dplyr}{}%
 Wickham, H., François, R., Henry, L., \& Müller, K. (2019). \emph{dplyr:
 A Grammar of Data Manipulation}. Recuperado de
@@ -1874,9 +2453,20 @@ Autoregressive Unit Root Alternative. \emph{Journal of Time Series
 Analysis}, \emph{22}(1), 87-105.
 \url{https://doi.org/10.1111/1467-9892.00213}
 
+\leavevmode\hypertarget{ref-knitr}{}%
+Xie, Y. (2014). knitr: A Comprehensive Tool for Reproducible Research in
+{R}. En V. Stodden, F. Leisch, \& R. D. Peng (Eds.), \emph{Implementing
+Reproducible Computational Research}. Recuperado de
+\url{http://www.crcpress.com/product/isbn/9781466561595}
+
 \leavevmode\hypertarget{ref-Zhang}{}%
 Zhang, G. (2003). Time series forecasting using a hybrid ARIMA and
 neural network model. \emph{Neurocomputing}, \emph{50}, 159-175.
+
+\leavevmode\hypertarget{ref-kableExtra}{}%
+Zhu, H. (2021). \emph{kableExtra: Construct Complex Table with 'kable'
+and Pipe Syntax}. Recuperado de
+\url{https://CRAN.R-project.org/package=kableExtra}
 
 \end{CSLReferences}
 

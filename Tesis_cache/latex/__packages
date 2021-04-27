@@ -6,3 +6,12 @@ tidyr
 dplyr
 kableExtra
 timetk
+readxl
+gridExtra
+lubridate
+ggseas
+astsa
+ggpmisc
+forecast
+popstudy
+ggpubr
