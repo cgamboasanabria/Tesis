@@ -1,0 +1,1038 @@
+```{r}
+carlians::requeridos(readxl, gridExtra, ggplot2, lubridate, 
+                     ggseas, astsa, ggpmisc, forecast, 
+                     tidyr, dplyr)
+```
+
+# Simulaciones
+
+
+
+
+## Función para simular procesos
+
+```{r}
+simular.proceso <- function(data, n, temporalidad, 
+                            no.estacional, estacional=c(0,0,0), 
+                            p=NULL, q=NULL, P=NULL, Q=NULL){
+  
+  require(forecast)
+  tryCatch({
+      coeficientes <- list(p, q, P, Q)
+      coeficientes.simulados <- lapply(c(no.estacional[c(1,3)], 
+                                         estacional[c(1,3)]), 
+                                       function(x) sample(seq(-1,1,.1), x))
+      
+    pos <- which(sapply(coeficientes, is.null)==TRUE)
+    pos2 <- which(sapply(coeficientes.simulados, length)>0)
+    
+    coeficientes[pos] <- coeficientes.simulados[pos]
+    
+    names(coeficientes) <- c("p", "q", "P", "Q")
+    coeficientes <- coeficientes[pos2]
+    
+    if(TRUE %in% (c("P", "Q") %in% names(coeficientes))){
+        modelo <- Arima(ts(data=data, freq=temporalidad), 
+                    order = no.estacional, 
+                    seasonal = estacional,
+                    fixed=c(unlist(coeficientes)))
+    }else({
+        modelo <- Arima(ts(data=data, freq=temporalidad), 
+                    order = no.estacional, 
+                    seasonal = estacional,
+                    fixed=c(unlist(coeficientes), NA))
+    })
+    
+    datos <- simulate(modelo, nsim=(n+length(data)))
+    
+    datos <- subset(datos, start=length(data)+1)
+    list(modelo=modelo, datos=datos)}, 
+    error = function(e) simular.proceso(data, n, temporalidad,
+                                        no.estacional, estacional, 
+                                        p, q, P, Q))
+}
+# simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
+#                 no.estacional=c(1,0,3),
+#                 estacional = c(1,2,2),
+#                 q=c(.1, .5, .9))
+# simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=1,
+#                 no.estacional=c(1,0,3),
+#                 estacional = c(0,0,0),
+#                 q=c(.1, .5, .9))
+```
+
+## Escenarios para simulación de series
+
+```{r}
+escenarios <- expand.grid(p=0:1, d=0:1, q=0:1,P=0:1, D=0:1, Q=0:1)
+no_estacional <- escenarios %>% 
+    select(p:q)
+no_estacional <- no_estacional[rowSums(no_estacional)>0,] %>% 
+    unique
+
+estacional <- escenarios[rowSums(escenarios)>0,]
+estacional <- estacional[rowSums(estacional[,4:6])>0,] 
+estacional <- estacional[rowSums(estacional[,1:3])>0,] %>% 
+    unique
+
+no_estacional_bajo <- no_estacional
+estacional_bajo <- estacional
+
+# Altos
+
+escenarios <- expand.grid(p=2:4, d=0:1, q=2:4,P=2:4, D=0:1, Q=2:4)
+no_estacional <- escenarios %>% 
+    select(p:q)
+no_estacional <- no_estacional[rowSums(no_estacional)>0,] %>% 
+    unique
+
+estacional <- escenarios[rowSums(escenarios)>0,]
+estacional <- estacional[rowSums(estacional[,4:6])>0,] 
+estacional <- estacional[rowSums(estacional[,1:3])>0,] %>% 
+    unique
+
+no_estacional_alto <- no_estacional
+estacional_alto <- estacional
+rm(no_estacional)
+rm(estacional)
+
+no_estacional_bajo; no_estacional_alto; estacional_bajo; estacional_alto
+```
+
+## Simulación de datos
+
+```{r}
+set.seed(16051989)
+dat <- rnorm(100, 10, 1)
+# no_estacional_bajo <- no_estacional_bajo[sample(1:nrow(no_estacional_bajo), 2, replace = FALSE),]
+# no_estacional_alto <- no_estacional_alto[sample(1:nrow(no_estacional_alto), 2, replace = FALSE),]
+# proceso_no_estacional <- do.call(rbind, list(no_estacional_bajo, no_estacional_alto))
+# estacional_bajo <- estacional_bajo[sample(1:nrow(estacional_bajo), 2, replace = FALSE),]
+# estacional_alto <- estacional_alto[sample(1:nrow(estacional_alto), 2, replace = FALSE),]
+# proceso_estacional <- do.call(rbind, list(estacional_bajo, estacional_alto))
+
+
+pos_no_estacional_bajo <- sample(1:nrow(no_estacional_bajo), nrow(no_estacional_bajo), replace = FALSE)
+pos_no_estacional_alto <- sample(1:nrow(no_estacional_alto), nrow(no_estacional_alto), replace = FALSE)
+
+pos_estacional_bajo <- sample(1:nrow(estacional_bajo), nrow(estacional_bajo), replace = FALSE)
+pos_estacional_alto <- sample(1:nrow(estacional_alto), nrow(estacional_alto), replace = FALSE)
+
+
+
+popstudy::descriptive_plot(data = data.frame(Yt=dat), labels = NULL, Yt)
+
+# proceso_no_estacional <- mapply(function(dat_,p_,d_,q_){
+#     simular.proceso(data=dat_, 
+#                     n=500, 
+#                     temporalidad=1,
+#                     no.estacional=c(p_,d_,q_))
+# }, 
+# p_=proceso_no_estacional$p, 
+# d_=proceso_no_estacional$d, 
+# q_=proceso_no_estacional$q,
+# MoreArgs = list(dat_=dat))
+
+resultados_no_estacional_bajo <- lapply(pos_no_estacional_bajo, function(x){
+  
+  pdq <- no_estacional_bajo[x,1:3] %>% unlist 
+  tryCatch({simular.proceso(data=dat, n=200, temporalidad=1,
+                  no.estacional=pdq)}, 
+           error=function(e) NULL)
+  
+  
+})
+resultados_no_estacional_bajo <- resultados_no_estacional_bajo[!sapply(resultados_no_estacional_bajo, is.null)][1:2]
+
+resultados_no_estacional_alto <- lapply(pos_no_estacional_alto, function(x){
+  
+  pdq <- no_estacional_alto[x,1:3] %>% unlist 
+  tryCatch({simular.proceso(data=dat, n=200, temporalidad=1,
+                  no.estacional=pdq)}, 
+           error=function(e) NULL)
+  
+  
+})
+resultados_no_estacional_alto <- resultados_no_estacional_alto[!sapply(resultados_no_estacional_alto, is.null)][1:2]
+
+
+resultados_estacional_bajo <- lapply(pos_estacional_bajo, function(x){
+  
+  pdq <- estacional_bajo[x,1:3] %>% unlist
+  PDQ <- estacional_bajo[x,4:6] %>% unlist
+  tryCatch({simular.proceso(data=dat, n=200, temporalidad=12,
+                  no.estacional=pdq,
+                  estacional = PDQ)}, 
+           error=function(e) NULL)
+  
+  
+})
+resultados_estacional_bajo <- resultados_estacional_bajo[!sapply(resultados_estacional_bajo, is.null)][1:2]
+
+resultados_estacional_alto <- lapply(pos_estacional_alto, function(x){
+  
+  pdq <- estacional_alto[x,1:3] %>% unlist
+  PDQ <- estacional_alto[x,4:6] %>% unlist
+  tryCatch({simular.proceso(data=dat, n=200, temporalidad=12,
+                  no.estacional=pdq,
+                  estacional = PDQ)}, 
+           error=function(e) NULL)
+  
+  
+})
+resultados_estacional_alto <- resultados_estacional_alto[!sapply(resultados_estacional_alto, is.null)][1:2]
+```
+
+## Comparacion de resultados
+
+```{r}
+inicio_comparacion <- Sys.time()
+comparacion <- function(data, proporcion, proceso, periodicidad, paralelo,...){
+    require(parallel)
+    require(tidyr)
+    require(dplyr)
+    corte <- round(length(data)*proporcion, 0)
+    train <<- subset(data, end=corte)
+    test <<- subset(data, start=corte+1)
+    haa <- auto.arima(train)
+    op <- popstudy::op.arima(arima_process=proceso,
+                       seasonal_periodicity = periodicidad,
+                       time_serie = data,
+                       horiz = 50,
+                       prop = proporcion,
+                       parallelize = paralelo,
+                       method="ML"
+                       )#https://stackoverflow.com/questions/7233288/non-stationary-seasonal-ar-part-from-css-error-in-r/7236919
+    
+    arima_estandar <- Arima(y = data, method="ML",...)
+    list(testing=test, haa=haa, op=op, 
+         arima_estandar=arima_estandar)
+}
+
+comparacion_no_estacional_bajo <- lapply(resultados_no_estacional_bajo, function(x){
+    res <- comparacion(data=x$datos, 
+                 proporcion = .8, 
+                 proceso=c(6,1,6,0,0,0),
+                 periodicidad = 1,
+                 paralelo = FALSE,
+                 order = c(1,1,1),
+                 seasonal = c(0,0,0))
+    
+    resultados <- list(modelos=list(original = x$modelo,
+                      autoarima = res$haa,
+                      sobreparametrizacion = res$op$best_model,
+                      arima_estandar = res$arima_estandar),
+         resultados_sobreparametrizacion = res$op[1:2],
+         testing = res$testing)
+    
+    resultados$pronosticos <- lapply(resultados$modelos, function(x){
+      pronosticos <- forecast(x, h=50)
+      list(pronosticos=pronosticos,
+           rendimiento=as.data.frame(accuracy(pronosticos, test = resultados$testing)))
+    })
+    
+    resultados
+})
+
+
+comparacion_no_estacional_alto <- lapply(resultados_no_estacional_alto, function(x){
+    res <- comparacion(data=x$datos, 
+                 proporcion = .8, 
+                 proceso=c(6,1,6,0,0,0),
+                 periodicidad = 1,
+                 paralelo = FALSE,
+                 order = c(1,1,1),
+                 seasonal = c(0,0,0))
+    resultados <- list(modelos=list(original = x$modelo,
+                      autoarima = res$haa,
+                      sobreparametrizacion = res$op$best_model,
+                      arima_estandar = res$arima_estandar),
+         resultados_sobreparametrizacion = res$op[1:2],
+         testing = res$testing)
+    
+    resultados$pronosticos <- lapply(resultados$modelos, function(x){
+      pronosticos <- forecast(x, h=50)
+      list(pronosticos=pronosticos,
+           rendimiento=as.data.frame(accuracy(pronosticos, test = resultados$testing)))
+    })
+    
+    resultados
+    
+    
+})
+
+comparacion_estacional_bajo <- lapply(resultados_estacional_bajo, function(x){
+    res <- comparacion(data=x$datos, 
+                 proporcion = .8, 
+                 proceso=c(4,1,4,4,1,4),
+                 periodicidad = 12,
+                 paralelo = TRUE,
+                 order = c(1,1,1),
+                 seasonal = c(1,1,1))
+    resultados <- list(modelos=list(original = x$modelo,
+                      autoarima = res$haa,
+                      sobreparametrizacion = res$op$best_model,
+                      arima_estandar = res$arima_estandar),
+         resultados_sobreparametrizacion = res$op[1:2],
+         testing = res$testing)
+    
+    resultados$pronosticos <- lapply(resultados$modelos, function(x){
+      pronosticos <- forecast(x, h=50)
+      list(pronosticos=pronosticos,
+           rendimiento=as.data.frame(accuracy(pronosticos, test = resultados$testing)))
+    })
+    
+    resultados
+    
+    
+})
+
+comparacion_estacional_alto <- lapply(resultados_estacional_alto, function(x){
+    res <- comparacion(data=x$datos, 
+                 proporcion = .8, 
+                 proceso=c(4,1,4,4,1,4),
+                 periodicidad = 12,
+                 paralelo = TRUE,
+                 order = c(1,1,1),
+                 seasonal = c(1,1,1))
+    resultados <- list(modelos=list(original = x$modelo,
+                      autoarima = res$haa,
+                      sobreparametrizacion = res$op$best_model,
+                      arima_estandar = res$arima_estandar),
+         resultados_sobreparametrizacion = res$op[1:2],
+         testing = res$testing)
+    
+    resultados$pronosticos <- lapply(resultados$modelos, function(x){
+      pronosticos <- forecast(x, h=50)
+      list(pronosticos=pronosticos,
+           rendimiento=as.data.frame(accuracy(pronosticos, test = resultados$testing)))
+    })
+    
+    resultados
+    
+    
+})
+fin_comparacion <- Sys.time()
+fin_comparacion-inicio_comparacion
+# INEC: Time difference of 1.979082 hours
+#comparacion_no_estacional_bajo[[1]]$modelos
+
+```
+
+### Resumen de comparaciones
+
+```{r}
+comparaciones <- lapply(list(comparacion_no_estacional_bajo, 
+                             comparacion_no_estacional_alto,
+                             comparacion_estacional_bajo, 
+                             comparacion_estacional_alto), function(z){
+                               lapply(z, function(y){
+                                 y$pronosticos %>% 
+                                   lapply(function(x){
+                                     x$rendimiento
+                                   }) %>% 
+                                   do.call(rbind,.) %>% 
+                                   mutate(proceso=sapply(y$modelos, function(x){
+                                     x <- capture.output(x)
+                                     substr(x[2],1, 100L)
+                                   }))
+                               })%>% 
+                                 do.call(rbind, .) %>% 
+                                 na.omit %>% 
+                                 mutate(modelo=row.names(.),
+                                        modelo=sub("[0-9]", "", modelo),
+                                        proceso=sub("with non-zero mean", "", proceso))
+                             }) %>% 
+  do.call(rbind, .) %>% 
+  select(modelo, proceso, MAE, MASE, RMSE) %>% 
+  mutate(MAE=ifelse(modelo=="original", NA, MAE),
+         MASE=ifelse(modelo=="original", NA, MASE),
+         RMSE=ifelse(modelo=="original", NA, RMSE)) %>% 
+  data.frame(row.names = NULL)
+# gather(medida, valor, -c(modelo, proceso)) 
+# pivot_wider(names_from = modelo, values_from=proceso)
+
+comparaciones
+```
+
+
+```{r, eval=FALSE}
+#Extracción de pronósticos
+lapply(list(comparacion_no_estacional_bajo, 
+            comparacion_no_estacional_alto,
+            comparacion_estacional_bajo, 
+            comparacion_estacional_alto), function(z){
+              
+              
+              
+              resultado <- z %>% 
+                lapply(function(y){
+                  #y$pronosticos$original$pronosticos$mean <- testing_set
+                  testing_set <- y$testing %>% c
+                  y$pronosticos %>% 
+                    sapply(function(x){
+                      x$pronosticos$mean %>% c
+                    }) %>% 
+                    as.data.frame() %>% 
+                    mutate(original=testing_set[1:nrow(.)]) %>% 
+                    na.omit
+                })
+              
+              resultado
+            })
+
+```
+
+# Series reales
+
+```{r}
+comparacion <- function(data, proporcion, proceso, periodicidad, paralelo,...){
+    require(parallel)
+    require(tidyr)
+    require(dplyr)
+    corte <- round(length(data)*proporcion, 0)
+    train <<- subset(data, end=corte)
+    test <<- subset(data, start=corte+1)
+    haa <- auto.arima(train)
+    op <- popstudy::op.arima(arima_process=proceso,
+                       seasonal_periodicity = periodicidad,
+                       time_serie = data,
+                       horiz = 50,
+                       prop = proporcion,
+                       parallelize = paralelo
+                       )#https://stackoverflow.com/questions/7233288/non-stationary-seasonal-ar-part-from-css-error-in-r/7236919
+    
+    #arima_estandar <- Arima(y = data, method="ML",...)
+    list(testing=test, haa=haa, op=op#, 
+         #arima_estandar=arima_estandar
+         )
+}
+
+resumen_resultados <- function(x, fecha_inicio, fecha_fin){
+  testing <- x$testing
+  
+  resultados_reales <- lapply(list(x$haa, x$op$best_model), function(x){
+  pronostico <- forecast(x, h=length(testing))$mean %>% 
+    c 
+  medidas <- accuracy(pronostico, testing) %>% 
+    as.data.frame()
+  pronostico <- data.frame(pronostico=pronostico) %>% t %>% 
+    as.data.frame()
+  list(pronostico=pronostico, 
+       medidas=medidas)
+})
+  
+  resultados_reales <- lapply(list(x$haa, x$op$best_model), function(x){
+  pronostico <- forecast(x, h=length(testing))$mean %>% 
+    c 
+  medidas <- accuracy(pronostico, testing) %>% 
+    as.data.frame()
+  pronostico <- data.frame(pronostico=pronostico) %>% t %>% 
+    as.data.frame()
+  list(pronostico=pronostico, 
+       medidas=medidas)
+})
+
+pronostico <-  do.call(rbind, list(resultados_reales[[1]]$pronostico,
+                    resultados_reales[[2]]$pronostico,
+                    data.frame(pronostico=testing) %>% 
+                      t %>% 
+                      as.data.frame()))
+
+names(pronostico) <- seq(ymd(fecha_inicio),ymd(fecha_fin), by = '1 month')
+pronostico <- pronostico %>% 
+  mutate(Serie=c("autoarima", "sobreparametrizacion", "original")) %>% 
+  gather(fecha, valor, -Serie) %>% 
+  mutate(fecha=ymd(fecha))
+
+#####
+
+medidas <- do.call(rbind, list(resultados_reales[[1]]$medidas,
+                    resultados_reales[[2]]$medidas)) %>% 
+  mutate(Serie=c("autoarima", "sobreparametrizacion")) %>% 
+  select(RMSE, MAE, MAPE, Serie) %>% 
+  gather(medida, valor, -Serie) %>% 
+  pivot_wider(names_from = medida, values_from=valor)
+
+list(pronostico=pronostico, 
+     medidas=medidas)
+}
+```
+
+
+## Tasa de mortalidad infantil interanual, iniciando desde enero de 1989 hasta diciembre de 2017. 
+
+```{r}
+# base <- read_excel(".\\Material de referencia\\Para sección de resultados\\01 - Tasa de mortalidad infantil interanual\\TMIIR.xlsx")
+base <- read_excel("./Material de referencia/Para sección de resultados/01 - Tasa de mortalidad infantil interanual/TMIIR.xlsx")
+TS <- ts(base$tmii, start = c(1989, 1), end = c(2017, 12), frequency = 12)
+```
+
+```{r}
+#Se requiere el paquete ggpmisc
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 1: Tasa de Mortalidad Infantil Interanual 1989 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  #ylim(7,12) +
+  scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+```
+
+```{r}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(tmii) %>% 
+  mutate(mes=factor(mes, labels=c("Febrero - Enero", "Marzo - Febrero",
+                                  "Abril - Marzo", "Mayo - Abril", 
+                                  "Junio - Mayo", "Julio - Junio",
+                                  "Agosto - Julio", "Setiembre - Agosto",
+                                  "Octubre - Setiembre", "Noviembre - Octubre",
+                                  "Diciembre - Noviembre", "Enero - Diciembre"))) %>% 
+  ggplot(., aes(x=año, y=tmii)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = -0.5) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1) +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 2: Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  #ylim(7, 14) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
+```
+
+```{r}
+base %>% 
+  mutate(tmii=BoxCox(tmii, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = tmii),
+         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 1.3) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 3: Descomposición de la TMII en el periodo 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #scale_x_discrete(expand = c(0,0))
+```
+
+
+```{r}
+TMII <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+TMII$haa
+TMII$op$best_model
+resumen_resultados(TMII, fecha_inicio = '2012-03-01', fecha_fin = '2017-12-01')
+resumen_resultados(TMII, fecha_inicio = '2012-03-01', fecha_fin = '2017-12-01')$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+## Tasa global de fecundidad, iniciando desde enero del 2000 hasta diciembre del 2017. 
+
+
+```{r}
+base <- read_excel("./Material de referencia/Para sección de resultados/02 - Tasa global de fecundidad/nacimientos.xlsx") %>% 
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\02 - Tasa global de fecundidad\\nacimientos.xlsx") %>% 
+  gather(año, valor, -mes) %>% 
+  mutate(fecha=ymd(paste(año, mes, sep="-"))) %>% 
+  select(fecha, valor)
+TS <- ts(base$valor, start = c(1988, 1), end = c(2017, 12), frequency = 12)
+```
+
+```{r}
+#Se requiere el paquete ggpmisc
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 1: Tasa de Mortalidad Infantil Interanual 1989 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #ylim(7,12) +
+  #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+```
+
+```{r}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(valor) %>% 
+  # mutate(mes=factor(mes, labels=c("Febrero - Enero", "Marzo - Febrero",
+  #                                 "Abril - Marzo", "Mayo - Abril", 
+  #                                 "Junio - Mayo", "Julio - Junio",
+  #                                 "Agosto - Julio", "Setiembre - Agosto",
+  #                                 "Octubre - Setiembre", "Noviembre - Octubre",
+  #                                 "Diciembre - Noviembre", "Enero - Diciembre"))) %>% 
+  ggplot(., aes(x=año, y=valor)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = -0.5) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1) +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 2: Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  #ylim(7, 14) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
+```
+
+```{r}
+base %>% 
+  mutate(valor=BoxCox(valor, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = valor),
+         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 1.3) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 3: Descomposición de la TMII en el periodo 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #scale_x_discrete(expand = c(0,0))
+```
+
+```{r}
+NACIMIENTOS <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+NACIMIENTOS$haa
+NACIMIENTOS$op$best_model
+resumen_resultados(NACIMIENTOS, fecha_inicio="2012-01-01", fecha_fin="2017-12-01")
+resumen_resultados(NACIMIENTOS,fecha_inicio="2012-01-01", fecha_fin="2017-12-01")$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+## Mortalidad por causa externa, iniciando desde enero del 2000 hasta diciembre del 2017.
+
+```{r}
+load("./Material de referencia/Para sección de resultados/03 - Mortalidad por causa externa/data.RData")
+TS <- ts(base$Total, start = c(2000, 1), end = c(2017, 12), frequency = 12)
+```
+
+```{r}
+#Se requiere el paquete ggpmisc
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 1: Tasa de Mortalidad Infantil Interanual 1989 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #ylim(7,12) +
+  #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+```
+
+```{r}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(Total) %>% 
+  # mutate(mes=factor(mes, labels=c("Febrero - Enero", "Marzo - Febrero",
+  #                                 "Abril - Marzo", "Mayo - Abril", 
+  #                                 "Junio - Mayo", "Julio - Junio",
+  #                                 "Agosto - Julio", "Setiembre - Agosto",
+  #                                 "Octubre - Setiembre", "Noviembre - Octubre",
+  #                                 "Diciembre - Noviembre", "Enero - Diciembre"))) %>% 
+  ggplot(., aes(x=año, y=Total)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = -0.5) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1) +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 2: Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  #ylim(7, 14) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
+```
+
+```{r}
+base %>% 
+  mutate(valor=BoxCox(Total, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = Total),
+         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 1.3) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 3: Descomposición de la TMII en el periodo 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #scale_x_discrete(expand = c(0,0))
+```
+
+```{r}
+EXTERNA <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+resumen_resultados(EXTERNA, fecha_inicio="2014-06-01", fecha_fin="2017-12-01")
+resumen_resultados(EXTERNA, fecha_inicio="2014-06-01", fecha_fin="2017-12-01")$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+## Incentivos salariales del sector público, iniciando en enero del 2007 hasta junio del 2018.
+
+```{r}
+base <- read_excel("./Material de referencia/Para sección de resultados/04 - Incentivos salariales del sector público/Datos examen1.xlsx") %>% 
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\04 - Incentivos salariales del sector público\\Datos examen1.xlsx") %>% 
+  mutate(valor=`Incentivos salariales`,
+         fecha=ymd(Fecha)) %>% 
+  select(fecha, valor)
+TS <- ts(base$valor, start = c(2007, 1), end = c(2015, 06), frequency = 12)
+```
+
+```{r}
+#Se requiere el paquete ggpmisc
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 1: Tasa de Mortalidad Infantil Interanual 1989 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #ylim(7,12) +
+  #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+```
+
+```{r}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(valor) %>% 
+  # mutate(mes=factor(mes, labels=c("Febrero - Enero", "Marzo - Febrero",
+  #                                 "Abril - Marzo", "Mayo - Abril", 
+  #                                 "Junio - Mayo", "Julio - Junio",
+  #                                 "Agosto - Julio", "Setiembre - Agosto",
+  #                                 "Octubre - Setiembre", "Noviembre - Octubre",
+  #                                 "Diciembre - Noviembre", "Enero - Diciembre"))) %>% 
+  ggplot(., aes(x=año, y=valor)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = -0.5) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1) +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 2: Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  #ylim(7, 14) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
+```
+
+```{r}
+base %>% 
+  mutate(valor=BoxCox(valor, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = valor),
+         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 1.3) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 3: Descomposición de la TMII en el periodo 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #scale_x_discrete(expand = c(0,0))
+```
+
+
+```{r}
+INCENTIVOS <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+resumen_resultados(INCENTIVOS, fecha_inicio="2013-11-01", fecha_fin="2015-06-01")
+resumen_resultados(INCENTIVOS, fecha_inicio="2013-11-01", fecha_fin="2015-06-01")$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+## Intereses y comisiones del sector público, iniciando en enero del 2007 hasta junio del 2018.
+
+```{r}
+base <- read_excel("./Material de referencia/Para sección de resultados/05 - Intereses y comisiones del sector público/Datos examen2.xlsx") %>%
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\05 - Intereses y comisiones del sector público\\Datos examen2.xlsx") %>% 
+  mutate(valor=`Intereses y comisiones`,
+         fecha=ymd(Fecha)) %>% 
+  select(fecha, valor) %>% 
+  filter(year(fecha)>=2009)
+TS <- ts(base$valor, start = c(2009, 1), end = c(2018, 06), frequency = 12)
+```
+
+```{r}
+#Se requiere el paquete ggpmisc
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 1: Tasa de Mortalidad Infantil Interanual 1989 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #ylim(7,12) +
+  #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+```
+
+```{r}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(valor) %>% 
+  # mutate(mes=factor(mes, labels=c("Febrero - Enero", "Marzo - Febrero",
+  #                                 "Abril - Marzo", "Mayo - Abril", 
+  #                                 "Junio - Mayo", "Julio - Junio",
+  #                                 "Agosto - Julio", "Setiembre - Agosto",
+  #                                 "Octubre - Setiembre", "Noviembre - Octubre",
+  #                                 "Diciembre - Noviembre", "Enero - Diciembre"))) %>% 
+  ggplot(., aes(x=año, y=valor)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = -0.5) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1) +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 2: Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMII",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  #ylim(7, 14) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
+```
+
+```{r}
+base %>% 
+  mutate(valor=BoxCox(valor, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = valor),
+         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 1.3) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 3: Descomposición de la TMII en el periodo 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #scale_x_discrete(expand = c(0,0))
+```
+
+
+```{r}
+INTERESES <- comparacion(data=TS, 
+                    proporcion = .8, 
+                    proceso=c(4,1,4,4,1,4),
+                    periodicidad = 12,
+                    paralelo = TRUE,
+                    order = c(1,1,1),
+                    seasonal = c(1,1,1))
+
+resumen_resultados(INTERESES, fecha_inicio="2016-08-01", fecha_fin="2018-06-01")
+resumen_resultados(INTERESES, fecha_inicio="2016-08-01", fecha_fin="2018-06-01")$pronostico %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=valor, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
+  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de los nacimientos para el periodo 2018 - 2022") +
+  labs(caption="Fuente: UED-INEC",
+       y="Nacimientos",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+## Demanda eléctrica, iniciando en enero del 2011 hasta junio del 2018 

@@ -1,0 +1,5 @@
+\section{DEFINICIÓN DE VARIABLE(S) DE ESTUDIO}
+
+Mortalidad infantil: Se define como la muerte de seres humanos que nacieron vivos y cuya defunción se dió antes de cumplir el primer año de edad.
+
+Nacimientos: Se define el acto de terminar el periodo de gestación en la madre y llegar con vida al mundo.

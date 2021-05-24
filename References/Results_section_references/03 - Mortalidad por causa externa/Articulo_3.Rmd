@@ -1,0 +1,710 @@
+---
+title: "Tasa de mortalidad por causa externa en Costa Rica: Un análisis de la serie temporal 2000 - 2017"
+author:
+  - name: César Gamboa Sanabria
+    affiliation: Universidad de Costa Rica
+    footnote: "email: cesar.gamboasanabria@ucr.ac.cr | LinkedIn: https://linkedin.com/in/cgamboasanabria | Github: https://github.com/cgamboasanabria"
+address:
+  - code: Universidad de Costa Rica
+    address: Escuela de Estadística, Universidad de Costa Rica
+header-includes:  \usepackage[spanish]{babel}
+bibliography: mybibfile.bib
+output: rticles::elsevier_article
+---
+
+\section*{RESUMEN}  
+
+La tasa de mortalidad por causa externa es un indicador demográfico utilizado para analizar las defunciones que tuvieron lugar debido a accidentes, homicidios, suicidios o condiciones semejantes. El presente artículo analiza la tasa de mortalidad por causa externa (TMCE) desde Enero del año 2000 a Diciembre del año 2017 mediante métodos de series temporales. Se utilizó una descomposición aditiva de la serie debido a los cambios en la poca variancia que presenta la misma a lo largo del tiempo. Se ajustaron distintos modelos de regresión, suavizamiento exponencial, un $ARIMA(2,0,1)(3,0,4)_{12}$ identificado manualmente y un $ARIMA(3,1,1)(0,0,1)_{12}$ de forma automática respectivamente;los cuales fueron seleccionados para su posterior comparación. El modelo final para realizar el pronóstico es el $ARIMA(2,0,1)(3,0,4)_{12}$ debido a que presenta mejores medidas de rendimiento (MAE, MAPE, RMSE y MASE) y también de las mejores estimaciones en cuanto a los criterios de información se refiere (AIC, AICc, BIC); dicho pronóstico para los siguientes 12 del 2018 periodos con un 95% de confianza abarca valores mínimos de 3.92, mientras que para el límite superior hasta 4.44. 
+
+***Palabras clave***: mortalidad, causa externa, R, ARIMA, RStudio, homicidios, suicidios, accidentes, tránsito
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache=TRUE,
+                      fig.height=3.3, fig.width=6.6, fig.align='center')
+```
+
+\section{1. INTRODUCCIÓN}  
+
+La violencia es un acto tan antiguo como el mundo, sin embargo, la evolución de esta en conjunto con el crecimiento de su relación con las defunciones registradas en una población la vuelven un problema de salud pública. En base a la clasificación Internacional de Enfermedades (@CIE10) de la de la Organización Mundial de la Salud[^1], las defunciones pueden clasificarse en cuatro grandes grupos, siendo el más importante el de las causas naturales, el cual incluye enfermedades congénitas, cardiopatías u otras relacionadas con la vejez. En menor cuantía se encuentran las causas de muerte ignoradas, las cuales se dan cuando la causa de muerte es desconocida y de intención indeterminada; y de forma similar se encuentran las causas de muerte que se mantienen en estudio, bien sea por parte de la morgue o de algún otro organismo, esta última tiene pocos registros conforme más se retrocede en el tiempo.
+  
+El otro gran grupo, aunque considerablemente menor que las causas naturales, son las causas externas, las cuales son objeto de análisis en la presente investigación. En este grupo puede a su vez ser clasificado en cuatro categorías, que son los homicidios, los suicidios y las muertes accidentales, esta última comprende los accidentes de tránsito, las muertes por caídas, personas ahogadas, víctimas de incendios, terraplenes u otros similares. Aunado a estas categorías se encuentran también las causas indeterminadas, las cuales se diferencian a las ignoradas en que se sabe que se debe a una causa externa pero no se conoce con certeza a cuál categoría pertenece o aún está en investigación, tal es el caso de una persona que fallece debido a una alta ingesta de drogas o estupefacientes; bien pudo haber consumido intencionalmente hasta morir, lo cual sería un suicidio, o bien el consumo excesivo se debió a un accidente.
+
+En Costa Rica para el año 2011, las muertes por causas externas ocuparon el tercer lugar, siendo solo superadas por las enfermedades del sistema circulatorio, en particular las enfermedades cardiovasculares, y los tumores, ambos casos mostraron una tendencia ascendente [@nacion]. Es debido a los elevados costos económicos y sociales [@ccp] que se aborda la imperiosa necesidad comprender el comportamiento de las defunciones debido a las causas externas con el fin de contar con un punto de partida para la elaboración de políticas públicas que busquen reducir al mínimo este tipo de eventos.
+
+[^1]: https://www.paho.org/salud-en-las-americas-2017/?lang=es]
+
+\section{2. METODOLOGÍA} 
+
+Los datos utilizados para esta investigación fueron obtenidos en la Unidad de Estadísticas Demográficas del INEC[^2], y corresponde a información mensual de la tasa de mortalidad por causas externas registradas anualmente desde Enero del año 2000 hasta Diciembre del año 2017. Estos datos serán procesados mediante el lenguaje R[^3] y su interfaz RStudio[^4]. Para la manipulación de los datos se utilizarán los paquetes de *R* `readxl`[@readxl], `tidyr`[@tidyr], y `dplyr`[@dplyr], mientras que para el manejo de datos temporales se utilizó el paquete `lubridate`[@lubridate] y `forecast`[@forecast] para realizar los pronósticos. En cuanto a la visualización, los paquetes `ggplot2` [@ggplot2], `ggpmisc` [@ggpmisc] y `ggseas`[@ggseas] serán empleados para generar distintos tipos de gráficos.
+
+El método de análisis consiste en analizar el comportamiento de las defunciones registradas debido a alguna causa externa, para lo cual se realizará un análisis descriptivo de la serie y, posteriormente, una descomposición de la misma para estudiar sus componentes. La serie completa será particionada en dos conjuntos, uno servirá de entrenamiento para la construcción de los modelos para ajustar la serie y otro servirá de validación una vez que el modelo sea generado, esto con el fin de conocer qué tan bien se ajustan las estimaciones a los datos reales; siendo los datos correspondientes a los periodos de Enero 2000 - Diciembre 2016 el conjunto de entrenamiento y de Enero 2017 – Diciembre 2017 para la validación. Se estimarán distintas variantes de los modelos de regresión, de suavizamiento exponencial y ARIMA. 
+
+En el caso de los modelos de regresión, se estimará uno solo con la tendencia, otro con la tendencia y la estacionalidad, y un tercero que consiste en una variante exponencial, todos ellos estimados mediante la máxima verosimilitud maximizando los coeficientes respecto a los parámetros de la función expresada en (1).
+
+\begin{equation}
+ln(L)=-\frac{T}{2}ln(2\pi)-\frac{T}{2}ln(\sigma^2)-\frac{1}{2\sigma^2}(Y-X\beta)'(Y-X\beta)
+\end{equation}
+
+Para los modelos de suavizamiento exponencial, se estimarán distintas variantes considerando errores aditivos y multiplicativos, sin tendencia y con tendencia aditiva y multiplicativa, y sin estacionalidad y con estacionalidad aditiva y multiplicativa, todo esto además de considerar el amortiguamiento.
+
+La estimación de los modelos ARIMA se abordará de dos maneras: 1) identificando los modelos de forma manual tanto en su parte estacional como en la no estacional y 2) de forma automática mediante la función `auto.arima()`.
+
+Una vez estimados estos modelos, se seleccionarán los mejores de cada clase, es decir, el mejor modelo de regresión, el mejor de suavizamiento exponencial, el mejor ARIMA identificado y el mejor ARIMA obtenido de forma automática. Dicha selección se hará analizando los criterios de información indicados en las ecuaciones (2), (3) y (4) donde los valores más bajos indican cuál es el mejor modelo, mientras que las medidas de rendimientos utilizadas se especifican en las ecuaciones (5), (6), (7) y (8) donde las más cercanas a cero sirven para indicar cuál modelo es el más adecuado,
+
+\begin{equation}
+AIC=-2logL\left(\hat\theta\right)+2k
+\end{equation}
+
+\begin{equation}
+AICc=-2logL\left(\hat\theta\right)+2k+\frac{2k+1}{n-k-1}
+\end{equation}
+
+\begin{equation}
+BIC=-2logL\left(\hat\theta\right)+k\cdot log(n)
+\end{equation}
+
+\begin{equation}
+MAE=n^{-1}\sum_{t=1}^n \left|y_t-f_t\right|
+\end{equation}
+
+\begin{equation}
+RMSE=\sqrt{n^{-1}\sum_{t=1}^n \left(y_t-f_t\right)^2}
+\end{equation}
+
+\begin{equation}
+MAPE=100n^{-1}\sum_{t=1}^n\frac{\left|y_t-f_t\right|}{\left|y_t\right|}
+\end{equation}
+
+\begin{equation}
+MASE=n^{-1}\sum_{t=1}^n\frac{\left|y_t-f_t\right|}{q}; q=(n-m)^{-1}\sum_{t=2}^n\left|y_t-y_{t-1}\right|
+\end{equation}
+
+donde $k$ es el número de parámetros y $n$ es el número de datos. 
+
+Finalmente se escogerá el modelo más adecuado en relación a tasa de mortalidad por causa externa (TMCE) para posteriormente realizar un pronóstico de los posibles valores que alcanzará este indicador en el futuro, así como un contextualización del fenómeno con respecto a la actualidad.   
+
+[^2]:http://www.inec.go.cr/
+[^3]: https://cran.r-project.org/
+[^4]: https://www.rstudio.com/
+
+\section{3. RESULTADOS} 
+
+Como fue mencionado en la introducción, un alto porcentaje de las defunciones registradas se deben, como es de esperar, a las causas naturales; sin embargo la mortalidad debido a causas externas representa un problema de salud pública que debe ser solventado. COnforme la sociedad crece, también se vuelve más complicado manejar situaciones de seguridad ciudadana por parte del Estado que a la postre terminan el la disminición de la población debido a los crímenes asociados a la delincuencia, defunciones que presentan un alto porcentaje desde hace más de dos décadas [@nacion2]. A lo largo de los años se han planteado diversas reformas para reducir la delincuencia, los accidentes en carretera y otros aspectos relacionados, y es en base a estas condiciones que se analizan este tipo de muertes durante los últimos 18 años.
+
+Dado que los registros de defunciones por causa externa se realizan diariamente, conviene analizar su comportamiento de manera mensual desde inicios del milenio de una manera más general, dicho comportamiento puede observarse en el gráfico 1.
+
+La serie muestra picos y valles pronunciados a lo largo de todo el periodo. A modo de visualización, se ajustó un suavizamiento de Loess, o regresión local, para buscar señales de tendencia y concavidad en los datos temporales. La línea roja punteada se ubica aproximadamente en el mes de Junio del año 2008, pues a partir de ese punto la regresión local muestra un ligero cambio en la concavidad, lo cual sugiere el inicio de un aumento en las defunciones que culmina con una caída en Noviembre del año 2011 (línea azul punteada) para posteriormente iniciar otro cambio en la concavidad, que significa un rápido ascenso en la cantidad de muertes debido a causas externas.
+
+```{r}
+load("~/Defunciones.RData")
+```
+```{r, results='hide'}
+requeridos <- function(paq){
+  paq.nuevo <- paq[!(paq %in% installed.packages()[, "Package"])]
+  if (length(paq.nuevo)) 
+    install.packages(paq.nuevo, dependencies = TRUE)
+  sapply(paq, require, character.only = TRUE)
+}
+
+paquetes <- c("tidyr", "lubridate", "ggplot2", "ggpmisc",
+              "ggseas", "formattable", "kableExtra", 
+              "forecast", "astsa", "ggpubr", "readxl", "dplyr")
+
+requeridos(paquetes)
+```
+```{r}
+base <- defunciones %>% 
+  mutate(Homicidios=ifelse(CAUSAMUER %in% c(paste("X", sprintf('%0.3d', 850:999), sep=""),
+                                            paste("Y", sprintf('%0.3d', 0:99), sep="")), 
+                           1, 0),
+         Suicidios=ifelse(CAUSAMUER %in% paste("X", sprintf('%0.3d', 600:849), sep=""), 
+                          1, 0),
+         Accidentales=ifelse(CAUSAMUER %in% c(paste("V", sprintf('%0.3d', 10:999), sep=""),
+                                              paste("W", sprintf('%0.3d', 0:999), sep=""),
+                                              paste("X", sprintf('%0.3d', 0:599), sep="")),
+                             1, 0),
+         Indeterminadas=ifelse(CAUSAMUER %in% paste("Y", sprintf('%0.3d', 100:349), sep=""), 
+                               1, 0),
+         Ignorado=ifelse(CAUSAMUER=="R999", 1, 0),
+         Estudio=ifelse(CAUSAMUER=="R990", 1, 0),
+         Naturales=ifelse(Homicidios=="0" & Suicidios == "0" & 
+                            Accidentales == "0" & Indeterminadas == "0" &
+                            Ignorado == "0" & Estudio == "0", 1, 0),
+         DIA="01") %>% 
+  select(ANOTRAB, MESTRAB, DIA, Homicidios, Suicidios, Accidentales, 
+         Indeterminadas, Ignorado, Estudio, Naturales)%>% 
+  unite(fecha, c(ANOTRAB, MESTRAB, DIA), sep="-") %>% 
+  mutate(fecha=ymd(fecha))%>% 
+  gather(Causa, casos, -fecha) %>% 
+  group_by(fecha, Causa) %>% 
+  summarise(Total=sum(casos)) %>% 
+  filter(Causa %in% c("Homicidios", "Suicidios", "Accidentales", "Indeterminadas")) %>% 
+  arrange(Causa, fecha) %>% 
+  mutate(año=year(fecha)) %>% 
+  data.frame()
+
+poblaciones <- read_excel("C:/Users/Dell/OneDrive/Academico/Proyectos/GitHub/INEC/Proyecciones de poblacion/Mortalidad Optima/poblaciones.xlsx")
+poblaciones <- poblaciones %>% 
+  mutate(periodo=paste(periodo, "-06-01", sep="")) %>% 
+  group_by(periodo) %>% 
+  summarise(Poblacion=sum(Poblacion)) %>% 
+  mutate(año=year(periodo))
+
+base <- merge(base, poblaciones, by="año") %>% 
+  mutate(Total=Total/Poblacion*100000) %>% 
+  select(-c(año, periodo, Poblacion))
+
+base2 <- base %>% group_by(fecha) %>% summarise(Total=sum(Total))
+TS <- ts(base2$Total, start = c(2000, 1), end = c(2017, 12), frequency = 12)
+```
+
+```{r}
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  geom_vline(xintercept = c(2005.6, 2010.8), linetype="dashed", color = c("red", "blue"))+
+  annotate("rect", xmin = 2012.6, xmax = 2018, 
+           ymin = 2.5, ymax = Inf, 
+           alpha = 0.3, fill="green", linetype="dashed")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 1: Mortalidad por causa externa 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))+
+  scale_y_continuous(expand=c(0, 0))+
+  ylim(2.5, 6)
+```
+
+Es importante recalcar que, entre Junio del año 2012 y Diciembre del año 2017 (área verde), el aumento en la tasa de cambio de la cantidad de defunciones debido a causas externas coincide con el aumento de la flotilla de motocicletas, pues en un período de cinco años esta cifra creció en un 189% [@motos]. Conviene entonces verificar el comportamiento a lo interno de la serie en referencias a las categorías de las causas externas.
+
+```{r}
+base %>% 
+  ggplot(., aes(x=fecha, y=Total, colour=Causa))+
+  geom_line( size = 0.78)+
+  geom_vline(xintercept = c(ymd("2005-06-01"), ymd("2010-11-01")), 
+             linetype="dashed", color = c("red", "blue"))+
+  annotate("rect", xmin = ymd("2012-06-01"), xmax = ymd("2017-12-01"), 
+           ymin = 0, ymax = Inf, 
+           alpha = 0.3, fill="green", linetype="dashed")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 2: Mortalidad por causa externa según categoría 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+El cambio descrito en base a lo mostrado en el gráfico 1 puede explicarse mediante el gráfico 2, pues el aumento mostrado en el área verde correspondiente al periodo Junio 2012 - Diciembre 2012 coincide en ambos gráficos, por lo que dicho descenso se debe a un fuerte cambio en las muertes por causas accidentales, posiblemente ocasionado por el aumento de la cantidad de motocicletas en carretera. Conociendo este hecho, resulta importante estudiar el comportamiento de la serie para cada uno de los meses durante todo el periodo.
+
+```{r, fig.height=4.3, fig.width=6.6, fig.align='center'}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(Total=sum(Total)) %>% 
+  ggplot(., aes(x=año, y=Total)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = 0.1, size=3) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1, size=3) +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1),
+        plot.title = element_text(size = 12)) +
+  ggtitle("Gráfico 3: Mortalidad por causa externa 2000 - 2017 según mes") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
+```
+
+
+
+```{r}
+base %>%
+  group_by(fecha) %>% 
+  summarise(Total=sum(Total)) %>% 
+  #mutate(tmii=BoxCox(tmii, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = Total),
+         method = "stl", s.window = 7, frequency = 12, type="additive",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 1.3) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1),
+        plot.title = element_text(size = 12)) +
+  ggtitle("Gráfico 4: Descomposición de las defunciones por causa externa en el periodo 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_discrete(expand = c(0,0))
+```
+
+Del gráfico 3 puede notarse que cada mes tiene sus picos y valles durante cada mes a lo largo del periodo, siendo los meses de Enero, Abril y Diciembre los que presentaron valores ligeramente más altos entre los años 2000 y 2017. 
+
+La descomposición de la serie se hará de forma aditiva debido a que en el gráfico 1 no se observan grandes cambios en la variabilidad a lo largo del tiempo. El gráfico 3 muestra que la tendencia se mantiene casi constante a lo largo del tiempo, mientras que parece haber estacionalidad en ciertos lapsos de la segunda mitad del año. Además, el componente aleatorio muestra como los errores no son constantes a lo largo de todo el período. 
+
+```{r}
+#particion de la serie
+base <- base %>% 
+  group_by(fecha) %>% 
+  summarise(Total=sum(Total))
+train <- filter(base, year(fecha)<2017)
+train <- ts(train$Total, start=c(2000, 1), frequency = 12)
+test <- filter(base, year(fecha)>=2017)
+test <- ts(test$Total, start=c(2017, 1), frequency = 12)
+train.serie <- window(train, 2000)
+test.serie <- window(test, 2017)
+serie.completa <- window(TS, start=2000)
+```
+
+Tras tener un panorama más claro del comportamiento de la serie mediante el análisis descriptivo anterior, es importante realizar las estimaciones de los modelos. Para las estimación de los mismo y todos los aspectos relacionados, se dividió la base de datos en dos subconjuntos: 1) la base de entrenamiento son los datos desde el año 2000 y hasta el 2016 inclusive, y 2) la base de validación, que corresponde a los datos del año 2017.
+
+```{r, results='hide'}
+load("C:/Users/Dell/OneDrive/Academico/Proyectos/GitHub/Academico/Cursos/SP-1633 Series Cronológicas/Artículos/Articulo 3/funciones.RData")
+```
+
+La primera estimación hecha es la que corresponde a los modelos de regresión. Las tres variantes descritas en el apartado metodológico de este artículo calculadas para luego contrastarlos mediante las medidas de rendimiento, los resultados pueden verse en cuadro 3 de la sección de anexos. El mejor modelo en este caso es el de variante exponencial, expresado mediante la ecuación (9), pues es el que cuenta con mejores medidas en el conjunto de entrenamiento y es muy competente en el conjunto de validación.
+
+\begin{equation}
+\begin{split}
+&log(\hat y_t)=1.3699+0.0007t-0.0597s_2-0.0411s_3-0.0269s_4-0.0968s_5-0.1132s_6\\
+                &\qquad-0.0913s_7-0.1242s_8-0.0888s_9-0.0861s_{10}-0.1184s_{11}+0.0161s_{12}
+\end{split}
+\end{equation}
+
+```{r, results='hide'}
+#Estimacion de los modelos
+mod1 <- tslm(train.serie~trend)
+mod2 <- tslm(train.serie~trend + season)
+mod3 <- tslm(train.serie~trend + season, lambda = 0) #exponencial
+
+#Medidas de los modelos
+l <- list()
+mods <- list(mod1, mod2, mod3)
+nombres <- c("Regresion T", "Regresion T+E", "Regresión exponencial")
+for(i in 1:length(mods)){
+  l[[i]] <- medidas.reg(mods[[i]], test.serie, nombres[i])
+  l
+}
+medidas1 <- do.call("rbind", l)
+tabla.latex(medidas1)
+medidas1
+```
+
+El segundo gran grupo de estimaciones corresponde a los modelos de suavizamiento exponencial. Para todas las variantes mencionadas en el apartado metodológico, se calcularon las medidas de rendimiento y los criterios de información para cada uno de los modelos, dichos resultados pueden verse en el cuadro 4 presente en la sección de anexos. Tras esta comparación, el mejor modelo de suavizamiento exponencial es que tiene errores multiplicativos, sin tendencia y con estacionalidad aditiva descrito en la ecuación (10), pues presenta mejores medidas de rendimiento en el set de validación y medidas cercanas al mínimo en el set de entrenamiento. 
+
+```{r, results='hide'}
+l <- list()
+mods <- list(modelos(train.serie, "A"), modelos(train.serie, "M"))
+for(i in 1:length(mods)){
+  l[[i]] <- medidas.ets(mods[[i]], test.serie)
+  l
+}
+medidas2 <- do.call("rbind", l)
+medidas2#revisar el RMSE
+```
+
+\begin{equation}
+\hat y_{t+h|t}=l_t+s_{t+h-m(k+1)}
+\end{equation}
+
+Donde $l_t=0.1742\left(y_t-s_{t-m}\right)+(1-0.1742)l_{t-1}$; $s_t=0.0003\left(y_t-l_{t-1}\right)+(1-0.0003)s_{t-m}$.
+
+Antes de estimar los modelos ARIMA es necesario realizar una inspección en base a los autocorrelogramas, y para esto es necesario verificar la estacionaridad de la serie, es decir, que el promedio y la varianza de la serie se mantengan a lo largo del tiempo. Con este fin es que se analiza el gráfico 5, en el cual se puede ver que para volver la serie estacionaria es necesario aplicar el logaritmo y hacer una doble diferenciación cada 12 meses. El gráfico 6 muestra los autocorrelogramas parcial y total para la serie estacionaria, el cual paree sugerir que se tiene un MA(1) en la parte estacional, sin embargo ante la poca claridad de este criterio conviene realizar una sobreparametrización para encontrar el modelo más adecuado.
+
+Para el proceso de sobreparametrización, se hace uso de la función `sarima()`, en la cual ese especifican los valores tanto en la parte estacional como en la no estacional, y a partir de esto se obtienen las probabilidades asociadas a los coeficientes y se descartan aquellos modelos cuyos coeficientes no sean significativamente distintos de cero. Al ser este un proceso iterativo, se llegaron a estimar 177 modelos ARIMA, de los cuales el más adecuado es el $ARIMA(2,0,1)(3,0,4)_{12}$ mostrado en la ecuación (11). Los resultados de los mejores 5 modelos ARIMA pueden encontrarse en el cuadro 5 en la sección de anexos.
+
+\begin{equation}
+\begin{split}
+&y_t=4.0043+0.5421y_{t-1}+0.3193y_{t-2}-0.8346y_{t-12}+0.9826y_{t-24}+0.8413y_{t-36}\\
+    &\qquad-0.5033y_{t-1}+1.0054y_{t-12}-0.9267y_{t-24}-0.9733y_{t-36}+u_t
+\end{split}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{Diagnosticos.png}
+\end{figure}
+
+
+
+La última estimación de los modelos corresponde ejecutado mediante la función `auto.arima()`. En este caso, el modelo sugerido es un $ARIMA(3,1,1)(0,0,1)_{12}$, el cual se muestra en la ecuacion (12).
+
+\begin{equation}
+y_t=-0.0457y_{t-1}+0.2462y_{t-2}+0.0390y_{t-3}-0.8904y_{t-1}+0.1164y_{t-12}+u_t
+\end{equation}
+
+```{r}
+data.frame(fecha=seq(ymd("2000-01-01"), ymd("2016-12-01"), by="months"),
+           Original=train.serie,
+           Logaritmo=log(train.serie),
+           `Logaritmo.y.diferenciacion(12)`=c(rep(NA,12), diff(log(train.serie),12)),
+           `Logaritmo.y.doble.diferenciacion(12)`=c(rep(NA, 13), diff(diff(log(train.serie),12),1))) %>% 
+  gather(Serie, valor, -fecha) %>% 
+  mutate(Serie=gsub('\\.', " ", Serie)) %>%
+  mutate(Serie=factor(Serie, levels=c("Original", "Logaritmo", 
+                                      "Logaritmo y diferenciacion 12 ", "Logaritmo y doble diferenciacion 12 "))) %>% 
+  ggplot(., aes(x=fecha, y=valor))+
+  facet_wrap(~Serie, scales="free")+
+  geom_line(color = "#00AFBB", size = 0.6)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 5: Estacionarización de la serie de Muertes\npor causa externa 2000 - 2017") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMCE (según escala)",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+```{r}
+p <- acf2(diff(diff(log(train.serie),12),1), main="Grafico 6: Autocorrelación y autocorrelación parcial")
+```
+
+```{r, results='hide'}
+auto.arima(train.serie)
+```
+
+Con los 4 mejores modelos seleccionados en cada categoría, se procede a comparar sus medidas de rendimiento y, posteriormente, el pronóstico para cada uno de ellos y verificar, mediante sus pronósticos, cual de todos es el más adecuado. El cuadro 1 muestra los criterios de información y las medidas de rendimiento para los datos de entrenamiento (rojo) y de validación (azul), siendo el modelo ARIMA estimado el mejor en el conjunto de entrenamiento y el segundo mejor en el de validación, pues queda ligeramente superado por el modelo de suavizamiento exponencial con errores multiplicativos, sin tendencia y con estacionalidad multiplicativa; una comparación gráfica de estos modelos en su pronóstico para el año 2014 puede verse en los gráfico 8-11 en la sección de anexos. Para culminar el análisis, se ofrece el pronóstico con el mejor modelo, que es el $ARIMA(2,0,1)(3,0,4)_{12}$ para los siguientes 12 periodos correspondientes al año 2018, así como el detalle de dicho pronóstico para cada uno de los meses en el cuadro 1 y el gráfico 7 respectivamente.
+
+```{r}
+regresion <- tslm(train.serie~trend + season, lambda = 0)
+exponencial <- ets(train.serie, model="MNA")
+arimamod <- Arima(train.serie, c(2,0,1), c(3,0,3))
+autoarima <- auto.arima(train.serie)
+```
+
+```{r, eval=FALSE}
+medidas.finales <- do.call("rbind", list(medidas.reg(regresion, test.serie, "Reg. tendencia exponencial"),
+                      medidas.ets(list(exponencial), test.serie),
+                      medidas.arima(arimamod, test.serie, 12),
+                      medidas.arima(autoarima, test.serie, 12))) %>% 
+  mutate_if(is.numeric, round, 2)
+```
+
+\begin{table}[!h]
+\centering
+\caption{Medidas de rendimiento y criterios de información para los 4 modelos comparados}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & RMSE & MASE\\
+\midrule
+Reg. tendencia exponencial & \textcolor{red}{-813.33} & \textcolor{red}{-811.1} & \textcolor{red}{-766.87} & \textcolor{black}{0.42} & \textcolor{black}{10.6} & \textcolor{black}{0.51} & \textcolor{black}{0.78}\\
+Reg. tendencia exponencial Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.28} & \textcolor{black}{5.94} & \textcolor{black}{0.36} & \textcolor{black}{0.51}\\
+(M,N,A) & \textcolor{black}{796.24} & \textcolor{black}{798.79} & \textcolor{black}{846.01} & \textcolor{black}{0.38} & \textcolor{black}{9.54} & \textcolor{black}{0.46} & \textcolor{black}{0.69}\\
+(M,N,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.27} & \textcolor{black}{6.26} & \textcolor{blue}{0.32} & \textcolor{black}{0.49}\\
+ARIMA(2,0,1)(3,0,3)[12] & \textcolor{black}{298.32} & \textcolor{black}{299.69} & \textcolor{black}{334.82} & \textcolor{red}{0.35} & \textcolor{red}{8.97} & \textcolor{red}{0.45} & \textcolor{red}{0.65}\\
+ARIMA(2,0,1)(3,0,3)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{0.24} & \textcolor{blue}{5.36} & \textcolor{blue}{0.32} & \textcolor{blue}{0.44}\\
+ARIMA(3,1,1)(0,0,1)[12] & \textcolor{black}{297.37} & \textcolor{black}{297.8} & \textcolor{black}{317.25} & \textcolor{black}{0.38} & \textcolor{black}{9.58} & \textcolor{black}{0.49} & \textcolor{black}{0.7}\\
+ARIMA(3,1,1)(0,0,1)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.37} & \textcolor{black}{8.59} & \textcolor{black}{0.45} & \textcolor{black}{0.69}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-20\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+```{r}
+basegraf <- data.frame(fecha=seq(ymd("2000-01-01"), ymd("2017-12-01"), by="months"),
+           Original=c(TS),
+           Regresion=c(forecast(regresion, h=12)$fitted, forecast(regresion, h=12)$mean),
+           Exponencial=c(forecast(exponencial, h=12)$fitted, forecast(exponencial, h=12)$mean),
+           Arima=c(forecast(arimamod, h=12)$fitted, forecast(arimamod, h=12)$mean),
+           Autoarima=c(forecast(autoarima, h=12)$fitted, forecast(autoarima, h=12)$mean),
+           LIreg=c(rep(NA, 204), forecast(regresion, h=12)$lower[,2]),
+           LSreg=c(rep(NA, 204), forecast(regresion, h=12)$upper[,2]),
+           LIexp=c(rep(NA, 204), forecast(exponencial, h=12)$lower[,2]),
+           LSexp=c(rep(NA, 204), forecast(exponencial, h=12)$upper[,2]),
+           LIarima=c(rep(NA, 204), forecast(arimamod, h=12)$lower[,2]),
+           LSarima=c(rep(NA, 204), forecast(arimamod, h=12)$upper[,2]),
+           LIauto=c(rep(NA, 204), forecast(autoarima, h=12)$lower[,2]),
+           LSauto=c(rep(NA, 204), forecast(autoarima, h=12)$upper[,2])) %>% 
+  gather(Serie, numero, -c(fecha, LIreg, LSreg, LIexp, LSexp, LIarima, LSarima, LIauto, LSauto)) %>% 
+  mutate(Serie=factor(Serie, levels = c("Original", "Regresion", "Exponencial", "Arima", "Autoarima")))
+```
+
+```{r}
+#regresion
+gregre <- basegraf %>% 
+  filter(Serie %in% c("Original", "Regresion")) %>% 
+  ggplot(., aes(x=fecha, y=numero, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1"))+
+  geom_ribbon(aes(x=fecha, ymin=LIreg, ymax=LSreg), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 8: Serie original y pronóstico para el 2017") +
+  labs(caption="Fuente:UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+
+#exponencial
+gexp <- basegraf %>% 
+  filter(Serie %in% c("Original", "Exponencial")) %>% 
+  ggplot(., aes(x=fecha, y=numero, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1"))+
+  geom_ribbon(aes(x=fecha, ymin=LIexp, ymax=LSexp), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 9: Serie original y pronóstico para el 2017") +
+  labs(caption="Fuente:UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+
+#arima
+garima <- basegraf %>% 
+  filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=numero, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1"))+
+  geom_ribbon(aes(x=fecha, ymin=LIarima, ymax=LSarima), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 10: Serie original y pronóstico para el 2017") +
+  labs(caption="Fuente:UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+
+#arima
+gautoarima <- basegraf %>% 
+  filter(Serie %in% c("Original", "Autoarima")) %>% 
+  ggplot(., aes(x=fecha, y=numero, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1"))+
+  geom_ribbon(aes(x=fecha, ymin=LIauto, ymax=LSauto), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 11: Serie original y pronóstico para el 2017") +
+  labs(caption="Fuente:UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+#pronosticos <- ggarrange(gregre, gexp, garima, gautoarima, ncol=2, nrow=2)
+#annotate_figure(pronosticos,
+ #               top = text_grob("Gráfico 7: Pronósticos para 2017 según modelo", color = "black", size = 14),
+  #              bottom = text_grob("Fuente: UED-INEC", color = "blue",
+   #                                hjust = 6, x = 1, face = "plain", size = 10)
+    #            )
+```
+
+```{r, results='asis'}
+#modfinal <- Arima(serie.completa, c(2,0,1), c(3,0,3))
+load("C:/Users/Dell/OneDrive/Academico/Proyectos/GitHub/Academico/Cursos/SP-1633 Series Cronológicas/Artículos/Articulo 3/Arima final.Rmd.RData")
+basegraf <- data.frame(fecha=seq(ymd("2000-01-01"), ymd("2018-12-01"), by="months"),
+                       Original=c(serie.completa, rep(NA,12)),
+                       Arima=c(forecast(modfinal, h=12)$fitted, forecast(modfinal, h=12)$mean),
+                       LIarima=c(rep(NA, 216), forecast(modfinal, h=12)$lower[,2]),
+                       LSarima=c(rep(NA, 216), forecast(modfinal, h=12)$upper[,2])) %>% 
+  gather(Serie, numero, -c(fecha, LIarima, LSarima)) %>% 
+  mutate(Serie=factor(Serie, levels = c("Original", "Regresion", "Exponencial", "Arima", "Autoarima")))
+
+basegraf %>% 
+  #filter(Serie %in% c("Original", "Arima")) %>% 
+  ggplot(., aes(x=fecha, y=numero, colour=Serie))+
+  geom_line(size = 0.8)+
+  scale_color_manual(values=c("limegreen", "orangered1"))+
+  geom_ribbon(aes(x=fecha, ymin=LIarima, ymax=LSarima), fill="green", linetype=0, alpha=0.2)+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  ggtitle("Gráfico 7: Pronóstico de la TMCE para el 2018") +
+  labs(caption="Fuente: UED-INEC",
+       y="TMCE",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_date(expand = c(0,0))+
+  scale_y_continuous(expand=c(0, 0))
+```
+
+```{r, eval=FALSE}
+kable(data.frame(forecast(modfinal, h=12))[,-c(2:3)], "latex", escape = F, booktabs = T, linesep = "")
+```
+
+\begin{table}[!h]
+\centering
+\caption{Pronóstico de la TMCE para 2018 e intervalos de confianza de 95 por ciento}
+\begin{tabular}{lrrr}
+\toprule
+Periodo  & Pronóstico & Límite inferior & Límite superior\\
+\midrule
+Ene 2018 & 4.429742 & 3.518728 & 5.340755\\
+Feb 2018 & 4.198171 & 3.286861 & 5.109481\\
+Mar 2018 & 4.198892 & 3.244204 & 5.153581\\
+Abr 2018 & 4.447787 & 3.477401 & 5.418173\\
+May 2018 & 4.125172 & 3.137033 & 5.113311\\
+Jun 2018 & 4.069298 & 3.068145 & 5.070451\\
+Jul 2018 & 4.070296 & 3.058014 & 5.082578\\
+Ago 2018 & 4.154106 & 3.132793 & 5.175419\\
+Sep 2018 & 4.052150 & 3.023351 & 5.080949\\
+Oct 2018 & 4.166288 & 3.131317 & 5.201259\\
+Nov 2018 & 3.924440 & 2.884366 & 4.964514\\
+Dic 2018 & 4.418334 & 3.374038 & 5.462631\\
+\bottomrule
+   \multicolumn{4} {p{\dimexpr \textwidth-40\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+\section{4. CONCLUSIONES Y RECOMENDACIONES} 
+
+Con todo lo descrito en las secciones previas, se han cubierto algunos de los aspectos más fundamentales en un análisis de series temporales, como lo son los análisis descriptivos, la estimación de modelos junto con sus medidas de rendimiento y, lo más importante de todo, el pronóstico. Los resultados obtenidos ofrecen una guía para futuros estudios relacionados con la tasa de mortalidad infantil por causa externa.
+
+La tasa de mortalidad por causas externas es, por su naturaleza, una serie muy volátil, y aunque se busque llegar a los valores más bajos posibles en este indicador, el crecimiento de la población y las condiciones propias de un país en vías de desarrollo hacen que la criminalidad aumente y por ende aumenten también los homicidios. Algo similar ocurre con las muertes accidentales, particularmente en los accidentes de tránsito, pues la alta densidad de vehículos genera mayores dificultades para desplazarse, lo cual a su vez genera irritabilidad en los conductores, facilitando así la aparición de eventos que terminan con el fallecimiento de las personas.
+
+Los análisis descriptivos ofrecen una visualización de rápido crecimiento de las muertes accidentales, lo cual explica en buena medida el comportamiento del total de la TMCE y que además coincide con el aumento de la flotilla de motocicletas. De todos los modelos que se estimaron los mejores son los modelos ARIMA, pues logran capturar de buena manera el comportamiento global de la serie.
+
+El pronóstico realizado ofrece un intervalo de confianza que es congruente con el comportamiento de la serie en general, pues alcanza como valores máximos los que se han venido mostrando desde 2012, mientras que para los valores mínimos es posible que se llegue a niveles similares los presentados desde 2017 debido al aumento de operativos en carretera y el mejoramiento de la infraestructura vial.
+
+A pesar de estos resultados conviene tener presente el peso que tienen las defunciones por causas naturales en las mortalidad general, pues este grupo representa un alto porcentaje. Este artículo plantea un punto de partida para estudiar la mortalidad en forma global para a su vez incluir las técnicas aquí tratadas en las estimaciones y proyecciones de población, pues la mortalidad es un importante componente de estas.
+
+\section{5. ANEXOS}
+
+\begin{table}[!h]
+\centering
+\caption{Medidas de rendimiento y criterios de informacion para modelos de regresion}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & RMSE & MASE\\
+\midrule
+Regresion T & \textcolor{black}{-242.31} & \textcolor{black}{-242.19} & \textcolor{black}{-232.36} & \textcolor{black}{0.44} & \textcolor{black}{11.19} & \textcolor{black}{0.54} & \textcolor{black}{0.81}\\
+Regresion T Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.35} & \textcolor{black}{7.53} & \textcolor{black}{0.45} & \textcolor{black}{0.65}\\
+Regresion T+E & \textcolor{black}{-244.73} & \textcolor{black}{-242.51} & \textcolor{black}{-198.28} & \textcolor{red}{0.42} & \textcolor{black}{10.68} & \textcolor{red}{0.51} & \textcolor{red}{0.78}\\
+Regresion T+E Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{0.27} & \textcolor{blue}{5.7} & \textcolor{blue}{0.35} & \textcolor{blue}{0.49}\\
+Regresión exponencial & \textcolor{red}{-813.33} & \textcolor{red}{-811.1} & \textcolor{red}{-766.87} & \textcolor{red}{0.42} & \textcolor{red}{10.6} & \textcolor{red}{0.51} & \textcolor{red}{0.78}\\
+Regresión exponencial Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.28} & \textcolor{black}{5.94} & \textcolor{black}{0.36} & \textcolor{black}{0.51}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-20\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\caption{Medidas de rendimiento y criterios de informacion para modelos de suavizamiento exponencial}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & MASE & RMSE\\
+\midrule
+(A,N,N) & \textcolor{black}{2352.65} & \textcolor{black}{2352.77} & \textcolor{red}{2362.61} & \textcolor{black}{17.15} & \textcolor{black}{9.86} & \textcolor{black}{0.72} & \textcolor{black}{22.03}\\
+(A,N,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{18.06} & \textcolor{black}{8.39} & \textcolor{black}{0.76} & \textcolor{black}{20.85}\\
+(A,A,N) & \textcolor{black}{2354.98} & \textcolor{black}{2355.28} & \textcolor{black}{2371.57} & \textcolor{black}{17.22} & \textcolor{black}{10.03} & \textcolor{black}{0.72} & \textcolor{black}{21.94}\\
+(A,A,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{19.31} & \textcolor{black}{9.06} & \textcolor{black}{0.81} & \textcolor{black}{22.34}\\
+(A,Ad,N) & \textcolor{black}{2357.67} & \textcolor{black}{2358.1} & \textcolor{black}{2377.58} & \textcolor{black}{17.02} & \textcolor{black}{9.8} & \textcolor{black}{0.71} & \textcolor{black}{21.98}\\
+(A,Ad,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{20.57} & \textcolor{black}{9.68} & \textcolor{black}{0.86} & \textcolor{black}{23.78}\\
+(A,N,A) & \textcolor{black}{2343.26} & \textcolor{black}{2345.81} & \textcolor{black}{2393.03} & \textcolor{black}{16.44} & \textcolor{black}{9.49} & \textcolor{black}{0.69} & \textcolor{black}{20.3}\\
+(A,N,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{13.47} & \textcolor{black}{6.39} & \textcolor{black}{0.57} & \textcolor{black}{16.47}\\
+(A,A,A) & \textcolor{black}{2344.67} & \textcolor{black}{2347.96} & \textcolor{black}{2401.07} & \textcolor{black}{16.28} & \textcolor{black}{9.5} & \textcolor{red}{0.68} & \textcolor{red}{20.17}\\
+(A,A,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{15.61} & \textcolor{black}{7.41} & \textcolor{black}{0.66} & \textcolor{black}{18.37}\\
+(A,Ad,A) & \textcolor{black}{2347.18} & \textcolor{black}{2350.87} & \textcolor{black}{2406.9} & \textcolor{red}{16.26} & \textcolor{black}{9.4} & \textcolor{red}{0.68} & \textcolor{black}{20.2}\\
+(A,Ad,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{17.6} & \textcolor{black}{8.33} & \textcolor{black}{0.74} & \textcolor{black}{19.94}\\
+(M,N,N) & \textcolor{black}{2355.14} & \textcolor{black}{2355.26} & \textcolor{black}{2365.1} & \textcolor{black}{17.13} & \textcolor{black}{9.83} & \textcolor{black}{0.72} & \textcolor{black}{22.04}\\
+(M,N,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{17.86} & \textcolor{black}{8.26} & \textcolor{black}{0.75} & \textcolor{black}{20.53}\\
+(M,M,N) & \textcolor{black}{2357} & \textcolor{black}{2357.3} & \textcolor{black}{2373.59} & \textcolor{black}{17.24} & \textcolor{black}{10.04} & \textcolor{black}{0.72} & \textcolor{black}{21.95}\\
+(M,M,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{19.67} & \textcolor{black}{9.24} & \textcolor{black}{0.83} & \textcolor{black}{22.74}\\
+(M,Md,N) & \textcolor{black}{2358.42} & \textcolor{black}{2358.85} & \textcolor{black}{2378.33} & \textcolor{black}{17.13} & \textcolor{black}{9.86} & \textcolor{black}{0.72} & \textcolor{black}{22.03}\\
+(M,Md,N)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{21.36} & \textcolor{black}{10.06} & \textcolor{black}{0.9} & \textcolor{black}{24.74}\\
+(M,N,M) & \textcolor{black}{2343.37} & \textcolor{black}{2345.92} & \textcolor{black}{2393.14} & \textcolor{black}{16.3} & \textcolor{red}{9.39} & \textcolor{red}{0.68} & \textcolor{black}{20.43}\\
+(M,N,M)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{11.45} & \textcolor{blue}{5.45} & \textcolor{blue}{0.48} & \textcolor{blue}{14.22}\\
+(M,Md,M) & \textcolor{black}{2345.69} & \textcolor{black}{2349.39} & \textcolor{black}{2405.41} & \textcolor{black}{16.36} & \textcolor{black}{9.48} & \textcolor{black}{0.69} & \textcolor{black}{20.24}\\
+(M,Md,M)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{17.41} & \textcolor{black}{8.31} & \textcolor{black}{0.73} & \textcolor{black}{20.51}\\
+(M,N,A) & \textcolor{red}{2339.09} & \textcolor{red}{2341.64} & \textcolor{black}{2388.86} & \textcolor{black}{16.42} & \textcolor{black}{9.45} & \textcolor{black}{0.69} & \textcolor{black}{20.3}\\
+(M,N,A)  Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{13.34} & \textcolor{black}{6.3} & \textcolor{black}{0.56} & \textcolor{black}{16.28}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-20\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\caption{Medidas de rendimiento y criterios de informacion para modelos ARIMA}
+\begin{tabular}{llllllll}
+\toprule
+Modelo & AIC & AICc & BIC & MAE & MAPE & RMSE & MASE\\
+\midrule
+ARIMA(2,0,1)(3,0,3)[12] & \textcolor{black}{298.32} & \textcolor{black}{299.69} & \textcolor{black}{334.82} & \textcolor{black}{0.35} & \textcolor{black}{8.97} & \textcolor{black}{0.45} & \textcolor{black}{0.65}\\
+ARIMA(2,0,1)(3,0,3)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{blue}{0.24} & \textcolor{blue}{5.36} & \textcolor{black}{0.32} & \textcolor{blue}{0.44}\\
+ARIMA(2,0,4)(3,0,3)[12] & \textcolor{black}{300.86} & \textcolor{black}{303.08} & \textcolor{black}{347.31} & \textcolor{red}{0.34} & \textcolor{red}{8.75} & \textcolor{red}{0.44} & \textcolor{red}{0.63}\\
+ARIMA(2,0,4)(3,0,3)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.25} & \textcolor{black}{5.67} & \textcolor{blue}{0.31} & \textcolor{black}{0.46}\\
+ARIMA(3,0,1)(3,0,3)[12] & \textcolor{red}{296.93} & \textcolor{red}{298.56} & \textcolor{black}{336.74} & \textcolor{red}{0.34} & \textcolor{black}{8.76} & \textcolor{red}{0.44} & \textcolor{red}{0.63}\\
+ARIMA(3,0,1)(3,0,3)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.25} & \textcolor{black}{5.69} & \textcolor{black}{0.32} & \textcolor{black}{0.46}\\
+ARIMA(1,0,1)(1,0,1)[12] & \textcolor{black}{299.56} & \textcolor{black}{299.99} & \textcolor{red}{319.47} & \textcolor{black}{0.39} & \textcolor{black}{9.88} & \textcolor{black}{0.48} & \textcolor{black}{0.72}\\
+ARIMA(1,0,1)(1,0,1)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.27} & \textcolor{black}{6.13} & \textcolor{black}{0.32} & \textcolor{black}{0.5}\\
+ARIMA(4,0,1)(3,0,3)[12] & \textcolor{black}{302.82} & \textcolor{black}{304.74} & \textcolor{black}{345.96} & \textcolor{black}{0.37} & \textcolor{black}{9.29} & \textcolor{black}{0.47} & \textcolor{black}{0.68}\\
+ARIMA(4,0,1)(3,0,3)[12] Validacion & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{white}{NA} & \textcolor{black}{0.27} & \textcolor{black}{6.09} & \textcolor{black}{0.36} & \textcolor{black}{0.51}\\
+\bottomrule
+   \multicolumn{8} {p{\dimexpr \textwidth-20\tabcolsep-10\arrayrulewidth}}{
+    Fuente: UED-INEC} \\
+\end{tabular}
+\end{table}
+
+\clearpage
+
+```{r}
+gregre
+```
+
+```{r}
+gexp
+```
+
+```{r}
+garima
+```
+
+```{r}
+gautoarima
+```
+
+\section{6. REFERENCIAS}    

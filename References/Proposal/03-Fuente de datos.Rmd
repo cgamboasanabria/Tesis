@@ -1,0 +1,3 @@
+\section{FUENTE(S) DE DATOS (SI YA ESTÁN RECOLECTADOS) O DISEÑO DEL ESTUDIO (SI NO ESTÁN RECOLECTADOS)}
+
+Los datos reales que se van a utilizar pertenecen a la Unidad de Estadísticas demográficas del Instituto Nacional de Estadística y Censos. Corresponden a las series históricas de la tasa de mortalidad infantil desde el año 1970 hasta la actualidad; así como la serie histórica de nacimientos ocurridos en Costa Rica desde 1950 hasta la actualidad.

@@ -1,0 +1,307 @@
+---
+title: "Sistemas estocásticos de series cronológicas lineales y no lineales"
+subtitle: "Un enfoque frecuentista"
+author: "[www.cesargamboasanabria.com](www.cesargamboasanabria.com)"
+date: "`r Sys.Date()`"
+output:
+  ioslides_presentation:
+    incremental: true
+    widescreen: true
+    smaller: true
+    transition: slower
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, fig.align = 'center', eval=FALSE)
+```
+
+## Introducción
+
+- Serie cronológica: Información obtenida de manera secuencial a o largo del tiempo.
+
+  + Finanzas: Devaluación del colón, exportaciones.
+  + Demografía: Mortalidad, fecundidad, migración.
+  + Actuarial: Moralidad para sostenibilidad del sistema de pensiones.
+
+- Al trabajar series cronológicas se busca:
+  + Análisis exploratorios de los datos (ccrecimiento o decrecimiento, valors atípicos, nivel medio).
+  + Generación de modelos para simplificar la realidad del fenómeno.
+  + **Obtener pronósticos para los valores futuros**.
+
+- Los tres puntos anteriores se trabajan de manera secuencial, pero obtener un modelo adecuado es fundamental.
+
+## Introducción
+
+- Modelos clásicos:
+  + Regresión lineal.
+  + Suavizamiento exponencial.
+  + **Modelos ARIMA**
+
+- Los modelos ARIMA:
+  + Asumen **linealidad** y **estacionariedad.**
+  + No supone ningún patrón en particular en la serie histórica que se busca pronosticar, sino que contempla un proceso iterativo para identificar un posible modelo a partir de una clase general de modelos y luego someter dicho modelo a diferentes pruebas y medidas de rendimiento para evaluar su ajuste.
+  + Requiere indentificar el proceso $ARIMA(p,d,q)(P,D,Q)_S$ que gobierna la serie cronológica.
+
+- Métodos de identificación del modelo:
+  + Visual.
+  + Pruebas estadísticas.
+  + Procesos automáticos o semiautomáticos.
+
+## Aporte metodológico
+    
+Mediante un estudio de simulación, desarrollar un método para la generación semiautomática de modelos de series cronológicas con el fin de generar pronósticos adecuados para la misma.
+    
+## Objetivos
+
+- Objetivo general:
+
+  + Evaluar la calidad de los pronósticos realizados con un método semiautomático para la estimación de modelos frecuentistas de series cronológicas lineales o no lineales, y estacionarias o no estacionarias.
+  
+- Objetivos específicos:
+  
+  + Diseñar un algoritmo para la selección de un modelo de series cronológicas según la temporalidad de la serie.
+  + Aplicar validación cruzada en distintos horizontes de pronóstico para identificar la mejor especificación de un modelo de series cronológicas.
+  + Comparar la precisión de los pronósticos con métodos automáticos similares, como el propuesto por Rob J. Hyndman.
+  + Integrar la metodología de análisis de series temporales en una librería del lenguaje estadístico R.
+
+## Metodología
+
+```{r, eval=TRUE, echo=FALSE}
+load("C:/Users/Dell/OneDrive/Academico/Proyectos/GitHub/Tesis/Presentaciones/Seminario 1 - Presentación 1/Environment.RData")
+```
+
+```{r, echo=TRUE}
+simular.proceso <- function(data, n, temporalidad, no.estacional, estacional, 
+                            p=NULL, q=NULL, P=NULL, Q=NULL){
+    
+    require(forecast)
+    coeficientes <- list(p, q, P, Q)
+    coeficientes.simulados <- lapply(c(no.estacional[c(1,3)], estacional[c(1,3)]), 
+                                     function(x) sample(seq(-1,1,.1), x))
+    pos <- which(sapply(coeficientes, is.null)==TRUE)
+    
+    coeficientes[pos] <- coeficientes.simulados[pos]
+    names(coeficientes) <- c("p", "q", "P", "Q")
+    
+    modelo <- Arima(ts(data=data, freq=temporalidad), 
+                    order = no.estacional, 
+                    seasonal = estacional,
+                    fixed=c(phi=coeficientes$p, 
+                            theta=coeficientes$q, 
+                            Phi=coeficientes$P, 
+                            Theta=coeficientes$Q))
+    datos <- simulate(modelo, nsim=n)
+    list(modelo=modelo, datos=datos)
+}
+```
+
+## Metodología (simulación)
+
+```{r, echo=TRUE}
+set.seed(1)
+simulacion <- simular.proceso(data=rpois(100, 15), n=500, temporalidad=12, no.estacional=c(1,1,3), estacional = c(2,1,1), p=.1)
+plot(simulacion$datos, type="l")
+```
+
+```{r, eval=TRUE, echo=FALSE}
+plot(simulacion$datos, type="l")
+```
+
+## Metodología (sobreparametrización)
+
+```{r, echo=TRUE}
+modelo.arima <- function(serie, no.estacional, estacional, regr = NULL){
+if(is.null(regr)){
+    modelo <- tryCatch({
+      forecast::Arima(serie, order = no.estacional, seasonal = estacional)
+    }, 
+    error = function(e) NULL)  
+  }
+  
+  if(!is.null(regr)){
+    modelo <-tryCatch({
+      forecast::Arima(serie, order = no.estacional, seasonal = estacional, 
+                      xreg = regr)
+    }, 
+    error = function(e) NULL)   
+  }
+  
+  if(!is.null(modelo)){
+    grados.libertad <- modelo$nobs - length(modelo$coef)
+    t.value <- modelo$coef/sqrt(diag(modelo$var.coef))
+    prob <- stats::pf(t.value^2, df1 = 1, df2 = grados.libertad, lower.tail = FALSE)
+    ifelse(sum(1*prob>0.05)<1, return(modelo), 1)
+  }
+}
+```
+
+## Metodología (medidas de rendimiento)
+
+```{r, echo=TRUE}
+medidas.arima <- function(modelo, testing, horizonte, regr = NULL){
+  ##Nombre del modelo
+  nombre <- capture.output(modelo)
+  nombre <- substr(nombre[2],1, 23)
+  ##Criterios de informacion
+  data <- capture.output(summary(modelo))
+  data <- data[grepl("AIC", data) == T]
+  informacion <- strsplit(data, " ")
+  pos <- which(sapply(informacion, nchar)>0)
+  informacion <- informacion[[1]][pos]
+  informacion <- do.call("rbind", strsplit(informacion, "=")) %>% 
+    data.frame() 
+  colnames(informacion) <- c("Medida", "Valor")
+  informacion <- informacion %>% 
+    mutate(Valor = as.numeric(as.character(Valor))) %>% 
+    spread(Medida, Valor) %>% 
+    data.frame(Modelo = nombre)
+  ##Medidas de rendimiento
+  rendimiento <- data.frame(Modelo = c(nombre, paste(nombre, "Validacion")), 
+                            accuracy(forecast(modelo, horizonte, xreg = regr), testing))
+  merge(informacion, rendimiento, by="Modelo", all = TRUE) %>% 
+    dplyr::select(Modelo, AIC, AICc, BIC, MAE, MAPE, RMSE, MASE)
+}
+```
+
+## Metodología (evaluación automática)
+
+```{r, echo=TRUE}
+arimas.auto <- function(tipo = c(p = 1, d = 1, q = 1, 
+                                 P = 1, D = 1, Q = 1), 
+                        serie, reg = NULL, validacion, horiz = 12,
+                        paralelo=FALSE, clusters=detectCores(logical = FALSE)){
+  #Matriz para la identificacion de los parametros del modelo
+  valores <- expand.grid(p = 0:tipo[1], d = 0:tipo[2], q = 0:tipo[3], 
+                         P = 0:tipo[4], D = 0:tipo[5], Q = 0:tipo[6])
+  valores.no.estacional <- split(as.matrix(valores[, 1:3]), row(valores[, 1:3]))
+  valores.estacional <- split(as.matrix(valores[, 4:6]), row(valores[, 4:6]))
+  #Estimación de los modelos
+  if(paralelo==FALSE){
+    modelos <- mapply(modelo.arima, no.estacional=valores.no.estacional, 
+                      estacional=valores.estacional, MoreArgs = list(serie=serie, regr=reg), 
+                      SIMPLIFY = FALSE)
+  }
+  if(paralelo==TRUE){
+    #Nombres de los objetos a exportar a cada cluster
+    obj <- sapply(as.list(match.call()), paste)
+    pos <- which(names(obj) %in% c("serie", "validacion"))
+    #Generar los cluster
+    clp <- makeCluster(clusters, type = "SOCK", useXDR=FALSE)
+    clusterExport(clp, varlist = c(obj[pos], "medidas.arima", "modelo.arima"))
+    #Proceso en paralelo
+    modelos <- clusterMap(cl=clp, fun = modelo.arima, 
+                       no.estacional=valores.no.estacional, 
+                       estacional=valores.estacional, 
+                       MoreArgs = list(serie=serie, regr=reg), 
+                       SIMPLIFY = FALSE, .scheduling = "dynamic")
+    stopCluster(clp)
+  }
+  #Obtiene las posiciones de la lista donde se pudieron estimar los modelos
+  pos <- which(sapply(sapply(modelos, class), length)>1)
+  #Calcula las medidas de rendimiento y los criterios de información
+  medidas <- do.call("rbind", lapply(modelos[pos], 
+                                     medidas.arima, 
+                                     testing = validacion, 
+                                    horizonte= horiz, 
+                                     regr = reg)) %>% 
+    mutate_if(is.numeric, round, 2)
+  #Devuelve una lista con los modelos y las medidas de rendimiento
+  list(modelos=modelos[pos], medidas=medidas)
+}
+```
+
+## Metodología (mejores arimas)
+
+```{r, echo=TRUE}
+mejores.arimas <- function(tabla, peso.train=.3, peso.test=.7){
+  #Elimina posibles modelos duplicados
+  tabla <- tabla %>%
+    distinct(Modelo, .keep_all = TRUE)
+  #Crea variable para agrupar modelos en train y test
+  tabla <- tabla %>% 
+    mutate(mod = as.character(c(0, rep(1:(nrow(tabla)-1)%/%2))))
+  #Crea la variable de puntaje ponderado
+  tabla2 <- tabla %>% 
+    mutate_at(vars(contains("C")), function(x){x-min(x, na.rm=TRUE)}) %>% 
+    mutate_if(is.numeric, function(x) ifelse(is.na(x),0,x)) %>% 
+    mutate(puntaje = AIC+AICc+BIC+MAE+MAPE+RMSE+MASE,
+           ponde = ifelse(grepl("Validacion", Modelo)==TRUE, peso.test, peso.train),
+           puntaje = puntaje*ponde)
+  #Busca el(los) puntaje(s) mínimo(s)
+  puntaje.minimo <- tabla2 %>% 
+    group_by(mod) %>% 
+    summarise(puntaje=sum(puntaje))
+  #Obtiene la(s) posición(es) con puntaje(s) más bajo(s) 
+  pos <- puntaje.minimo$mod[which(puntaje.minimo$puntaje==min(puntaje.minimo$puntaje))]
+  #Devuelve el(los) mejor(es) modelo(s)
+  tabla %>% 
+    filter(mod %in% pos) %>% 
+    dplyr::select(Modelo:MASE)
+}
+```
+
+## Metodología (comparación)
+
+```{r, echo=TRUE}
+comparacion <- function(data, prop, proceso){
+    require(parallel)
+    require(tidyr)
+    require(dplyr)
+    corte <- round(length(data)*prop, 0)
+    train <<- subset(data, end=corte)
+    test <<- subset(data, start=corte+1)
+    hyndman <- auto.arima(train)
+    gamboa <- arimas.auto(tipo=proceso, serie=train, validacion=test, paralelo=TRUE)
+    gamboa <- mejores.arimas(gamboa$medidas)
+    list(hyndman=hyndman, gamboa=gamboa)
+}
+
+k <- comparacion(data=simulacion$datos, prop=.8, 
+                 proceso=c(3,1,3,3,1,3))
+```
+
+## Resultados
+
+```{r, eval=TRUE, echo=TRUE}
+k$gamboa
+```
+
+```{r, echo=TRUE}
+mod <- Arima(train, order=c(0,1,3), seasonal=c(1,1,0))
+```
+
+## Resultados
+
+```{r, eval=TRUE, results='hide', echo=FALSE}
+mod <- mod.gamboa
+library(forecast)
+```
+
+```{r, echo=TRUE, eval=TRUE}
+plot(test, type="l")
+lines(forecast(mod, h=100)$mean, col="blue")
+```
+
+
+## Siguientes pasos
+
+- Mejorar el metodo de estiamción de los ARIMA.
+  + Intervenciones.
+  + Deteccción de cambipos de nivel.
+  + Medidas para la selección edl modelo.
+
+- Incorporar métodos no lineales:
+  + Modelos Umbral (”Threshold Models”).
+  + Modelos EXPAR (”Amplitude-dependent exponential autoregressive models”).
+  + Modelos EXPAR (”Amplitude-dependent exponential autoregressive models”).
+  + Modelos FAR (”Fractional autoregressive models”).
+  + Modelos PAR (”Product autoregressive models”).
+  + Modelos RCA (”Random coefficient autoregressive models”).
+  + Modelos NEAR (”Newer exponential autoregressive models”).
+  + Modelos autoregresivos con espacio de estados discreto.
+  + Modelos bilineales (BL).
+  + Modelos no lineales de medias móviles.
+  + Modelos ARCH (”Autoregressive models with conditional heterocedasticity”).
+  + Modelos de segunda generación.
+  + Modelos doblemente estocásticos.
+  + Modelos SDM (”State dependent models”) o dependientes de estados.
