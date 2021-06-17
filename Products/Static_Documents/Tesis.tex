@@ -452,26 +452,30 @@ cronológicas son diversos, y responden al propio contexto y tipo de
 datos. Obtener buenos pronósticos o explicar el comportamiento de un
 fenómeno en el tiempo, siempre será un tema recurrente de investigación.
 Generar una adecuada estimación es fundamental para obtener un
-pronóstico de confianza, además resulta importante mencionar que los
-modelos ARIMA tienen como objetivo explicar las relaciones pasadas de la
-serie cronológica, para de esta manera conocer el posible comportamiento
-futuro de la misma (\protect\hyperlink{ref-hyndman2018forecasting}{R. J.
-Hyndman \& Athanasopoulos, 2018a}).
+pronóstico de confianza. Es importante resaltar que las técnicas de
+proyección ARIMA tienen como objetivo explicar las relaciones pasadas de
+la serie cronológica, para de esta manera conocer el posible
+comportamiento futuro de la misma
+(\protect\hyperlink{ref-hyndman2018forecasting}{R. J. Hyndman \&
+Athanasopoulos, 2018a}).
 
 Al trabajar con la metodología de Box-Jenkins, uno de las etapas a
 concretar es identificar los parámetros de estimación que gobiernan la
 serie temporal. Para indagar los términos en el proceso de investigación
-se ha utilizado la identificación de parámetros mediante
+se suele utilizar la identificación de parámetros mediante
 autocorrelogramas parciales y totales. Sin embargo, los
 autocorrelogramas formados no analizan de forma exhaustiva y óptima los
 posibles coeficientes que podrían contemplarse la ecuación de Wold.
-Según su definición matemática, esta posee infinitos coeficientes, por
-tanto, se debe buscar una alternativa distinta, que opte por aproximar
-de una mejor manera la identificación de los parámetros estimados,
-cubriendo un mayor número de posibilidades. Esto se podría obtener
-mediante un método analítico de sobreparametrización.
+Según su definición matemática, esta posee infinitos coeficientes, y la
+aproximación mediante los autocorrelogramas no es una forma exacta de
+aproximar el proceso que gobierna la serie. Por lo tanto, se debe buscar
+una alternativa distinta, que opte por aproximar de una mejor manera la
+identificación de los parámetros estimados, cubriendo un mayor número de
+posibilidades. Una alternativa al problema de aproximar los parámetros
+del proceso que gobierna la serie cronológica puede ser la
+sobreparametrización.
 
-\subsection{La problemática}
+\subsection{El problema}
 
 La dificultad visual a la hora de identificar un modelo ARIMA radica en
 que los autocorrelogramas solo aportan una aproximación al proceso que
@@ -508,7 +512,7 @@ aproximaciones analíticas para definir el proceso que gobierna la serie
 cronológica, dejando así un vacío en el cual se corre el riesgo de no
 seleccionar un modelo que ofrezca mejores pronósticos. Poner a prueba un
 mayor número de posibilidades para la especificación de los modelos
-tiene la ventaja descartar ciertos modelos, y mantener otros con un
+tiene la ventaja de descartar ciertos modelos, y mantener otros con un
 criterio más científico y una evidencia numérica que despalde esa
 decisión.
 
@@ -582,10 +586,10 @@ concluye esta sección con hechos que justifican la importancia de esta
 investigación.
 
 El siguiente capítulo consiste en el marco teórico, abarcando aspectos
-fundamentales de la ecuación de Wold, la metodología Box-Jenkins, la
-selección de los procesos que gobiernan la serie, la descripción del
-proceso iterativo, el análisis combinatorio que aborda los escenarios de
-estimación, entre otros.
+fundamentales de las series temporales: la ecuación de Wold, la
+metodología Box-Jenkins, la selección de los procesos que gobiernan la
+serie, la descripción del proceso iterativo, el análisis combinatorio
+que aborda los escenarios de estimación, entre otros.
 
 El tercer capítulo describe la metodología relacionada al estudio. Se
 inicia con una descripción global de los conceptos más fundamentales del
@@ -601,11 +605,12 @@ método propuesto.
 El capítulo cuatro consiste en la presentación de los resultados, tanto
 en los datos simulados como en la aplicación a datos costarricenses y se
 contrastarán contra los obtenidos por otros métodos como el de la
-función \texttt{auto.arima()}, entre otros.
+función \texttt{auto.arima()} y un modelo estándar como el
+\(ARIMA(1,1,1)(1,1,1)_s\).
 
-El último capítulo busca discutir los principales resultados, así como
-señalar las conclusiones más importantes y ofrecer algunas
-recomendaciones que orienten futuros estudios relacionados.
+El capítulo de conclusión/discusión busca discutir los principales
+resultados, así como señalar las conclusiones más importantes y ofrecer
+algunas recomendaciones que orienten futuros estudios relacionados.
 
 \newpage
 
@@ -616,13 +621,13 @@ investigación durante décadas (\protect\hyperlink{ref-tsa_decades}{De
 Gooijer \& Hyndman, 2006}). Su objetivo principal consiste en obtener
 simplificaciones de la realidad mediante el ajuste de diversos modelos,
 los cuales se ajustan a datos recolectados a lo largo del tiempo de
-forma regular. Estos modelos son luego utilizados para generar
-pronósticos sobre el comportamiento futuro del fenómeno de interés.
+forma periódica.
 
 Sin embargo, encontrar un modelo que presente un buen comportamiento con
-respecto a los datos no es tarea fácil, pues deben considerarse diversos
-aspectos teóricos para obtener un modelo adecuado que logre generar
-pronósticos realistas y pertinentes para la toma de decisiones
+respecto a los datos no es sencillo, pues deben considerarse diversos
+aspectos teóricos, prácticos, y de la temática de estudio para así
+obtener un modelo adecuado que logre generar pronósticos realistas y
+pertinentes para la toma de decisiones
 (\protect\hyperlink{ref-tsa_decision_making}{Rezaee, Aliabadi,
 Dorestani, \& Rezaee, 2020}).
 
@@ -639,62 +644,117 @@ las variaciones diarias del precio de un activo financiero,
 respectivamente; las observaciones continuas, además, pueden ser
 convertidas a su vez en observaciones discretas.
 
-El presente capítulo consta de seis apartados: El primer apartado abarca
-los cuatro componentes de una serie cronológica, siendo estos la
-tendencia y los componentes estacionales, cíclicos e irregulares.
-Posteriormente, la segunda sección repasa los supuestos fundamentales en
-el análisis de series cronológicas. Con los elementos más básicos
-introducidos, el tercer apartado cubre el eje central de esta
-investigación: Los modelos Autorregresivos Integrados de Medias Móviles
-y sus componentes, los modelos autorregresivos y los modelos de medias
-móviles, así como la metodología Box-Jenkins y el proceso para la
-identificación de los modelos. En el cuarto apartado se introducen los
-métodos para la identificación de los modelos. El quinto apartado abarca
-los componentes relacionados a los autocorrelogramas, la forma más
-difundida para la selección de modelos y, finalmente, el sexto apartado
-introduce el principal aporte de este estudio, la sobreparametrización
-como método para la selección de modelos.
+El presente capítulo consta de seis apartados. El primer apartado abarca
+los cuatro componentes de una serie cronológica. Posteriormente, la
+segunda sección repasa los supuestos fundamentales en el análisis de
+series cronológicas. Con los elementos más básicos introducidos, el
+tercer apartado cubre el eje central de esta investigación: Los modelos
+Autorregresivos Integrados de Medias Móviles y sus componentes, los
+modelos autorregresivos y los modelos de medias móviles, así como la
+metodología Box-Jenkins y el proceso para la identificación de los
+modelos. En el cuarto apartado se introducen los métodos para la
+identificación de los modelos. El quinto apartado abarca los componentes
+relacionados a los autocorrelogramas, la forma más difundida para la
+selección de modelos y, finalmente, el sexto apartado introduce el
+principal aporte de este estudio, la sobreparametrización como método
+para la selección de modelos.
 
 \subsection{Componentes de una serie cronológica}
 
 En el análisis de series cronológicas existen dos grandes corrientes de
 estudio: Los componentes inherentes a la serie cronológica y el estudio
-de las autocorrelaciones. De acuerdo con
+de las autocorrelaciones. Según el primer enfoque, de acuerdo con
 \protect\hyperlink{ref-oscarh-1}{Hernández}
 (\protect\hyperlink{ref-oscarh-1}{2011a}), las series cronológicas
-poseen cuatro componentes principales: Tendencia, Ciclos, Estacionalidad
-e Irregularidad. Considerando estos cuatro elementos, las series
+poseen tres componentes principales: Tendencia-ciclos, Estacionalidad e
+Irregularidad. Considerando estos tres elementos, las series
 cronológicas pueden ser \emph{aditivas}, como se muestra en la ecuación
-\ref{eqn:serie_aditiva}, en cuyo caso se asume que los cuatro
-componentes son independientes entre sí; o \emph{multiplicativa}, donde,
-por el contrario, los cuatro componentes son independientes, como
-muestra la ecuación \ref{eqn:serie_multiplicativa}.
+\ref{eqn:serie_aditiva}, en cuyo caso se asume que los tres componentes
+son independientes entre sí; o \emph{multiplicativa}, donde, por el
+contrario, los tres componentes no son independientes, como muestra la
+ecuación \ref{eqn:serie_multiplicativa}.
 
 \begin{equation}
 \label{eqn:serie_aditiva}
-Y(t)=T(t)+S(t)+C(t)+I(t)
+Y(t)=T(t)+S(t)+I(t)
 \end{equation}
 
 \begin{equation}
 \label{eqn:serie_multiplicativa}
-Y(t)=T(t)\times S(t)\times C(t)\times I(t)
+Y(t)=T(t)\times S(t)\times I(t)
 \end{equation}
 
-Donde \(Y\) es la serie cronológica, \(T\) es la tendencia, \(S\) es la
-parte estacional, \(C\) el componente cíclico, \(I\) la parte irregular
-o aleatoria, y \(t\) es el momento en el tiempo. Cada una de sus partes
-se definen a continuación.
+Donde \(Y\) es la serie cronológica, \(T\) es la tendencia-ciclo, \(S\)
+es la parte estacional, \(I\) la parte irregular o aleatoria, y \(t\) es
+el momento en el tiempo. Esta perspectiva clásica del análisis de series
+de tiempo permite realizar un análisis descriptivo del comportamiento de
+la serie en cuestión; cada una de sus partes se definen en posteriores
+apartados. De manera visual, una serie cronológica aditiva posee un
+comportamiento similar al mostrado en la figura
+\ref{fig:ejemplo_aditiva}, mientras que un comportamiento multiplicativo
+puede apreciarse en la figura \ref{fig:ejemplo_multiplicativa}.
 
-\subsubsection{La tendencia}
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_aditiva-1} \caption{Número de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_aditiva}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_multiplicativa-1} \caption{Número de turistas en Costa Rica para el periodo 1991-2000}\label{fig:ejemplo_multiplicativa}
+\end{figure}
+
+\subsubsection{La tendencia-ciclo}
 
 A partir del texto de
 \protect\hyperlink{ref-calderon2012estadistica}{Calderón}
 (\protect\hyperlink{ref-calderon2012estadistica}{2012}), la tendencia
 general de una serie cronológica se refiere al crecimiento,
 decrecimiento o lateralización de sus movimientos a lo largo del periodo
-de estudio. Una tendencia bastante marcada es la del comportamiento
-poblacional, que con el tiempo su crecimiento suele comportarse de una
-forma muy similar a una exponencial.
+de estudio. Un ejemplo es la serie cronológica del número de matrimonios
+en Costa Rica para el periodo 1978-1983, que con el tiempo su
+crecimiento suele comportarse de una forma creciente tal y como muestra
+la figura \ref{fig:ejemplo_tendencia}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_tendencia-1} \caption{Tendencia del número de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_tendencia}
+\end{figure}
+
+Del informe elaborado también por
+\protect\hyperlink{ref-calderon2012estadistica}{Calderón}
+(\protect\hyperlink{ref-calderon2012estadistica}{2012}) se desprende que
+los periodos cíclicos, por su parte, se refieren a los cambios que se
+dan en una serie cronológica en el mediano-largo plazo, que son causados
+por determinados eventos que suelen repetirse. Estos ciclos suelen tener
+una duración determinada, como es el caso de los índice bursátil
+NASDAQ-100. Este indicador resume el estado los 100 valores de las
+compañías más importantes del sector de la industria de la tecnología, y
+sus ciclos suelen presentar un auge, seguido por un descenso que,
+posteriormente, se vuelve una depresión, y que finalmente se convierte
+en una recuperación a su estado inicial. La figura
+\ref{fig:ejemplo_ciclo} muestra como el índice NASDAQ-100 inicia un auge
+alrededor de enero de 1995 (primera línea azul punteada), para luego
+experimentar una fuerte caída a partir de junio del año 2000 (línea roja
+punteada) y posteriormente iniciar un periodo de recuperación en enero
+del año 2009 (segunda línea azul punteada).
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_ciclo-1} \caption{Índice bursatil NASDAQ-100 para el periodo enero 1990 - junio 2021}\label{fig:ejemplo_ciclo}
+\end{figure}
+
+La descomposición clásica de la tendencia-ciclo que este componente se
+mantiene constante de un periodo al siguiente y se obtiene a partir de
+una media móvil de \(m\) periodos \(\left(\bar y_{m}\right)\). De esta
+manera la forma matemática de la tendencia-ciclo para una serie
+cronológica se muestra en la ecuación
+\ref{eqn:descomposicion_tendencia}.
+
+\begin{equation}
+\label{eqn:descomposicion_tendencia}
+T(t)=
+\begin{cases}
+2\bar y_{m}, & \text{si}\ \text{m es par} \\
+\bar y_{m}, & \text{si}\ \text{m es impar} \\
+\end{cases}
+\end{equation}
 
 \subsubsection{Componentes estacionales}
 
@@ -702,23 +762,28 @@ forma muy similar a una exponencial.
 (\protect\hyperlink{ref-calderon2012estadistica}{2012}) también se
 refiere a los cambios estacionales que se presentan en una serie de
 tiempo, los cuales se relacionan con las fluctuaciones naturales del
-fenómeno dentro de una temporada de observaciones. Ejemplos comunes de
-esto son las condiciones climáticas, consumo de alimentos en fechas
-festivas, entre otros.
+fenómeno dentro de una temporada de observaciones. Visualmente los
+efectos estacionales puede apreciarse en la figura
+\ref{fig:ejemplo_multiplicativa}, en donde los picos más altos de
+turistas siempre se ubican entres los meses de diciembre y enero.
+Matemáticamente, el componente estacional puede definirse como se indica
+en la ecuación \ref{eqn:descomposicion_estacional}:
 
-\subsubsection{Componente cíclico}
+\begin{equation}
+\label{eqn:descomposicion_estacional}
+S(t)=\bar{y}_{s_t}-\bar{y}_{k};
+\begin{cases}
+\bar{y}_{s_t} = \frac{\sum \bar{y}_s}{n} \\
+\bar{y}_k = \frac{\sum y_k}{n-m} \\
+\bar{y}_s = \sum_{j=1}^s y_{k_j} \\
+y_k = y_t - \bar{y}_{mc_t} \\
+\bar{y}_{mc_t} = \frac{\bar{y}_{m_t} + \bar{y}_{m_{t-1}}}{2} \\
+\bar{y}_{m_t} = \frac{\sum_{t=1}^m y_t}{m} \\
+\end{cases}
+\end{equation}
 
-Del informe elaborado también por
-\protect\hyperlink{ref-calderon2012estadistica}{Calderón}
-(\protect\hyperlink{ref-calderon2012estadistica}{2012}) se desprende que
-los periodos cíclicos, por su parte, se refieren a los cambios que se
-dan en una serie cronológica en el mediano plazo, que son causados por
-determinados eventos que suelen repetirse. Estos ciclos suelen tener una
-duración determinada, como es el caso de los índice bursátil S\&P 500.
-Este indicador resume el estado de las 500 empresas más importantes de
-Estados Unidos, y sus ciclos suelen presentar un auge, seguido por un
-descenso que, posteriormente, se vuelve una depresión, y que finalmente
-se convierte en una recuperación a su estado inicial.
+donde \(m\) representa la cantidad de periodos y \(s\) la frecuencia
+estacional.
 
 \subsubsection{Componente irregular}
 
@@ -727,7 +792,18 @@ Finalmente, la irregularidad de una serie cronológica, siguiendo a
 (\protect\hyperlink{ref-calderon2012estadistica}{2012}), se refiere a
 las fluctuaciones propias de un fenómeno que no pueden ser predichas.
 Estos cambios no se dan de manera regular, es decir, no siguen un patrón
-determinado.
+determinado. Matemáticamente su descomposición se obtiene a partir de
+los otros componentes así como de la propia serie cronológica \(y(t)\),
+tal y como se muestra en la ecuación \ref{eqn:descomposicion_irregular}.
+
+\begin{equation}
+\label{eqn:descomposicion_irregular}
+I(t)=
+\begin{cases}
+y(t)-T(t)-S(t), & \text{si}\ \text{la serie es aditiva} \\
+\frac{y(t)}{T(t)S(t)} , & \text{si}\ \text{la serie es multiplicativa} \\
+\end{cases}
+\end{equation}
 
 \subsection{Supuestos en el análisis de series cronológicas}
 
@@ -2240,7 +2316,7 @@ la fuente oficial de los paquetes del lenguaje R.
     
 \NormalTok{    datos }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(datos, }\AttributeTok{start=}\FunctionTok{length}\NormalTok{(data)}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
     \FunctionTok{list}\NormalTok{(}\AttributeTok{modelo=}\NormalTok{modelo, }\AttributeTok{datos=}\NormalTok{datos)\}, }
-    \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\FunctionTok{simular.proceso}\NormalTok{(data, n, temporalidad,}
+    \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\FunctionTok{ts.sim}\NormalTok{(data, n, temporalidad,}
 \NormalTok{                                        no.estacional, estacional, }
 \NormalTok{                                        p, q, P, Q))}
 \NormalTok{\}}

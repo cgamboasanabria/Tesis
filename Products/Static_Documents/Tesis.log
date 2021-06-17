@@ -1,24 +1,24 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.13)  24 MAY 2021 13:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.17)  17 JUN 2021 15:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Tesis.tex
 (./Tesis.tex
-LaTeX2e <2020-10-01> patch level 4
-L3 programming layer <2021-02-18> (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
+LaTeX2e <2021-06-01> patch level 1
+L3 programming layer <2021-06-01> (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
 dist/tex/latex/base/article.cls
-Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+Document Class: article 2021/02/12 v1.4n Standard LaTeX document class
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+File: size10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count179
-\c@section=\count180
-\c@subsection=\count181
-\c@subsubsection=\count182
-\c@paragraph=\count183
-\c@subparagraph=\count184
-\c@figure=\count185
-\c@table=\count186
+\c@part=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
@@ -58,7 +58,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2020/09/23 v2.17i AMS math features
+Package: amsmath 2021/04/20 v2.17j AMS math features
 \@mathmargin=\skip49
 For additional information on amsmath, use the `?' option.
 
@@ -66,7 +66,7 @@ For additional information on amsmath, use the `?' option.
 Package: amstext 2000/06/29 v2.01 AMS text
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks15
+\@emptytoks=\toks16
 \ex@=\dimen139
 )) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.s
 ty
@@ -76,41 +76,41 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 y
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count187
+\inf@bad=\count190
 LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count188
-\leftroot@=\count189
+\uproot@=\count191
+\leftroot@=\count192
 LaTeX Info: Redefining \overline on input line 399.
-\classnum@=\count190
-\DOTSCASE@=\count191
+\classnum@=\count193
+\DOTSCASE@=\count194
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
-\Mathstrutbox@=\box47
-\strutbox@=\box48
+\Mathstrutbox@=\box50
+\strutbox@=\box51
 \big@size=\dimen141
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count192
-\c@MaxMatrixCols=\count193
+\macc@depth=\count195
+\c@MaxMatrixCols=\count196
 \dotsspace@=\muskip16
-\c@parentequation=\count194
-\dspbrk@lvl=\count195
-\tag@help=\toks16
-\row@=\count196
-\column@=\count197
-\maxfields@=\count198
-\andhelp@=\toks17
+\c@parentequation=\count197
+\dspbrk@lvl=\count198
+\tag@help=\toks17
+\row@=\count199
+\column@=\count266
+\maxfields@=\count267
+\andhelp@=\toks18
 \eqnshift@=\dimen142
 \alignsep@=\dimen143
 \tagshift@=\dimen144
 \tagwidth@=\dimen145
 \totwidth@=\dimen146
 \lineht@=\dimen147
-\@envbody=\toks18
+\@envbody=\toks19
 \multlinegap=\skip50
 \multlinetaggap=\skip51
-\mathdisplay@stack=\toks19
+\mathdisplay@stack=\toks20
 LaTeX Info: Redefining \[ on input line 2923.
 LaTeX Info: Redefining \] on input line 2924.
 )
@@ -123,16 +123,16 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 y
 Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
-Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
 2.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.st
 y
-Package: inputenc 2020/08/01 v1.3d Input encoding file
-\inpenc@prehook=\toks20
-\inpenc@posthook=\toks21
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks21
+\inpenc@posthook=\toks22
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 )
@@ -162,7 +162,7 @@ Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks22
+\KV@toks@=\toks23
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.s
 ty
@@ -175,7 +175,7 @@ Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.s
 ty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count199
+\etb@tempcnta=\count268
 )) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.st
 y
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
@@ -210,7 +210,7 @@ File: x11nam.def 2016/05/11 v2.12 Predefined colors according to Unix/X11 (UK)
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.s
 ty
-Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftex
 cmds.sty
@@ -244,17 +244,17 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
 \@linkdim=\dimen148
-\Hy@linkcounter=\count266
-\Hy@pagecounter=\count267
+\Hy@linkcounter=\count269
+\Hy@pagecounter=\count270
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-l
 angpatches.def
-File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel la
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
 nguages
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.s
@@ -265,9 +265,9 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 .sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count268
+\Hy@SavedSpaceFactor=\count271
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
@@ -279,7 +279,7 @@ Package hyperref Info: Plain pages OFF on input line 4207.
 Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4445.
-\c@Hy@tempcnt=\count269
+\c@Hy@tempcnt=\count272
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -295,34 +295,33 @@ calc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count270
+\Fld@menulength=\count273
 \Field@Width=\dimen150
 \Fld@charsize=\dimen151
-Package hyperref Info: Hyper figures OFF on input line 6075.
-Package hyperref Info: Link nesting OFF on input line 6080.
-Package hyperref Info: Hyper index ON on input line 6083.
-Package hyperref Info: backreferencing OFF on input line 6090.
-Package hyperref Info: Link coloring OFF on input line 6095.
-Package hyperref Info: Link coloring with OCG OFF on input line 6100.
-Package hyperref Info: PDF/A mode OFF on input line 6105.
-LaTeX Info: Redefining \ref on input line 6145.
-LaTeX Info: Redefining \pageref on input line 6149.
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.s
 ty
-Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
-ge
-with kernel methods
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
 )
-\Hy@abspage=\count271
-\c@Item=\count272
-\c@Hfootnote=\count273
+\Hy@abspage=\count274
+\c@Item=\count275
+\c@Hfootnote=\count276
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.de
 f
-File: hpdftex.def 2021-02-27 v7.00k Hyperref driver for pdfTeX
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.
 sty
@@ -330,8 +329,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
 e
 with kernel methods
 )
-\Fld@listcount=\count274
-\c@bookmark@seq@number=\count275
+\Fld@listcount=\count277
+\c@bookmark@seq@number=\count278
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/reru
 nfilecheck.sty
@@ -354,9 +353,9 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count276
-\Gm@cntv=\count277
-\c@Gm@tempcnt=\count278
+\Gm@cnth=\count279
+\Gm@cntv=\count280
+\c@Gm@tempcnt=\count281
 \Gm@bindingoffset=\dimen152
 \Gm@wd@mp=\dimen153
 \Gm@odd@mp=\dimen154
@@ -365,16 +364,16 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutheight=\dimen157
 \Gm@layouthoffset=\dimen158
 \Gm@layoutvoffset=\dimen159
-\Gm@dimlist=\toks23
+\Gm@dimlist=\toks24
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.s
 ty
 Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
-\FV@CodeLineNo=\count279
+\FV@CodeLineNo=\count282
 \FV@InFile=\read2
-\FV@TabBox=\box49
-\c@FancyVerbLine=\count280
-\FV@StepNumber=\count281
+\FV@TabBox=\box52
+\c@FancyVerbLine=\count283
+\FV@StepNumber=\count284
 \FV@OutFile=\write3
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
@@ -386,11 +385,11 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.s
 ty
-Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.s
 ty
-Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
@@ -398,7 +397,7 @@ Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 cs.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 105.
+Package graphics Info: Driver file: pdftex.def on input line 107.
 )
 \Gin@req@height=\dimen164
 \Gin@req@width=\dimen165
@@ -407,28 +406,28 @@ Package graphics Info: Driver file: pdftex.def on input line 105.
 ty
 Package: setspace 2011/12/19 v6.7a set line spacing
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2021/04/07 3.57 The Babel package
+Package: babel 2021/06/02 3.60 The Babel package
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2021/04/07 3.57 Babel common definitions
-\babel@savecnt=\count282
+File: babel.def 2021/06/02 3.60 Babel common definitions
+\babel@savecnt=\count285
 \U@D=\dimen166
-\l@babelnohyphens=\language6
+\l@unhyphenated=\language6
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.de
 f)
 \bbl@readstream=\read3
 )
-\bbl@dirlevel=\count283
+\bbl@dirlevel=\count286
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel-spanish/spa
 nish.ldf
-Language: spanish.ldf 2016/03/03 v5.0p Spanish support from the babel system
-\es@quottoks=\toks24
-\es@quotdepth=\count284
-Package babel Info: Making " an active character on input line 561.
-Package babel Info: Making . an active character on input line 662.
-Package babel Info: Making < an active character on input line 707.
-Package babel Info: Making > an active character on input line 707.
+Language: spanish.ldf 2021/05/27 v5.0q Spanish support from the babel system
+\es@quottoks=\toks25
+\es@quotdepth=\count287
+Package babel Info: Making " an active character on input line 570.
+Package babel Info: Making . an active character on input line 675.
+Package babel Info: Making < an active character on input line 722.
+Package babel Info: Making > an active character on input line 722.
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/sectsty/sectsty.sty
 Package: sectsty 2002/02/25 v2.0.2 Commands to change all sectional heading sty
@@ -471,8 +470,8 @@ Package tocloft Info: The document has section divisions on input line 51.
 \cftbeforefigskip=\skip77
 \cftfigindent=\skip78
 \cftfignumwidth=\skip79
-\c@lofdepth=\count285
-\c@lotdepth=\count286
+\c@lofdepth=\count288
+\c@lotdepth=\count289
 \cftbeforelottitleskip=\skip80
 \cftafterlottitleskip=\skip81
 \cftbeforetabskip=\skip82
@@ -486,12 +485,12 @@ Package tocloft Warning: \@starttoc has already been redefined; tocloft bailing
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.s
 ty
 Package: titlesec 2019/10/16 v2.13 Sectioning titles
-\ttl@box=\box50
+\ttl@box=\box53
 \beforetitleunit=\skip85
 \aftertitleunit=\skip86
 \ttl@plus=\dimen167
 \ttl@minus=\dimen168
-\ttl@toksa=\toks25
+\ttl@toksa=\toks26
 \titlewidth=\dimen169
 \titlewidthlast=\dimen170
 \titlewidthfirst=\dimen171
@@ -511,8 +510,8 @@ Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
 \caption@hangindent=\dimen178
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count287
-\c@continuedfloat=\count288
+\c@caption@flags=\count290
+\c@continuedfloat=\count291
 Package caption Info: hyperref package is loaded.
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.s
@@ -542,61 +541,62 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen186
 \cmidrulekern=\dimen187
 \defaultaddspace=\dimen188
-\@cmidla=\count289
-\@cmidlb=\count290
+\@cmidla=\count292
+\@cmidlb=\count293
 \@aboverulesep=\dimen189
 \@belowrulesep=\dimen190
-\@thisruleclass=\count291
-\@lastruleclass=\count292
+\@thisruleclass=\count294
+\@lastruleclass=\count295
 \@thisrulewidth=\dimen191
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
+Package: longtable 2021-05-07 v4.16 Multi-page Table package (DPC)
 \LTleft=\skip96
 \LTright=\skip97
 \LTpre=\skip98
 \LTpost=\skip99
-\LTchunksize=\count293
+\LTchunksize=\count296
 \LTcapwidth=\dimen192
-\LT@head=\box51
-\LT@firsthead=\box52
-\LT@foot=\box53
-\LT@lastfoot=\box54
-\LT@cols=\count294
-\LT@rows=\count295
-\c@LT@tables=\count296
-\c@LT@chunks=\count297
-\LT@p@ftn=\toks26
+\LT@head=\box54
+\LT@firsthead=\box55
+\LT@foot=\box56
+\LT@lastfoot=\box57
+\LT@gbox=\box58
+\LT@cols=\count297
+\LT@rows=\count298
+\c@LT@tables=\count299
+\c@LT@chunks=\count300
+\LT@p@ftn=\toks27
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
-Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
+Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
 \col@sep=\dimen193
-\ar@mcellbox=\box55
+\ar@mcellbox=\box59
 \extrarowheight=\dimen194
-\NC@list=\toks27
+\NC@list=\toks28
 \extratabsurround=\skip100
 \backup@length=\skip101
-\ar@cellbox=\box56
+\ar@cellbox=\box60
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.s
 ty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \multirow@colwidth=\skip102
-\multirow@cntb=\count298
+\multirow@cntb=\count301
 \multirow@dima=\skip103
 \bigstrutjot=\dimen195
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen196
 \WF@size=\dimen197
-\c@WF@wrappedlines=\count299
-\WF@box=\box57
-\WF@everypar=\toks28
+\c@WF@wrappedlines=\count302
+\WF@box=\box61
+\WF@everypar=\toks29
 Package: wrapfig 2003/01/31  v 3.6
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.s
 ty
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
-\everycr=\toks29
+\everycr=\toks30
 \minrowclearance=\skip104
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape
@@ -613,17 +613,17 @@ Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.s
 ty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box58
-\sift@deathcycles=\count300
+\@vwid@box=\box62
+\sift@deathcycles=\count303
 \@vwid@loff=\dimen198
 \@vwid@roff=\dimen199
 )
-\c@taburow=\count301
-\tabu@nbcols=\count302
-\tabu@cnt=\count303
-\tabu@Xcol=\count304
-\tabu@alloc=\count305
-\tabu@nested=\count306
+\c@taburow=\count304
+\tabu@nbcols=\count305
+\tabu@cnt=\count306
+\tabu@Xcol=\count307
+\tabu@alloc=\count308
+\tabu@nested=\count309
 \tabu@target=\dimen256
 \tabu@spreadtarget=\dimen257
 \tabu@naturalX=\dimen258
@@ -633,18 +633,18 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \abovetabulinesep=\dimen262
 \belowtabulinesep=\dimen263
 \tabustrutrule=\dimen264
-\tabu@thebody=\toks30
-\tabu@footnotes=\toks31
-\tabu@box=\box59
-\tabu@arstrutbox=\box60
-\tabu@hleads=\box61
-\tabu@vleads=\box62
+\tabu@thebody=\toks31
+\tabu@footnotes=\toks32
+\tabu@box=\box63
+\tabu@arstrutbox=\box64
+\tabu@hleads=\box65
+\tabu@vleads=\box66
 \tabu@cellskip=\skip105
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttable/thre
 eparttable.sty
 Package: threeparttable 2003/06/13  v 3.0
-\@tempboxb=\box63
+\@tempboxb=\box67
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttablex/thr
 eeparttablex.sty
@@ -659,14 +659,14 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
 \TPTL@width=\skip106
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box64
-\UL@hyphenbox=\box65
+\UL@box=\box68
+\UL@hyphenbox=\box69
 \UL@skip=\skip107
-\UL@hook=\toks32
+\UL@hook=\toks33
 \UL@height=\dimen265
-\UL@pe=\count307
+\UL@pe=\count310
 \UL@pixel=\dimen266
-\ULC@box=\box66
+\ULC@box=\box70
 Package: ulem 2019/11/18
 \ULdepth=\dimen267
 )
@@ -674,20 +674,20 @@ Package: ulem 2019/11/18
 ty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen268
-\c@nlinenum=\count308
-\TeXr@lab=\toks33
+\c@nlinenum=\count311
+\TeXr@lab=\toks34
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/floatrow/floatrow.s
 ty
 Package: floatrow 2008/08/02 v0.3b floatrow: float package extension
-\c@float@type=\count309
-\float@exts=\toks34
-\float@box=\box67
-\@floatcapt=\box68
+\c@float@type=\count312
+\float@exts=\toks35
+\float@box=\box71
+\@floatcapt=\box72
 Package floatrow Info: Modified float package code loaded on input line 455.
 Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 
-\FR@everyfloat=\toks35
+\FR@everyfloat=\toks36
 \flrow@foot=\insert252
 \FB@wd=\dimen269
 \FBo@wd=\dimen270
@@ -698,25 +698,25 @@ Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 \FBo@max=\skip111
 \FBc@max=\skip112
 \FBf@max=\skip113
-\c@FBl@b=\count310
-\floatbox@depth=\count311
-\c@FRobj=\count312
-\c@FRsobj=\count313
+\c@FBl@b=\count313
+\floatbox@depth=\count314
+\c@FRobj=\count315
+\c@FRsobj=\count316
 \Xhsize=\skip114
 \sXhsize=\skip115
 \Zhsize=\skip116
 \sZhsize=\skip117
-\flrow@rowbox=\box69
+\flrow@rowbox=\box73
 \FR@Zunitlength=\dimen272
-\c@FBcnt=\count314
-\FPOScnt=\count315
+\c@FBcnt=\count317
+\FPOScnt=\count318
 \LTleft=\skip118
 \LTright=\skip119
 \LTleft=\skip120
 \LTright=\skip121
-\flrow@types=\toks36
+\flrow@types=\toks37
 )
-\c@chunk=\count316
+\c@chunk=\count319
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/frontendlayer/t
 ikz.sty
@@ -726,7 +726,7 @@ sty
 s.sty
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 util-common.tex
-\pgfutil@everybye=\toks37
+\pgfutil@everybye=\toks38
 \pgfutil@tempdima=\dimen273
 \pgfutil@tempdimb=\dimen274
 
@@ -734,15 +734,15 @@ util-common.tex
 util-common-lists.tex))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 util-latex.def
-\pgfutil@abb=\box70
+\pgfutil@abb=\box74
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 rcs.code.tex
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/pgf.revision.
 tex)
-Package: pgfrcs 2020/12/27 v3.1.8b (3.1.8b)
+Package: pgfrcs 2021/05/15 v3.1.9a (3.1.9a)
 ))
-Package: pgf 2020/12/27 v3.1.8b (3.1.8b)
+Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgfc
 ore.sty
@@ -750,16 +750,16 @@ ore.sty
 sys.sty
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gfsys.code.tex
-Package: pgfsys 2020/12/27 v3.1.8b (3.1.8b)
+Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 keys.code.tex
-\pgfkeys@pathtoks=\toks38
-\pgfkeys@temptoks=\toks39
+\pgfkeys@pathtoks=\toks39
+\pgfkeys@temptoks=\toks40
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 keysfiltered.code.tex
-\pgfkeys@tmptoks=\toks40
+\pgfkeys@tmptoks=\toks41
 ))
 \pgf@x=\dimen275
 \pgf@y=\dimen276
@@ -773,42 +773,42 @@ keysfiltered.code.tex
 \pgf@yd=\dimen284
 \w@pgf@writea=\write4
 \r@pgf@reada=\read4
-\c@pgf@counta=\count317
-\c@pgf@countb=\count318
-\c@pgf@countc=\count319
-\c@pgf@countd=\count320
-\t@pgf@toka=\toks41
-\t@pgf@tokb=\toks42
-\t@pgf@tokc=\toks43
-\pgf@sys@id@count=\count321
+\c@pgf@counta=\count320
+\c@pgf@countb=\count321
+\c@pgf@countc=\count322
+\c@pgf@countd=\count323
+\t@pgf@toka=\toks42
+\t@pgf@tokb=\toks43
+\t@pgf@tokc=\toks44
+\pgf@sys@id@count=\count324
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gf.cfg
-File: pgf.cfg 2020/12/27 v3.1.8b (3.1.8b)
+File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
 )
 Driver file for pgf: pgfsys-pdftex.def
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gfsys-pdftex.def
-File: pgfsys-pdftex.def 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfsys-pdftex.def 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gfsys-common-pdf.def
-File: pgfsys-common-pdf.def 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
 )))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gfsyssoftpath.code.tex
-File: pgfsyssoftpath.code.tex 2020/12/27 v3.1.8b (3.1.8b)
-\pgfsyssoftpath@smallbuffer@items=\count322
-\pgfsyssoftpath@bigbuffer@items=\count323
+File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfsyssoftpath@smallbuffer@items=\count325
+\pgfsyssoftpath@bigbuffer@items=\count326
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gfsysprotocol.code.tex
-File: pgfsysprotocol.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcore.code.tex
-Package: pgfcore 2020/12/27 v3.1.8b (3.1.8b)
+Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.
 code.tex
@@ -819,11 +819,11 @@ til.code.tex)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathp
 arser.code.tex
 \pgfmath@dimen=\dimen285
-\pgfmath@count=\count324
-\pgfmath@box=\box71
-\pgfmath@toks=\toks44
-\pgfmath@stack@operand=\toks45
-\pgfmath@stack@operation=\toks46
+\pgfmath@count=\count327
+\pgfmath@box=\box75
+\pgfmath@toks=\toks45
+\pgfmath@stack@operand=\toks46
+\pgfmath@stack@operation=\toks47
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathf
 unctions.code.tex
@@ -845,13 +845,13 @@ unctions.misc.code.tex)
 unctions.integerarithmetics.code.tex)))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathf
 loat.code.tex
-\c@pgfmathroundto@lastzeros=\count325
+\c@pgfmathroundto@lastzeros=\count328
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.c
 ode.tex)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepoints.code.tex
-File: pgfcorepoints.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@picminx=\dimen286
 \pgf@picmaxx=\dimen287
 \pgf@picminy=\dimen288
@@ -869,103 +869,103 @@ File: pgfcorepoints.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepathconstruct.code.tex
-File: pgfcorepathconstruct.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@path@lastx=\dimen300
 \pgf@path@lasty=\dimen301
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepathusage.code.tex
-File: pgfcorepathusage.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@shorten@end@additional=\dimen302
 \pgf@shorten@start@additional=\dimen303
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorescopes.code.tex
-File: pgfcorescopes.code.tex 2020/12/27 v3.1.8b (3.1.8b)
-\pgfpic=\box72
-\pgf@hbox=\box73
-\pgf@layerbox@main=\box74
-\pgf@picture@serial@count=\count326
+File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfpic=\box76
+\pgf@hbox=\box77
+\pgf@layerbox@main=\box78
+\pgf@picture@serial@count=\count329
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoregraphicstate.code.tex
-File: pgfcoregraphicstate.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgflinewidth=\dimen304
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoretransformations.code.tex
-File: pgfcoretransformations.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@pt@x=\dimen305
 \pgf@pt@y=\dimen306
 \pgf@pt@temp=\dimen307
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorequick.code.tex
-File: pgfcorequick.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorequick.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoreobjects.code.tex
-File: pgfcoreobjects.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcoreobjects.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepathprocessing.code.tex
-File: pgfcorepathprocessing.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorearrows.code.tex
-File: pgfcorearrows.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgfarrowsep=\dimen308
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoreshade.code.tex
-File: pgfcoreshade.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@max=\dimen309
-\pgf@sys@shading@range@num=\count327
-\pgf@shadingcount=\count328
+\pgf@sys@shading@range@num=\count330
+\pgf@shadingcount=\count331
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoreimage.code.tex
-File: pgfcoreimage.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoreexternal.code.tex
-File: pgfcoreexternal.code.tex 2020/12/27 v3.1.8b (3.1.8b)
-\pgfexternal@startupbox=\box75
+File: pgfcoreexternal.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfexternal@startupbox=\box79
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorelayers.code.tex
-File: pgfcorelayers.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorelayers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoretransparency.code.tex
-File: pgfcoretransparency.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcoretransparency.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepatterns.code.tex
-File: pgfcorepatterns.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorepatterns.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorerdf.code.tex
-File: pgfcorerdf.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfcorerdf.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmo
 duleshapes.code.tex
-File: pgfmoduleshapes.code.tex 2020/12/27 v3.1.8b (3.1.8b)
-\pgfnodeparttextbox=\box76
+File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfnodeparttextbox=\box80
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmo
 duleplot.code.tex
-File: pgfmoduleplot.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/p
 gfcomp-version-0-65.sty
-Package: pgfcomp-version-0-65 2020/12/27 v3.1.8b (3.1.8b)
+Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@nodesepstart=\dimen310
 \pgf@nodesepend=\dimen311
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/p
 gfcomp-version-1-18.sty
-Package: pgfcomp-version-1-18 2020/12/27 v3.1.8b (3.1.8b)
+Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgffo
 r.sty
@@ -979,23 +979,23 @@ y
 code.tex))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 for.code.tex
-Package: pgffor 2020/12/27 v3.1.8b (3.1.8b)
+Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.
 code.tex)
 \pgffor@iter=\dimen312
 \pgffor@skip=\dimen313
-\pgffor@stack=\toks47
-\pgffor@toks=\toks48
+\pgffor@stack=\toks48
+\pgffor@toks=\toks49
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer
 /tikz/tikz.code.tex
-Package: tikz 2020/12/27 v3.1.8b (3.1.8b)
+Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgf
 libraryplothandlers.code.tex
-File: pgflibraryplothandlers.code.tex 2020/12/27 v3.1.8b (3.1.8b)
-\pgf@plot@mark@count=\count329
+File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@plot@mark@count=\count332
 \pgfplotmarksize=\dimen314
 )
 \tikz@lastx=\dimen315
@@ -1006,31 +1006,31 @@ File: pgflibraryplothandlers.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 \tikz@lastmovetoy=\dimen320
 \tikzleveldistance=\dimen321
 \tikzsiblingdistance=\dimen322
-\tikz@figbox=\box77
-\tikz@figbox@bg=\box78
-\tikz@tempbox=\box79
-\tikz@tempbox@bg=\box80
-\tikztreelevel=\count330
-\tikznumberofchildren=\count331
-\tikznumberofcurrentchild=\count332
-\tikz@fig@count=\count333
+\tikz@figbox=\box81
+\tikz@figbox@bg=\box82
+\tikz@tempbox=\box83
+\tikz@tempbox@bg=\box84
+\tikztreelevel=\count333
+\tikznumberofchildren=\count334
+\tikznumberofcurrentchild=\count335
+\tikz@fig@count=\count336
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmo
 dulematrix.code.tex
-File: pgfmodulematrix.code.tex 2020/12/27 v3.1.8b (3.1.8b)
-\pgfmatrixcurrentrow=\count334
-\pgfmatrixcurrentcolumn=\count335
-\pgf@matrix@numberofcolumns=\count336
+File: pgfmodulematrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfmatrixcurrentrow=\count337
+\pgfmatrixcurrentcolumn=\count338
+\pgf@matrix@numberofcolumns=\count339
 )
-\tikz@expandcount=\count337
+\tikz@expandcount=\count340
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer
 /tikz/libraries/tikzlibrarytopaths.code.tex
-File: tikzlibrarytopaths.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: tikzlibrarytopaths.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer
 /tikz/libraries/tikzlibrarymatrix.code.tex
-File: tikzlibrarymatrix.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: tikzlibrarymatrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer
 /tikz/libraries/tikzlibrarydecorations.pathreplacing.code.tex
@@ -1043,38 +1043,38 @@ duledecorations.code.tex
 \pgfdecoratedinputsegmentcompleteddistance=\dimen325
 \pgfdecoratedinputsegmentremainingdistance=\dimen326
 \pgf@decorate@distancetomove=\dimen327
-\pgf@decorate@repeatstate=\count338
+\pgf@decorate@repeatstate=\count341
 \pgfdecorationsegmentamplitude=\dimen328
 \pgfdecorationsegmentlength=\dimen329
 )
-\tikz@lib@dec@box=\box81
+\tikz@lib@dec@box=\box85
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/dec
 orations/pgflibrarydecorations.pathreplacing.code.tex))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer
 /tikz/libraries/tikzlibrarycalc.code.tex
-File: tikzlibrarycalc.code.tex 2020/12/27 v3.1.8b (3.1.8b)
+File: tikzlibrarycalc.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
 \cslhangindent=\skip122
 \csllabelwidth=\skip123
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count339
-\calc@Bcount=\count340
+\calc@Acount=\count342
+\calc@Bcount=\count343
 \calc@Adimen=\dimen330
 \calc@Bdimen=\dimen331
 \calc@Askip=\skip124
 \calc@Bskip=\skip125
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count341
+\calc@Ccount=\count344
 \calc@Cskip=\skip126
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend
 -pdftex.def
-File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count342
-\l__pdf_internal_box=\box82
+File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count345
+\l__pdf_internal_box=\box86
 ) (./Tesis.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
@@ -1125,7 +1125,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ttitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count343
+\c@section@level=\count346
 )
 LaTeX Info: Redefining \ref on input line 323.
 LaTeX Info: Redefining \pageref on input line 323.
@@ -1188,9 +1188,9 @@ Package caption Info: End \AtBeginDocument code.
 le.sty
 Package: fr-longtable 2007/11/28 v0.1b (beta) floatrow: additions for longtable
 
-\flrow@LT@lasthead=\box83
-\flrow@LT@prelastfoot=\box84
-\c@FBLTpage=\count344
+\flrow@LT@lasthead=\box87
+\flrow@LT@prelastfoot=\box88
+\c@FBLTpage=\count347
 )
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 3
 25.
@@ -1285,103 +1285,143 @@ LaTeX Info: Redefining \% on input line 1.
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-86.
+90.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17]
+) [4] [5] [6] [7]
+<Tesis_files/figure-latex/ejemplo_aditiva-1.jpeg, id=415, 469.755pt x 325.215pt
+>
+File: Tesis_files/figure-latex/ejemplo_aditiva-1.jpeg Graphic file (type jpg)
+<use Tesis_files/figure-latex/ejemplo_aditiva-1.jpeg>
+Package pdftex.def Info: Tesis_files/figure-latex/ejemplo_aditiva-1.jpeg  used 
+on input line 698.
+(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
+<Tesis_files/figure-latex/ejemplo_multiplicativa-1.jpeg, id=416, 469.755pt x 32
+5.215pt>
+File: Tesis_files/figure-latex/ejemplo_multiplicativa-1.jpeg Graphic file (type
+ jpg)
+<use Tesis_files/figure-latex/ejemplo_multiplicativa-1.jpeg>
+Package pdftex.def Info: Tesis_files/figure-latex/ejemplo_multiplicativa-1.jpeg
+  used on input line 702.
+(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<Tesis_files/figure-latex/ejemplo_tendencia-1.jpeg, id=420, 469.755pt x 325.215
+pt>
+File: Tesis_files/figure-latex/ejemplo_tendencia-1.jpeg Graphic file (type jpg)
+
+<use Tesis_files/figure-latex/ejemplo_tendencia-1.jpeg>
+Package pdftex.def Info: Tesis_files/figure-latex/ejemplo_tendencia-1.jpeg  use
+d on input line 718.
+(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[8 <./Tesis_files/figure-latex/ejemplo_aditiva-1.jpeg>] [9 <./Tesis_files/figur
+e-latex/ejemplo_multiplicativa-1.jpeg> <./Tesis_files/figure-latex/ejemplo_tend
+encia-1.jpeg>]
+<Tesis_files/figure-latex/ejemplo_ciclo-1.jpeg, id=435, 469.755pt x 325.215pt>
+File: Tesis_files/figure-latex/ejemplo_ciclo-1.jpeg Graphic file (type jpg)
+<use Tesis_files/figure-latex/ejemplo_ciclo-1.jpeg>
+Package pdftex.def Info: Tesis_files/figure-latex/ejemplo_ciclo-1.jpeg  used on
+ input line 740.
+(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
+[10 <./Tesis_files/figure-latex/ejemplo_ciclo-1.jpeg>] [11] [12] [13] [14] [15]
+[16] [17] [18] [19] [20]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[18] [19] [20]
-<Tesis_files/figure-latex/datos_simulados-1.jpeg, id=631, 469.755pt x 325.215pt
+[21] [22] [23]
+<Tesis_files/figure-latex/datos_simulados-1.jpeg, id=660, 469.755pt x 325.215pt
 >
 File: Tesis_files/figure-latex/datos_simulados-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/datos_simulados-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/datos_simulados-1.jpeg  used 
-on input line 1457.
+on input line 1533.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/series_simuladas-1.jpeg, id=633, 469.755pt x 325.215p
+<Tesis_files/figure-latex/series_simuladas-1.jpeg, id=662, 469.755pt x 325.215p
 t>
 File: Tesis_files/figure-latex/series_simuladas-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/series_simuladas-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/series_simuladas-1.jpeg  used
- on input line 1465.
+ on input line 1541.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[21] [22 <./Tesis_files/figure-latex/datos_simulados-1.jpeg> <./Tesis_files/fig
+[24] [25 <./Tesis_files/figure-latex/datos_simulados-1.jpeg> <./Tesis_files/fig
 ure-latex/series_simuladas-1.jpeg>]
-Overfull \hbox (20.07953pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (20.07953pt too wide) in paragraph at lines 1616--1616
  []\T1/lmr/m/n/5 ARIMA(0,0,1)(0,1,1)[12]|
  []
 
 
-Overfull \hbox (20.07953pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (20.07953pt too wide) in paragraph at lines 1616--1616
  []\T1/lmr/m/n/5 ARIMA(0,0,1)(0,1,1)[12]|
  []
 
 
-Overfull \hbox (2.07954pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (2.07954pt too wide) in paragraph at lines 1616--1616
  []|\T1/lmr/m/n/5 ARIMA(0,0,1)(0,1,1)[12]|
  []
 
 
-Overfull \hbox (20.07953pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (20.07953pt too wide) in paragraph at lines 1616--1616
  []\T1/lmr/m/n/5 ARIMA(1,1,1)(1,1,1)[12]|
  []
 
 
-Overfull \hbox (20.07953pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (20.07953pt too wide) in paragraph at lines 1616--1616
  []\T1/lmr/m/n/5 ARIMA(2,0,4)(0,0,2)[12]|
  []
 
 
-Overfull \hbox (20.07953pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (20.07953pt too wide) in paragraph at lines 1616--1616
  []\T1/lmr/m/n/5 ARIMA(2,1,3)(0,1,3)[12]|
  []
 
 
-Overfull \hbox (2.07954pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (2.07954pt too wide) in paragraph at lines 1616--1616
  []|\T1/lmr/m/n/5 ARIMA(2,1,4)(3,0,3)[12]|
  []
 
 
-Overfull \hbox (20.07953pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (20.07953pt too wide) in paragraph at lines 1616--1616
  []\T1/lmr/m/n/5 ARIMA(1,1,1)(1,1,1)[12]|
  []
 
-[23]
-<Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg, id=670, 469.755pt x 325.215pt
+[26]
+<Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg, id=700, 469.755pt x 325.215pt
 >
 File: Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg  used 
-on input line 1606.
+on input line 1682.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[24]
-<Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg, id=684, 469.755pt x 325.215p
+[27]
+<Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg, id=713, 469.755pt x 325.215p
 t>
 File: Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg  used
- on input line 1628.
+ on input line 1704.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=687, 469.755pt x 32
+<Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=716, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg Graphic file (type
  jpg)
 <use Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg
-  used on input line 1641.
+  used on input line 1717.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1389,271 +1429,271 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg, id=690, 469.755pt x 325.21
+<Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg, id=719, 469.755pt x 325.21
 5pt>
 File: Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg Graphic file (type jpg
 )
 <use Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg  us
-ed on input line 1671.
+ed on input line 1747.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[25 <./Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg>] [26 <./Tesis_files/fig
+[28 <./Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg>] [29 <./Tesis_files/fig
 ure-latex/tmiiplotperiodos-1.jpeg> <./Tesis_files/figure-latex/tmiiplotdescompo
-sicion-1.jpeg>] [27 <./Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg>]
-<Tesis_files/figure-latex/externaplotgeneral-1.jpeg, id=712, 469.755pt x 325.21
+sicion-1.jpeg>] [30 <./Tesis_files/figure-latex/tmiiplotpronostico-1.jpeg>]
+<Tesis_files/figure-latex/externaplotgeneral-1.jpeg, id=743, 469.755pt x 325.21
 5pt>
 File: Tesis_files/figure-latex/externaplotgeneral-1.jpeg Graphic file (type jpg
 )
 <use Tesis_files/figure-latex/externaplotgeneral-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/externaplotgeneral-1.jpeg  us
-ed on input line 1723.
+ed on input line 1799.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[28 <./Tesis_files/figure-latex/externaplotgeneral-1.jpeg>]
-<Tesis_files/figure-latex/externasplotperiodos-1.jpeg, id=724, 469.755pt x 325.
+[31 <./Tesis_files/figure-latex/externaplotgeneral-1.jpeg>]
+<Tesis_files/figure-latex/externasplotperiodos-1.jpeg, id=754, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/externasplotperiodos-1.jpeg Graphic file (type j
 pg)
 <use Tesis_files/figure-latex/externasplotperiodos-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/externasplotperiodos-1.jpeg  
-used on input line 1740.
+used on input line 1816.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/externasplotdescomposicion-1.jpeg, id=726, 469.755pt 
+<Tesis_files/figure-latex/externasplotdescomposicion-1.jpeg, id=756, 469.755pt 
 x 325.215pt>
 File: Tesis_files/figure-latex/externasplotdescomposicion-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/externasplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/externasplotdescomposicion-1.
-jpeg  used on input line 1752.
+jpeg  used on input line 1828.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/externasplotpronostico-1.jpeg, id=729, 469.755pt x 32
+<Tesis_files/figure-latex/externasplotpronostico-1.jpeg, id=759, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/externasplotpronostico-1.jpeg Graphic file (type
  jpg)
 <use Tesis_files/figure-latex/externasplotpronostico-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/externasplotpronostico-1.jpeg
-  used on input line 1780.
+  used on input line 1856.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[29 <./Tesis_files/figure-latex/externasplotperiodos-1.jpeg>] [30 <./Tesis_file
+[32 <./Tesis_files/figure-latex/externasplotperiodos-1.jpeg>] [33 <./Tesis_file
 s/figure-latex/externasplotdescomposicion-1.jpeg> <./Tesis_files/figure-latex/e
 xternasplotpronostico-1.jpeg>]
-<Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg, id=741, 469.755pt x 325
+<Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg, id=770, 469.755pt x 325
 .215pt>
 File: Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg 
- used on input line 1809.
+ used on input line 1885.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg, id=742, 469.755pt x 32
+<Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg, id=771, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg Graphic file (type
  jpg)
 <use Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg
-  used on input line 1813.
+  used on input line 1889.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg, id=744, 469.755p
+<Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg, id=773, 469.755p
 t x 325.215pt>
 File: Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg Graphic file
  (type jpg)
 <use Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotdescomposicion-
-1.jpeg  used on input line 1826.
+1.jpeg  used on input line 1902.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 1028) in paragraph at lines 1829--1836
+Underfull \hbox (badness 1028) in paragraph at lines 1905--1912
 []\T1/lmr/m/n/10 Nuevamente, se ajus-ta-ron dos mo-de-los ARI-MA, el pri-me-ro 
 de ellos me-dian-te la fun-ción
  []
 
-[31 <./Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg>]
+[34 <./Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/incentivosplotpronostico-1.jpeg, id=751, 469.755pt x 
+<Tesis_files/figure-latex/incentivosplotpronostico-1.jpeg, id=780, 469.755pt x 
 325.215pt>
 File: Tesis_files/figure-latex/incentivosplotpronostico-1.jpeg Graphic file (ty
 pe jpg)
 <use Tesis_files/figure-latex/incentivosplotpronostico-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotpronostico-1.jp
-eg  used on input line 1853.
+eg  used on input line 1929.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[32 <./Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg> <./Tesis_files/f
-igure-latex/incentivosplotdescomposicion-1.jpeg>] [33 <./Tesis_files/figure-lat
+[35 <./Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg> <./Tesis_files/f
+igure-latex/incentivosplotdescomposicion-1.jpeg>] [36 <./Tesis_files/figure-lat
 ex/incentivosplotpronostico-1.jpeg>]
-<Tesis_files/figure-latex/interesesplotgeneral-1.jpeg, id=763, 469.755pt x 325.
+<Tesis_files/figure-latex/interesesplotgeneral-1.jpeg, id=793, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/interesesplotgeneral-1.jpeg Graphic file (type j
 pg)
 <use Tesis_files/figure-latex/interesesplotgeneral-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/interesesplotgeneral-1.jpeg  
-used on input line 1899.
+used on input line 1975.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/interesesplotperiodos-1.jpeg, id=764, 469.755pt x 325
+<Tesis_files/figure-latex/interesesplotperiodos-1.jpeg, id=794, 469.755pt x 325
 .215pt>
 File: Tesis_files/figure-latex/interesesplotperiodos-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/interesesplotperiodos-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/interesesplotperiodos-1.jpeg 
- used on input line 1903.
+ used on input line 1979.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg, id=766, 469.755pt
+<Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg, id=796, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg Graphic file 
 (type jpg)
 <use Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/interesesplotdescomposicion-1
-.jpeg  used on input line 1916.
+.jpeg  used on input line 1992.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 1117) in paragraph at lines 1919--1928
+Underfull \hbox (badness 1117) in paragraph at lines 1995--2004
 []\T1/lmr/m/n/10 Por úl-ti-mo, los mo-de-los ajus-ta-dos pa-ra pro-nos-ti-car l
 os in-tere-ses y co-mi-sio-nes del sec-tor
  []
 
-[34 <./Tesis_files/figure-latex/interesesplotgeneral-1.jpeg>]
+[37 <./Tesis_files/figure-latex/interesesplotgeneral-1.jpeg>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Tesis_files/figure-latex/interesesplotpronostico-1.jpeg, id=773, 469.755pt x 3
+<Tesis_files/figure-latex/interesesplotpronostico-1.jpeg, id=803, 469.755pt x 3
 25.215pt>
 File: Tesis_files/figure-latex/interesesplotpronostico-1.jpeg Graphic file (typ
 e jpg)
 <use Tesis_files/figure-latex/interesesplotpronostico-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/interesesplotpronostico-1.jpe
-g  used on input line 1945.
+g  used on input line 2021.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[35 <./Tesis_files/figure-latex/interesesplotperiodos-1.jpeg> <./Tesis_files/fi
-gure-latex/interesesplotdescomposicion-1.jpeg>] [36 <./Tesis_files/figure-latex
-/interesesplotpronostico-1.jpeg>] [37]
+[38 <./Tesis_files/figure-latex/interesesplotperiodos-1.jpeg> <./Tesis_files/fi
+gure-latex/interesesplotdescomposicion-1.jpeg>] [39 <./Tesis_files/figure-latex
+/interesesplotpronostico-1.jpeg>] [40]
 
 Package caption Warning: \captionsetup{type*=...} or \captionof
-(caption)                outside box or environment on input line 2017.
+(caption)                outside box or environment on input line 2093.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 2017.
+(caption)                particular \caption on input line 2093.
 See the caption package documentation for explanation.
 
 Package hyperref Info: bookmark level for unknown chunk defaults to 0 on input 
-line 2017.
+line 2093.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2021.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2097.
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-2194.
+2270.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Underfull \vbox (badness 10000) detected at line 2200
- []
-
-[38]
-Underfull \vbox (badness 10000) detected at line 2200
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2200
- []
-
-[39]
-Underfull \vbox (badness 10000) detected at line 2200
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2200
- []
-
-[40]
-Underfull \vbox (badness 10000) detected at line 2200
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2200
+Underfull \vbox (badness 10000) detected at line 2276
  []
 
 [41]
-Underfull \vbox (badness 10000) detected at line 2200
+Underfull \vbox (badness 10000) detected at line 2276
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2200
+Underfull \vbox (badness 10000) detected at line 2276
  []
 
 [42]
+Underfull \vbox (badness 10000) detected at line 2276
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2276
+ []
+
+[43]
+Underfull \vbox (badness 10000) detected at line 2276
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2276
+ []
+
+[44]
+Underfull \vbox (badness 10000) detected at line 2276
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2276
+ []
+
+[45]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 2204.
+(caption)                particular \caption on input line 2280.
 See the caption package documentation for explanation.
 
 
-Underfull \vbox (badness 3557) detected at line 2248
+Underfull \vbox (badness 3557) detected at line 2324
  []
 
-[43] [44]
-Underfull \hbox (badness 1072) in paragraph at lines 2299--2304
+[46] [47]
+Underfull \hbox (badness 1072) in paragraph at lines 2375--2380
 [][]\T1/lmr/m/n/10 Calderón, C. E. (2012). Es-ta-dís-ti-ca pa-ra Es-tu-dian-tes
  de Ad-mi-nis-tra-ción de Em-pre-sas de
  []
 
 
-Underfull \hbox (badness 1742) in paragraph at lines 2299--2304
+Underfull \hbox (badness 1742) in paragraph at lines 2375--2380
 \T1/lmr/m/n/10 la Uni-ver-si-dad Na-cio-nal del Ca-llao. \T1/lmr/m/it/10 Edi-to
 -rial San Mar-cos, 2da Edi-ción, Li-ma Pe-rú\T1/lmr/m/n/10 .
  []
 
-[45]
+[48]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-360.
+436.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Underfull \hbox (badness 4543) in paragraph at lines 2358--2362
+Underfull \hbox (badness 4543) in paragraph at lines 2434--2438
 [][]\T1/lmr/m/n/10 Hernández, O. (2011a). \T1/lmr/m/it/10 In-tro-duc-ción a las
  Se-ries Cro-no-ló-gi-cas \T1/lmr/m/n/10 (1.\TS1/lmr/m/n/10 ª \T1/lmr/m/n/10 ed
 .). Re-cu-pe-ra-do
  []
 
 
-Underfull \hbox (badness 4846) in paragraph at lines 2363--2367
+Underfull \hbox (badness 4846) in paragraph at lines 2439--2443
 [][]\T1/lmr/m/n/10 Hernández, O. (2011b). \T1/lmr/m/it/10 In-tro-duc-ción a las
  Se-ries Cro-no-ló-gi-cas\T1/lmr/m/n/10 . Re-cu-pe-ra-do de [][]$http :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2363--2367
+Underfull \hbox (badness 10000) in paragraph at lines 2439--2443
 \T1/lmr/m/n/10 / / www . editorial . ucr . ac . cr / ciencias -[] naturales -[]
  y -[] exactas / item / 1985 -[] introduccion -[] a -[] las -[] series -[]
  []
 
-[46] [47] [48] (./Tesis.aux
+[49] [50] [51] (./Tesis.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
@@ -1661,16 +1701,16 @@ LaTeX Info: Redefining \% on input line 25.
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `Tesis.out' has not changed.
-(rerunfilecheck)             Checksum: 4BD80B97E372276E639F705D9A0B8560;8345.
+(rerunfilecheck)             Checksum: DC9EC2264DB45A82F70CB03592F487D4;8188.
  ) 
 Here is how much of TeX's memory you used:
- 27755 strings out of 480913
- 505976 string characters out of 5903860
- 843566 words of memory out of 5000000
- 44206 multiletter control sequences out of 15000+600000
+ 28202 strings out of 480431
+ 522371 string characters out of 5895323
+ 856550 words of memory out of 5000000
+ 45125 multiletter control sequences out of 15000+600000
  476397 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 87i,17n,88p,1194b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,17n,83p,1194b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.10} has been referenced but does not ex
 ist, replaced by a fixed one
 
@@ -1732,10 +1772,10 @@ sers/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c
 b><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt1
 0.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsf
 onts/symbols/msbm10.pfb>
-Output written on Tesis.pdf (55 pages, 21948496 bytes).
+Output written on Tesis.pdf (58 pages, 25637523 bytes).
 PDF statistics:
- 1050 PDF objects out of 1200 (max. 8388607)
- 942 compressed objects within 10 object streams
- 212 named destinations out of 1000 (max. 500000)
- 487 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1111 PDF objects out of 1200 (max. 8388607)
+ 968 compressed objects within 10 object streams
+ 221 named destinations out of 1000 (max. 500000)
+ 499 words of extra memory for PDF output out of 10000 (max. 10000000)
 

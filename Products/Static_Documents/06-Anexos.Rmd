@@ -222,7 +222,7 @@ ts.sim <- function(data, n, temporalidad,
     
     datos <- subset(datos, start=length(data)+1)
     list(modelo=modelo, datos=datos)}, 
-    error = function(e) simular.proceso(data, n, temporalidad,
+    error = function(e) ts.sim(data, n, temporalidad,
                                         no.estacional, estacional, 
                                         p, q, P, Q))
 }
