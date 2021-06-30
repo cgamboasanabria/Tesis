@@ -815,9 +815,7 @@ generar pronósticos. Es en este sentido que entran en escena las
 observaciones recolectadas de la serie, pues ellas son analizadas y
 sujetas a modelados matemáticos que logren capturar el proceso que
 gobierna a toda la serie cronológica
-(\protect\hyperlink{ref-Zhang}{Zhang, 2003}). Los pronósticos se generan
-a partir de este modelo, es decir, pronosticar el futuro, se utilizan
-las correlaciones con las observaciones pasadas.
+(\protect\hyperlink{ref-Zhang}{Zhang, 2003}).
 
 En un proceso determinístico, es posible predecir con certeza lo que
 ocurrirá en el futuro; las series cronológicas, sin embargo, carecen de
@@ -827,32 +825,84 @@ se conoce como un proceso estocástico. Es de esta manera que
 \protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
 (\protect\hyperlink{ref-Hipel}{1994}) sugieren que una serie cronológica
 puede considerarse como una muestra aleatoria de una serie mucho más
-grande.
+grande. Este componente no determinístico es lo que define a un procesos
+estocástico (aleatorio) como un conjunto de variables aleatorias
+ordenadas en el tiempo
+(\protect\hyperlink{ref-definicion_estocastico}{Elmabrouk, s.~f.}). De
+acuerdo con \protect\hyperlink{ref-introduccion_series}{Ramírez}
+(\protect\hyperlink{ref-introduccion_series}{2007}), una forma de
+definir un proceso estocástico \(Y_t\) es mediante los momentos
+poblacionales de primer y segundo orden tal y como se define en la
+ecuación \ref{eqn:ecuacion_estocastico}.
 
-Como una serie de tiempo puede considerarse como un proceso estocástico,
-éstas se encuentran sujetas a múltiples supuestos. El más fundamental de
-ellos es que todas las observaciones son independientes e idénticamente
-distribuidas (i.i.d.) siguiendo una distribución aproximadamente Normal,
-con una media y variancia dadas. Lo anterior es contrario al uso de las
-observaciones pasadas para pronosticar el futuro, por lo que este
-supuesto, según \protect\hyperlink{ref-Cochrane}{Cochrane}
-(\protect\hyperlink{ref-Cochrane}{1997}), no es exacto pues una una
-serie de tiempo no es exactamente, i.i.d., sino que siguen un patrón
-medianamente regular en el largo plazo.
+\begin{equation}
+\label{eqn:ecuacion_estocastico}
+Y_t:
+\begin{cases}
+E(Y_t) = \mu_t, \forall t \\
+V(Y_t) = \sigma^2_t, \forall t \\
+COV(T_t,Y_s) = E\left[(Y_t-\mu_t)(Y_s-\mu_s)\right], \forall t,s \\
+\end{cases}
+\end{equation}
 
-Otro concepto de interés en las series cronológicas es el de
-estacionaridad. De acuerdo con
+Lo anterior implica que la media, la varianza y la covarianza dependen
+del tiempo. De esto se desprende además que existen dos tipos de
+procesos estocásticos: estacionarios y no estacionarios. De acuerdo con
 \protect\hyperlink{ref-stationary_def}{Agrawal \& Adhikari}
 (\protect\hyperlink{ref-stationary_def}{2013}), una serie se considera
 estacionaria cuando su nivel medio y su variancia son aproximadamente
 las mismas durante todo el periodo, es decir, el tiempo no afecta a
 estos estadísticos de variabilidad. Este supuesto busca simplificar la
 identificación del proceso estocástico con el objetivo de obtener un
-modelo adecuado para generar los pronósticos. Sin embargo, y de una
-manera similar al supuesto de i.i.d., si una serie cronológica posee
-tendencias o patrones estacionales hace que esta sea no estacionaria. En
-la práctica, una serie puede volverse estacionaria al aplicarle
-transformaciones o diferenciaciones de distinto orden.
+modelo adecuado para generar los pronósticos. De acuerdo con
+(\protect\hyperlink{ref-definicion_estocastico}{Elmabrouk, s.~f.}), se
+dice que una serie cronológica \(Y_t\) es fuertemente estacionaria si
+satisface las siguientes tres condiciones:
+
+\textbf{1.} La media de \(Y_t\) se mantiene constante e el tiempo.
+
+\textbf{2.} La variabilidad de \(Y_t\) se mantiene constante en el
+tiempo y además es finita.
+
+\textbf{3.} La covarianza entre \(Y_t\) y \(Y_{t-k}\) únicamente depende
+de la distancia entre \(t\) y \(t-k\).
+
+Un proceso estocástico es débilmente estacionario si alguna de las tres
+condiciones previas no se cumple, en particular la última. Si una serie
+cronológica posee tendencias o patrones estacionales hace que esta sea
+no estacionaria. En la práctica, una serie puede volverse estacionaria
+al aplicarle transformaciones o diferenciaciones de distinto orden.
+
+Como una serie de tiempo puede considerarse como un proceso estocástico,
+éstas se encuentran sujetas a múltiples supuestos. El más fundamental de
+ellos es que todas las observaciones son independientes e idénticamente
+distribuidas (i.i.d.), que según
+\protect\hyperlink{ref-definicion_iid}{Evans \& Rosenthal}
+(\protect\hyperlink{ref-definicion_iid}{2005}), un conjunto de variables
+aleatorias \(Y_1,...,Y_n\) son independientes e idénticamente
+distribuidas si el conjunto es independiente y además cada una de las n
+variables sigue la misma distribución, que usualmente se define como una
+distribución aproximadamente Normal, con una media y variancia dadas.
+Este supuesto puede dividirse según el tipo de variable aleatoria:
+
+\textbf{1.}: Si el conjunto de variables \(Y_1,...,Y_n\) pertenecen a
+una distribución discreta, cada función de probabilidad es idéntica, de
+manera que \(p_{y_1}(y)=p_{y_2}(y)=\cdots=p_{y_n}(y)\equiv p(y)\), y
+además
+\(p_{y_1,...,y_n}(y_1,...,y_n)=p_{y_1}(y_1)p_{y_2}(y_2)\cdots p_{y_n}(y_n)=p(y_1)p(y_2)\cdots p(y_n)\).
+
+\textbf{2.}: Si el conjunto de variables \(Y_1,...,Y_n\) pertenecen a
+una distribución continua, cada función de probabilidad es idéntica, de
+manera que \(f_{y_1}(y)=f_{y_2}(y)=\cdots=f_{y_n}(y)\equiv f(y)\), y
+además
+\(f_{y_1,...,y_n}(y_1,...,y_n)=f_{y_1}(y_1)f_{y_2}(y_2)\cdots f_{y_n}(y_n)=f(y_1)f(y_2)\cdots f(y_n)\).
+
+Lo anterior es contrario al uso de las observaciones pasadas para
+pronosticar el futuro, por lo que este supuesto, según
+\protect\hyperlink{ref-Cochrane}{Cochrane}
+(\protect\hyperlink{ref-Cochrane}{1997}), no es exacto pues una una
+serie de tiempo no es exactamente, i.i.d., sino que siguen un patrón
+medianamente regular en el largo plazo.
 
 El último supuesto, y quizá el que más debate genera, es el criterio de
 parsimonia. Como mencionan \protect\hyperlink{ref-Zhang}{Zhang}
@@ -868,6 +918,124 @@ problema, sin embargo, se presenta al considerar un único modelo con
 muchos parámetros; pero si se consideran varios modelos y estos son
 sometidos a distintos criterios, puede obtenerse un modelo
 sobreparametrizado que ofrezca buenos pronósticos.
+
+\subsection{Identificación del modelo}
+
+Los métodos más clásicos para la identificación del proceso que gobierna
+a una serie cronológica son las funciones de autocorrelación y
+autocorrelación parcial, las cuales sirven de indicador acerca de qué
+tan relacionadas están las observaciones unas de otras. Estas funciones
+ofrecen indicios sobre el orden de los términos para los modelos
+\(AR(p)\), \(MA(q)\) y para la diferenciación y, por ende, para la
+identificación de un modelo \(ARIMA\)
+(\protect\hyperlink{ref-hyndman_box-jenkins}{R. J. Hyndman \&
+Athanasopoulos, 2018b}).
+
+Para medir la relación lineal entre dos variables cuantitativas es común
+utilizar el coeficiente de correlación \(r\) de Pearson
+(\protect\hyperlink{ref-pearson}{Benesty \& Chen, 2009}), el cual se
+define para dos variables \(X\) e \(Y\) como se muestra en la ecuación
+\ref{eqn:pearson}.
+
+\begin{equation}
+\label{eqn:pearson}
+r_{X,Y}=\frac{E(XY)}{\sigma_X \sigma_Y} = \frac{\sum_{i=1}^n \left(X_i- \bar X\right) \left(Y_i- \bar Y\right)}{\sqrt{\sum_{i=1}^n \left(X_i- \bar X\right)^2 \sum_{i=1}^n \left(Y_i- \bar Y\right)^2}}
+\end{equation}
+
+Este mismo concepto puede aplicarse a las series cronológicas para
+comparar el valor de la misma en el tiempo \(t\), con su valor en el
+tiempo \(t-1\), es decir, se comparan las observaciones consecutivas
+\(Y_t\) con \(Y_{t-1}\). Esto también es aplicable a no solo una
+observación rezagada \((Y_{t-1})\), sino también con múltiples rezagos
+\((Y_{t-2}), (Y_{t-3}), \cdots,(Y_{t-n})\). Para esto se hace uso del
+coeficiente de autocorrelación.
+
+El coeficiente de autocorrelación (\emph{ACF} por sus siglas en inglés)
+recibe su nombre debido a que se utiliza el coeficiente de correlación
+para pares de observaciones \(r_{Y_t, Y_{t-1}}\) de la serie
+cronológica. Al conjunto de todas las autocorrelaciones se le llama
+función de autocorrelación.
+
+La función de autocorrelación parcial\footnote{\emph{PACF} por sus
+  siglas en inglés}, como menciona
+\protect\hyperlink{ref-oscarh-4}{Hernández}
+(\protect\hyperlink{ref-oscarh-4}{2011b}), busca medir la asociación
+lineal entre las observaciones \(Y_t\) y \(Y_{t-k}\), es decir, la
+correlación entres dos observaciones distintas separadas por \(k\)
+periodos, descartando los efectos de los rezagos \(1,2, \cdots ,k-1\);
+esta correlación puede obtenerse a partir de la ecuación
+\ref{eqn:pearson}, que al adaptarse a dos observaciones de la misma
+serie cronológica se obtiene el resultado de ecuación
+\ref{eqn:pearson_adaptada_autocorrelacion}.
+
+\begin{equation}
+\label{eqn:pearson_adaptada_autocorrelacion}
+r_{{Y_t},{Y_{t-k}}}=\frac{E({Y_t}{Y_{t-k}})}{\sigma_{Y_t} \sigma_{Y_{t-k}}} = \frac{\sum_{i=1}^n \left({Y_t}_i- \bar {Y_t}\right) \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)}{\sqrt{\sum_{i=1}^n \left({Y_t}_i- \bar {Y_t}\right)^2 \sum_{i=1}^n \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)^2}}
+\end{equation}
+
+De lo anterior se deduce entonces que un las k observaciones previas
+pueden utilizarse para obtener el valor de de la serie cronológica en el
+momento \(t\), como muestra la ecuación
+\ref{eqn:ecuacion_autocorrelaciones}.
+
+\begin{equation}
+\label{eqn:ecuacion_autocorrelaciones}
+y_t=\phi_{k1}y_{t-1}+\phi_{k2}y_{t-2}+\cdots+\phi_{kk}y_{t-k}+u_t,k=1,2,...,K
+\end{equation}
+
+Los valores de cada término \(\phi_{kk}\), asumiendo que pertenecen a un
+proceso estacionario, suelen estimarse mediante la ecuación de
+Yule-Walker (\protect\hyperlink{ref-yule.walker}{Brockwell \& Davis,
+2009}), cuya forma más general se muestra en la ecuación
+\ref{eqn:ecuacion_yule_walker_general}.
+
+\begin{equation}
+\label{eqn:ecuacion_yule_walker_general}
+\gamma_i=E\left[ \phi_{k1}y_{t-1}y_{t-i} + \phi_{k2}y_{t-2}y_{t-i} + \cdots + \phi_{kn}y_{t-n}y_{t-i} + u_ty_{t-i} \right]=\phi_{k1}\gamma_{i-1} + \phi_{k2}\gamma_{i-2} + \cdots + \phi_{kn}\gamma_{n-i}
+\end{equation}
+
+Al considerar la ecuación en términos de la función de autocorrelación
+se obtiene lo siguiente:
+
+\begin{equation}
+\label{eqn:ecuacion_yule_walker_autocorrelacion}
+\rho_i=\phi_{k1}\rho_{i-1} + \phi_{k2}\rho_{i-2} + \cdots + \phi_{kn}\rho_{n-i}+\cdots
+\end{equation}
+
+Alternando los distintos valores de \(k\) a partir de la ecuación
+\ref{eqn:ecuacion_yule_walker_autocorrelacion}, se obtiene el sistema de
+ecuaciones mostrado en \ref{eqn:sistema_yule_walker}.
+
+\begin{equation}
+\label{eqn:sistema_yule_walker}
+\begin{array}{lll} 
+\rho_1=\phi_{k1} + \phi_{k2}\rho_{1} + \cdots + \phi_{kn}\rho_{n-1}+\cdots \\
+\rho_2=\phi_{k1}\rho_{1} + \phi_{k2} + \cdots + \phi_{kn}\rho_{n-2}+\cdots \\
+\rho_3=\phi_{k1}\rho_{2} + \phi_{k2}\rho_{1} + \cdots + \phi_{kn}\rho_{n-3}+\cdots \\
+\vdots \\
+\rho_k=\phi_{k1}\rho_{k-1} + \phi_{k2}\rho_{k-2} + \cdots + \phi_{kn}\rho_{n-k}+\cdots
+\end{array}
+\end{equation}
+
+Como resultado del sistema de ecuaciones mostrado en
+\ref{eqn:sistema_yule_walker}, es posible hacer un replanteamiento en
+forma de un sistema matricial del cuál las autocorelaciones parciales
+pueden obtenerse a partir del despeje del vector \(\Phi\) en
+\ref{eqn:sistema_yule_walker_matricial}.
+
+\begin{equation}
+\label{eqn:sistema_yule_walker_matricial}
+\left[ \begin{array}{c} \rho_1 \\ \rho_2 \\ \vdots \\ \rho_k \end{array} \right] = \begin{bmatrix} 1 & \rho_1 & \rho_2 & \cdots & \rho_{k-1} \\ \rho_1 & 1 & \rho_1 & \cdots & \rho_{k-2} \\ \vdots & \vdots & \vdots & \cdots & \vdots \\ \rho_{k-1} & \rho_{k-2} & \rho_{k-3} & \cdots & 1 &\end{bmatrix} \left[ \begin{array}{c} \phi_{k1} \\ \phi_{k2}  \\ \vdots \\ \phi_{kk} \end{array} \right]\end{equation}
+
+Cuando se tiene el modelo ARIMA debidamente identificado, es importante
+realizar los pronósticos. Sin embargo, estos pronósticos no son
+imperativos, sino que se debe evaluar su calidad con las llamadas
+medidas de rendimiento. Estas mediciones son hechas comparando el
+pronóstico y su diferencia con el valor real. Existen múltiples medidas
+de rendimiento, \protect\hyperlink{ref-medidas}{Adhikari, K, \& Agrawal}
+(\protect\hyperlink{ref-medidas}{2013}) menciona entre ellas el
+\emph{MAE}, \emph{MAPE}, \emph{RMSE}, \emph{MASE}, \emph{AIC},
+\emph{AICc} y el \emph{BIC}.
 
 \subsection{Modelos Autorregresivos Integrados de Medias Móviles}
 
@@ -965,51 +1133,10 @@ previsión asociado está dado por:
 x_{T+h}- \hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-h+1}
 \end{equation}
 
-\subsubsection{Modelos Autorregresivos}
-
-Un modelo autorregresivo de orden \emph{p}, denotado como \(AR(p)\),
-considera los valores futuros de una serie cronológica como una
-combinación lineal las \(p\) observaciones predecesoras, un componente
-aleatorio y un término constante. \protect\hyperlink{ref-Hipel}{Hipel \&
-McLeod} (\protect\hyperlink{ref-Hipel}{1994}) y
-\protect\hyperlink{ref-Lee}{Lee} (\protect\hyperlink{ref-Lee}{s.~f.})
-emplean la notación de la ecuación \ref{eqn:modelo_AR}.
-
-\begin{equation}
-\label{eqn:modelo_AR}
-y_t=c+\sum_{i=1}^p \varphi_iy_{t-i}+\varepsilon_t
-\end{equation}
-
-Donde \(y_t\) y \(\varepsilon_t\) corresponden al valor de la serie y al
-componente aleatorio en el momento actual \(t\), mientras que
-\(\varphi_i\), con \(i=1,2,\cdots,p\) son los parámetros del modelo, y
-\(c\) es su término constante, que en ciertas ocasiones se suele omitir
-para simplificar la notación. Los parámetros de esta clase de modelos
-suelen estimarse mediante la ecuación de Yule-Walker
-(\protect\hyperlink{ref-yule.walker}{Brockwell \& Davis, 2009}).
-
-\subsubsection{Modelos de Medias Móviles}
-
-De manera similar a como un \(AR(p)\) utiliza los valores pasados para
-pronosticar los futuros, los modelos de medias móviles de orden q,
-denotados como \(MA(q)\), utilizan los errores pasados de las variables
-independientes. Estos modelos se describen mediante la ecuación
-\ref{eqn:modelo_MA}.
-
-\begin{equation}
-\label{eqn:modelo_MA}
-y_t=\mu+\sum_{j=1}^q \theta_j \varepsilon_{t-j}+\varepsilon_t
-\end{equation}
-
-Donde \(\mu\) representa el valor medio de la serie cronológica y cada
-valor de \(\theta_j(j=1,2,\cdots,q)\) son los parámetros del modelo.
-Como los \(MA(q)\) utilizan los errores pasados de la serie cronológica,
-se asume que estos son i.i.d. centrados en cero y con una variancia
-constante, siguiendo una distribución aproximadamente Normal, con lo
-cual este tipo de modelos pueden considerarse como una regresión lineal
-entre una observación determinada y los términos de error que le
-preceden (\protect\hyperlink{ref-stationary_def}{Agrawal \& Adhikari,
-2013}).
+De esta manera, la ecuación de Wold se convierte en una herramienta
+general para representar a una serie cronológica que está gobernada por
+un determinado proceso, y que al no ser conocido, resulta necesario
+contar con una herramienta para su aproximación.
 
 \subsubsection{Metodología Box-Jenkins}
 
@@ -1045,6 +1172,50 @@ estacionarios por naturaleza. Esta condición hace necesaria la
 introducción de una generalización de los modelos \(ARMA\), la cual se
 conoce como los modelos \(ARIMA\)
 (\protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \& Reinsel, 1994}).
+
+\subsubsection{Modelos Autorregresivos}
+
+Un modelo autorregresivo de orden \emph{p}, denotado como \(AR(p)\),
+considera los valores futuros de una serie cronológica como una
+combinación lineal las \(p\) observaciones predecesoras, un componente
+aleatorio y un término constante. \protect\hyperlink{ref-Hipel}{Hipel \&
+McLeod} (\protect\hyperlink{ref-Hipel}{1994}) y
+\protect\hyperlink{ref-Lee}{Lee} (\protect\hyperlink{ref-Lee}{s.~f.})
+emplean la notación de la ecuación \ref{eqn:modelo_AR}.
+
+\begin{equation}
+\label{eqn:modelo_AR}
+y_t=c+\sum_{i=1}^p \varphi_iy_{t-i}+\varepsilon_t
+\end{equation}
+
+Donde \(y_t\) y \(\varepsilon_t\) corresponden al valor de la serie y al
+componente aleatorio en el momento actual \(t\), mientras que
+\(\varphi_i\), con \(i=1,2,\cdots,p\) son los parámetros del modelo, y
+\(c\) es su término constante, que en ciertas ocasiones se suele omitir
+para simplificar la notación.
+
+\subsubsection{Modelos de Medias Móviles}
+
+De manera similar a como un \(AR(p)\) utiliza los valores pasados para
+pronosticar los futuros, los modelos de medias móviles de orden q,
+denotados como \(MA(q)\), utilizan los errores pasados de las variables
+independientes. Estos modelos se describen mediante la ecuación
+\ref{eqn:modelo_MA}.
+
+\begin{equation}
+\label{eqn:modelo_MA}
+y_t=\mu+\sum_{j=1}^q \theta_j \varepsilon_{t-j}+\varepsilon_t
+\end{equation}
+
+Donde \(\mu\) representa el valor medio de la serie cronológica y cada
+valor de \(\theta_j(j=1,2,\cdots,q)\) son los parámetros del modelo.
+Como los \(MA(q)\) utilizan los errores pasados de la serie cronológica,
+se asume que estos son i.i.d. centrados en cero y con una variancia
+constante, siguiendo una distribución aproximadamente Normal, con lo
+cual este tipo de modelos pueden considerarse como una regresión lineal
+entre una observación determinada y los términos de error que le
+preceden (\protect\hyperlink{ref-stationary_def}{Agrawal \& Adhikari,
+2013}).
 
 \subsubsection{Modelos ARIMA}
 
@@ -1096,60 +1267,6 @@ adecue más a la serie cronológica, se deben realizar los diagnósticos
 para evaluar la calidad del ajuste del modelo, así como las medidas de
 rendimiento referentes a los pronósticos que genera el modelo estimado
 hasta un horizonte determinado.
-
-\subsection{Identificación del modelo}
-
-Los métodos más clásicos para la identificación del proceso que gobierna
-a una serie cronológica son las funciones de autocorrelación y
-autocorrelación parcial, las cuales sirven de indicador acerca de qué
-tan relacionadas están las observaciones unas de otras. Estas funciones
-ofrecen indicios sobre el orden de los términos para los modelos
-\(AR(p)\), \(MA(q)\) y para la diferenciación y, por ende, para la
-identificación de un modelo \(ARIMA\)
-(\protect\hyperlink{ref-hyndman_box-jenkins}{R. J. Hyndman \&
-Athanasopoulos, 2018b}).
-
-Para medir la relación lineal entre dos variables cuantitativas es común
-utilizar el coeficiente de correlación \(r\) de Pearson
-(\protect\hyperlink{ref-pearson}{Benesty \& Chen, 2009}), el cual se
-define para dos variables \(X\) e \(Y\) como se muestra en la ecuación
-\ref{eqn:pearson}.
-
-\begin{equation}
-\label{eqn:pearson}
-r_{X,Y}=\frac{E(XY)}{\sigma_X \sigma_Y} = \frac{\sum_{i=1}^n \left(X_i- \bar X\right) \left(Y_i- \bar Y\right)}{\sqrt{\sum_{i=1}^n \left(X_i- \bar X\right)^2 \sum_{i=1}^n \left(Y_i- \bar Y\right)^2}}
-\end{equation}
-
-Este mismo concepto puede aplicarse a las series cronológicas para
-comparar el valor de la misma en el tiempo \(t\), con su valor en el
-tiempo \(t-1\), es decir, se comparan las observaciones consecutivas
-\(Y_t\) con \(Y_{t-1}\). Esto también es aplicable a no solo una
-observación rezagada \((Y_{t-1})\), sino también con múltiples rezagos
-\((Y_{t-2}), (Y_{t-3}), \cdots,(Y_{t-n})\). Para esto se hace uso del
-coeficiente de autocorrelación.
-
-El coeficiente de autocorrelación (\emph{ACF} por sus siglas en inglés)
-recibe su nombre debido a que se utiliza el coeficiente de correlación
-para pares de observaciones \(r_{Y_t, Y_{t-1}}\) de la serie
-cronológica. Al conjunto de todas las autocorrelaciones se le llama
-función de autocorrelación.
-
-La función de autocorrelación parcial\footnote{\emph{PACF} por sus
-  siglas en inglés}, como menciona
-\protect\hyperlink{ref-oscarh-4}{Hernández}
-(\protect\hyperlink{ref-oscarh-4}{2011b}), busca medir la asociación
-lineal entre las observaciones \(Y_t\) y \(Y_{t-k}\), descartando los
-efectos de los rezagos \(1,2, \cdots ,k-1\).
-
-Cuando se tiene el modelo ARIMA debidamente identificado, es importante
-realizar los pronósticos. Sin embargo, estos pronósticos no son
-imperativos, sino que se debe evaluar su calidad con las llamadas
-medidas de rendimiento. Estas mediciones son hechas comparando el
-pronóstico y su diferencia con el valor real. Existen múltiples medidas
-de rendimiento, \protect\hyperlink{ref-medidas}{Adhikari, K, \& Agrawal}
-(\protect\hyperlink{ref-medidas}{2013}) menciona entre ellas el
-\emph{MAE}, \emph{MAPE}, \emph{RMSE}, \emph{MASE}, \emph{AIC},
-\emph{AICc} y el \emph{BIC}.
 
 \subsection{Los autocorrelogramas}
 
@@ -1206,6 +1323,58 @@ Para la identificación de los términos \(p\) y \(q\):
   disminuir el orden de la diferenciación en uno.
 \end{itemize}
 
+Para ejemplificar el uso de los autocorrelogramas en la identificación
+de modelos, se presenta en la figura \ref{fig:ejemplo_ucr} la serie
+cronológica expuesta por \protect\hyperlink{ref-oscarh-1}{Hernández}
+(\protect\hyperlink{ref-oscarh-1}{2011a}) de graduados de la Universidad
+de Costa Rica (UCR) para el periodo 1965-2002.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_ucr-1} \caption{Número anual de graduados de la Universidad de Costa Rica para el periodo 1965-2002}\label{fig:ejemplo_ucr}
+\end{figure}
+
+Tal y como menciona \protect\hyperlink{ref-oscarh-1}{Hernández}
+(\protect\hyperlink{ref-oscarh-1}{2011a}), la serie cronológica posee
+una clara tendencia creciente a lo largo del tiempo, lo cual sugiere que
+no se trata de una serie estacionaria. Esto se confirma al analizar las
+funciones de autocorrelación simple y parcial de la serie cronológica en
+als figuras \ref{fig:auto_ucr1} y \ref{fig:parcial:ucr1}; pues la
+función de autocorrelación no cae rápidamente a cero, sino que posee un
+descenso más pausado.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/auto_ucr1-1} \caption{Función de autocorrelación simple de la serie de graduados de la UCR}\label{fig:auto_ucr1}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/parcial_ucr1-1} \caption{Función de autocorrelación parcial de la serie de graduados de la UCR}\label{fig:parcial_ucr1}
+\end{figure}
+
+Dado que la serie mostrada no es estacionaria, es posible aplicar una
+diferenciación para hacerla cumplir esta condición, tal y como se
+muestra en la figura \ref{fig:ejemplo_ucr_diferenciada}. Al analizar la
+figura \ref{fig:auto_ucr2} se observa cómo la función de autocorrelación
+cae rápidamente a cero, lo cual confirma que se posee una serie
+estacionaria. Posteriormente, para intentar identificar el proceso que
+gobierna la serie cronológica, puede verse tal y como menciona
+\protect\hyperlink{ref-oscarh-1}{Hernández}
+(\protect\hyperlink{ref-oscarh-1}{2011a}) que hay dos barras en la
+figura \ref{fig:parcial_ucr2} y que además la función de autocorrelación
+de la figura \ref{fig:auto_ucr2} cae rápidamente hacia cero, lo cual
+sugiere que se está en presencia de un modelo autorregresivo de orden 2.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_ucr_diferenciada-1} \caption{Serie diferenciada de graduados de la Universidad de Costa Rica para el periodo 1965-2002}\label{fig:ejemplo_ucr_diferenciada}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/auto_ucr2-1} \caption{Función de autocorrelación simple de la serie diferenciada de graduados de la UCR}\label{fig:auto_ucr2}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/parcial_ucr2-1} \caption{Función de autocorrelación parcial de la serie diferenciada de graduados de la UCR}\label{fig:parcial_ucr2}
+\end{figure}
+
 Tener en consideración estos y otros posibles criterios para la
 identificación del proceso que gobierna la serie cronológica puede
 fácilmente volverse algo subjetivo, pues dos personas diferentes pueden
@@ -1217,8 +1386,6 @@ necesario considerar un abanico más amplio de opciones que a su vez
 elimine el criterio subjetivo del observador, lo cual se puede lograr al
 considerar múltiples permutaciones de términos, es decir, empleando la
 sobreparametrización.
-
-\subsection{La sobreparametrización y el análisis combinatorio}
 
 La identificación visual mediante los autocorrelogramas puede llevar a
 decisiones erradas acerca del proceso que gobierna la serie cronológica.
@@ -1242,8 +1409,8 @@ en sus medidas de ajuste y rendimiento del modelo.
 La aplicación de las series cronológicas tiene tres objetivos: 1) el
 análisis exploratorio de la serie en cuestión, 2) estimar modelos de
 proyección, y 3) generar pronósticos para los posibles valores futuros
-que tomará la serie cronológica. Asimismo, existen múltiples formas de
-proceder mediante la etapa de estimación, como lo son los métodos de
+que tomará la serie cronológica. Existen múltiples formas de proceder
+mediante la etapa de estimación, como lo son los métodos de
 suavizamiento exponencial (\protect\hyperlink{ref-brown}{Brown, 1956}),
 modelos de regresión para series temporales
 (\protect\hyperlink{ref-kedem}{Kedem \& Fokianos, 2005}), redes
@@ -1268,9 +1435,9 @@ fundamentada en las permutaciones de todos los parámetros de un modelo
 ARIMA hasta un rango determinado. Las medidas de precisión y de bondad
 de ajuste sirven de insumo para utilizar un método de consenso entre
 ellas y seleccionar el modelo más adecuado mediante la
-sobreparametrización: se comparan todos los posibles en un intervalo
-específico de términos definiendo una diferenciación adecuada para la
-serie y permutando hasta un máximo definido para los términos
+sobreparametrización: se comparan todos los posibles modelos en un
+intervalo específico de términos definiendo una diferenciación adecuada
+para la serie y permutando hasta un máximo definido para los términos
 autorregresivos y de medias móviles especificados para así seleccionar
 la especificación que ofrezca mejores resultados al momento de
 pronosticar valores futuros de la serie cronológica.
@@ -1569,7 +1736,7 @@ pronósticos se acercan más a los datos reales.
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-10}\label{tab:comparaciones}Medidas de rendimiento según método de estimación}
+\caption{\label{tab:unnamed-chunk-13}\label{tab:comparaciones}Medidas de rendimiento según método de estimación}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{5}{7}\selectfont
@@ -1730,7 +1897,7 @@ figura \ref{fig:tmiiplotpronostico}
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-13}\label{tab:tmiimedidas}Medidas de rendimiento según método de estimación para la TMII}
+\caption{\label{tab:unnamed-chunk-16}\label{tab:tmiimedidas}Medidas de rendimiento según método de estimación para la TMII}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -1839,7 +2006,7 @@ gráficamente mediante la figura \ref{fig:externasplotpronostico}
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-15}\label{tab:externasmedidas}Medidas de rendimiento según método de estimación para la Mortalidad por causa externa}
+\caption{\label{tab:unnamed-chunk-18}\label{tab:externasmedidas}Medidas de rendimiento según método de estimación para la Mortalidad por causa externa}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -1912,7 +2079,7 @@ pronósticos obtenidos son superiores utilizando la sobreparametrización.
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-17}\label{tab:incentivosmedidas}Medidas de rendimiento según método de estimación para los incentivos salariales}
+\caption{\label{tab:unnamed-chunk-20}\label{tab:incentivosmedidas}Medidas de rendimiento según método de estimación para los incentivos salariales}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -2004,7 +2171,7 @@ difieren solamente en un parámetro para la parte estacional.
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-19}\label{tab:interesesmedidas}Medidas de rendimiento según método de estimación para los intereses y comisiones del sector público}
+\caption{\label{tab:unnamed-chunk-22}\label{tab:interesesmedidas}Medidas de rendimiento según método de estimación para los intereses y comisiones del sector público}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -2412,6 +2579,16 @@ Ellis, P. (2018). \emph{ggseas: 'stats' for Seasonal Adjustment on the
 Fly with 'ggplot2'}. Recuperado de
 \url{https://CRAN.R-project.org/package=ggseas}
 
+\leavevmode\hypertarget{ref-definicion_estocastico}{}%
+Elmabrouk, O. M. (s.~f.). \emph{Measuring Reliability of Stationary
+Stochastic Processes}. Recuperado de
+\url{https://www.academia.edu/7140606/Measuring_Reliability_of_Stationary_Stochastic_Processes?auto=download}
+
+\leavevmode\hypertarget{ref-definicion_iid}{}%
+Evans, M. J., \& Rosenthal, J. S. (2005). \emph{Probabilidad y
+estadística} (p. 121). Recuperado de
+\url{https://books.google.co.cr/books?id=ZU3MEKZFgsMC}
+
 \leavevmode\hypertarget{ref-Lombardo}{}%
 Flaherty, J., \& Lombardo, R. (2000, enero). \emph{Modelling Private New
 Housing Starts in Australia}. Recuperado de
@@ -2513,6 +2690,11 @@ Recuperado de
 \leavevmode\hypertarget{ref-parallel}{}%
 R Core Team. (2019). \emph{R: A Language and Environment for Statistical
 Computing}. Recuperado de \url{https://www.R-project.org/}
+
+\leavevmode\hypertarget{ref-introduccion_series}{}%
+Ramírez, F. (2007). \emph{Introducción a las series de tiempo. Métodos
+paramétricos}. Recuperado de
+\url{https://books.google.es/books?id=KvLhxFPwvsUC}
 
 \leavevmode\hypertarget{ref-tsa_decision_making}{}%
 Rezaee, Z., Aliabadi, S., Dorestani, A., \& Rezaee, N. J. (2020).
