@@ -187,44 +187,56 @@ op.arima <- function(arima_process = c(p = 1, d = 1, q = 1,
 \subsection{Función de simulación de series cronológicas}
 
 ```{r, ref="simula_series", codecap = "Función ts.sim", echo=TRUE, eval=FALSE}
-ts.sim <- function(data, n, temporalidad, 
-                            no.estacional, estacional=c(0,0,0), 
-                            p=NULL, q=NULL, P=NULL, Q=NULL){
-  
-  require(forecast)
-  tryCatch({
-      coeficientes <- list(p, q, P, Q)
-      coeficientes.simulados <- lapply(c(no.estacional[c(1,3)], 
-                                         estacional[c(1,3)]), 
-                                       function(x) sample(seq(-1,1,.1), x))
-      
-    pos <- which(sapply(coeficientes, is.null)==TRUE)
-    pos2 <- which(sapply(coeficientes.simulados, length)>0)
-    
-    coeficientes[pos] <- coeficientes.simulados[pos]
-    
-    names(coeficientes) <- c("p", "q", "P", "Q")
-    coeficientes <- coeficientes[pos2]
-    
-    if(TRUE %in% (c("P", "Q") %in% names(coeficientes))){
-        modelo <- Arima(ts(data=data, freq=temporalidad), 
-                    order = no.estacional, 
+ts.sim <- function(data,
+                   n,
+                   temporalidad,
+                   no.estacional,
+                   estacional = c(0, 0, 0),
+                   p = NULL,
+                   q = NULL,
+                   P = NULL,
+                   Q = NULL) {
+    require(forecast)
+    tryCatch({
+        coeficientes <- list(p, q, P, Q)
+        coeficientes.simulados <- lapply(c(no.estacional[c(1, 3)],
+                                           estacional[c(1, 3)]),
+                                         function(x)
+                                             sample(seq(-1, 1, .1), x))
+        
+        pos <- which(sapply(coeficientes, is.null) == TRUE)
+        pos2 <- which(sapply(coeficientes.simulados, length) > 0)
+        
+        coeficientes[pos] <- coeficientes.simulados[pos]
+        
+        names(coeficientes) <- c("p", "q", "P", "Q")
+        coeficientes <- coeficientes[pos2]
+        
+        if (TRUE %in% (c("P", "Q") %in% names(coeficientes))) {
+            modelo <- Arima(
+                ts(data = data, freq = temporalidad),
+                order = no.estacional,
+                seasonal = estacional,
+                fixed = c(unlist(coeficientes))
+            )
+        } else
+            ({
+                modelo <- Arima(
+                    ts(data = data, freq = temporalidad),
+                    order = no.estacional,
                     seasonal = estacional,
-                    fixed=c(unlist(coeficientes)))
-    }else({
-        modelo <- Arima(ts(data=data, freq=temporalidad), 
-                    order = no.estacional, 
-                    seasonal = estacional,
-                    fixed=c(unlist(coeficientes), NA))
-    })
-    
-    datos <- simulate(modelo, nsim=(n+length(data)))
-    
-    datos <- subset(datos, start=length(data)+1)
-    list(modelo=modelo, datos=datos)}, 
-    error = function(e) ts.sim(data, n, temporalidad,
-                                        no.estacional, estacional, 
-                                        p, q, P, Q))
+                    fixed = c(unlist(coeficientes), NA)
+                )
+            })
+        
+        datos <- simulate(modelo, nsim=(n+length(data)))
+        
+        datos <- subset(datos, start=length(data)+1)
+        list(modelo=modelo, datos=datos)},
+        error = function(e)
+            ts.sim(data, n, temporalidad,
+                   no.estacional, estacional,
+                   p, q, P, Q))
 }
 ```
 

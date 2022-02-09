@@ -1,18 +1,53 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
 ]{article}
+\title{UNIVERSIDAD DE COSTA RICA\\
+SISTEMA DE ESTUDIOS DE POSGRADO\\
+\strut \\
+\strut \\
+\strut \\}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{LA SOBREPARAMETRIZACIÓN EN EL ARIMA: UNA APLICACIÓN A DATOS
+COSTARRICENCES\\
+\strut \\
+\strut \\
+\strut \\
+\strut \\
+Tesis sometida a la consideración de la Comisión del Programa de
+Estudios de Posgrado en Estadística para optar por el grado y título de
+Maestría Académica en Estadística}
+\author{\hfill\break
+\hfill\break
+\hfill\break
+\hfill\break
+\hfill\break
+CÉSAR ANDRÉS GAMBOA SANABRIA B12672\\
+\strut \\
+\strut \\
+\strut \\
+\strut \\
+\strut \\
+Ciudad Universitaria Rodrigo Facio, Costa Rica\\
+\strut \\
+\strut \\}
+\date{2022}
+
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -39,10 +74,10 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   colorlinks=true,
-  linkcolor=blue,
-  filecolor=Maroon,
-  citecolor=Blue,
-  urlcolor=blue,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
@@ -103,6 +138,29 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 
 %\usepackage{fancyhdr}
@@ -260,65 +318,9 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
-  % set entry spacing
-  \ifnum #2 > 0
-  \setlength{\parskip}{#2\baselineskip}
-  \fi
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-
-\title{UNIVERSIDAD DE COSTA RICA\\
-SISTEMA DE ESTUDIOS DE POSGRADO\\
-~\\
-~\\
-~\\}
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
-\subtitle{LA SOBREPARAMETRIZACIÓN EN EL ARIMA: UNA APLICACIÓN A DATOS
-COSTARRICENCES\\
-~\\
-~\\
-~\\
-~\\
-Tesis sometida a la consideración de la Comisión del Programa de
-Estudios de Posgrado en Estadística para optar por el grado y título de
-Maestría Académica en Estadística}
-\author{\hfill\break
-\hfill\break
-\hfill\break
-\hfill\break
-\hfill\break
-CÉSAR ANDRÉS GAMBOA SANABRIA B12672\\
-~\\
-~\\
-~\\
-~\\
-~\\
-Ciudad Universitaria Rodrigo Facio, Costa Rica\\
-~\\
-~\\}
-\date{2021}
 
 \begin{document}
 \maketitle
@@ -418,7 +420,7 @@ diferentes áreas, tanto en investigación académica como en el análisis
 de datos para la toma de decisiones. En el campo financiero es común
 hablar de la devaluación del colón con respecto al dólar, cantidad de
 exportaciones mensuales de un determinado producto o las ventas, entre
-otros (\protect\hyperlink{ref-oscarh-1}{Hernández, 2011a}). Las series
+otros (\protect\hyperlink{ref-oscarh-1}{Hernández, 2011}). Las series
 cronológicas son particularmente importantes en la investigación de
 mercados o en las proyecciones demográficas; de manera conjunta apoyan
 la toma de decisiones para la aprobación presupuestaria en distintas
@@ -542,8 +544,9 @@ series temporales en una librería del lenguaje estadístico R.
 
 \subsection{Justificación del estudio}
 
-El accionar de políticas gubernamentales, así como de otro tipo de
-sectores, se apoyan cada vez más en un acertado análisis de la
+El uso correcto de las series temporales se puede apreciar en distintos
+contextos. El accionar de políticas gubernamentales, así como de otro
+tipo de sectores, se apoyan cada vez más en un acertado análisis de la
 información temporal. En demografía, uno de los principales temas de
 investigación son las proyecciones de población; durante una emergencia,
 conocer la posible cantidad de población que habita una zona es clave
@@ -616,9 +619,9 @@ algunas recomendaciones que orienten futuros estudios relacionados.
 
 \section{MARCO TEÓRICO}
 
-Los modelos de series cronológicas han sido un importante tema de
-investigación durante décadas (\protect\hyperlink{ref-tsa_decades}{De
-Gooijer \& Hyndman, 2006}). Su objetivo principal consiste en obtener
+Las series cronológicas han sido un importante tema de investigación
+durante décadas (\protect\hyperlink{ref-tsa_decades}{De Gooijer \&
+Hyndman, 2006}). Su objetivo principal consiste en obtener
 simplificaciones de la realidad mediante el ajuste de diversos modelos,
 los cuales se ajustan a datos recolectados a lo largo del tiempo de
 forma periódica.
@@ -634,18 +637,67 @@ Dorestani, \& Rezaee, 2020}).
 Una serie temporal se define como una secuencia de datos observados,
 cuyas mediciones ocurren de manera sucesiva durante un periodo de
 tiempo. Los registros de estos datos pueden referirse a una única
-variable en cuyo caso de dice que es una serie univariada; o bien,
-pueden registrarse distintas variables para el mismo periodo de tiempo,
-conocida como serie temporal multivariada. Según
+variable en cuyo caso de dice que es una serie univariada. Según
 \protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
 (\protect\hyperlink{ref-Hipel}{1994}), cada observación puede ser
 continua o discreta, como la temperatura de una ciudad durante el día o
 las variaciones diarias del precio de un activo financiero,
 respectivamente; las observaciones continuas, además, pueden ser
-convertidas a su vez en observaciones discretas.
+convertidas a su vez en observaciones discretas. De esta manera, una
+serie de tiempo puede considerarse una muestra aleatoria, pues para un
+determinado tiempo \(t\), que se considera el momento actual, la serie
+tiene tres momentos: el pasado, que son los rezagos denotados como
+\(Y_{t-1}, Y_{t-2}, \cdots, Y_{t-k}\), el momento presente, denotado
+como \(Y_t\), y los pronósticos, denotados como
+\(Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}\); así, una serie temporal
+univariada, con lapsos equidistantes entre los tiempos, puede
+representarse como
+\(Y_{t-k}, \cdots, Y_{t-2}, Y_{t-1}, Y_t, Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}\).
 
-El presente capítulo consta de seis apartados. El primer apartado abarca
-los cuatro componentes de una serie cronológica. Posteriormente, la
+A partir de lo anterior, la serie cronológica se compone de dos partes:
+la estocástica, que contiene una parte conocida (sistemática) y
+susceptible de predecir y de una parte totalmente desconocida o
+aleatoria; y una parte determinística, que representa una ecuación
+matemática sin error, dado que no posee más que ese componente
+determinístico, se trata de una variable que está determinada o fija y
+que no cambia de una muestra a otra. De esta manera, puede concluirse
+que una serie cronológica cuenta con dos características fundamentales:
+Los valores se encuentran ordenados cronológicamente y, además, existe
+una dependencia o correlación entre los valores de dicha serie de
+tiempo; de no presentarse estas dos condiciones, no se estaría en
+presencia de una serie cronológica. Así, puede decirse que las series de
+tiempo se enfocan en tres grandes objetivos que serán detallados en
+secciones posteriores: la descripción de la serie, la adecuación de un
+modelo o técnica estocástica, y el pronóstico para hasta un horizonte
+\(h\) determinado; el análisis de la serie debe preguntarse sobre el
+tipo de serie que se está analizando, el tipo de datos y el periodo de
+referencia utilizado para ajustar el modelo que servirá para realizar
+los pronósticos.
+
+Existen múltiples formas de proceder mediante la etapa de estimación,
+como lo son los métodos de suavizamiento exponencial
+(\protect\hyperlink{ref-brown}{Brown, 1956}), modelos de regresión para
+series temporales (\protect\hyperlink{ref-kedem}{Kedem \& Fokianos,
+2005}), redes neuronales secuenciales aplicadas a datos longitudinales
+(\protect\hyperlink{ref-redes}{Tadayon \& Iwashita, 2020}), estimaciones
+bayesianas (\protect\hyperlink{ref-bayes}{Jammalamadaka, Qiu, \& Ning,
+2018}), y finalmente, los procesos Autorregresivos Integrados de Medias
+Móviles o ARIMA por sus siglas en inglés
+(\protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \& Reinsel, 1994}),
+siendo estos últimos el foco de interés en este estudio. Los modelos
+ARIMA se enfocan en considerar las relaciones pasadas de un serie
+cronológica asociando los datos de las correlaciones totales y
+parciales. La forma de abordar una serie de tiempo utilizando los
+modelos ARIMA consiste, de forma muy general, en hacer una descripción
+de la serie para corroborar que se trate de una serie estacionaria y, de
+no serlo, someterla a procesos matemáticos para asegurar esta condición.
+Posteriormente, se realiza una identificación del posible proceso que
+gobierna la serie cronológica para luego estimar el modelo del orden
+seleccionado, sometiendo este a diversas pruebas de bondad de ajuste y
+rendimiento para finalmente verificar la calidad de los pronósticos
+obtenidos. El sustento teórico de cada una de estas será discutido a lo
+largo de este capítulo, que se compone de seis apartados. El primer
+apartado abarca los cuatro componentes de una serie cronológica. La
 segunda sección repasa los supuestos fundamentales en el análisis de
 series cronológicas. Con los elementos más básicos introducidos, el
 tercer apartado cubre el eje central de esta investigación: Los modelos
@@ -657,7 +709,7 @@ identificación de los modelos. El quinto apartado abarca los componentes
 relacionados a los autocorrelogramas, la forma más difundida para la
 selección de modelos y, finalmente, el sexto apartado introduce el
 principal aporte de este estudio, la sobreparametrización como método
-para la selección de modelos.
+selección de casos.
 
 \subsection{Componentes de una serie cronológica}
 
@@ -665,8 +717,8 @@ En el análisis de series cronológicas existen dos grandes corrientes de
 estudio: Los componentes inherentes a la serie cronológica y el estudio
 de las autocorrelaciones. Según el primer enfoque, de acuerdo con
 \protect\hyperlink{ref-oscarh-1}{Hernández}
-(\protect\hyperlink{ref-oscarh-1}{2011a}), las series cronológicas
-poseen tres componentes principales: Tendencia-ciclos, Estacionalidad e
+(\protect\hyperlink{ref-oscarh-1}{2011}), las series cronológicas poseen
+tres componentes principales: Tendencia-ciclos, Estacionalidad e
 Irregularidad. Considerando estos tres elementos, las series
 cronológicas pueden ser \emph{aditivas}, como se muestra en la ecuación
 \ref{eqn:serie_aditiva}, en cuyo caso se asume que los tres componentes
@@ -709,10 +761,26 @@ A partir del texto de
 (\protect\hyperlink{ref-calderon2012estadistica}{2012}), la tendencia
 general de una serie cronológica se refiere al crecimiento,
 decrecimiento o lateralización de sus movimientos a lo largo del periodo
-de estudio. Un ejemplo es la serie cronológica del número de matrimonios
-en Costa Rica para el periodo 1978-1983, que con el tiempo su
-crecimiento suele comportarse de una forma creciente tal y como muestra
-la figura \ref{fig:ejemplo_tendencia}.
+de estudio. La descomposición clásica de la tendencia-ciclo de este
+componente se mantiene constante de un periodo al siguiente y se obtiene
+a partir de una media móvil de \(m\) periodos
+\(\left(\bar y_{m}\right)\). De esta manera la forma matemática de la
+tendencia-ciclo para una serie cronológica se muestra en la ecuación
+\ref{eqn:descomposicion_tendencia}.
+
+\begin{equation}
+\label{eqn:descomposicion_tendencia}
+T(t)=
+\begin{cases}
+2\bar y_{m}, & \text{si}\ \text{m es par} \\
+\bar y_{m}, & \text{si}\ \text{m es impar} \\
+\end{cases}
+\end{equation}
+
+Un ejemplo es la serie cronológica del número de matrimonios en Costa
+Rica para el periodo 1978-1983, que con el tiempo su crecimiento suele
+comportarse de una forma creciente tal y como muestra la figura
+\ref{fig:ejemplo_tendencia}.
 
 \begin{figure}[!h]
 \includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_tendencia-1} \caption{Tendencia del número de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_tendencia}
@@ -739,22 +807,6 @@ del año 2009 (segunda línea azul punteada).
 \begin{figure}[!h]
 \includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_ciclo-1} \caption{Índice bursatil NASDAQ-100 para el periodo enero 1990 - junio 2021}\label{fig:ejemplo_ciclo}
 \end{figure}
-
-La descomposición clásica de la tendencia-ciclo que este componente se
-mantiene constante de un periodo al siguiente y se obtiene a partir de
-una media móvil de \(m\) periodos \(\left(\bar y_{m}\right)\). De esta
-manera la forma matemática de la tendencia-ciclo para una serie
-cronológica se muestra en la ecuación
-\ref{eqn:descomposicion_tendencia}.
-
-\begin{equation}
-\label{eqn:descomposicion_tendencia}
-T(t)=
-\begin{cases}
-2\bar y_{m}, & \text{si}\ \text{m es par} \\
-\bar y_{m}, & \text{si}\ \text{m es impar} \\
-\end{cases}
-\end{equation}
 
 \subsubsection{Componentes estacionales}
 
@@ -783,7 +835,12 @@ y_k = y_t - \bar{y}_{mc_t} \\
 \end{equation}
 
 donde \(m\) representa la cantidad de periodos y \(s\) la frecuencia
-estacional.
+estacional. Gráficamente, el componente estacional se muestra en la
+figura \ref{fig:ejemplo_estacional}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_estacional-1} \caption{Componente aleatorio de la serie de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_estacional}
+\end{figure}
 
 \subsubsection{Componente irregular}
 
@@ -795,6 +852,8 @@ Estos cambios no se dan de manera regular, es decir, no siguen un patrón
 determinado. Matemáticamente su descomposición se obtiene a partir de
 los otros componentes así como de la propia serie cronológica \(y(t)\),
 tal y como se muestra en la ecuación \ref{eqn:descomposicion_irregular}.
+Visualmente, la magnitud del componente aleatorio se muestra en la
+figura \ref{fig:ejemplo_aleatorio}
 
 \begin{equation}
 \label{eqn:descomposicion_irregular}
@@ -804,6 +863,10 @@ y(t)-T(t)-S(t), & \text{si}\ \text{la serie es aditiva} \\
 \frac{y(t)}{T(t)S(t)} , & \text{si}\ \text{la serie es multiplicativa} \\
 \end{cases}
 \end{equation}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_aleatorio-1} \caption{Componente aleatorio de la serie de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_aleatorio}
+\end{figure}
 
 \subsection{Supuestos en el análisis de series cronológicas}
 
@@ -957,16 +1020,13 @@ cronológica. Al conjunto de todas las autocorrelaciones se le llama
 función de autocorrelación.
 
 La función de autocorrelación parcial\footnote{\emph{PACF} por sus
-  siglas en inglés}, como menciona
-\protect\hyperlink{ref-oscarh-4}{Hernández}
-(\protect\hyperlink{ref-oscarh-4}{2011b}), busca medir la asociación
-lineal entre las observaciones \(Y_t\) y \(Y_{t-k}\), es decir, la
-correlación entres dos observaciones distintas separadas por \(k\)
-periodos, descartando los efectos de los rezagos \(1,2, \cdots ,k-1\);
-esta correlación puede obtenerse a partir de la ecuación
-\ref{eqn:pearson}, que al adaptarse a dos observaciones de la misma
-serie cronológica se obtiene el resultado de ecuación
-\ref{eqn:pearson_adaptada_autocorrelacion}.
+  siglas en inglés}, busca medir la asociación lineal entre las
+observaciones \(Y_t\) y \(Y_{t-k}\), es decir, la correlación entres dos
+observaciones distintas separadas por \(k\) periodos, descartando los
+efectos de los rezagos \(1,2, \cdots ,k-1\); esta correlación puede
+obtenerse a partir de la ecuación \ref{eqn:pearson}, que al adaptarse a
+dos observaciones de la misma serie cronológica se obtiene el resultado
+de ecuación \ref{eqn:pearson_adaptada_autocorrelacion}.
 
 \begin{equation}
 \label{eqn:pearson_adaptada_autocorrelacion}
@@ -1042,12 +1102,11 @@ de rendimiento, \protect\hyperlink{ref-medidas}{Adhikari, K, \& Agrawal}
 Hay dos grandes grupos de modelos lineales de series cronológicas: Los
 modelos Autorregresivos (AR) (\protect\hyperlink{ref-Lee}{Lee, s.~f.}) y
 los modelos de Medias Móviles (MA)
-(\protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \& Reinsel, 1994}).
-La combinación de estos dos grandes grupos forman los Modelos
-Autorregresivos de Medias Móviles (ARMA)
-(\protect\hyperlink{ref-Hipel}{Hipel \& McLeod, 1994}) y los modelos
-Autorregresivos Integrados de Medias Móviles (ARIMA), siendo este último
-de particular interés en esta investigación.
+(\protect\hyperlink{ref-box-jenkins}{Box et~al., 1994}). La combinación
+de estos dos grandes grupos forman los Modelos Autorregresivos de Medias
+Móviles (ARMA) (\protect\hyperlink{ref-Hipel}{Hipel \& McLeod, 1994}) y
+los modelos Autorregresivos Integrados de Medias Móviles (ARIMA), siendo
+este último de particular interés en esta investigación.
 
 Los modelos ARIMA son los de uso más extendido en el análisis de series
 cronológicas. Se fundamentan en las autocorrelaciones pasadas, y
@@ -1133,10 +1192,10 @@ previsión asociado está dado por:
 x_{T+h}- \hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-h+1}
 \end{equation}
 
-De esta manera, la ecuación de Wold se convierte en una herramienta
-general para representar a una serie cronológica que está gobernada por
-un determinado proceso, y que al no ser conocido, resulta necesario
-contar con una herramienta para su aproximación.
+De esta manera, la ecuación de Wold se convierte en una representación
+base para representar a una serie cronológica que está gobernada por un
+determinado proceso, y que al no ser conocido, resulta necesario contar
+con una herramienta para su aproximación.
 
 \subsubsection{Metodología Box-Jenkins}
 
@@ -1171,7 +1230,7 @@ ciertos patrones estacionales y, además, como menciona
 estacionarios por naturaleza. Esta condición hace necesaria la
 introducción de una generalización de los modelos \(ARMA\), la cual se
 conoce como los modelos \(ARIMA\)
-(\protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \& Reinsel, 1994}).
+(\protect\hyperlink{ref-box-jenkins}{Box et~al., 1994}).
 
 \subsubsection{Modelos Autorregresivos}
 
@@ -1243,8 +1302,8 @@ suele ser suficiente. Así, un \(ARIMA(p,0,0)=AR(p)\),
 \(ARIMA(0,0,q)=MA(q)\), y un \(ARIMA(0,1,0)=y_t=y_{t-1}+\varepsilon_t\),
 es decir, un modelo de caminata aleatoria.
 
-Como sugieren \protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \&
-Reinsel} (\protect\hyperlink{ref-box-jenkins}{1994}), lo anterior puede
+Como sugieren \protect\hyperlink{ref-box-jenkins}{Box et~al.}
+(\protect\hyperlink{ref-box-jenkins}{1994}), lo anterior puede
 generalizarse aún más al considerar los efectos estacionales de la serie
 cronológica. Si se considera una serie cronológica con observaciones
 mensuales, una diferenciación de primer orden es igual a la diferencia
@@ -1253,20 +1312,20 @@ del año anterior; es decir, si el periodo estacional es de \(s=12\)
 meses, entonces esta diferencia estacional aplicada a un
 \(ARIMA(p,d,q)(P,D,Q)_S\) es calculada mediante \(z_t=y_t-y_{t-s}\).
 
-De esta manera, el método de \protect\hyperlink{ref-box-jenkins}{Box,
-Jenkins, \& Reinsel} (\protect\hyperlink{ref-box-jenkins}{1994}) inicia
-con el análisis exploratorio de la serie cronológica, teniendo un
-interés particular en identificar si hay presencia de factores no
-estacionarios en la misma. Si en efecto se cuenta con una serie no
-estacionaria, ésta debe volverse estacionaria mediante algún tipo de
-transformación, típicamente el logaritmo natural. Con la serie ya
-transformada, se busca identificar el proceso que gobierna la serie. La
-forma clásica de hacer esto es mediante los gráficos de autocorrelación
-y autocorrelación parcial. Cuando se logra identificar un proceso que se
-adecue más a la serie cronológica, se deben realizar los diagnósticos
-para evaluar la calidad del ajuste del modelo, así como las medidas de
-rendimiento referentes a los pronósticos que genera el modelo estimado
-hasta un horizonte determinado.
+De esta manera, el método de \protect\hyperlink{ref-box-jenkins}{Box
+et~al.} (\protect\hyperlink{ref-box-jenkins}{1994}) inicia con el
+análisis exploratorio de la serie cronológica, teniendo un interés
+particular en identificar si hay presencia de factores no estacionarios
+en la misma. Si en efecto se cuenta con una serie no estacionaria, ésta
+debe volverse estacionaria mediante algún tipo de transformación,
+típicamente el logaritmo natural. Con la serie ya transformada, se busca
+identificar el proceso que gobierna la serie. La forma clásica de hacer
+esto es mediante los gráficos de autocorrelación y autocorrelación
+parcial. Cuando se logra identificar un proceso que se adecue más a la
+serie cronológica, se deben realizar los diagnósticos para evaluar la
+calidad del ajuste del modelo, así como las medidas de rendimiento
+referentes a los pronósticos que genera el modelo estimado hasta un
+horizonte determinado.
 
 \subsection{Los autocorrelogramas}
 
@@ -1326,19 +1385,18 @@ Para la identificación de los términos \(p\) y \(q\):
 Para ejemplificar el uso de los autocorrelogramas en la identificación
 de modelos, se presenta en la figura \ref{fig:ejemplo_ucr} la serie
 cronológica expuesta por \protect\hyperlink{ref-oscarh-1}{Hernández}
-(\protect\hyperlink{ref-oscarh-1}{2011a}) de graduados de la Universidad
+(\protect\hyperlink{ref-oscarh-1}{2011}) de graduados de la Universidad
 de Costa Rica (UCR) para el periodo 1965-2002.
 
 \begin{figure}[!h]
 \includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/ejemplo_ucr-1} \caption{Número anual de graduados de la Universidad de Costa Rica para el periodo 1965-2002}\label{fig:ejemplo_ucr}
 \end{figure}
 
-Tal y como menciona \protect\hyperlink{ref-oscarh-1}{Hernández}
-(\protect\hyperlink{ref-oscarh-1}{2011a}), la serie cronológica posee
-una clara tendencia creciente a lo largo del tiempo, lo cual sugiere que
-no se trata de una serie estacionaria. Esto se confirma al analizar las
+Tal y como menciona el autor, la serie cronológica posee una clara
+tendencia creciente a lo largo del tiempo, lo cual sugiere que no se
+trata de una serie estacionaria. Esto se confirma al analizar las
 funciones de autocorrelación simple y parcial de la serie cronológica en
-als figuras \ref{fig:auto_ucr1} y \ref{fig:parcial:ucr1}; pues la
+als figuras \ref{fig:auto_ucr1} y \ref{fig:parcial_ucr1}; pues la
 función de autocorrelación no cae rápidamente a cero, sino que posee un
 descenso más pausado.
 
@@ -1356,9 +1414,7 @@ muestra en la figura \ref{fig:ejemplo_ucr_diferenciada}. Al analizar la
 figura \ref{fig:auto_ucr2} se observa cómo la función de autocorrelación
 cae rápidamente a cero, lo cual confirma que se posee una serie
 estacionaria. Posteriormente, para intentar identificar el proceso que
-gobierna la serie cronológica, puede verse tal y como menciona
-\protect\hyperlink{ref-oscarh-1}{Hernández}
-(\protect\hyperlink{ref-oscarh-1}{2011a}) que hay dos barras en la
+gobierna la serie cronológica, puede verse que hay dos barras en la
 figura \ref{fig:parcial_ucr2} y que además la función de autocorrelación
 de la figura \ref{fig:auto_ucr2} cae rápidamente hacia cero, lo cual
 sugiere que se está en presencia de un modelo autorregresivo de orden 2.
@@ -1377,15 +1433,17 @@ sugiere que se está en presencia de un modelo autorregresivo de orden 2.
 
 Tener en consideración estos y otros posibles criterios para la
 identificación del proceso que gobierna la serie cronológica puede
-fácilmente volverse algo subjetivo, pues dos personas diferentes pueden
+fácilmente volverse subjetivo, pues dos personas diferentes pueden
 llegar a dar distintas interpretaciones a las visualizaciones de los
 autocorrelogramas. Estas interpretaciones pueden sesgar la
 identificación de los modelos y, además, no considerar otros escenarios
 para los términos de un modelo \(ARIMA\); para solventar esto es
 necesario considerar un abanico más amplio de opciones que a su vez
 elimine el criterio subjetivo del observador, lo cual se puede lograr al
-considerar múltiples permutaciones de términos, es decir, empleando la
-sobreparametrización.
+considerar múltiples permutaciones de términos para contrastar una gran
+cantidad de modelos, es decir, utilizar la sobreparametrización.
+
+\subsection{La sobreparametrización y el análisis combinatorio}
 
 La identificación visual mediante los autocorrelogramas puede llevar a
 decisiones erradas acerca del proceso que gobierna la serie cronológica.
@@ -1400,7 +1458,66 @@ cantidad de observaciones y del rango con que se trabajen los
 coeficientes, la comparación de los modelos puede volverse muy extensa y
 complicada, razón por la cual resulta imperativo generar un
 procedimiento sistemático que logre seleccionar el mejor modelo con base
-en sus medidas de ajuste y rendimiento del modelo.
+en sus medidas de ajuste y rendimiento.
+
+Es aquí donde entra en escena el análisis combinatorio, pues a partir de
+sus procedimientos es posible conocer la cantidad de modelos que deben
+ser probados. Resulta pertinente discutir dos principios fundamentales
+del análisis combinatorio mencionados por
+\protect\hyperlink{ref-analisis_combinatorio}{Hernández}
+(\protect\hyperlink{ref-analisis_combinatorio}{2008}): Uno es el
+principio de adición, el cual indica que si se tienen dos procedimientos
+\(A\) y \(B\), los cuales pueden realizarse de \(k_A\) y \(K_B\)
+maneras, respectivamente, entonces la cantidad de maneras que se puede
+realizar uno u otro procedimiento es \(k_A + k_B\). Por otro lado se
+tiene el principio de multiplicación, con el cual, si si el
+procedimiento \(A\) se puede realizar de \(k_A\) formas distintas,
+seguido de otro procedimiento \(B\) que puede realizarse de \(k_B\)
+formas, entonces si a cada forma de realizar el procedimiento \(A\) se
+puede asociar a cualquiera de las \(k_B\) maneras de realizar el
+procedimiento \(B\), entonces ambos procedimientos pueden realizarse de
+\(k_A \cdot k_B\) formas distintas.
+
+Es a partir de estos dos principios que pueden obtenerse la cantidad de
+formas distintas que pueden ordenarse \(m\) elementos tomando \(r\)
+elementos a la vez. Uno de ellos son las permutaciones, descritos en la
+ecuación \ref{eqn:permutacion}, la cual describe la forma de calcular la
+cantidad de formas distintas que puede ordenarse \(m\) elementos tomando
+\(r\) a la vez, donde el orden sí importa, a modo de ejemplo, si se
+quiere saber la cantidad formas que pueden ordenarse las letras \(A, B\)
+y \(C\) tomando dos letras a la vez, se tendría que existen
+\(\frac{3!}{(3-1)!}=6\) formas distintas, que son \(AB, AC, BC, BA, CA\)
+y \(CB\). De manera similar, se tienen las combinaciones, cuya fórmula
+se describe en la ecuación \ref{eqn:combinacion}, que brinda la cantidad
+de maneras distintas en que pueden ordenarse \(m\) elementos tomando
+\(r\) a la vez donde el orden no importa; es decir, si se desean ordenar
+las letras \(A, B\) y \(C\) tomando dos a la vez, se tendrían
+\(\frac{3!}{2!(3-1)!}=3\) formas distintas, las cuales son \(AB, AC\) y
+\(BC\).
+
+\begin{equation}
+\label{eqn:permutacion}
+_mP_r=\frac{m!}{(m-r)!}
+\end{equation}
+
+\begin{equation}
+\label{eqn:combinacion}
+_mC_r=\frac{m!}{r!(m-r)!}
+\end{equation}
+
+Es a partir de esto que la sobreparametrización se utiliza en conjunto
+con el análisis combinatorio y en particular con el método de
+permutaciones, pues el orden de la cantidad de coeficientes a estimar en
+un modelo \(ARIMA(p,d,q)\) sí importa, debido a que no es lo mismo
+estimar un modelo \(ARIMA(2,1,3)\) que un modelo \(ARIMA(3,1,2)\). En
+las elección de modelos ARIMA normalmente los métodos tradicionales como
+los correlogramas u otros, no suelen abarcar un espectro más amplio de
+coeficientes, y esto podría representar un método de estimación que no
+es el mejor, por esto, la presente tesis propone una metodología que
+mezcla la sobreparametrización con las permutaciones con el objetivo de
+lograr estimar el mejor modelo \(ARIMA\) de una amplia cantidad de
+posibles candidatos para conseguir pronósticos más precisos en
+comparación a los métodos tradicionales.
 
 \newpage
 
@@ -1409,38 +1526,407 @@ en sus medidas de ajuste y rendimiento del modelo.
 La aplicación de las series cronológicas tiene tres objetivos: 1) el
 análisis exploratorio de la serie en cuestión, 2) estimar modelos de
 proyección, y 3) generar pronósticos para los posibles valores futuros
-que tomará la serie cronológica. Existen múltiples formas de proceder
-mediante la etapa de estimación, como lo son los métodos de
-suavizamiento exponencial (\protect\hyperlink{ref-brown}{Brown, 1956}),
-modelos de regresión para series temporales
-(\protect\hyperlink{ref-kedem}{Kedem \& Fokianos, 2005}), redes
-neuronales secuenciales aplicadas a datos longitudinales
-(\protect\hyperlink{ref-redes}{Tadayon \& Iwashita, 2020}), estimaciones
-bayesianas (\protect\hyperlink{ref-bayes}{Jammalamadaka, Qiu, \& Ning,
-2018}), y finalmente, los procesos Autorregresivos Integrados de Medias
-Móviles o ARIMA por sus siglas en inglés
-(\protect\hyperlink{ref-box-jenkins}{Box, Jenkins, \& Reinsel, 1994}),
-siendo estos últimos el foco de interés en este estudio.
+que tomará la serie cronológica.
 
 Esta sección aborda la metodología propuesta como método de estimación y
 pronóstico de series cronológicas. En la búsqueda de un modelo adecuado
-de entre varios candidatos, se cubren en un primer apartado las medidas
-de bondad de ajuste y de precisión a utilizar.
+de entre varios candidatos, se cubren en un primer apartado los
+materiales a utilizar, así como los métodos, incluyendo el proceso de
+estimación, el procedimiento de simulación empleado para la verificación
+del método propuesto, y las medidas de bondad de ajuste y de precisión a
+utilizar. Se describe en detalle el uso de la sobreparametrización como
+herramienta para la generación de pronósticos de series cronológicas con
+temporalidades mensuales, bimensuales, trimestrales, cuatrimestrales o
+anuales mediante un proceso de selección fundamentada en las
+permutaciones de todos los parámetros de un modelo ARIMA hasta un rango
+determinado. Las medidas de precisión y de bondad de ajuste sirven de
+insumo para utilizar un método de consenso entre ellas y seleccionar el
+modelo más adecuado mediante la sobreparametrización: se comparan todos
+los posibles modelos en un intervalo específico de términos definiendo
+una diferenciación adecuada para la serie y permutando hasta un máximo
+definido para los términos autorregresivos y de medias móviles
+especificados para así seleccionar la especificación que ofrezca mejores
+resultados al momento de pronosticar valores futuros de la serie
+cronológica.
 
-El segundo apartado describe en detalle el uso de la
-sobreparametrización como herramienta para la generación de pronósticos
-de series cronológicas con temporalidades mensuales, bimensuales,
-trimestrales, cuatrimestrales o anuales mediante un proceso de selección
-fundamentada en las permutaciones de todos los parámetros de un modelo
-ARIMA hasta un rango determinado. Las medidas de precisión y de bondad
-de ajuste sirven de insumo para utilizar un método de consenso entre
-ellas y seleccionar el modelo más adecuado mediante la
-sobreparametrización: se comparan todos los posibles modelos en un
-intervalo específico de términos definiendo una diferenciación adecuada
-para la serie y permutando hasta un máximo definido para los términos
-autorregresivos y de medias móviles especificados para así seleccionar
-la especificación que ofrezca mejores resultados al momento de
-pronosticar valores futuros de la serie cronológica.
+\subsection{Materiales}
+
+Se describen a continuación las series cronológicas reales que servirán
+de insumo para poner a prueba el método propuesto.
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+La Tasa de Mortalidad Infantil (TMI) es uno de los indicadores
+demográficos más importantes, pues es utilizado como un parámetro de
+referencia sobre la calidad del sistema de salud, tanto a nivel nacional
+como regional. Si bien este indicador se construye relacionando las
+defunciones de menores de un año con el total de nacimientos, también
+involucra de manera implícita otras condiciones tales como las
+económicas, sociales y culturales, así como la efectividad en los
+métodos preventivos y curativos de esta categoría poblacional
+(\protect\hyperlink{ref-leon}{León, 1998}). Debido a esto, el
+fallecimiento de un niño menor de un año se traduce en una falla del
+sistema de salud, por lo que estos casos son sujetos de estudio con el
+fin de conocer las causas que desencadenaron el evento.
+
+En algunos países en vías de desarrollo de Asia, África y América
+Latina, la mortalidad infantil alcanza valores elevados pues la
+desnutrición, ausencia de asistencia médica y mala calidad de las
+condiciones sanitarias son, a diferencia de los países más
+desarrollados, algo muy común (\protect\hyperlink{ref-donoso}{Donoso,
+2004}). En el caso de Costa Rica, la unidad de estadísticas demográficas
+del Instituto Nacional de Estadística y Censos\footnote{\url{http://www.inec.go.cr/}}
+(INEC) es el ente encargado de reportar este indicador con el fin de dar
+seguimiento y control al comportamiento del mismo a lo largo del tiempo
+con el objetivo de llegar a los niveles más bajos posibles.
+
+En el INEC, cada mes se publica el boletín de la TMI interanual (TMII),
+que analiza la TMI de un mes y los 11 meses previos para comparar los
+periodos correspondientes (\protect\hyperlink{ref-infantiles}{INEC,
+2004}). Este apartado busca hacer un análisis de la TMII para los 12
+periodos desde el año 1989 y hasta 2017, y no de manera mensual simple,
+pues dada la volatilidad del fenómeno de estudio, hacer un estudio
+interanual permite analizar de una mejor manera los cambios entre
+periodos. Es decir, se analizará la TMII desde el periodo Febrero 1989
+-- Enero 1990 hasta el periodo Enero 2017 -- Diciembre 2017.
+
+La importancia de este proceso, aparte de servir de parámetro para
+evaluar el sistema de salud, está en su estrecha relación con las
+proyecciones de población, pues como se mencionó previamente, la TMII
+analiza la mortalidad en el grupo de edad de menores de un año, que es
+el primer grupo al generar tablas de mortalidad, ya sea de la forma
+clásica o mediante la mortalidad óptima
+(\protect\hyperlink{ref-mortalidad_optima}{Villalón, 2006}). Uno de los
+métodos más conocidos para realizar estas estimaciones es el método de
+los componentes de cambio demográfico, que son la fecundidad, la
+mortalidad y la migración. En el caso de la mortalidad, uno de los
+puntos de partida es la estimación de las tasas de mortalidad por grupos
+de edad, siendo de particular interés la de menores de cinco años, pues
+esta a su vez se subdivide en los grupos de menores de un año y el de
+uno a cuatro años. Conocer el comportamiento de la mortalidad infantil
+es importante porque es en este grupo de edad en el que pueden existir
+cambios muy bruscos en la mortalidad y la fecundidad
+(\protect\hyperlink{ref-Rincon}{Rincon, 2000}).
+
+Dado que la medición de la TMII se hace partiendo de un determinado mes
+y a partir de éste se consideran los 11 meses anteriores, el primer
+valor de la base de datos fue medido a partir de Enero de 2000, que
+corresponde al período interanual Febrero 1999 -- Enero 2000. Todos los
+periodos siguientes se muestran en la figura \ref{fig:tmiiplotgeneral}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotgeneral-1} \caption{Tasa de Mortalidad Infantil Interanual 1989 - 2017}\label{fig:tmiiplotgeneral}
+\end{figure}
+
+La serie muestra picos y valles pronunciados a lo largo de todo el
+periodo. A modo de visualización, se ajustó un suavizamiento de Loess
+para buscar señales de tendencia y concavidad en los datos temporales.
+La línea roja punteada se ubica aproximadamente en el mes de Julio del
+año 2000, pues a partir de ese punto el suavizamiento de Loess muestra
+un ligero cambio en la concavidad, lo cual sugiere que a partir ese
+punto será más difícil que la TMII vuelva a alcanzar valores similares a
+los mostrados al inicio de la serie. Además, al presentarse dos caídas y
+subidas abruptas en la TMII, esta tiende a estabilizarse.
+
+Mediante un análisis visual, la figura \ref{fig:tmiiplotperiodos} parece
+respaldar el supuesto de que la mortalidad no posee efectos estacionales
+determinantes, pues para cada uno de los 12 períodos, en ninguno parecen
+existir mayores diferencias. El efecto que se mantiene en cada uno de
+los períodos es el de la tendencia, pues en cada uno ésta sigue
+descendiendo con el pasar de los años. Este hecho coincide con lo
+observado en la figura \ref{fig:tmiiplotgeneral}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotperiodos-1} \caption{Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos}\label{fig:tmiiplotperiodos}
+\end{figure}
+
+Para hacer la descomposición de la serie se hizo una transformación de
+Box-Cox con \(\lambda=1\) para aplicarla de manera multiplicativa. Esto
+se debe a que en la figura \ref{fig:tmiiplotgeneral} pueden observarse
+cambios considerables en la variabilidad de la serie a lo largo del
+tiempo. la figura \ref{fig:tmiiplotdescomposicion} muestra, como se
+mencionó previamente, una tendencia decreciente y una estacionalidad que
+no es reiterada a lo largo del tiempo. Además, el componente aleatorio
+muestra como los errores no son constantes durante todo el período.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotdescomposicion-1} \caption{Descomposición de la TMII en el periodo 2000 - 2017}\label{fig:tmiiplotdescomposicion}
+\end{figure}
+
+\subsubsection{Mortalidad por causa externa}
+
+La violencia es un acto tan antiguo como el mundo, sin embargo, la
+evolución de esta en conjunto con el crecimiento de su relación con las
+defunciones registradas en una población la vuelven un problema de salud
+pública. En base a la clasificación Internacional de Enfermedades
+(\protect\hyperlink{ref-CIE10}{OPS, 2016}) de la de la Organización
+Mundial de la Salud\footnote{\url{https://www.paho.org/salud-en-las-americas-2017/?lang=es}{]}},
+las defunciones pueden clasificarse en cuatro grandes grupos, siendo el
+más importante el de las causas naturales, el cual incluye enfermedades
+congénitas, cardiopatías u otras relacionadas con la vejez. En menor
+cuantía se encuentran las causas de muerte ignoradas, las cuales se dan
+cuando la causa de muerte es desconocida y de intención indeterminada; y
+de forma similar se encuentran las causas de muerte que se mantienen en
+estudio, bien sea por parte de la morgue o de algún otro organismo, esta
+última tiene pocos registros conforme más se retrocede en el tiempo.
+
+El otro gran grupo, aunque considerablemente menor que las causas
+naturales, son las causas externas, las cuales son objeto de análisis en
+este apartado. Este grupo puede a su vez ser clasificado en homicidios,
+suicidios y las muertes accidentales, esta última comprende los
+accidentes de tránsito, las muertes por caídas, personas ahogadas,
+víctimas de incendios, terraplenes u otros similares. Aunado a estas
+categorías se encuentran también las causas indeterminadas, las cuales
+se diferencian a las ignoradas en que se sabe que se debe a una causa
+externa pero no se conoce con certeza a cuál categoría pertenece o aún
+está en investigación, tal es el caso de una persona que fallece debido
+a una alta ingesta de drogas o estupefacientes; bien pudo haber
+consumido intencionalmente hasta morir, lo cual sería un suicidio, o
+bien el consumo excesivo se debió a un accidente.
+
+En Costa Rica para el año 2011, las muertes por causas externas ocuparon
+el tercer lugar, siendo solo superadas por las enfermedades del sistema
+circulatorio, en particular las enfermedades cardiovasculares, y los
+tumores, ambos casos mostraron una tendencia ascendente
+(\protect\hyperlink{ref-nacion}{Nación, 2013}). Es debido a los elevados
+costos económicos y sociales
+(\protect\hyperlink{ref-ccpexternas}{Cardona, 2013}) que se aborda la
+imperiosa necesidad comprender el comportamiento de las defunciones
+debido a las causas externas con el fin de contar con un punto de
+partida para la elaboración de políticas públicas que busquen reducir al
+mínimo este tipo de eventos.
+
+Dado que los registros de defunciones por causa externa se realizan
+diariamente, conviene analizar su comportamiento de manera mensual desde
+inicios del milenio de una manera más general, dicho comportamiento
+puede observarse en la figura \ref{fig:externaplotgeneral}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externaplotgeneral-1} \caption{Mortalidad por causa externa 2000 - 2017}\label{fig:externaplotgeneral}
+\end{figure}
+
+Es importante recalcar que, entre Junio del año 2012 y Diciembre del año
+2017, el aumento en la tasa de cambio de la cantidad de defunciones
+debido a causas externas coincide con el aumento de la flotilla de
+motocicletas, pues en un período de cinco años esta cifra creció en un
+189\% (\protect\hyperlink{ref-motos}{Vázquez, 2017}). Conviene entonces
+verificar el comportamiento a lo interno de la serie en referencias a
+las categorías de las causas externas.
+
+De la figura \ref{fig:externasplotperiodos} puede notarse que cada mes
+tiene sus picos y valles durante cada mes a lo largo del periodo, siendo
+los meses de Enero, Abril y Diciembre los que presentaron valores
+ligeramente más altos entre los años 2000 y 2017.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externasplotperiodos-1} \caption{Mortalidad por causa externa 2000 - 2017 según mes}\label{fig:externasplotperiodos}
+\end{figure}
+
+La descomposición de la serie se hará de forma aditiva debido a que en
+el gráfico 1 no se observan grandes cambios en la variabilidad a lo
+largo del tiempo. La figura \ref{fig:externasplotdescomposicion} muestra
+que la tendencia se mantiene casi constante a lo largo del tiempo,
+mientras que parece haber estacionalidad en ciertos lapsos de la segunda
+mitad del año. Además, el componente aleatorio muestra como los errores
+no son constantes a lo largo de todo el período.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externasplotdescomposicion-1} \caption{Descomposición de las defunciones por causa externa en el periodo 2000-2017}\label{fig:externasplotdescomposicion}
+\end{figure}
+
+\subsubsection{Incentivos salariales del sector público}
+
+Los incentivos salariales son retribuciones que de conformidad con la
+legislación vigente se asignan al servidor por sus características
+laborales que complementan las remuneraciones básicas. Los incentivos se
+reconocen tanto a profesionales como a no profesionales, facultados por
+disposiciones jurídicas que así lo autorizan. Algunos de estos
+incentivos son: anualidades, dedicación exclusiva, salario escolar,
+carrera profesional, carrera técnica, zonaje, desarraigo,
+regionalización, riesgo policial, riesgo penitenciario, riesgo de
+seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros.
+Esta serie cronológica representa los incentivos salariales en millones
+de colones del sector público de Costa Rica de enero 2007 a junio 2015.
+
+De manera análoga a las secciones anteriores, la figura
+\ref{fig:incentivosplotgeneral} muestra el comportamiento general de la
+serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio
+de concavidad a partir de Julio 2008, lo cual sugiere que a partir de
+este momento los incentivos salariales vuelvan a alcanzar valores
+similares a los mostrados al inicio de la serie. La figura
+\ref{fig:incentivosplotperiodos} muestra cómo hay un crecimiento
+sostenido de los incentivos en cada mes a lo largo de todo el periodo.
+Sin embargo, este crecimiento se da a una tasa mucho mayor en la época
+de fin y principio de año.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotgeneral-1} \caption{Incentivos salariales en el sector público 2007 - 2018}\label{fig:incentivosplotgeneral}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotperiodos-1} \caption{Incentivos salariales en el sector público 2007 - 2018 según mes}\label{fig:incentivosplotperiodos}
+\end{figure}
+
+En la figura \ref{fig:incentivosplotdescomposicion} se muestra la
+descomposición de la serie en sus distintos componentes. Pueden
+observarse, además de un crecimiento a lo largo del tiempo, los picos y
+las caídas en la parte estacional, esto hace referencia a los meses de
+Diciembre y Enero; cuando no se está en este periodo los incentivos
+poseen un comportamiento más estable. El componente aleatorio muestra
+indicios de que la variabilidad de la serie no es homogénea, sino que
+cambia conforme pasa el tiempo.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotdescomposicion-1} \caption{Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018}\label{fig:incentivosplotdescomposicion}
+\end{figure}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+Finalmente, se utiliza para este análisis la serie cronológica de los
+intereses y comisiones del sector público, que comprenden el pago de los
+intereses de la deuda del gobierno, esto es, las erogaciones de
+intereses y comisiones destinadas por las instituciones públicas para
+cubrir el pago a favor de terceras personas, físicas o jurídicas, del
+sector privado o del sector público, residentes en el territorio
+nacional o en el exterior, por la utilización en un determinado plazo de
+recursos financieros provenientes de los conceptos de emisión y
+colocación de títulos valores, contratación de préstamos directos,
+créditos de proveedores, depósitos a plazo y a la vista, intereses por
+deudas de avales asumidos, entre otros pasivos de la entidad tranzados
+en el país o en el exterior. Incluye el pago por concepto de otras
+obligaciones contraídas entre las partes, que no provienen de las
+actividades normales de financiamiento. Además, los intereses y
+comisiones por las operaciones normales de los bancos comerciales del
+sector público, así como las diferencias por tipo de cambio por
+operaciones financieras; y también el pago de intereses moratorios
+correspondientes a la deuda pública.
+
+Para iniciar el análisis exploratorio de esta serie, la figura
+\ref{fig:interesesplotgeneral} muestra que hay un ligero cambio de
+concavidad a partir de Julio 2010, esto sugiere que a partir de este
+momento los intereses y comisiones inician una tendencia al alza, la
+cual se sostiene hasta Junio del 2018. Por su parte, la figura
+\ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento
+sostenido de los intereses y comisiones del sector público al final de
+cada trimestre durante todo el periodo, mientras que se mantiene casi
+constante durante los primeros dos meses de cada trimestre. La caída más
+pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento
+más rápida parece darse al final del primer trimestre. Además, en la
+figura \ref{fig:interesesplotdescomposicion} se muestra la
+descomposición de la serie en sus distintos componentes. Puede
+observarse, además de un crecimiento a lo largo del tiempo posterior a
+una disminución, los picos y las caídas en la parte estacional, esto en
+cuanto a los cierres trimestrales previamente mencionados. El componente
+aleatorio muestra indicios de que la variabilidad de la serie no es
+homogénea, sino que cambia conforme pasa el tiempo, pues durante un
+tiempo se mantuvo relativamente estable pero luego presenta algunos
+cambios.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotgeneral-1} \caption{Intereses y comisiones del sector público en el periodo 2007-2018}\label{fig:interesesplotgeneral}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotperiodos-1} \caption{Intereses y comisiones del sector público en el periodo 2007-2018 según mes}\label{fig:interesesplotperiodos}
+\end{figure}
+
+En la figura \ref{fig:interesesplotdescomposicion} se muestra la
+descomposición de la serie en sus distintos componentes. Pueden
+observarse, además de un crecimiento a lo largo del tiempo posterior a
+una disminución, los picos y las caídas en la parte estacional. El
+componente aleatorio muestra indicios de que la variabilidad de la serie
+no es homogénea, sino que cambia conforme pasa el tiempo, pues durante
+un tiempo se mantuvo relativamente estable pero luego presenta algunos
+cambios.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotdescomposicion-1} \caption{Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018}\label{fig:interesesplotdescomposicion}
+\end{figure}
+
+\subsubsection{Herramientas analíticas y procedimiento de simulación}
+
+Como se ha mencionado en este documento, el lenguaje de programación R
+ha sido utilizado para los análisis. Específicamente, los paquetes
+utilizados para la obtención de estos resultados, aparte de los ya
+mencionados, son \texttt{knitr} (\protect\hyperlink{ref-knitr}{Xie,
+2014}), \texttt{kableExtra} (\protect\hyperlink{ref-kableExtra}{Zhu,
+2021}), \texttt{readxl} (\protect\hyperlink{ref-readxl}{Wickham \&
+Bryan, 2019}), \texttt{gridExtra}
+(\protect\hyperlink{ref-gridExtra}{Auguie, 2017}), \texttt{ggpubr}
+(\protect\hyperlink{ref-ggpubr}{Kassambara, 2020}), \texttt{ggplot2}
+(\protect\hyperlink{ref-ggplot2}{Wickham, 2016}), \texttt{lubridate}
+(\protect\hyperlink{ref-lubridate}{Grolemund \& Wickham, 2011}),
+\texttt{ggseas} (\protect\hyperlink{ref-ggseas}{Ellis, 2018}),
+\texttt{ggpmisc} (\protect\hyperlink{ref-ggpmisc}{Aphalo, 2021}) y
+\texttt{forecast} (\protect\hyperlink{ref-forecast}{Rob J. Hyndman \&
+Khandakar, 2008}).
+
+La metodología propuesta será puesta a prueba en una primera etapa con
+series cronológicas simuladas a partir de distintos modelos. Los
+resultados obtenidos al utilizar la sobreparametrización serán
+contrastados con otros dos métodos: La función \texttt{auto.arima()} de
+R y un modelo ARIMA estándar, que se trata de un \(ARIMA(1,1,1)\) en el
+caso de series no estacionales, y un \(ARIMA(1,1,1)(1,1,1)_{12}\) sobre
+los datos simulados de series mensuales. De forma similar, se comparan
+los resultados obtenidos mediante la sobreparametrización con los
+obtenidos utilizando la función \texttt{auto.arima()} de R, aplicado a
+las distintas series cronológicas.
+
+Como parte de esta investigación, es necesario validar la estimación de
+modelos ARIMA mediante sobreparametrización no solo con datos reales,
+sino también mediante datos simulados. Para ello es necesario generar
+series cronológicas que son gobernadas por un proceso determinado y
+previamente conocido para poder compararlo con los modelos identificados
+tanto con la sobreparametrización, como con la función
+\texttt{auto.arima()} y el correspondiente modelo \(ARIMA\) estándar.
+
+Con este fin, se programó la función que se encuentra en el
+\ref{simula_series} que sigue los siguientes pasos:
+
+\textbf{1.} Se generan valores aleatorios de alguna distribución de
+probabilidad. Para esta investigación se escogen 100 valores de una
+distribución Normal con media 10 y varianza 1. Estos valores se resumen
+en la figura \ref{fig:datos_simulados}; donde las región azul oscuro
+representa la densidad de datos entre los percentiles 25 y 75, las
+líneas punteadas de color naranja marcan la cantidad de desviaciones
+estándar que los datos se alejan del promedio, y las líneas punteadas de
+color azul marcan los puntos de corte mínimo, percentiles 25, 50 y 75, y
+el máximo.
+
+\textbf{2.} Se seleccionan mediante un muestreo simple al azar la
+cantidad de coeficientes a utilizar en los términos del modelo
+\(ARIMA(p,d,q)(P,D,Q)_S\) que gobiernan la serie. Para esta
+investigación fueron seleccionados los siguientes procesos:
+\(ARIMA(1,0,0), ARIMA(1,0,1),ARIMA(2,0,3), ARIMA(4,0,2), ARIMA(0,0,1)(0,1,1)\)
+y \(ARIMA(2,1,4)(3,0,3)\).
+
+\textbf{3.} Para cada uno de los procesos seleccionados, se genera una
+secuencia de valores en el intervalo \([-1,1]\) con saltos de 0.1 para
+posteriormente seleccionar de manera aleatoria el valor que tomaran los
+coeficientes de cada uno de los procesos mencionados en el punto
+anterior.
+
+\textbf{4.} Con los valores simulados, la cantidad de parámetros y sus
+respectivos valors definidos en los puntos anteriores, se ajusta cada
+uno de los modelos \(ARIMA\) descritos en el inciso \textbf{2.}.
+
+\textbf{5.} Con cada modelo ajustado, se utiliza la función
+\texttt{simulate.Arima()} para generar 200 observaciones basadas en
+dichos modelos.
+
+Tras aplicar los pasos anteriores y obtener las correspondientes series
+cronológicas simuladas, el comportamiento y proceso gobernante de cada
+una se muestra en la figura \ref{fig:series_simuladas}.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/datos_simulados-1} \caption{Valores de referencia para la simulación de series cronológicas}\label{fig:datos_simulados}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/series_simuladas-1} \caption{Series cronológicas simuladas}\label{fig:series_simuladas}
+\end{figure}
+
+\subsection{Métodos}
 
 \subsection{Medidas de bondad de ajuste y rendimiento}
 
@@ -1448,7 +1934,7 @@ El objetivo último al estimar un modelo ARIMA es obtener los pronósticos
 de dicho modelo Sin embargo, estos pronósticos no son pueden asumirse
 como correctos, sino que se debe evaluar su calidad con las llamadas
 medidas de bondad de ajuste y de rendimiento. Existen múltiples medidas,
-\protect\hyperlink{ref-medidas}{Adhikari, K, \& Agrawal}
+\protect\hyperlink{ref-medidas}{Adhikari et~al.}
 (\protect\hyperlink{ref-medidas}{2013}) menciona, entre otras, las
 siguientes:
 
@@ -1633,80 +2119,13 @@ Donde \(m_i\) representa cada una de las medidas de rendimiento y
 validación mencionados anteriormente. El valor más bajo de todos los
 modelos es el que se define como el modelo más adecuado.
 
-Como parte de esta investigación, es necesario validar la estimación de
-modelos ARIMA mediante sobreparametrización no solo con datos reales,
-sino también mediante datos simulados. Para ello es necesario obtener
-series cronológicas que son gobernadas por un proceso determinado.
-
-Con este fin, se programó un función haciendo uso del lenguaje R que
-toma una serie de valores, los cuales pueden ser reales o simulados.
-Además, se especifican los valores \(p,d,q,P,D,Q\) del modelo ARIMA a
-partir del cual se desea obtener los datos, así como los valores de los
-coeficientes presentes en el modelo. Es partiendo de este modelo que se
-simulan los datos de las series cronológicas que serán insumo para la
-prueba la selección mediante sobreparametrización, este procedimiento se
-encuentra en el \ref{simula_series}.
-
 \newpage
 
 \section{RESULTADOS}
 
 \subsection{Introducción}
 
-La metodología propuesta será puesta a prueba en una primera etapa con
-series cronológicas simuladas a partir de distintos modelos. Los
-resultados obtenidos al utilizar la sobreparametrización serán
-contrastados con otros dos métodos: La función \texttt{auto.arima()} de
-R y un modelo ARIMA estándar, que se trata de un \(ARIMA(1,1,1)\) en el
-caso de series no estacionales, y un \(ARIMA(1,1,1)(1,1,1)_{12}\) sobre
-los datos simulados de series mensuales.
-
-De forma similar, en la segunda parte de este capítulo se comparan los
-resultados obtenidos mediante la sobreparametrización con los obtenidos
-utilizando la función \texttt{auto.arima()} de R, aplicado a series
-cronológicas costarricenses.
-
-Los paquetes utilizados para la obtención de estos resultados, aparte de
-los ya mencionados, son \texttt{knitr}
-(\protect\hyperlink{ref-knitr}{Xie, 2014}), \texttt{kableExtra}
-(\protect\hyperlink{ref-kableExtra}{Zhu, 2021}), \texttt{readxl}
-(\protect\hyperlink{ref-readxl}{Wickham \& Bryan, 2019}),
-\texttt{gridExtra} (\protect\hyperlink{ref-gridExtra}{Auguie, 2017}),
-\texttt{ggpubr} (\protect\hyperlink{ref-ggpubr}{Kassambara, 2020}),
-\texttt{ggplot2} (\protect\hyperlink{ref-ggplot2}{Wickham, 2016}),
-\texttt{lubridate} (\protect\hyperlink{ref-lubridate}{Grolemund \&
-Wickham, 2011}), \texttt{ggseas} (\protect\hyperlink{ref-ggseas}{Ellis,
-2018}), \texttt{ggpmisc} (\protect\hyperlink{ref-ggpmisc}{Aphalo, 2021})
-y \texttt{forecast} (\protect\hyperlink{ref-forecast}{Rob J. Hyndman \&
-Khandakar, 2008}).
-
 \subsection{Análisis de simulación en series cronológicas}
-
-Como se mencionó en el capítulo anterior, se utiliza la función
-\ref{simula_series} para generar las distintas series cronológicas que
-evaluarán el método. El primer insumo de esta función consiste en una
-muestra de valores aleatorios; en este caso se seleccionaron 100 valores
-de una distribución \(N(10,1)\) para generar series de 200
-observaciones. Los valores paramétricos de los modelos ARIMA fueron
-seleccionados de manera aleatoria. Los valores iniciales para obtener
-las series cronológicas simuladas se resumen en la figura
-\ref{fig:datos_simulados}; donde las región azul oscuro representa la
-densidad de datos entre los percentiles 25 y 75, las líneas punteadas de
-color naranja marcan la cantidad de desviaciones estándar que los datos
-se alejan del promedio, y las líneas punteadas de color azul marcan los
-puntos de corte mínimo, percentiles 25, 50 y 75, y el máximo.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/datos_simulados-1} \caption{Valores de referencia para la simulación de series cronológicas}\label{fig:datos_simulados}
-\end{figure}
-
-Por su lado, se simularon un total de ocho series cronológicas, cuyo
-comportamiento y proceso gobernante se muestran en la figura
-\ref{fig:series_simuladas}.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/series_simuladas-1} \caption{Series cronológicas simuladas}\label{fig:series_simuladas}
-\end{figure}
 
 El cuadro \ref{tab:comparaciones} muestra los valores del MAE, MASE y
 RMSE para cada proceso estimado y, además, muestra el proceso de origen
@@ -1736,7 +2155,7 @@ pronósticos se acercan más a los datos reales.
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-13}\label{tab:comparaciones}Medidas de rendimiento según método de estimación}
+\caption{\label{tab:unnamed-chunk-17}\label{tab:comparaciones}Medidas de rendimiento según método de estimación}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{5}{7}\selectfont
@@ -1787,103 +2206,6 @@ Proceso original & Método & Proceso & MAE & MASE & RMSE\\
 
 \subsubsection{Tasa de mortalidad infantil interanual}
 
-La Tasa de Mortalidad Infantil (TMI) es uno de los indicadores
-demográficos más importantes, pues es utilizado como un parámetro de
-referencia sobre la calidad del sistema de salud, tanto a nivel nacional
-como regional. Si bien este indicador se construye relacionando las
-defunciones de menores de un año con el total de nacimientos, también
-involucra de manera implícita otras condiciones tales como las
-económicas, sociales y culturales, así como la efectividad en los
-métodos preventivos y curativos de esta categoría poblacional
-(\protect\hyperlink{ref-leon}{León, 1998}). Debido a esto, el
-fallecimiento de un niño menor de un año se traduce en una falla del
-sistema de salud, por lo que estos casos son sujetos de estudio con el
-fin de conocer las causas que desencadenaron el evento.
-
-En algunos países en vías de desarrollo de Asia, África y América
-Latina, la mortalidad infantil alcanza valores elevados pues la
-desnutrición, ausencia de asistencia médica y mala calidad de las
-condiciones sanitarias son, a diferencia de los países más
-desarrollados, algo muy común (\protect\hyperlink{ref-donoso}{Donoso,
-2004}). En el caso de Costa Rica, la unidad de estadísticas demográficas
-del Instituto Nacional de Estadística y Censos\footnote{\url{http://www.inec.go.cr/}}
-(INEC) es el ente encargado de reportar este indicador con el fin de dar
-seguimiento y control al comportamiento del mismo a lo largo del tiempo
-con el objetivo de llegar a los niveles más bajos posibles.
-
-En el INEC, cada mes se publica el boletín de la TMI interanual (TMII),
-que analiza la TMI de un mes y los 11 meses previos para comparar los
-periodos correspondientes (\protect\hyperlink{ref-infantiles}{INEC,
-2004}). Este apartado busca hacer un análisis de la TMII para los 12
-periodos desde el año 1989 y hasta 2017, y no de manera mensual simple,
-pues dada la volatilidad del fenómeno de estudio, hacer un estudio
-interanual permite analizar de una mejor manera los cambios entre
-periodos. Es decir, se analizará la TMII desde el periodo Febrero 1989
--- Enero 1990 hasta el periodo Enero 2017 -- Diciembre 2017.
-
-La importancia de este proceso, aparte de servir de parámetro para
-evaluar el sistema de salud, está en su estrecha relación con las
-proyecciones de población, pues como se mencionó previamente, la TMII
-analiza la mortalidad en el grupo de edad de menores de un año, que es
-el primer grupo al generar tablas de mortalidad, ya sea de la forma
-clásica o mediante la mortalidad óptima
-(\protect\hyperlink{ref-mortalidad_optima}{Villalón, 2006}). Uno de los
-métodos más conocidos para realizar estas estimaciones es el método de
-los componentes de cambio demográfico, que son la fecundidad, la
-mortalidad y la migración. En el caso de la mortalidad, uno de los
-puntos de partida es la estimación de las tasas de mortalidad por grupos
-de edad, siendo de particular interés la de menores de cinco años, pues
-esta a su vez se subdivide en los grupos de menores de un año y el de
-uno a cuatro años. Conocer el comportamiento de la mortalidad infantil
-es importante porque es en este grupo de edad en el que pueden existir
-cambios muy bruscos en la mortalidad y la fecundidad
-(\protect\hyperlink{ref-Rincon}{Rincon, 2000}).
-
-Dado que la medición de la TMII se hace partiendo de un determinado mes
-y a partir de éste se consideran los 11 meses anteriores, el primer
-valor de la base de datos fue medido a partir de Enero de 2000, que
-corresponde al período interanual Febrero 1999 -- Enero 2000. Todos los
-periodos siguientes se muestran en la figura \ref{fig:tmiiplotgeneral}.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotgeneral-1} \caption{Tasa de Mortalidad Infantil Interanual 1989 - 2017}\label{fig:tmiiplotgeneral}
-\end{figure}
-
-La serie muestra picos y valles pronunciados a lo largo de todo el
-periodo. A modo de visualización, se ajustó un suavizamiento de Loess
-para buscar señales de tendencia y concavidad en los datos temporales.
-La línea roja punteada se ubica aproximadamente en el mes de Julio del
-año 2000, pues a partir de ese punto el suavizamiento de Loess muestra
-un ligero cambio en la concavidad, lo cual sugiere que a partir ese
-punto será más difícil que la TMII vuelva a alcanzar valores similares a
-los mostrados al inicio de la serie. Además, al presentarse dos caídas y
-subidas abruptas en la TMII, esta tiende a estabilizarse.
-
-Mediante un análisis visual, la figura \ref{fig:tmiiplotperiodos} parece
-respaldar el supuesto de que la mortalidad no posee efectos estacionales
-determinantes, pues para cada uno de los 12 períodos, en ninguno parecen
-existir mayores diferencias. El efecto que se mantiene en cada uno de
-los períodos es el de la tendencia, pues en cada uno ésta sigue
-descendiendo con el pasar de los años. Este hecho coincide con lo
-observado en la figura \ref{fig:tmiiplotgeneral}.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotperiodos-1} \caption{Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos}\label{fig:tmiiplotperiodos}
-\end{figure}
-
-Para hacer la descomposición de la serie se hizo una transformación de
-Box-Cox con \(\lambda=1\) para aplicarla de manera multiplicativa. Esto
-se debe a que en la figura \ref{fig:tmiiplotgeneral} pueden observarse
-cambios considerables en la variabilidad de la serie a lo largo del
-tiempo. la figura \ref{fig:tmiiplotdescomposicion} muestra, como se
-mencionó previamente, una tendencia decreciente y una estacionalidad que
-no es reiterada a lo largo del tiempo. Además, el componente aleatorio
-muestra como los errores no son constantes durante todo el período.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmiiplotdescomposicion-1} \caption{Descomposición de la TMII en el periodo 2000 - 2017}\label{fig:tmiiplotdescomposicion}
-\end{figure}
-
 Tras tener un panorama más claro del comportamiento de la serie mediante
 el análisis descriptivo anterior, se modela la serie mediante la función
 \texttt{auto.arima()}, teniendo como mejor modelo un
@@ -1897,7 +2219,7 @@ figura \ref{fig:tmiiplotpronostico}
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-16}\label{tab:tmiimedidas}Medidas de rendimiento según método de estimación para la TMII}
+\caption{\label{tab:unnamed-chunk-19}\label{tab:tmiimedidas}Medidas de rendimiento según método de estimación para la TMII}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -1916,85 +2238,6 @@ sobreparametrizacion & 0.3495541 & 0.2839742 & 3.418392\\
 
 \subsubsection{Mortalidad por causa externa}
 
-La violencia es un acto tan antiguo como el mundo, sin embargo, la
-evolución de esta en conjunto con el crecimiento de su relación con las
-defunciones registradas en una población la vuelven un problema de salud
-pública. En base a la clasificación Internacional de Enfermedades
-(\protect\hyperlink{ref-CIE10}{OPS, 2016}) de la de la Organización
-Mundial de la Salud\footnote{\url{https://www.paho.org/salud-en-las-americas-2017/?lang=es}{]}},
-las defunciones pueden clasificarse en cuatro grandes grupos, siendo el
-más importante el de las causas naturales, el cual incluye enfermedades
-congénitas, cardiopatías u otras relacionadas con la vejez. En menor
-cuantía se encuentran las causas de muerte ignoradas, las cuales se dan
-cuando la causa de muerte es desconocida y de intención indeterminada; y
-de forma similar se encuentran las causas de muerte que se mantienen en
-estudio, bien sea por parte de la morgue o de algún otro organismo, esta
-última tiene pocos registros conforme más se retrocede en el tiempo.
-
-El otro gran grupo, aunque considerablemente menor que las causas
-naturales, son las causas externas, las cuales son objeto de análisis en
-este apartado. Este grupo puede a su vez ser clasificado en homicidios,
-suicidios y las muertes accidentales, esta última comprende los
-accidentes de tránsito, las muertes por caídas, personas ahogadas,
-víctimas de incendios, terraplenes u otros similares. Aunado a estas
-categorías se encuentran también las causas indeterminadas, las cuales
-se diferencian a las ignoradas en que se sabe que se debe a una causa
-externa pero no se conoce con certeza a cuál categoría pertenece o aún
-está en investigación, tal es el caso de una persona que fallece debido
-a una alta ingesta de drogas o estupefacientes; bien pudo haber
-consumido intencionalmente hasta morir, lo cual sería un suicidio, o
-bien el consumo excesivo se debió a un accidente.
-
-En Costa Rica para el año 2011, las muertes por causas externas ocuparon
-el tercer lugar, siendo solo superadas por las enfermedades del sistema
-circulatorio, en particular las enfermedades cardiovasculares, y los
-tumores, ambos casos mostraron una tendencia ascendente
-(\protect\hyperlink{ref-nacion}{Nación, 2013}). Es debido a los elevados
-costos económicos y sociales
-(\protect\hyperlink{ref-ccpexternas}{Cardona, 2013}) que se aborda la
-imperiosa necesidad comprender el comportamiento de las defunciones
-debido a las causas externas con el fin de contar con un punto de
-partida para la elaboración de políticas públicas que busquen reducir al
-mínimo este tipo de eventos.
-
-Dado que los registros de defunciones por causa externa se realizan
-diariamente, conviene analizar su comportamiento de manera mensual desde
-inicios del milenio de una manera más general, dicho comportamiento
-puede observarse en la figura \ref{fig:externaplotgeneral}.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externaplotgeneral-1} \caption{Mortalidad por causa externa 2000 - 2017}\label{fig:externaplotgeneral}
-\end{figure}
-
-Es importante recalcar que, entre Junio del año 2012 y Diciembre del año
-2017, el aumento en la tasa de cambio de la cantidad de defunciones
-debido a causas externas coincide con el aumento de la flotilla de
-motocicletas, pues en un período de cinco años esta cifra creció en un
-189\% (\protect\hyperlink{ref-motos}{Vázquez, 2017}). Conviene entonces
-verificar el comportamiento a lo interno de la serie en referencias a
-las categorías de las causas externas.
-
-De la figura \ref{fig:externasplotperiodos} puede notarse que cada mes
-tiene sus picos y valles durante cada mes a lo largo del periodo, siendo
-los meses de Enero, Abril y Diciembre los que presentaron valores
-ligeramente más altos entre los años 2000 y 2017.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externasplotperiodos-1} \caption{Mortalidad por causa externa 2000 - 2017 según mes}\label{fig:externasplotperiodos}
-\end{figure}
-
-La descomposición de la serie se hará de forma aditiva debido a que en
-el gráfico 1 no se observan grandes cambios en la variabilidad a lo
-largo del tiempo. La figura \ref{fig:externasplotdescomposicion} muestra
-que la tendencia se mantiene casi constante a lo largo del tiempo,
-mientras que parece haber estacionalidad en ciertos lapsos de la segunda
-mitad del año. Además, el componente aleatorio muestra como los errores
-no son constantes a lo largo de todo el período.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externasplotdescomposicion-1} \caption{Descomposición de las defunciones por causa externa en el periodo 2000-2017}\label{fig:externasplotdescomposicion}
-\end{figure}
-
 De manera similar a lo hecho para pronosticar la TMII, se ajusta un
 modelo utilizando la función \texttt{auto.arima()}, siendo el modelo
 sugerido un \(ARIMA(1,1,1)\); mientras que la sobreparametrización
@@ -2006,7 +2249,7 @@ gráficamente mediante la figura \ref{fig:externasplotpronostico}
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-18}\label{tab:externasmedidas}Medidas de rendimiento según método de estimación para la Mortalidad por causa externa}
+\caption{\label{tab:unnamed-chunk-20}\label{tab:externasmedidas}Medidas de rendimiento según método de estimación para la Mortalidad por causa externa}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -2025,50 +2268,6 @@ sobreparametrizacion & 0.7058923 & 0.6011625 & 13.27879\\
 
 \subsubsection{Incentivos salariales del sector público}
 
-Los incentivos salariales son retribuciones que de conformidad con la
-legislación vigente se asignan al servidor por sus características
-laborales que complementan las remuneraciones básicas. Los incentivos se
-reconocen tanto a profesionales como a no profesionales, facultados por
-disposiciones jurídicas que así lo autorizan. Algunos de estos
-incentivos son: anualidades, dedicación exclusiva, salario escolar,
-carrera profesional, carrera técnica, zonaje, desarraigo,
-regionalización, riesgo policial, riesgo penitenciario, riesgo de
-seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros.
-Esta serie cronológica representa los incentivos salariales en millones
-de colones del sector público de Costa Rica de enero 2007 a junio 2015.
-
-De manera análoga a las secciones anteriores, la figura
-\ref{fig:incentivosplotgeneral} muestra el comportamiento general de la
-serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio
-de concavidad a partir de Julio 2008, lo cual sugiere que a partir de
-este momento los incentivos salariales vuelvan a alcanzar valores
-similares a los mostrados al inicio de la serie. La figura
-\ref{fig:incentivosplotperiodos} muestra cómo hay un crecimiento
-sostenido de los incentivos en cada mes a lo largo de todo el periodo.
-Sin embargo, este crecimiento se da a una tasa mucho mayor en la época
-de fin y principio de año.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotgeneral-1} \caption{Incentivos salariales en el sector público 2007 - 2018}\label{fig:incentivosplotgeneral}
-\end{figure}
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotperiodos-1} \caption{Incentivos salariales en el sector público 2007 - 2018 según mes}\label{fig:incentivosplotperiodos}
-\end{figure}
-
-En la figura \ref{fig:incentivosplotdescomposicion} se muestra la
-descomposición de la serie en sus distintos componentes. Pueden
-observarse, además de un crecimiento a lo largo del tiempo, los picos y
-las caídas en la parte estacional, esto hace referencia a los meses de
-Diciembre y Enero; cuando no se está en este periodo los incentivos
-poseen un comportamiento más estable. El componente aleatorio muestra
-indicios de que la variabilidad de la serie no es homogénea, sino que
-cambia conforme pasa el tiempo.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivosplotdescomposicion-1} \caption{Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018}\label{fig:incentivosplotdescomposicion}
-\end{figure}
-
 Nuevamente, se ajustaron dos modelos ARIMA, el primero de ellos mediante
 la función \texttt{auto.arima()}, siendo el modelo sugerido un
 \(ARIMA(0,0,1)(1,1,0)_{12}\);y el segudo modelo sugerido, utilizando la
@@ -2079,7 +2278,7 @@ pronósticos obtenidos son superiores utilizando la sobreparametrización.
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-20}\label{tab:incentivosmedidas}Medidas de rendimiento según método de estimación para los incentivos salariales}
+\caption{\label{tab:unnamed-chunk-21}\label{tab:incentivosmedidas}Medidas de rendimiento según método de estimación para los incentivos salariales}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -2097,67 +2296,6 @@ sobreparametrizacion & 3476.907 & 2846.975 & 4.000943\\
 \end{figure}
 
 \subsubsection{Intereses y comisiones del sector público}
-
-Finalmente, se utiliza para este análisis la serie cronológica de los
-intereses y comisiones del sector público, que comprenden el pago de los
-intereses de la deuda del gobierno, esto es, las erogaciones de
-intereses y comisiones destinadas por las instituciones públicas para
-cubrir el pago a favor de terceras personas, físicas o jurídicas, del
-sector privado o del sector público, residentes en el territorio
-nacional o en el exterior, por la utilización en un determinado plazo de
-recursos financieros provenientes de los conceptos de emisión y
-colocación de títulos valores, contratación de préstamos directos,
-créditos de proveedores, depósitos a plazo y a la vista, intereses por
-deudas de avales asumidos, entre otros pasivos de la entidad tranzados
-en el país o en el exterior. Incluye el pago por concepto de otras
-obligaciones contraídas entre las partes, que no provienen de las
-actividades normales de financiamiento. Además, los intereses y
-comisiones por las operaciones normales de los bancos comerciales del
-sector público, así como las diferencias por tipo de cambio por
-operaciones financieras; y también el pago de intereses moratorios
-correspondientes a la deuda pública.
-
-Para iniciar el análisis exploratorio de esta serie, la figura
-\ref{fig:interesesplotgeneral} muestra que hay un ligero cambio de
-concavidad a partir de Julio 2010, esto sugiere que a partir de este
-momento los intereses y comisiones inician una tendencia al alza, la
-cual se sostiene hasta Junio del 2018. Por su parte, la figura
-\ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento
-sostenido de los intereses y comisiones del sector público al final de
-cada trimestre durante todo el periodo, mientras que se mantiene casi
-constante durante los primeros dos meses de cada trimestre. La caída más
-pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento
-más rápida parece darse al final del primer trimestre. Además, en la
-figura \ref{fig:interesesplotdescomposicion} se muestra la
-descomposición de la serie en sus distintos componentes. Puede
-observarse, además de un crecimiento a lo largo del tiempo posterior a
-una disminución, los picos y las caídas en la parte estacional, esto en
-cuanto a los cierres trimestrales previamente mencionados. El componente
-aleatorio muestra indicios de que la variabilidad de la serie no es
-homogénea, sino que cambia conforme pasa el tiempo, pues durante un
-tiempo se mantuvo relativamente estable pero luego presenta algunos
-cambios.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotgeneral-1} \caption{Intereses y comisiones del sector público en el periodo 2007-2018}\label{fig:interesesplotgeneral}
-\end{figure}
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotperiodos-1} \caption{Intereses y comisiones del sector público en el periodo 2007-2018 según mes}\label{fig:interesesplotperiodos}
-\end{figure}
-
-En la figura \ref{fig:interesesplotdescomposicion} se muestra la
-descomposición de la serie en sus distintos componentes. Pueden
-observarse, además de un crecimiento a lo largo del tiempo posterior a
-una disminución, los picos y las caídas en la parte estacional. El
-componente aleatorio muestra indicios de que la variabilidad de la serie
-no es homogénea, sino que cambia conforme pasa el tiempo, pues durante
-un tiempo se mantuvo relativamente estable pero luego presenta algunos
-cambios.
-
-\begin{figure}[!h]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/interesesplotdescomposicion-1} \caption{Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018}\label{fig:interesesplotdescomposicion}
-\end{figure}
 
 Por último, los modelos ajustados para pronosticar los intereses y
 comisiones del sector público con un \(ARIMA(0,0,1)(0,1,0)_{12}\) para
@@ -2448,44 +2586,56 @@ la fuente oficial de los paquetes del lenguaje R.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ts.sim }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, n, temporalidad, }
-\NormalTok{                            no.estacional, }\AttributeTok{estacional=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{), }
-                            \AttributeTok{p=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{q=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{P=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{Q=}\ConstantTok{NULL}\NormalTok{)\{}
-  
-  \FunctionTok{require}\NormalTok{(forecast)}
-  \FunctionTok{tryCatch}\NormalTok{(\{}
-\NormalTok{      coeficientes }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(p, q, P, Q)}
-\NormalTok{      coeficientes.simulados }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\FunctionTok{c}\NormalTok{(no.estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)], }
-\NormalTok{                                         estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)]), }
-                                       \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sample}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{), x))}
-      
-\NormalTok{    pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(coeficientes, is.null)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{    pos2 }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(coeficientes.simulados, length)}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)}
-    
-\NormalTok{    coeficientes[pos] }\OtherTok{\textless{}{-}}\NormalTok{ coeficientes.simulados[pos]}
-    
-    \FunctionTok{names}\NormalTok{(coeficientes) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"q"}\NormalTok{, }\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{)}
-\NormalTok{    coeficientes }\OtherTok{\textless{}{-}}\NormalTok{ coeficientes[pos2]}
-    
-    \ControlFlowTok{if}\NormalTok{(}\ConstantTok{TRUE} \SpecialCharTok{\%in\%}\NormalTok{ (}\FunctionTok{c}\NormalTok{(}\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{) }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(coeficientes)))\{}
-\NormalTok{        modelo }\OtherTok{\textless{}{-}} \FunctionTok{Arima}\NormalTok{(}\FunctionTok{ts}\NormalTok{(}\AttributeTok{data=}\NormalTok{data, }\AttributeTok{freq=}\NormalTok{temporalidad), }
-                    \AttributeTok{order =}\NormalTok{ no.estacional, }
+\NormalTok{ts.sim }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data,}
+\NormalTok{                   n,}
+\NormalTok{                   temporalidad,}
+\NormalTok{                   no.estacional,}
+                   \AttributeTok{estacional =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+                   \AttributeTok{p =} \ConstantTok{NULL}\NormalTok{,}
+                   \AttributeTok{q =} \ConstantTok{NULL}\NormalTok{,}
+                   \AttributeTok{P =} \ConstantTok{NULL}\NormalTok{,}
+                   \AttributeTok{Q =} \ConstantTok{NULL}\NormalTok{) \{}
+    \FunctionTok{require}\NormalTok{(forecast)}
+    \FunctionTok{tryCatch}\NormalTok{(\{}
+\NormalTok{        coeficientes }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(p, q, P, Q)}
+\NormalTok{        coeficientes.simulados }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\FunctionTok{c}\NormalTok{(no.estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)],}
+\NormalTok{                                           estacional[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)]),}
+                                         \ControlFlowTok{function}\NormalTok{(x)}
+                                             \FunctionTok{sample}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{), x))}
+        
+\NormalTok{        pos }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(coeficientes, is.null) }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{        pos2 }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(coeficientes.simulados, length) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)}
+        
+\NormalTok{        coeficientes[pos] }\OtherTok{\textless{}{-}}\NormalTok{ coeficientes.simulados[pos]}
+        
+        \FunctionTok{names}\NormalTok{(coeficientes) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"q"}\NormalTok{, }\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{)}
+\NormalTok{        coeficientes }\OtherTok{\textless{}{-}}\NormalTok{ coeficientes[pos2]}
+        
+        \ControlFlowTok{if}\NormalTok{ (}\ConstantTok{TRUE} \SpecialCharTok{\%in\%}\NormalTok{ (}\FunctionTok{c}\NormalTok{(}\StringTok{"P"}\NormalTok{, }\StringTok{"Q"}\NormalTok{) }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(coeficientes))) \{}
+\NormalTok{            modelo }\OtherTok{\textless{}{-}} \FunctionTok{Arima}\NormalTok{(}
+                \FunctionTok{ts}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data, }\AttributeTok{freq =}\NormalTok{ temporalidad),}
+                \AttributeTok{order =}\NormalTok{ no.estacional,}
+                \AttributeTok{seasonal =}\NormalTok{ estacional,}
+                \AttributeTok{fixed =} \FunctionTok{c}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(coeficientes))}
+\NormalTok{            )}
+\NormalTok{        \} }\ControlFlowTok{else}
+\NormalTok{            (\{}
+\NormalTok{                modelo }\OtherTok{\textless{}{-}} \FunctionTok{Arima}\NormalTok{(}
+                    \FunctionTok{ts}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data, }\AttributeTok{freq =}\NormalTok{ temporalidad),}
+                    \AttributeTok{order =}\NormalTok{ no.estacional,}
                     \AttributeTok{seasonal =}\NormalTok{ estacional,}
-                    \AttributeTok{fixed=}\FunctionTok{c}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(coeficientes)))}
-\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{(\{}
-\NormalTok{        modelo }\OtherTok{\textless{}{-}} \FunctionTok{Arima}\NormalTok{(}\FunctionTok{ts}\NormalTok{(}\AttributeTok{data=}\NormalTok{data, }\AttributeTok{freq=}\NormalTok{temporalidad), }
-                    \AttributeTok{order =}\NormalTok{ no.estacional, }
-                    \AttributeTok{seasonal =}\NormalTok{ estacional,}
-                    \AttributeTok{fixed=}\FunctionTok{c}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(coeficientes), }\ConstantTok{NA}\NormalTok{))}
-\NormalTok{    \})}
-    
-\NormalTok{    datos }\OtherTok{\textless{}{-}} \FunctionTok{simulate}\NormalTok{(modelo, }\AttributeTok{nsim=}\NormalTok{(n}\SpecialCharTok{+}\FunctionTok{length}\NormalTok{(data)))}
-    
-\NormalTok{    datos }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(datos, }\AttributeTok{start=}\FunctionTok{length}\NormalTok{(data)}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
-    \FunctionTok{list}\NormalTok{(}\AttributeTok{modelo=}\NormalTok{modelo, }\AttributeTok{datos=}\NormalTok{datos)\}, }
-    \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\FunctionTok{ts.sim}\NormalTok{(data, n, temporalidad,}
-\NormalTok{                                        no.estacional, estacional, }
-\NormalTok{                                        p, q, P, Q))}
+                    \AttributeTok{fixed =} \FunctionTok{c}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(coeficientes), }\ConstantTok{NA}\NormalTok{)}
+\NormalTok{                )}
+\NormalTok{            \})}
+        
+\NormalTok{        datos }\OtherTok{\textless{}{-}} \FunctionTok{simulate}\NormalTok{(modelo, }\AttributeTok{nsim=}\NormalTok{(n}\SpecialCharTok{+}\FunctionTok{length}\NormalTok{(data)))}
+        
+\NormalTok{        datos }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(datos, }\AttributeTok{start=}\FunctionTok{length}\NormalTok{(data)}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
+        \FunctionTok{list}\NormalTok{(}\AttributeTok{modelo=}\NormalTok{modelo, }\AttributeTok{datos=}\NormalTok{datos)\},}
+        \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e)}
+            \FunctionTok{ts.sim}\NormalTok{(data, n, temporalidad,}
+\NormalTok{                   no.estacional, estacional,}
+\NormalTok{                   p, q, P, Q))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -2496,279 +2646,279 @@ la fuente oficial de los paquetes del lenguaje R.
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\hypertarget{ref-medidas}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-medidas}{}}%
 Adhikari, R., K, A. R., \& Agrawal, R. K. (2013). \emph{An Introductory
 Study on Time Series Modeling and Forecasting} (pp. 42-45). Recuperado
 de \url{https://arxiv.org/ftp/arxiv/papers/1302/1302.6613.pdf}
 
-\leavevmode\hypertarget{ref-stationary_def}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-stationary_def}{}}%
 Agrawal, R., \& Adhikari, R. (2013). An introductory study on time
 series modeling and forecasting. \emph{Nova York: CoRR}.
 
-\leavevmode\hypertarget{ref-ggpmisc}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ggpmisc}{}}%
 Aphalo, P. J. (2021). \emph{ggpmisc: Miscellaneous Extensions to
 'ggplot2'}. Recuperado de
 \url{https://CRAN.R-project.org/package=ggpmisc}
 
-\leavevmode\hypertarget{ref-gridExtra}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-gridExtra}{}}%
 Auguie, B. (2017). \emph{gridExtra: Miscellaneous Functions for "Grid"
 Graphics}. Recuperado de
 \url{https://CRAN.R-project.org/package=gridExtra}
 
-\leavevmode\hypertarget{ref-pearson}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-pearson}{}}%
 Benesty, J., \& Chen, Y. and C., J.and Huang. (2009). Pearson
 Correlation Coefficient. En \emph{Noise Reduction in Speech Processing}
 (pp. 37-38). \url{https://doi.org/10.1007/978-3-642-00296-0_5}
 
-\leavevmode\hypertarget{ref-box-jenkins}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-box-jenkins}{}}%
 Box, G. E. P., Jenkins, G. M., \& Reinsel, G. C. (1994). \emph{Time
 Series Analysis: Forecasting and Control}. Recuperado de
 \url{https://books.google.co.cr/books?id=sRzvAAAAMAAJ}
 
-\leavevmode\hypertarget{ref-yule.walker}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-yule.walker}{}}%
 Brockwell, P. J., \& Davis, R. A. (2009). \emph{Time Series: Theory and
 Methods}. En \emph{Springer Series en Statistics} (p. 239). Recuperado
-de \url{https://books.google.co.cr/books?id=_DcYu_EhVzUC}
+de \url{https://books.google.co.cr/books?id=/_DcYu/_EhVzUC}
 
-\leavevmode\hypertarget{ref-brown}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-brown}{}}%
 Brown, R. (1956). \emph{Exponential Smoothing for Predicting Demand}.
 Recuperado de \url{https://www.industrydocuments.ucsf.edu/docs/jzlc0130}
 
-\leavevmode\hypertarget{ref-burnham2007model}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-burnham2007model}{}}%
 Burnham, K. P., \& Anderson, D. R. (2007). \emph{Model Selection and
 Multimodel Inference: A Practical Information-Theoretic Approach}.
 Recuperado de \url{https://books.google.co.cr/books?id=IWUKBwAAQBAJ}
 
-\leavevmode\hypertarget{ref-calderon2012estadistica}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-calderon2012estadistica}{}}%
 Calderón, C. E. (2012). Estadística para Estudiantes de Administración
 de Empresas de la Universidad Nacional del Callao. \emph{Editorial San
 Marcos, 2da Edición, Lima Perú}. Recuperado de
 \url{https://unac.edu.pe/documentos/organizacion/vri/cdcitra/Informes_Finales_Investigacion/IF_JUNIO_2012/IF_CALDERON\%20OTOYA_FCA/capitulo\%208.pdf}
 
-\leavevmode\hypertarget{ref-10.2307ux2f1392184}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-10.2307ux2f1392184}{}}%
 Canova, F., \& Hansen, B. E. (1995). Are Seasonal Patterns Constant over
 Time? A Test for Seasonal Stability. \emph{Journal of Business \&
 Economic Statistics}, \emph{13}(3), 237-252. Recuperado de
 \url{http://www.jstor.org/stable/1392184}
 
-\leavevmode\hypertarget{ref-ccpexternas}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ccpexternas}{}}%
 Cardona, G. ;. F., D.; Escané. (2013). Mortalidad por causas externas:
 Un problema de salud pública. Argentina, Chile y Colombia. 2000-2008.
 \emph{Revista electrónica semestral}, \emph{10}(2). Recuperado de
 \url{https://www.researchgate.net/publication/274885475_Mortalidad_por_causa_externas_un_problema_de_salud_publica_Argentina_Chile_y_Colombia_2000-2008}
 
-\leavevmode\hypertarget{ref-Cochrane}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Cochrane}{}}%
 Cochrane, J. H. (1997). \emph{Time Series for Macroeconomics and
 Finance}. Recuperado de
 \url{http://econ.lse.ac.uk/staff/wdenhaan/teach/cochrane.pdf}
 
-\leavevmode\hypertarget{ref-tsa_decades}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-tsa_decades}{}}%
 De Gooijer, J. G., \& Hyndman, R. J. (2006). 25 years of time series
 forecasting. \emph{International Journal of Forecasting}, \emph{22}(3),
 443-473.
 https://doi.org/\url{https://doi.org/10.1016/j.ijforecast.2006.01.001}
 
-\leavevmode\hypertarget{ref-donoso}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-donoso}{}}%
 Donoso, E. (2004). Desigualdad en mortalidad infantil entre las comunas
 de la provincia de Santiago. \emph{Revista médica de Chile}, \emph{132},
 461-466. Recuperado de
 \url{https://scielo.conicyt.cl/scielo.php?script=sci_arttext\&pid=S0034-98872004000400008\&nrm=iso}
 
-\leavevmode\hypertarget{ref-ggseas}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ggseas}{}}%
 Ellis, P. (2018). \emph{ggseas: 'stats' for Seasonal Adjustment on the
 Fly with 'ggplot2'}. Recuperado de
 \url{https://CRAN.R-project.org/package=ggseas}
 
-\leavevmode\hypertarget{ref-definicion_estocastico}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-definicion_estocastico}{}}%
 Elmabrouk, O. M. (s.~f.). \emph{Measuring Reliability of Stationary
 Stochastic Processes}. Recuperado de
 \url{https://www.academia.edu/7140606/Measuring_Reliability_of_Stationary_Stochastic_Processes?auto=download}
 
-\leavevmode\hypertarget{ref-definicion_iid}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-definicion_iid}{}}%
 Evans, M. J., \& Rosenthal, J. S. (2005). \emph{Probabilidad y
 estadística} (p. 121). Recuperado de
 \url{https://books.google.co.cr/books?id=ZU3MEKZFgsMC}
 
-\leavevmode\hypertarget{ref-Lombardo}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Lombardo}{}}%
 Flaherty, J., \& Lombardo, R. (2000, enero). \emph{Modelling Private New
 Housing Starts in Australia}. Recuperado de
 \url{http://www.prres.net/papers/Flaherty_Modelling_Private_New_Housing_Starts_In_Australia.pdf}
 
-\leavevmode\hypertarget{ref-fuller1995introduction}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-fuller1995introduction}{}}%
 Fuller, W. A. (1995). \emph{Introduction to Statistical Time Series}.
 Recuperado de \url{https://books.google.co.cr/books?id=wyRhjmAPQIYC}
 
-\leavevmode\hypertarget{ref-lubridate}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-lubridate}{}}%
 Grolemund, G., \& Wickham, H. (2011). Dates and Times Made Easy with
 {lubridate}. \emph{Journal of Statistical Software}, \emph{40}(3), 1-25.
 Recuperado de \url{https://www.jstatsoft.org/v40/i03/}
 
-\leavevmode\hypertarget{ref-Hamzacebi}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Hamzacebi}{}}%
 Hamzaçebi, C. (2008). Improving Artificial Neural Networks' Performance
 in Seasonal Time Series Forecasting. \emph{Inf. Sci.}, \emph{178}(23),
 4550-4559. \url{https://doi.org/10.1016/j.ins.2008.07.024}
 
-\leavevmode\hypertarget{ref-oscarh-1}{}%
-Hernández, O. (2011a). \emph{Introducción a las Series Cronológicas}
-(1.ª ed.). Recuperado de
+\leavevmode\vadjust pre{\hypertarget{ref-analisis_combinatorio}{}}%
+Hernández, O. (2008). \emph{Modelos probabilísticos discretos} (1.ª
+ed.). Recuperado de
+\url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/2168-modelos-probabilisticos-discretos.html}
+
+\leavevmode\vadjust pre{\hypertarget{ref-oscarh-1}{}}%
+Hernández, O. (2011). \emph{Introducción a las Series Cronológicas} (1.ª
+ed.). Recuperado de
 \url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}
 
-\leavevmode\hypertarget{ref-oscarh-4}{}%
-Hernández, O. (2011b). \emph{Introducción a las Series Cronológicas}.
-Recuperado de
-\url{http://www.editorial.ucr.ac.cr/ciencias-naturales-y-exactas/item/1985-introduccion-a-las-series-cronologicas.html}
-
-\leavevmode\hypertarget{ref-Hipel}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Hipel}{}}%
 Hipel, K. W., \& McLeod, A. I. (1994). \emph{Time Series Modelling of
 Water Resources and Environmental Systems}. Recuperado de
 \url{https://books.google.co.cr/books?id=t1zG8OUbgdgC}
 
-\leavevmode\hypertarget{ref-hyndman2018forecasting}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-hyndman2018forecasting}{}}%
 Hyndman, R. J., \& Athanasopoulos, G. (2018a). \emph{Forecasting:
 principles and practice}. Recuperado de
-\url{https://books.google.co.cr/books?id=_bBhDwAAQBAJ}
+\url{https://books.google.co.cr/books?id=/_bBhDwAAQBAJ}
 
-\leavevmode\hypertarget{ref-hyndman_box-jenkins}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-hyndman_box-jenkins}{}}%
 Hyndman, R. J., \& Athanasopoulos, G. (2018b). \emph{Forecasting:
 principles and practice}. Recuperado de
-\url{https://books.google.co.cr/books?id=_bBhDwAAQBAJ}
+\url{https://books.google.co.cr/books?id=/_bBhDwAAQBAJ}
 
-\leavevmode\hypertarget{ref-forecast}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-forecast}{}}%
 Hyndman, Rob J., \& Khandakar, Y. (2008). Automatic time series
 forecasting: the forecast package for {R}. \emph{Journal of Statistical
 Software}, \emph{26}(3), 1-22. Recuperado de
 \url{https://www.jstatsoft.org/article/view/v027i03}
 
-\leavevmode\hypertarget{ref-auto.arima}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-auto.arima}{}}%
 Hyndman, R., \& Khandakar, Y. (2008). Automatic Time Series Forecasting:
 The forecast Package for R. \emph{Journal of Statistical Software,
 Articles}, \emph{27}(3), 1-22.
 \url{https://doi.org/10.18637/jss.v027.i03}
 
-\leavevmode\hypertarget{ref-infantiles}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-infantiles}{}}%
 INEC. (2004). \emph{Documento Metodológico de Defunciones Infantiles}.
 INEC.
 
-\leavevmode\hypertarget{ref-bayes}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-bayes}{}}%
 Jammalamadaka, S. R., Qiu, J., \& Ning, N. (2018). \emph{Multivariate
 Bayesian Structural Time Series Model}. Recuperado de
 \url{https://arxiv.org/pdf/1801.03222.pdf}
 
-\leavevmode\hypertarget{ref-ggpubr}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ggpubr}{}}%
 Kassambara, A. (2020). \emph{ggpubr: 'ggplot2' Based Publication Ready
 Plots}. Recuperado de \url{https://CRAN.R-project.org/package=ggpubr}
 
-\leavevmode\hypertarget{ref-kedem}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-kedem}{}}%
 Kedem, B., \& Fokianos, K. (2005). \emph{Regression Models for Time
 Series Analysis}. Recuperado de
 \url{https://books.google.co.cr/books?id=8r0qE35wt44C}
 
-\leavevmode\hypertarget{ref-Lee}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Lee}{}}%
 Lee, J. (s.~f.). Univariate time series modeling and forecasting
 (Box-Jenkins Method). \emph{Econ 413, lecture 4}.
 
-\leavevmode\hypertarget{ref-leon}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-leon}{}}%
 León, B. ;. E., R.; Gallegos. (1998). {Mortalidad infantil: Análisis de
 un decenio}. \emph{{Revista Cubana de Medicina General Integral}},
 \emph{14}, 606-610. Recuperado de
 \url{http://scielo.sld.cu/scielo.php?script=sci_arttext\&pid=S0864-21251998000600017\&nrm=iso}
 
-\leavevmode\hypertarget{ref-nacion}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-nacion}{}}%
 Nación. (2013). Morbilidad y mortalidad en Costa Rica. \emph{La Nacion}.
 Recuperado de \url{https://bit.ly/2xWUeXU}
 
-\leavevmode\hypertarget{ref-CIE10}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-CIE10}{}}%
 OPS. (2016). \emph{Clasificación Estadística Internacional de
 Enfermedades y Problemas Relacionados con la Salud}. OMS.
 
-\leavevmode\hypertarget{ref-Osborn2009SEASONALITYAT}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Osborn2009SEASONALITYAT}{}}%
 Osborn, D. R., Chui, A. P. L., Smith, J., \& Birchenhall, C. (2009).
 \emph{Seasonality and the order of integration for consumption}.
 Recuperado de
 \url{http://www.est.uc3m.es/esp/nueva_docencia/comp_col_get/lade/tecnicas_prediccion/OCSB_OxBull1988.pdf}
 
-\leavevmode\hypertarget{ref-parallel}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-parallel}{}}%
 R Core Team. (2019). \emph{R: A Language and Environment for Statistical
 Computing}. Recuperado de \url{https://www.R-project.org/}
 
-\leavevmode\hypertarget{ref-introduccion_series}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-introduccion_series}{}}%
 Ramírez, F. (2007). \emph{Introducción a las series de tiempo. Métodos
 paramétricos}. Recuperado de
 \url{https://books.google.es/books?id=KvLhxFPwvsUC}
 
-\leavevmode\hypertarget{ref-tsa_decision_making}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-tsa_decision_making}{}}%
 Rezaee, Z., Aliabadi, S., Dorestani, A., \& Rezaee, N. J. (2020).
 Application of Time Series Models in Business Research: Correlation,
 Association, Causation. \emph{Sustainability}, \emph{12}(12), 4833.
 
-\leavevmode\hypertarget{ref-Rincon}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Rincon}{}}%
 Rincon, M. (2000). \emph{Métodos para proyecciones demográficas}.
 
-\leavevmode\hypertarget{ref-supenprodc}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-supenprodc}{}}%
 Rosero-Bixby, L. (2018). \emph{Producto C para SUPEN. Proyección de la
 mortalidad de Costa Rica 2015-2150}. Recuperado de CCP-UCR website:
-\url{http://srv-website.cloudapp.net/documents/10179/999061/Nota+t}
+\url{http://srv-website.cloudapp.net/documents/10179/999061/Nota+t\%C3\%A9cnica+tablas+de+vida+segunda+parte}
 
-\leavevmode\hypertarget{ref-sargent_macro}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-sargent_macro}{}}%
 Sargent, T. J. (1979). \emph{Macroeconomic Theory}. Recuperado de
 \url{https://books.google.co.cr/books?id=X6u7AAAAIAAJ}
 
-\leavevmode\hypertarget{ref-astsa}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-astsa}{}}%
 Stoffer, D. (2020). \emph{astsa: Applied Statistical Time Series
 Analysis}. Recuperado de \url{https://CRAN.R-project.org/package=astsa}
 
-\leavevmode\hypertarget{ref-Wold}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Wold}{}}%
 Surhone, L. M., Timpledon, M. T., \& Marseken, S. F. (2010). \emph{Wold
 Decomposition}. Recuperado de
 \url{https://books.google.co.cr/books?id=7cSqcQAACAAJ}
 
-\leavevmode\hypertarget{ref-redes}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-redes}{}}%
 Tadayon, M., \& Iwashita, Y. (2020). \emph{Comprehensive Analysis of
 Time Series Forecasting Using Neural Networks}. Recuperado de
 \url{https://arxiv.org/pdf/2001.09547.pdf}
 
-\leavevmode\hypertarget{ref-motos}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-motos}{}}%
 Vázquez, J. (2017). En 5 años flotilla de motos se disparó en un 189 por
 ciento. \emph{CR Hoy}. Recuperado de \url{https://bit.ly/2QmQQfE}
 
-\leavevmode\hypertarget{ref-mortalidad_optima}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-mortalidad_optima}{}}%
 Villalón, S. ;. O., G.; Vera. (2006). \emph{Tabla de vida por método de
 mortalidad óptima}. INE.
 
-\leavevmode\hypertarget{ref-ggplot2}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ggplot2}{}}%
 Wickham, H. (2016). \emph{ggplot2: Elegant Graphics for Data Analysis}.
 Recuperado de \url{https://ggplot2.tidyverse.org}
 
-\leavevmode\hypertarget{ref-readxl}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-readxl}{}}%
 Wickham, H., \& Bryan, J. (2019). \emph{readxl: Read Excel Files}.
 Recuperado de \url{https://CRAN.R-project.org/package=readxl}
 
-\leavevmode\hypertarget{ref-dplyr}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-dplyr}{}}%
 Wickham, H., François, R., Henry, L., \& Müller, K. (2019). \emph{dplyr:
 A Grammar of Data Manipulation}. Recuperado de
 \url{https://CRAN.R-project.org/package=dplyr}
 
-\leavevmode\hypertarget{ref-tidyr}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-tidyr}{}}%
 Wickham, H., \& Henry, L. (2019). \emph{tidyr: Tidy Messy Data}.
 Recuperado de \url{https://CRAN.R-project.org/package=tidyr}
 
-\leavevmode\hypertarget{ref-doi:10.1111ux2f1467-9892.00213}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-doi:10.1111ux2f1467-9892.00213}{}}%
 Xiao, Z. (2001). Testing the Null Hypothesis of Stationarity Against an
 Autoregressive Unit Root Alternative. \emph{Journal of Time Series
 Analysis}, \emph{22}(1), 87-105.
 \url{https://doi.org/10.1111/1467-9892.00213}
 
-\leavevmode\hypertarget{ref-knitr}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-knitr}{}}%
 Xie, Y. (2014). knitr: A Comprehensive Tool for Reproducible Research in
 {R}. En V. Stodden, F. Leisch, \& R. D. Peng (Eds.), \emph{Implementing
 Reproducible Computational Research}. Recuperado de
 \url{http://www.crcpress.com/product/isbn/9781466561595}
 
-\leavevmode\hypertarget{ref-Zhang}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Zhang}{}}%
 Zhang, G. (2003). Time series forecasting using a hybrid ARIMA and
 neural network model. \emph{Neurocomputing}, \emph{50}, 159-175.
 
-\leavevmode\hypertarget{ref-kableExtra}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-kableExtra}{}}%
 Zhu, H. (2021). \emph{kableExtra: Construct Complex Table with 'kable'
 and Pipe Syntax}. Recuperado de
 \url{https://CRAN.R-project.org/package=kableExtra}

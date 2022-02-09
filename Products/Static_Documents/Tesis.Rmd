@@ -54,7 +54,7 @@ knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
                       dev="jpeg", out.width = '100%', out.height='100%', fig.pos="!h",
                       echo=FALSE)
 
-carlians::requeridos(knitr, kableExtra, readxl, gridExtra, ggpubr, ggplot2, lubridate, 
+popstudy::required_packages(knitr, kableExtra, readxl, gridExtra, ggpubr, ggplot2, lubridate, 
                      ggseas, astsa, ggpmisc, forecast, 
                      tidyr, popstudy, dplyr)
 
