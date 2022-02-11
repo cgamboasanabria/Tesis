@@ -1,6 +1,12 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {table}{\numberline {1}{\ignorespaces Medidas de rendimiento según método de estimación\relax }}{43}{table.caption.27}%
-\contentsline {table}{\numberline {2}{\ignorespaces Medidas de rendimiento según método de estimación para la TMII\relax }}{44}{table.caption.28}%
-\contentsline {table}{\numberline {3}{\ignorespaces Medidas de rendimiento según método de estimación para la Mortalidad por causa externa\relax }}{45}{table.caption.30}%
-\contentsline {table}{\numberline {4}{\ignorespaces Medidas de rendimiento según método de estimación para los incentivos salariales\relax }}{45}{table.caption.32}%
-\contentsline {table}{\numberline {5}{\ignorespaces Medidas de rendimiento según método de estimación para los intereses y comisiones del sector público\relax }}{46}{table.caption.34}%
+\contentsline {table}{\numberline {1}{\ignorespaces Coefcientes del proceso original y los estimados con auto.arima()\relax }}{63}{table.caption.59}%
+\contentsline {table}{\numberline {2}{\ignorespaces Coefcientes de los modelos ajustados con a las series reales con auto.arima()\relax }}{64}{table.caption.60}%
+\contentsline {table}{\numberline {3}{\ignorespaces Coefcientes del proceso original y los estimados con sobreparametrización\relax }}{64}{table.caption.61}%
+\contentsline {table}{\numberline {4}{\ignorespaces Coefcientes de los modelos ajustados con a las series reales con sobreparametrización\relax }}{65}{table.caption.62}%
+\contentsline {table}{\numberline {5}{\ignorespaces Coefcientes del proceso original y los estimados con un ARIMA estándar\relax }}{66}{table.caption.63}%
+\contentsline {table}{\numberline {6}{\ignorespaces Coefcientes de los modelos ajustados con a las series reales con un ARIMA estándar\relax }}{66}{table.caption.64}%
+\contentsline {table}{\numberline {7}{\ignorespaces Medidas de rendimiento según método de estimación\relax }}{67}{table.caption.65}%
+\contentsline {table}{\numberline {8}{\ignorespaces Medidas de rendimiento según método de estimación para la TMII\relax }}{68}{table.caption.66}%
+\contentsline {table}{\numberline {9}{\ignorespaces Medidas de rendimiento según método de estimación para la Mortalidad por causa externa\relax }}{68}{table.caption.68}%
+\contentsline {table}{\numberline {10}{\ignorespaces Medidas de rendimiento según método de estimación para los incentivos salariales\relax }}{69}{table.caption.70}%
+\contentsline {table}{\numberline {11}{\ignorespaces Medidas de rendimiento según método de estimación para los intereses y comisiones del sector público\relax }}{70}{table.caption.72}%

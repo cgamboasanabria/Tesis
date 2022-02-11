@@ -304,6 +304,15 @@ Ciudad Universitaria Rodrigo Facio, Costa Rica\\
         ($(#1.south west)!(#1-1-#2.south west)!(#1.south east)-(0,\mymatrixbraceoffsetv)$);
 }
 %%%
+
+%%% Para hacer la subsubsubsection
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -1928,17 +1937,214 @@ una se muestra en la figura \ref{fig:series_simuladas}.
 
 \subsection{Métodos}
 
-\subsection{Medidas de bondad de ajuste y rendimiento}
+En este apartado se describe el procedimiento a seguir con cada una de
+las series cronológicas mencionadas previamente, tanto las series
+simuladas como las reales. Para comprobar el poder predictivo del método
+propuesto se realiza inicialmente un análisis exploratorio para
+verificar si las series temporales sujetas a análisis son o no
+estacionarias, y en caso de no serlo, si requieren algún proceso de
+diferenciación. Se describe además el proceso de partición de los datos
+tanto para ajustar los modelos como para validar los pronósticos. Para
+cada serie de tiempo, se estima el mejor modelo utilizando la función
+\texttt{auto.arima()}, la sobreparametrización y un modelo ARIMA
+estándar, que pueed ser un \(ARIMA(1,1,1)\) para las series no
+estacionales, o un \(ARIMA(1,1,1)(1,1,1)\) en el caso de las series
+cronológicas estacionales. Una vez obtenidos estos modelos, se analizan
+los residuales obtenidos. En última instancia, se obtienen los
+pronósticos y sus medidas de bondad de ajuste y de rendimiento.
+
+\subsubsection{Análisis exploratorio}
+
+Como fue mencionado en el Marco Teórico, debe corroborarse que la serie
+cronológica a trabajar posea un comportamiento estacionario y, de no
+serlo, someterla a procesos matemáticos para asegurar esta condición,
+estando entre los más comunes la diferenciación o la aplicación del
+logaritmo natural. Posteriormente, se realiza una identificación del
+posible proceso que gobierna la serie cronológica al graficar las
+funciones de autocorrelación y autocorrelación parcial, las cuales
+también sirven para verificar si la serie (transformada o no) es
+estacionaria.
+
+\subsubsection{Partición de los datos}
+
+A partir de la serie cronológica que se someterá a análisis, se realiza
+una partición de los datos para tener dos conjuntos distintos:
+entrenamiento y validación. El primero servirá precisamente para
+entrenar y estimar los distintos modelos; mientras que el segundo
+servirá para validar los pronósticos obtenidos. De manera
+predeterminada, se utilizará una partición del 80\% de los datos para el
+conjunto de entrenamiento y un 20\% para los datos de validación, sin
+embargo, esto puede cambiar de acuerdo al interés propio del(la)
+investigador(a).
+
+\subsubsection{Estimación del mejor modelo según la función auto.arima()}
+
+Con el correspondiente conjunto de datos de entrenamiento, se utiliza la
+función \texttt{auto.arima()} para encontrar el mejor modelo ARIMA
+sugerido con este método, que como fue mencionado en la introducción de
+esta tesis, usa como criterio la minimización del AICc.
+
+\subsubsection{Estimación del mejor modelo con sobreparametrización}
+
+A partir del mismo conjunto de datos de entrenamiento de la
+correspondiente serie cronológica, se utiliza la sobreparametrización
+para encontrar el mejor modelo a partir de distintas permutaciones de la
+cantidad de coeficientes de los términos \(p,d,q, P,D,Q\), según sea el
+caso.
+
+La estimación de los modelos y posterior selección de los mismos vía
+sobreparametrización es un proceso que requiere de distintas etapas. El
+procedimiento completo fue programado utilizando el lenguaje R y su
+código se muestra en el \ref{funcion_op_arima}, la cuál fue construida
+haciendo uso de los paquetes de R \texttt{tidyr}
+(\protect\hyperlink{ref-tidyr}{Wickham \& Henry, 2019}),
+\texttt{dplyr}(\protect\hyperlink{ref-dplyr}{Wickham, François, Henry,
+\& Müller, 2019}) y \texttt{parallel}(\protect\hyperlink{ref-parallel}{R
+Core Team, 2019}), los procesos internos de esta función son descritos a
+continuación:
+
+\textbf{1.} Una vez que se define la partición que tendrá la serie
+cronológica, se prosigue con la selección de los escenarios para estimar
+los modelos de ARIMA. Es en esta instancia en donde se decide en valor
+máximo de los parámetros \(p,d,q,P,D,Q\) del modelo
+\(ARIMA(p,d,q)(P,D,Q)_s\) que serán sujetos al análisis.
+
+\textbf{2.} Para el caso de series cronológicas no estacionales, los
+valores \(P,D\) y \(Q\) son iguales a cero (porque precisamente, no se
+estiman coeficientes para la parte estacional). Se estiman todas las
+permutaciones de parámetros \(p,d,q\) hasta tener como máximo un modelo
+\(ARIMA(6,1,6)\). Para ello se genera una matriz con cada una de estas
+permutaciones, denominada matriz de valores paramétricos, en donde cada
+fila representa la especificación del modelo \(ARIMA(p,d,q)\) que se va
+a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
+
+\begin{equation}
+\label{eqn:matriz_arima_1}
+\begin{tikzpicture}[mymatrixenv]
+    \matrix[mymatrix] (m)  {
+        0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 2 & 0 & 0 & 0 \\
+        0 & 0 & 3 & 0 & 0 & 0 \\
+        0 & 0 & 4 & 0 & 0 & 0 \\
+        0 & 0 & 5 & 0 & 0 & 0 \\
+        0 & 0 & 6 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 1 & 0 & 0 & 0 \\
+        0 & 1 & 2 & 0 & 0 & 0 \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+        6 & 1 & 6 & 0 & 0 & 0 \\
+    };
+    \mymatrixbracetop{1}{3}{$p, d, q$};
+    \mymatrixbracetop{4}{6}{$P,D,Q$}
+\end{tikzpicture}
+\end{equation}
+
+\textbf{3.} De manera análoga, al trabajar con series cronológicas
+estacionales, se decide trabajar (para una temporalidad determinada,
+como mensual) hasta un modelo máximo de \(ARIMA(4,1,4)(4,1,4)_{12}\).
+Así, la matriz de valores paramétricos mostrada en
+\ref{eqn:matriz_arima_2} posee, en cada línea, una especificación de
+modelo a estimar:
+
+\begin{equation}
+\label{eqn:matriz_arima_2}
+\begin{tikzpicture}[mymatrixenv]
+    \matrix[mymatrix] (m)  {
+        0 & 0 & 1 & 0 & 0 & 1 \\
+        0 & 0 & 1 & 0 & 0 & 2 \\
+        0 & 0 & 1 & 0 & 0 & 3 \\
+        0 & 0 & 1 & 0 & 0 & 4 \\
+        0 & 0 & 1 & 0 & 1 & 1 \\
+        0 & 0 & 1 & 0 & 1 & 2 \\
+        0 & 0 & 1 & 0 & 1 & 3 \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+        4 & 1 & 4 & 4 & 1 & 4 \\
+    };
+    \mymatrixbracetop{1}{3}{$p, d, q$};
+    \mymatrixbracetop{4}{6}{$P,D,Q$}
+\end{tikzpicture}
+\end{equation}
+
+\textbf{4.} Con la matriz de valores paramétricos, como las mostradas en
+\ref{eqn:matriz_arima_1} y \ref{eqn:matriz_arima_2}, se inicia la
+estimación los modelos en orden ascendente, es decir, del modelo con
+menos parámetros al que tiene más parámetros. Al estimar un nuevo
+modelo, se evalúa mediante una prueba \emph{t}
+(\protect\hyperlink{ref-astsa}{Stoffer, 2020}) para verificar que el
+nuevo término incorporado al modelo es significativamente distinto de
+cero, es decir, el nuevo parámetro está generando un impacto en el
+modelo.
+
+\textbf{5.} Al tratarse de un proceso iterativo, el cálculo puede
+volverse computacionalmente pesado, es por esta razón que la
+programación del proceso fue habilitada para realizar procesamiento
+paralelo y de esta manera reducir el consumo de tiempo en la obtención
+de resultados.
+
+\textbf{6.} Cuando se han realizado las pruebas de significancia
+estadística a los modelos, son calculadas las medidas de bondad de
+ajuste y de rendimiento que se mencionarán más adelante.
+
+\textbf{7.} Tras esto, se aplica un método de concenso para seleccionar
+el modelo más adecuado. Este criterio consiste en darle una mayor o
+menor ponderación a los resultados obtenidos con el conjunto de datos de
+entrenamiento y el de validación. De forma predeterminada se le da una
+ponderación de 0.8 a los resultados de validación y un 0.2 a los de
+entrenamiento, esto porque en la práctica, los datos de validación son
+considerados como datos más recientes y que, mientras más cercanos sean
+los pronósticos a estos datos, mejores resultados ofrece el modelo
+sleccionado. El método de concenso es utilizado para obtener un puntaje
+de cada modelo ARIMA, su cálculo se obtiene de la ecuación
+\ref{eqn:concenso}:
+
+\begin{equation}
+\label{eqn:concenso}
+min\left( \sum_i {m_i}\cdot w_j \right)
+\end{equation}
+
+Donde \(m_i\) representa cada una de las medidas de rendimiento y
+\(w_j\) es el valor de ponderación de los conjunto de entrenamiento y
+validación mencionados anteriormente. El valor más bajo de todos los
+modelos es el que se define como el modelo más adecuado.
+
+\subsubsection{Estimación de un modelo ARIMA estándar}
+
+Para contrastar los dos métodos de selección de modelos anteriores
+(\texttt{auto.arima()} y sobreparametrización), se ajusta también un
+modelo ARIMA más tradicional o estándar. En el caso de las series
+cronológicas no estacionales se ajusta un modelo \(ARIMA(1,1,1)\) y en
+el caso de las series estacionales se ajusta un modelo
+\(ARIMA(1,1,1),(1,1,1)_S\).
+
+\subsubsection{Análisis de los errores}
+
+Una vez que se selecciona un modelo de cada tipo (\texttt{auto.arima()},
+sobreparametrización y ARIMA estándar), se realiza un análisis de los
+residuos estandarizados, la autorrelación y el supuesto de normalidad de
+normalidad de los residuales.
+
+standardized residuals, sample ACF of residuals, normal QQ-Plot y Q
+statistic p-value
+
+\subsubsection{Pronósticos}
+
+Para cada modelo estimado, se realiza un pronóstico de 50 periodos hacia
+el futuro para realizar una inspección visual de los resultados previo a
+hacer una comparación numérica mediante dos formas distintas pero
+complementarias: las medidas de bondad de ajuste y de rendimiento.
+
+\subsubsection{Medidas de bondad de ajuste y de rendimiento}
 
 El objetivo último al estimar un modelo ARIMA es obtener los pronósticos
-de dicho modelo Sin embargo, estos pronósticos no son pueden asumirse
-como correctos, sino que se debe evaluar su calidad con las llamadas
-medidas de bondad de ajuste y de rendimiento. Existen múltiples medidas,
+de dicho modelo. Sin embargo, estos pronósticos no pueden asumirse como
+correctos, sino que se debe evaluar su calidad con las llamadas medidas
+de bondad de ajuste y de rendimiento, aplicadas a los conjuntos de
+entrenamiento y validación. Existen múltiples medidas,
 \protect\hyperlink{ref-medidas}{Adhikari et~al.}
 (\protect\hyperlink{ref-medidas}{2013}) menciona, entre otras, las
 siguientes:
 
-\subsubsection{AIC}
+\paragraph{AIC}
 
 Se calcula de la siguiente manera:
 
@@ -1949,7 +2155,7 @@ AIC=-2logL\left(\hat\theta\right)+2k
 
 Donde \(k\) es el número de parámetros y \(n\) el número de datos.
 
-\subsubsection{AICc}
+\paragraph{AICc}
 
 Su forma de cálculo se muestra en la ecuación \ref{eqn:AICc}
 \begin{equation}
@@ -1959,7 +2165,7 @@ AICc=-2logL\left(\hat\theta\right)+2k+\frac{2k+1}{n-k-1}
 
 Donde \(k\) es el número de parámetros y \(n\) el número de datos.
 
-\subsubsection{BIC}
+\paragraph{BIC}
 
 El último estadístico de bondad de ajuste se calcula como se muestran en
 la ecuación \ref{eqn:BIC}.
@@ -1971,7 +2177,7 @@ BIC=-2logL\left(\hat\theta\right)+k\cdot log(n)
 
 Donde \(k\) es el número de parámetros y \(n\) el número de datos.
 
-\subsubsection{MAE}
+\paragraph{MAE}
 
 El error absoluto medio se define mediante la ecuación \ref{eqn:MAE}
 
@@ -1980,7 +2186,7 @@ El error absoluto medio se define mediante la ecuación \ref{eqn:MAE}
 \frac{1}{n}\sum_{t=1}^n |e_t|
 \end{equation}
 
-\subsubsection{MASE}
+\paragraph{MASE}
 
 Esta medida de rendimiento tiene dos casos, uno para series cronológicas
 no estacionales y otro para series cronológicas estacionales, como se
@@ -1998,7 +2204,7 @@ muestra en las ecuaciones \ref{eqn:MASE_no} y \ref{eqn:MASE_si}.
 
 Donde \(m\) es la temporalidad de la serie.
 
-\subsubsection{RMSE}
+\paragraph{RMSE}
 
 Es la raíz del error cuadrático medio, como se define en la ecuación
 \ref{eqn:RMSE}.
@@ -2008,124 +2214,756 @@ Es la raíz del error cuadrático medio, como se define en la ecuación
 \sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}
 \end{equation}
 
-\subsection{La sobreparametrización}
-
-La estimación de los modelos y posterior selección de los mismos vía
-sobreparametrización es un proceso que requiere de distintas etapas. El
-procedimiento completo fue programado utilizando el lenguaje
-R\footnote{\url{https://cran.r-project.org/}} y su código se muestra en
-el \ref{funcion_op_arima}, la cuál fue construida haciendo uso de los
-paquetes de R \texttt{tidyr} (\protect\hyperlink{ref-tidyr}{Wickham \&
-Henry, 2019}), \texttt{dplyr}(\protect\hyperlink{ref-dplyr}{Wickham,
-François, Henry, \& Müller, 2019}) y
-\texttt{parallel}(\protect\hyperlink{ref-parallel}{R Core Team, 2019}),
-los procesos internos de esta función son descritos a continuación.
-
-A partir de una serie cronológica \(y_t\), se realiza una partición de
-los datos para tener dos conjuntos distintos. Uno de ellos servirá para
-entrenar y estimar los distintos modelos; mientras que el segundo
-servirá para validar los pronósticos y posteriormente seleccionar el
-modelo más adecuado. De manera predeterminada, se utiliza una partición
-del 80\% de los datos para el conjunto de entrenamiento y un 20\% para
-los datos de validación, sin embargo, esto puede cambiar de acuerdo al
-interés propio del investigador(a).
-
-Una vez que se define la partición que tendrá la serie cronológica, se
-prosigue con la selección de los escenarios para estimar los modelos de
-ARIMA. Es en esta instancia en donde se decide en valor máximo de los
-parámetros \(p,d,q,P,D,Q\) del modelo \(ARIMA(p,d,q)(P,D,Q)_s\) que
-serán sujetos al análisis. Si se cuenta con una serie sin patrones
-estacionales y cuyo modelo con mayor cantidad de parámetros es un
-\(ARIMA(3,1,4)\), la matriz de valores paramétricos es la que se muestra
-en \ref{eqn:matriz_arima_1}:
-
-\begin{equation}
-\label{eqn:matriz_arima_1}
-\begin{tikzpicture}[mymatrixenv]
-    \matrix[mymatrix] (m)  {
-        0 & 0 & 1 & 0 & 0 & 0 \\
-        0 & 0 & 2 & 0 & 0 & 0 \\
-        0 & 0 & 3 & 0 & 0 & 0 \\
-        0 & 0 & 4 & 0 & 0 & 0 \\
-        0 & 1 & 0 & 0 & 0 & 0 \\
-        0 & 1 & 1 & 0 & 0 & 0 \\
-        0 & 1 & 2 & 0 & 0 & 0 \\
-        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-        3 & 1 & 4 & 0 & 0 & 0 \\
-    };
-    \mymatrixbracetop{1}{3}{$p, d, q$};
-    \mymatrixbracetop{4}{6}{$P,D,Q$}
-\end{tikzpicture}
-\end{equation}
-
-De manera análoga, al trabajar con un modelo con algún efecto estacional
-en una determinada periodicidad, como por ejemplo mensual, la matriz de
-valores paramétricos al definir el modelo con mayor número de parámetros
-como un \(ARIMA(6,1,6)(6,1,6)_{12}\) es la mostrada en
-\ref{eqn:matriz_arima_2}:
-
-\begin{equation}
-\label{eqn:matriz_arima_2}
-\begin{tikzpicture}[mymatrixenv]
-    \matrix[mymatrix] (m)  {
-        0 & 0 & 1 & 0 & 0 & 1 \\
-        0 & 0 & 1 & 0 & 0 & 2 \\
-        0 & 0 & 1 & 0 & 0 & 3 \\
-        0 & 0 & 1 & 0 & 0 & 4 \\
-        0 & 1 & 1 & 0 & 0 & 5 \\
-        0 & 1 & 1 & 0 & 0 & 6 \\
-        0 & 1 & 1 & 0 & 1 & 0 \\
-        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-        6 & 1 & 6 & 6 & 1 & 6 \\
-    };
-    \mymatrixbracetop{1}{3}{$p, d, q$};
-    \mymatrixbracetop{4}{6}{$P,D,Q$}
-\end{tikzpicture}
-\end{equation}
-
-Con la matriz de valores paramétricos, como las mostradas en
-\ref{eqn:matriz_arima_1} y \ref{eqn:matriz_arima_2}, se estiman los
-modelos en orden descendente, del modelo con menos parámetros al que
-tiene más parámetros. Al estimar un nuevo modelo, se evalúa mediante una
-prueba t (\protect\hyperlink{ref-astsa}{Stoffer, 2020}) para verificar
-el nuevo término incorporado al modelo es estadísticamente distinto de
-cero, es decir, el nuevo parámetro está generando un impacto en el
-modelo. AL tratarse de un proceso iterativo, los cálculos son pueden
-volverse computacionalmente pesado, es por esta razón que la
-programación del proceso fue habilitada para realizar procesamiento
-paralelo y de esta manera reducir el consumo de tiempo en la obtención
-de resultados.
-
-Cuando se han realizado las pruebas de significancia estadística a los
-modelos, son calculadas las medidas de bondad de ajuste y de rendimiento
-mencionadas con anterioridad. Tras esto, se aplica un método de concenso
-para seleccionar el modelo más adecuado. Este criterio consiste en darle
-mayor o menor ponderación a los resultados obtenidos con el conjunto de
-datos de entrenamiento y el de validación; de forma predeterminada se le
-da una ponderación de 0.8 a los resultados de validación y un 0.2 a los
-de entrenamiento, esto porque en la práctica, los datos de validación
-son considerados como datos más recientes y que, mientras más cercanos
-sean los pronósticos a estos datos, mejores resultados ofrece el modelo.
-El método de concenso es utilizado para obtener un puntaje de cada
-modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
-
-\begin{equation}
-\label{eqn:concenso}
-min\left( \sum_i {m_i}\cdot w_j \right)
-\end{equation}
-
-Donde \(m_i\) representa cada una de las medidas de rendimiento y
-\(w_j\) es el valor de ponderación de los conjunto de entrenamiento y
-validación mencionados anteriormente. El valor más bajo de todos los
-modelos es el que se define como el modelo más adecuado.
+De esta manera, cada una de las series cronológicas (simuladas y reales)
+serán sometidas a un análisis exploratorio y a una partición de los
+datos con un 80\% para el conjunto de entrenamiento y el restante 20\%
+para validación, esto con el fin de estimar modelos mediante la función
+\texttt{auto.arima()}, la sobreparametrización y un ARIMA estándar para
+evaluar sus correspondientes y la calidad de los pronósticos obtenidos.
 
 \newpage
 
 \section{RESULTADOS}
 
-\subsection{Introducción}
+Este capítulo aborda los principales resultados a partir del
+procedimiento descrito en la metodología. Cada sección de este capítulo
+tendrá una subsección donde se aplica cada etapa de análisis a las
+respectivas series cronológicas.
 
-\subsection{Análisis de simulación en series cronológicas}
+\subsection{Análisis exploratorio}
+
+Inicialmente, se analizan las series cronológicas para verificar su
+comportamiento al ajustar un suavizamiento de Loess para buscar señales
+de tendencia y concavidad en los datos temporales, y buscar indicios de
+los procesos que gobiernan dichas series, además someterlas a prueba
+para verificar que se trate de series cronológicas estacionarias.
+
+\subsubsection{Datos simulados}
+
+En la figura \ref{fig:series_simuladas} se mostró el comportamiento
+general de cada una de las series cronológicas simuladas. Al tratarse de
+datos simulados se conoce de previo el proceso que gobierna a cada una
+de las series temporales, por lo que verificar la estacioneriedad y
+obtener los correlogramas sirve para confirmar que los procesos siguen
+aproximadamente los procesos planteados.
+
+\paragraph{ARIMA(1,0,0)}
+
+En la figura \ref{fig:arima100_comportamiento} puede verse como los
+datos simulados bajo este proceso se comportan de manera aproximadamente
+estacionaria a lo largo del tiempo sin necesidad de aplicar ninguna
+transformación a los datos. Además, la figura \ref{fig:arima100_acf}
+muestra como las autocorrelaciones caen rápidamente a cero y van
+disminuyendo, mientras que la figura \ref{fig:arima100_pacf} se corta al
+inicio, lo que sugiere que se está en presencia de un proceso
+\(ARIMA(1,0,0)\), tal y como fue planteado al simular los datos.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima100_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,0)}\label{fig:arima100_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima100_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(1,0,0)}\label{fig:arima100_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima100_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(1,0,0)}\label{fig:arima100_pacf}
+\end{figure}
+
+\paragraph{ARIMA(1,0,1)}
+
+En la figura \ref{fig:arima101_comportamiento} también puede verse como
+los datos simulados bajo este proceso se comportan de manera
+aproximadamente estacionaria a lo largo del tiempo sin necesidad de
+aplicar ninguna transformación a los datos. Además, la figura
+\ref{fig:arima101_acf} muestra como las autocorrelaciones van
+disminuyendo, misma situación que se aprecia en la figura
+\ref{fig:arima101_pacf}, pues también va disminuyendo, lo que sugiere
+que el posible proceso que gobierna los datos podría tratarse de un
+\(ARIMA(1,0,1)\), tal y como fue planteado al simular los datos.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima101_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,1)}\label{fig:arima101_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima101_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(1,0,1)}\label{fig:arima101_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima101_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(1,0,1)}\label{fig:arima101_pacf}
+\end{figure}
+
+\paragraph{ARIMA(2,0,3)}
+
+En la figura \ref{fig:arima203_comportamiento} se observa como los datos
+simulados bajo este proceso no parecen tener ninguna tendencia, si bien
+podría aplicarse alguna transformación para volverla aún más
+estacionaria, esto no se considera necesario. La figura
+\ref{fig:arima203_acf} muestra como las autocorrelaciones van
+disminuyendo, misma situación que se aprecia en la figura
+\ref{fig:arima203_pacf}, pues también va disminuyendo, esta situación
+sugiere que se está en presencia de un proceso \(ARMA(p,q)\), por lo que
+podrían ajustarse varios modelos \(ARIMA(p,d,q)\) hasta encontrar el más
+adecuado.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima203_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(2,0,3)}\label{fig:arima203_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima203_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(2,0,3)}\label{fig:arima203_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima203_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(2,0,3)}\label{fig:arima203_pacf}
+\end{figure}
+
+\paragraph{ARIMA(4,0,2)}
+
+En la figura \ref{fig:arima402_comportamiento} se observa como los datos
+simulados bajo este proceso tampoco parecen tener ninguna tendencia, por
+lo que no se considera necesario aplicar ninguna transformación. Las
+figuras \ref{fig:arima402_acf} y \ref{fig:arima402_pacf} presentan una
+situación similar a la anterior, por lo que podrían ajustarse varios
+modelos \(ARIMA(p,d,q)\) hasta encontrar el más adecuado.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima402_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(4,0,2)}\label{fig:arima402_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima402_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(4,0,2)}\label{fig:arima402_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima402_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(4,0,2)}\label{fig:arima402_pacf}
+\end{figure}
+
+\paragraph{ARIMA(0,0,1)(0,1,1)}
+
+En la figura \ref{fig:arima001_011_comportamiento} los datos parecen ser
+aproximadamente estacionarios; una transformación no es estrictamente
+necesaria, pero puede aplicarse para corregir ligeramente la parte
+estacional. Las figuras \ref{fig:arima001_011_acf} y
+\ref{fig:arima001_011_pacf}, sugieren estar en presencia de un proceso
+estacional cada 12 periodos, por lo que la estimación de modelos
+\(ARIMA\) de bajo nivel podría ser suficiente..
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima001_011_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)}\label{fig:arima001_011_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima001_011_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)}\label{fig:arima001_011_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima001_011_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)}\label{fig:arima001_011_pacf}
+\end{figure}
+
+\paragraph{ARIMA(2,1,4)(3,0,3)}
+
+En la figura \ref{fig:arima214_303_comportamiento} lucen estacionarios,
+pues su media se mantiene muy constante a lo largo del tiempo. Las
+figuras \ref{fig:arima214_303_acf} y \ref{fig:arima214_303_pacf} por su
+lado sugieren la presencia de procesos estacionales cada 12 periodos tal
+y como fueron simulados los datos, pero no es claro identificar el
+proceso que gobierna la serie, por lo que habría que probar distintos
+modelos \(ARIMA\) hasta encontrar el más adecuado.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima214_303_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)}\label{fig:arima214_303_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima214_303_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)}\label{fig:arima214_303_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/arima214_303_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)}\label{fig:arima214_303_pacf}
+\end{figure}
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+Como se mostró en la figura \ref{fig:tmiiplotgeneral}, la tasa de
+mortalidad infantil interanual posee una tendencia claramente
+decreciente, por lo que su media, por lo que no se trata de una serie
+cronológica estacionaria. Tras aplicarle una diferenciación, esta
+situación cambia, tal y como se muestra en la figura
+\ref{fig:tmii_comportamiento}.
+
+Por otro lado, las figuras \ref{fig:tmii_acf} y \ref{fig:tmii_pacf}
+sugieren la presencia de procesos estacionales , mientras que en la
+parte no estacional se observa como la \emph{ACF} va disminuyendo y el
+\emph{PACF} se corta tras el segundo rezado, lo cual podría ser indicio
+de un proceso \(MA(2)\) o superior.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmii_comportamiento-1} \caption{Tendencia de los datos diferenciados de la TMII}\label{fig:tmii_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmii_acf-1} \caption{Autocorrelación de los datos diferenciados de la TMII}\label{fig:tmii_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/tmii_pacf-1} \caption{Autocorrelación parcial de los datos diferenciados de la TMII}\label{fig:tmii_pacf}
+\end{figure}
+
+\subsubsection{Mortalidad por causa externa}
+
+En la figura \ref{fig:externaplotgeneral} se observó como la tasa de
+mortalidad por causa externa posee una tendencia ligeramente creciente e
+inestable a lo largo del tiempo, por lo que no se trata de una serie
+cronológica estacionaria. Tras aplicarle una diferenciación la serie se
+comporta como lo mostrado en la figura \ref{fig:externa_comportamiento}.
+Además, las figuras \ref{fig:externa_acf} y \ref{fig:externa_pacf}
+muestran indicios de un proceso bajo en la parte no estacional, y si
+bien no hay indicios claros de patrones estacionales, es sabido que los
+meses de Enero, Abril y Diciembre son los que cuentan con un mayor
+número de defunciones por estas causas.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externa_comportamiento-1} \caption{Tendencia de los datos diferenciados de la mortalidad por causa externa}\label{fig:externa_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externa_acf-1} \caption{Autocorrelación de los datos diferenciados de la mortalidad por causa externa}\label{fig:externa_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/externa_pacf-1} \caption{Autocorrelación parcial de los datos diferenciados de la mortalidad por causa externa}\label{fig:externa_pacf}
+\end{figure}
+
+\subsubsection{Incentivos salariales}
+
+En la figura \ref{fig:incentivosplotgeneral} se observó como la serie de
+incentivos salariales posee una tendencia creciente y sostenida a lo
+largo del tiempo, por lo que no se trata de una serie cronológica
+estacionaria. Tras una diferenciación la serie se comporta como lo
+mostrado en la figura \ref{fig:incentivos_comportamiento}, que aunque su
+media se mantiene constante, parece seguir teniendo patrones. Además,
+las figuras \ref{fig:incentivos_acf} y \ref{fig:incentivos_pacf} no
+parecen sugerir un proceso en particular tanto para la parte estacional
+como para la no estacional, a pesar de que es claro que existe un efecto
+periódico.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivos_comportamiento-1} \caption{Tendencia de los datos diferenciados de la serie de incentivos salariales}\label{fig:incentivos_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivos_acf-1} \caption{Autocorrelación de los datos diferenciados de la serie de incentivos salariales}\label{fig:incentivos_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/incentivos_pacf-1} \caption{Autocorrelación parcial de los datos diferenciados de la serie de incentivos salariales}\label{fig:incentivos_pacf}
+\end{figure}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+En la figura \ref{fig:interesesplotgeneral} se muestra como la serie de
+intereses y comisiones del sector público posee una tendencia creciente
+no lineal, por lo que no se trata de una serie de tiempo estacionaria.
+Tras utilizar una diferenciación la serie se comporta como lo mostrado
+en la figura \ref{fig:intereses_comportamiento}, que aunque su media se
+mantiene constante, pero aún conserva algunos patrones. Las figuras
+\ref{fig:intereses_acf} y \ref{fig:intereses_pacf} indican que existen
+un efecto estacional, pero su identificación no es clara.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/intereses_comportamiento-1} \caption{Tendencia de los datos diferenciados de la serie de intereses y comisiones del sector público}\label{fig:intereses_comportamiento}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/intereses_acf-1} \caption{Autocorrelación de los datos diferenciados de la serie de intereses y comisiones del sector público}\label{fig:intereses_acf}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/intereses_pacf-1} \caption{Autocorrelación parcial de los datos diferenciados de la serie de intereses y comisiones del sector público}\label{fig:intereses_pacf}
+\end{figure}
+
+\subsection{Partición de los datos}
+
+Como se mencionó en la metodología, la partición utilizada consiste en
+tomar 80\% de las observaciones para generar el serie cronológica de
+entrenamiento para ajustar los modelos, mientras que el restante 20\%
+corresponde al la serie cronológica utilizada como validación. En el
+caso de los datos simulados, la ventana de observación de los datos
+seleccionados se muestra en la figura
+\ref{fig:particion_series_simuladas} para los datos simulados, y en la
+figura \ref{fig:particion_series_reales} para las series de tiempo
+reales.
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/particion_series_simuladas-1} \caption{Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo simuladas}\label{fig:particion_series_simuladas}
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/particion_series_reales-1} \caption{Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo reales}\label{fig:particion_series_reales}
+\end{figure}
+
+\subsection{Estimación del mejor modelo según la función auto.arima()}
+
+Al ajustar modelos con la función \texttt{auto.arima()}, al igual que
+con cualquier otro método para estimar modelos \(ARIMA\), se obtienen
+estimaciones de coeficientes. En el caso de los datos simulados, donde
+se conoce el verdadero proceso que gobierna la serie de tiempo, estos
+valores pueden compararse con los valores obtenidos.
+
+\subsubsection{Datos simulados}
+
+El cuadro \ref{tab:coeficientes_original_autoarima} resume los
+resultados obtenidos en la estimación de los coeficientes. En la columna
+\emph{Proceso original} se indica el proceso a partir del cual se generó
+la serie cronológica mediante simulación, en la columna
+\emph{Coeficiente} se indica el coeficiente al cual pertenecen las
+estimaciones presentes en las columnas \emph{Valor real} (el valor del
+coeficiente del proceso original), \emph{Estimación auto.arima()} (valor
+estimado del coeficiente mediante la función \texttt{auto.arima()}),
+\emph{Límite Inferior} y \emph{Límite Superior} del intervalo de
+confianza el 95\% para los coeficientes estimados en la columna
+\emph{Estimación auto.arima()}. Como se ha mencionado, la notación más
+utilizada para los modelos \(ARIMA\) es \(ARIMA(p,d,q)(P,D,Q)\), que en
+la columna \emph{Coeficiente} equivale a
+\(ARIMA(ARX, d, MAX)(SARX, D, SMAX)\), con \(X=\{1,2,3,4\}\), según
+corresponda.
+
+De esta manera, a modo de ejemplo, para los datos simulados a partir de
+un \(ARIMA(4,0,2)\), los coeficientes de \(AR1\) hasta \(AR4\)
+representan los cuatro coeficientes de la parte autorregresiva no
+estacional, mientras que \(MA1\) y \(MA2\) son los dos coeficientes del
+modelo de medias móviles de la parte no estacional, la celda del
+\emph{Valor real} correspondiente al coeficiente \(MA3\) está vacía
+porque el modelo original solo tenía dos coeficientes en el modelo de
+medias móviles, no tres. Así, el modelo estimado con
+\texttt{auto.arima()} estima únicamente los coeficientes \(AR1\) y
+\(AR2\) para el modelo autorregresivo, y \(MA1\), \(MA2\) y \(MA3\) para
+el modelo de medias móviles.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-23}\label{tab:coeficientes_original_autoarima}Coefcientes del proceso original y los estimados con auto.arima()}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{5}{7}\selectfont
+\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Proceso original & Coeficiente & Valor real & Estimación auto.arima() & Límite Inferior & Límite Superior\\
+\midrule
+\textbf{ARIMA(1,0,0)} & AR1 & -0.5 & -0.52 & -0.65 & -0.39\\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.4 &  &  & \\
+\cmidrule{2-6}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,1)}} & MA1 & -0.3 & -0.66 & -0.78 & -0.55\\
+\cmidrule{1-6}
+\textbf{} & AR1 & 0.8 & 1.08 & 0.65 & 1.5\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.1 & -0.37 & -0.74 & 0.01\\
+\cmidrule{2-6}
+\textbf{} & MA1 & 0.1 & -0.22 & -0.62 & 0.19\\
+\cmidrule{2-6}
+\textbf{} & MA2 & 0.5 & 0.55 & 0.41 & 0.69\\
+\cmidrule{2-6}
+\textbf{\multirow{-5}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,0,3)}} & MA3 & 0.2 &  &  & \\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.1 & 0.33 & 0.08 & 0.57\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.3 & -0.68 & -0.88 & -0.47\\
+\cmidrule{2-6}
+\textbf{} & AR3 & -0.4 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & AR4 & -0.2 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & MA1 & 0.1 & -0.41 & -0.65 & -0.17\\
+\cmidrule{2-6}
+\textbf{} & MA2 & 0.2 & 0.67 & 0.44 & 0.89\\
+\cmidrule{2-6}
+\textbf{\multirow{-7}{2.5cm}{\raggedleft\arraybackslash ARIMA(4,0,2)}} & MA3 &  & -0.37 & -0.52 & -0.21\\
+\cmidrule{1-6}
+\textbf{} & MA1 & 0.9 & 0.86 & 0.79 & 0.94\\
+\cmidrule{2-6}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(0,0,1)(0,1,1)}} & SMA1 & -0.5 & -0.55 & -0.72 & -0.39\\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.7 & -0.62 & -0.72 & -0.52\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.9 & -0.84 & -0.93 & -0.75\\
+\cmidrule{2-6}
+\textbf{} & MA1 & -0.8 & 0.37 & 0.19 & 0.55\\
+\cmidrule{2-6}
+\textbf{} & MA2 & -0.9 & -0.55 & -0.77 & -0.33\\
+\cmidrule{2-6}
+\textbf{} & MA3 & 0.9 & 0.31 & 0.16 & 0.46\\
+\cmidrule{2-6}
+\textbf{} & MA4 & 0.1 & 0.27 & 0.12 & 0.43\\
+\cmidrule{2-6}
+\textbf{} & SAR1 & -0.7 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SAR2 & 0.2 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SAR3 & 0.1 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SMA1 & 0.5 & -0.62 & -0.83 & -0.41\\
+\cmidrule{2-6}
+\textbf{} & SMA2 & -0.3 & 0.63 & 0.46 & 0.8\\
+\cmidrule{2-6}
+\textbf{\multirow{-12}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,1,4)(3,0,3)}} & SMA3 & 0.9 &  &  & \\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\subsubsection{Datos reales}
+
+En el caso de las series cronológicas reales, se toma en consideración
+el mejor modelo sugerido por la función \texttt{auto.arima()}. Los
+coeficientes obtenidos para las distintas series de tiempo
+costarricenses se muestran en el cuadro
+\ref{tab:coeficientes_reales_autoarima}.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-25}\label{tab:coeficientes_reales_autoarima}Coefcientes de los modelos ajustados con a las series reales con auto.arima()}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{5}{7}\selectfont
+\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Serie & Coeficiente & Estimación & Límite Inferior & Límite Superior\\
+\midrule
+\textbf{} & AR1 & 0.19 & 0.08 & 0.31\\
+\cmidrule{2-5}
+\textbf{} & AR2 & 0.32 & 0.21 & 0.44\\
+\cmidrule{2-5}
+\textbf{\multirow{-3}{2.5cm}{\raggedleft\arraybackslash TMII}} & SMA1 & -0.78 & -0.87 & -0.69\\
+\cmidrule{1-5}
+\textbf{} & AR1 & -0.11 & -0.29 & 0.08\\
+\cmidrule{2-5}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash Mortalidad por causa externa}} & MA1 & -0.82 & -0.94 & -0.70\\
+\cmidrule{1-5}
+\textbf{} & MA1 & 0.22 & -0.06 & 0.49\\
+\cmidrule{2-5}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash Incentivos salariales}} & SAR1 & 0.54 & 0.31 & 0.76\\
+\cmidrule{1-5}
+\textbf{Intereses y comisiones} & MA1 & -0.44 & -0.62 & -0.27\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\subsection{Estimación del mejor modelo con sobreparametrización}
+
+De manera análoga al procedimiento realizado con la función
+\texttt{auto.arima()}, se realiza el proceso descrito en la metodología
+para seleccionar el mejor modelo utilizando la sobreparametrización.
+Nuevamente, para los datos simulados, se conoce de previo el verdadero
+proceso que gobierna la serie de temporal, los cuales se comparan con
+los valores de los coeficientes de cada modelo obtenido mediante la
+sobreparametrización.
+
+\subsubsection{Datos simulados}
+
+Los mismos conceptos explicados para el cuadro
+\ref{tab:coeficientes_original_autoarima} aplican ahora para el
+\ref{tab:coeficientes_original_sobreparametrizacion}.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-26}\label{tab:coeficientes_original_sobreparametrizacion}Coefcientes del proceso original y los estimados con sobreparametrización}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{5}{7}\selectfont
+\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Proceso original & Coeficiente & Valor real & Estimación sobreparametrización & Límite Inferior & Límite Superior\\
+\midrule
+\textbf{ARIMA(1,0,0)} & AR1 & -0.5 & -0.52 & -0.65 & -0.39\\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.4 &  &  & \\
+\cmidrule{2-6}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,1)}} & MA1 & -0.3 & -0.66 & -0.78 & -0.55\\
+\cmidrule{1-6}
+\textbf{} & AR1 & 0.8 & 0.85 & 0.7 & 1\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.1 & 0.39 & 0.2 & 0.59\\
+\cmidrule{2-6}
+\textbf{} & AR3 &  & -0.38 & -0.57 & -0.19\\
+\cmidrule{2-6}
+\textbf{} & AR4 &  & -0.35 & -0.54 & -0.16\\
+\cmidrule{2-6}
+\textbf{} & AR5 &  & 0.27 & 0.12 & 0.42\\
+\cmidrule{2-6}
+\textbf{} & MA1 & 0.1 & -1 & -1.03 & -0.97\\
+\cmidrule{2-6}
+\textbf{} & MA2 & 0.5 &  &  & \\
+\cmidrule{2-6}
+\textbf{\multirow{-8}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,0,3)}} & MA3 & 0.2 &  &  & \\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.1 & -0.77 & -1.13 & -0.41\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.3 & -0.52 & -0.82 & -0.22\\
+\cmidrule{2-6}
+\textbf{} & AR3 & -0.4 & -0.42 & -0.6 & -0.25\\
+\cmidrule{2-6}
+\textbf{} & AR4 & -0.2 & -0.4 & -0.56 & -0.25\\
+\cmidrule{2-6}
+\textbf{} & MA1 & 0.1 & 0.7 & 0.3 & 1.1\\
+\cmidrule{2-6}
+\textbf{\multirow{-6}{2.5cm}{\raggedleft\arraybackslash ARIMA(4,0,2)}} & MA2 & 0.2 & 0.39 & 0.09 & 0.68\\
+\cmidrule{1-6}
+\textbf{} & MA1 & 0.9 & 0.86 & 0.79 & 0.94\\
+\cmidrule{2-6}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(0,0,1)(0,1,1)}} & SMA1 & -0.5 & -0.55 & -0.72 & -0.39\\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.7 & -0.63 & -0.71 & -0.55\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.9 & -0.87 & -0.94 & -0.8\\
+\cmidrule{2-6}
+\textbf{} & MA1 & -0.8 & -0.87 & -0.99 & -0.75\\
+\cmidrule{2-6}
+\textbf{} & MA2 & -0.9 & -0.87 & -1.08 & -0.66\\
+\cmidrule{2-6}
+\textbf{} & MA3 & 0.9 & 1 & 0.88 & 1.12\\
+\cmidrule{2-6}
+\textbf{} & MA4 & 0.1 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SAR1 & -0.7 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SAR2 & 0.2 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SAR3 & 0.1 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SMA1 & 0.5 & -1.75 & -2.09 & -1.41\\
+\cmidrule{2-6}
+\textbf{} & SMA2 & -0.3 & 1.37 & 1 & 1.74\\
+\cmidrule{2-6}
+\textbf{\multirow{-12}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,1,4)(3,0,3)}} & SMA3 & 0.9 & -0.62 & -0.87 & -0.37\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\subsubsection{Datos reales}
+
+Para las series cronológicas reales también se toma en consideración el
+mejor modelo sugerido esta vez por la sobreparametrización. Los
+coeficientes obtenidos para las distintas series de tiempo
+costarricenses se muestran en el cuadro
+\ref{tab:coeficientes_reales_sobreparametrizacion}.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-27}\label{tab:coeficientes_reales_sobreparametrizacion}Coefcientes de los modelos ajustados con a las series reales con sobreparametrización}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{5}{7}\selectfont
+\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Serie & Coeficiente & Estimación & Límite Inferior & Límite Superior\\
+\midrule
+\textbf{} & AR1 & 0.11 & 0.11 & 0.11\\
+\cmidrule{2-5}
+\textbf{} & AR2 & 0.27 & 0.27 & 0.27\\
+\cmidrule{2-5}
+\textbf{} & AR3 & 0.03 & 0.02 & 0.04\\
+\cmidrule{2-5}
+\textbf{} & AR4 & -0.02 & -0.02 & -0.02\\
+\cmidrule{2-5}
+\textbf{} & SAR1 & -1.33 & -1.35 & -1.32\\
+\cmidrule{2-5}
+\textbf{} & SAR2 & -1.24 & -1.25 & -1.22\\
+\cmidrule{2-5}
+\textbf{} & SAR3 & -0.82 & -0.83 & -0.81\\
+\cmidrule{2-5}
+\textbf{\multirow{-8}{2.5cm}{\raggedleft\arraybackslash TMII}} & SAR4 & -0.39 & -0.39 & -0.39\\
+\cmidrule{1-5}
+\textbf{} & AR1 & 0.71 & 0.45 & 0.97\\
+\cmidrule{2-5}
+\textbf{} & AR2 & 0.24 & 0.04 & 0.44\\
+\cmidrule{2-5}
+\textbf{} & MA1 & -0.72 & -0.95 & -0.48\\
+\cmidrule{2-5}
+\textbf{\multirow{-4}{2.5cm}{\raggedleft\arraybackslash Mortalidad por causa externa}} & SMA1 & -1.00 & -1.29 & -0.71\\
+\cmidrule{1-5}
+\textbf{} & AR1 & -0.57 & -0.78 & -0.37\\
+\cmidrule{2-5}
+\textbf{} & AR2 & -0.50 & -0.71 & -0.29\\
+\cmidrule{2-5}
+\textbf{} & SAR1 & 0.43 & 0.14 & 0.72\\
+\cmidrule{2-5}
+\textbf{\multirow{-4}{2.5cm}{\raggedleft\arraybackslash Incentivos salariales}} & SAR2 & 0.35 & 0.04 & 0.65\\
+\cmidrule{1-5}
+\textbf{} & MA1 & -1.45 & -1.63 & -1.27\\
+\cmidrule{2-5}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash Intereses y comisiones}} & MA2 & 0.49 & 0.31 & 0.67\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\subsection{Estimación de un modelo ARIMA estándar}
+
+Ajustar un modelo ARIMA genérico sirve para referenciar los demás
+resultados obtenidos, es decir, contrastarlos con los resultados del
+\texttt{auto.arima()} y la sobreparametrización. Nuevamente, para los
+datos simulados se comparan los coeficientes obtenidos con los que se
+connocen a priori.
+
+\subsubsection{Datos simulados}
+
+Los mismos conceptos explicados para los cuadros
+\ref{tab:coeficientes_original_autoarima} y
+\ref{tab:coeficientes_original_sobreparametrizacion} aplican ahora para
+el cuadro \ref{tab:coeficientes_original_arima_estandar}.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-28}\label{tab:coeficientes_original_arima_estandar}Coefcientes del proceso original y los estimados con un ARIMA estándar}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{5}{7}\selectfont
+\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Proceso original & Coeficiente & Valor real & Estimación ARIMA estándar & Límite Inferior & Límite Superior\\
+\midrule
+\textbf{} & AR1 & -0.5 & -0.56 & -0.68 & -0.44\\
+\cmidrule{2-6}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,0)}} & MA1 &  & -0.99 & -1.06 & -0.91\\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.4 & -0.55 & -0.67 & -0.43\\
+\cmidrule{2-6}
+\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,1)}} & MA1 & -0.3 & -1 & -1.03 & -0.97\\
+\cmidrule{1-6}
+\textbf{} & AR1 & 0.8 & -0.51 & -0.92 & -0.11\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.1 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & MA1 & 0.1 & 0.43 & 0.02 & 0.84\\
+\cmidrule{2-6}
+\textbf{} & MA2 & 0.5 &  &  & \\
+\cmidrule{2-6}
+\textbf{\multirow{-5}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,0,3)}} & MA3 & 0.2 &  &  & \\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.1 & 0.02 & -0.12 & 0.16\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.3 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & AR3 & -0.4 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & AR4 & -0.2 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & MA1 & 0.1 & -1 & -1.04 & -0.96\\
+\cmidrule{2-6}
+\textbf{\multirow{-6}{2.5cm}{\raggedleft\arraybackslash ARIMA(4,0,2)}} & MA2 & 0.2 &  &  & \\
+\cmidrule{1-6}
+\textbf{} & AR1 &  & -0.51 & -0.67 & -0.36\\
+\cmidrule{2-6}
+\textbf{} & MA1 & 0.9 & 0.92 & 0.84 & 0.99\\
+\cmidrule{2-6}
+\textbf{} & SAR1 &  & 0.38 & 0.11 & 0.65\\
+\cmidrule{2-6}
+\textbf{\multirow{-4}{2.5cm}{\raggedleft\arraybackslash ARIMA(0,0,1)(0,1,1)}} & SMA1 & -0.5 & -0.8 & -1.01 & -0.58\\
+\cmidrule{1-6}
+\textbf{} & AR1 & -0.7 & -0.31 & -0.44 & -0.17\\
+\cmidrule{2-6}
+\textbf{} & AR2 & -0.9 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & MA1 & -0.8 & -1 & -1.05 & -0.95\\
+\cmidrule{2-6}
+\textbf{} & MA2 & -0.9 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & MA3 & 0.9 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & MA4 & 0.1 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SAR1 & -0.7 & -0.65 & -0.75 & -0.56\\
+\cmidrule{2-6}
+\textbf{} & SAR2 & 0.2 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SAR3 & 0.1 &  &  & \\
+\cmidrule{2-6}
+\textbf{} & SMA1 & 0.5 & -1 & -1.13 & -0.87\\
+\cmidrule{2-6}
+\textbf{} & SMA2 & -0.3 &  &  & \\
+\cmidrule{2-6}
+\textbf{\multirow{-12}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,1,4)(3,0,3)}} & SMA3 & 0.9 &  &  & \\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\subsubsection{Datos reales}
+
+Las series cronológicas reales, al contar con un componente estacional,
+se ajustan todas con un \(ARIMA(1,1,1)(1,1,1)\). Los resultados aparecen
+en el cuadro \ref{tab:coeficientes_reales_arima_estandar}.
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-29}\label{tab:coeficientes_reales_arima_estandar}Coefcientes de los modelos ajustados con a las series reales con un ARIMA estándar}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{5}{7}\selectfont
+\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+Serie & Coeficiente & Estimación & Límite Inferior & Límite Superior\\
+\midrule
+\textbf{} & AR1 & 0.75 & 0.56 & 0.94\\
+\cmidrule{2-5}
+\textbf{} & MA1 & -0.57 & -0.80 & -0.35\\
+\cmidrule{2-5}
+\textbf{} & SAR1 & -0.48 & -0.58 & -0.37\\
+\cmidrule{2-5}
+\textbf{\multirow{-4}{2.5cm}{\raggedleft\arraybackslash TMII}} & SMA1 & -1.00 & -1.07 & -0.93\\
+\cmidrule{1-5}
+\textbf{} & AR1 & -0.22 & -0.42 & -0.03\\
+\cmidrule{2-5}
+\textbf{} & MA1 & -0.76 & -0.91 & -0.61\\
+\cmidrule{2-5}
+\textbf{} & SAR1 & -0.03 & -0.20 & 0.13\\
+\cmidrule{2-5}
+\textbf{\multirow{-4}{2.5cm}{\raggedleft\arraybackslash Mortalidad por causa externa}} & SMA1 & -1.00 & -1.57 & -0.43\\
+\cmidrule{1-5}
+\textbf{} & AR1 & 0.06 & -0.24 & 0.35\\
+\cmidrule{2-5}
+\textbf{} & MA1 & -0.87 & -1.03 & -0.72\\
+\cmidrule{2-5}
+\textbf{} & SAR1 & 0.79 & 0.48 & 1.10\\
+\cmidrule{2-5}
+\textbf{\multirow{-4}{2.5cm}{\raggedleft\arraybackslash Incentivos salariales}} & SMA1 & -0.33 & -0.90 & 0.23\\
+\cmidrule{1-5}
+\textbf{} & AR1 & -0.44 & -0.64 & -0.24\\
+\cmidrule{2-5}
+\textbf{} & MA1 & -0.97 & -1.05 & -0.88\\
+\cmidrule{2-5}
+\textbf{} & SAR1 & 0.20 & -0.91 & 1.31\\
+\cmidrule{2-5}
+\textbf{\multirow{-4}{2.5cm}{\raggedleft\arraybackslash Intereses y comisiones}} & SMA1 & -0.11 & -1.22 & 0.99\\
+\bottomrule
+\end{tabu}}
+\end{table}
+
+\subsection{Análisis de los errores}
+
+\subsubsection{Datos simulados}
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+\subsubsection{Mortalidad por causa externa}
+
+\subsubsection{Incentivos salariales}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+\subsection{Pronósticos}
+
+\subsubsection{Datos simulados}
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+\subsubsection{Mortalidad por causa externa}
+
+\subsubsection{Incentivos salariales}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+\subsection{Medidas de bondad de ajuste y de rendimiento}
 
 El cuadro \ref{tab:comparaciones} muestra los valores del MAE, MASE y
 RMSE para cada proceso estimado y, además, muestra el proceso de origen
@@ -2155,7 +2993,7 @@ pronósticos se acercan más a los datos reales.
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-17}\label{tab:comparaciones}Medidas de rendimiento según método de estimación}
+\caption{\label{tab:unnamed-chunk-30}\label{tab:comparaciones}Medidas de rendimiento según método de estimación}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{5}{7}\selectfont
@@ -2219,7 +3057,7 @@ figura \ref{fig:tmiiplotpronostico}
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-19}\label{tab:tmiimedidas}Medidas de rendimiento según método de estimación para la TMII}
+\caption{\label{tab:unnamed-chunk-32}\label{tab:tmiimedidas}Medidas de rendimiento según método de estimación para la TMII}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -2249,7 +3087,7 @@ gráficamente mediante la figura \ref{fig:externasplotpronostico}
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-20}\label{tab:externasmedidas}Medidas de rendimiento según método de estimación para la Mortalidad por causa externa}
+\caption{\label{tab:unnamed-chunk-33}\label{tab:externasmedidas}Medidas de rendimiento según método de estimación para la Mortalidad por causa externa}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -2278,7 +3116,7 @@ pronósticos obtenidos son superiores utilizando la sobreparametrización.
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-21}\label{tab:incentivosmedidas}Medidas de rendimiento según método de estimación para los incentivos salariales}
+\caption{\label{tab:unnamed-chunk-34}\label{tab:incentivosmedidas}Medidas de rendimiento según método de estimación para los incentivos salariales}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
@@ -2309,7 +3147,7 @@ difieren solamente en un parámetro para la parte estacional.
 
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-22}\label{tab:interesesmedidas}Medidas de rendimiento según método de estimación para los intereses y comisiones del sector público}
+\caption{\label{tab:unnamed-chunk-35}\label{tab:interesesmedidas}Medidas de rendimiento según método de estimación para los intereses y comisiones del sector público}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}

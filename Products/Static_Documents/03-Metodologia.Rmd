@@ -519,95 +519,29 @@ ggarrange(arima100, arima101, arima203, arima402,
 
 \subsection{Métodos}
 
+En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos. Para cada serie de tiempo, se estima el mejor modelo utilizando la función `auto.arima()`, la sobreparametrización y un modelo ARIMA estándar, que pueed ser un $ARIMA(1,1,1)$ para las series no estacionales, o un $ARIMA(1,1,1)(1,1,1)$ en el caso de las series cronológicas estacionales. Una vez obtenidos estos modelos, se analizan los residuales obtenidos. En última instancia, se obtienen los pronósticos y sus medidas de bondad de ajuste y de rendimiento.
 
+\subsubsection{Análisis exploratorio}
 
+Como fue mencionado en el Marco Teórico, debe corroborarse que la serie cronológica a trabajar posea un comportamiento estacionario y, de no serlo, someterla a procesos matemáticos para asegurar esta condición, estando entre los más comunes la diferenciación o la aplicación del logaritmo natural. Posteriormente, se realiza una identificación del posible proceso que gobierna la serie cronológica al graficar las funciones de autocorrelación y autocorrelación parcial, las cuales también sirven para verificar si la serie (transformada o no) es estacionaria.
 
+\subsubsection{Partición de los datos}
 
+A partir de la serie cronológica que se someterá a análisis, se realiza una partición de los datos para tener dos conjuntos distintos: entrenamiento y validación. El primero servirá precisamente para entrenar y estimar los distintos modelos; mientras que el segundo servirá para validar los pronósticos obtenidos. De manera predeterminada, se utilizará una partición del 80% de los datos para el conjunto de entrenamiento y un 20% para los datos de validación, sin embargo, esto puede cambiar de acuerdo al interés propio del(la) investigador(a). 
 
+\subsubsection{Estimación del mejor modelo según la función auto.arima()}
 
+Con el correspondiente conjunto de datos de entrenamiento, se utiliza la función `auto.arima()` para encontrar el mejor modelo ARIMA sugerido con este método, que como fue mencionado en la introducción de esta tesis, usa como criterio la minimización del AICc.
 
+\subsubsection{Estimación del mejor modelo con sobreparametrización}
 
+A partir del mismo conjunto de datos de entrenamiento de la correspondiente serie cronológica, se utiliza la sobreparametrización para encontrar el mejor modelo a partir de distintas permutaciones de la cantidad de coeficientes de los términos $p,d,q, P,D,Q$, según sea el caso. 
 
+La estimación de los modelos y posterior selección de los mismos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R y su código se muestra en el \ref{funcion_op_arima}, la cuál fue construida haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación:
 
-\subsection{Medidas de bondad de ajuste y rendimiento}
+**1.** Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide en valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. 
 
-El objetivo último al estimar un modelo ARIMA es obtener los pronósticos de dicho modelo Sin embargo, estos pronósticos no son pueden asumirse como correctos, sino que se debe evaluar su calidad con las llamadas medidas de bondad de ajuste y de rendimiento. Existen múltiples medidas, @medidas menciona, entre otras, las siguientes: 
-
-\subsubsection{AIC}
-
-Se calcula de la siguiente manera: 
-
-\begin{equation}
-\label{eqn:AIC}
-AIC=-2logL\left(\hat\theta\right)+2k
-\end{equation}
-
-Donde $k$ es el número de parámetros y $n$ el número de datos.
-
-\subsubsection{AICc}
-
-Su forma de cálculo se muestra en la ecuación \ref{eqn:AICc}
-\begin{equation}
-\label{eqn:AICc}
-AICc=-2logL\left(\hat\theta\right)+2k+\frac{2k+1}{n-k-1}
-\end{equation}
-
-Donde $k$ es el número de parámetros y $n$ el número de datos.
-
-\subsubsection{BIC}
-
-El último estadístico de bondad de ajuste se calcula como se muestran en la ecuación \ref{eqn:BIC}.
-
-\begin{equation}
-\label{eqn:BIC}
-BIC=-2logL\left(\hat\theta\right)+k\cdot log(n)
-\end{equation}
-
-Donde $k$ es el número de parámetros y $n$ el número de datos.
-
-\subsubsection{MAE}
-
-El error absoluto medio se define mediante la ecuación \ref{eqn:MAE}
-
-\begin{equation}
-\label{eqn:MAE}
-\frac{1}{n}\sum_{t=1}^n |e_t|
-\end{equation}
-
-\subsubsection{MASE}
-
-Esta medida de rendimiento tiene dos casos, uno para series cronológicas no estacionales y otro para series cronológicas estacionales, como se muestra en las ecuaciones \ref{eqn:MASE_no} y \ref{eqn:MASE_si}.
-
-\begin{equation}
-\label{eqn:MASE_no}
-\frac{\frac{1}{J}\sum_j|e_j|}{\frac{1}{T-1}\sum_{t=2}^T|Y_t-Y_{t-1}|}
-\end{equation}
-
-\begin{equation}
-\label{eqn:MASE_si}
-\frac{\frac{1}{J}\sum_j|e_j|}{\frac{1}{T-m}\sum_{t=m+1}^T|Y_t-Y_{t-m}|}
-\end{equation}
-
-Donde $m$ es la temporalidad de la serie.
-
-\subsubsection{RMSE}
-
-Es la raíz del error cuadrático medio, como se define en la ecuación \ref{eqn:RMSE}.
-
-\begin{equation}
-\label{eqn:RMSE}
-\sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}
-\end{equation}
-
-\subsection{La sobreparametrización}
-
-La estimación de los modelos y posterior selección de los mismos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R[^6] y su código se muestra en el \ref{funcion_op_arima}, la cuál fue construida haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación.
-
-[^6]: https://cran.r-project.org/
-
-A partir de una serie cronológica $y_t$, se realiza una partición de los datos para tener dos conjuntos distintos. Uno de ellos servirá para entrenar y estimar los distintos modelos; mientras que el segundo servirá para validar los pronósticos y posteriormente seleccionar el modelo más adecuado. De manera predeterminada, se utiliza una partición del 80% de los datos para el conjunto de entrenamiento y un 20% para los datos de validación, sin embargo, esto puede cambiar de acuerdo al interés propio del investigador(a). 
-
-Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide en valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. Si se cuenta con una serie sin patrones estacionales y cuyo modelo con mayor cantidad de parámetros es un $ARIMA(3,1,4)$, la matriz de valores paramétricos es la que se muestra en \ref{eqn:matriz_arima_1}:
+**2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero (porque precisamente, no se estiman coeficientes para la parte estacional). Se estiman todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
 
 ```{r, eval=FALSE, echo=FALSE}
 Las siguiente matriz se obtuvo de:
@@ -623,18 +557,20 @@ https://tex.stackexchange.com/questions/40/how-do-i-label-different-rows-or-colu
         0 & 0 & 2 & 0 & 0 & 0 \\
         0 & 0 & 3 & 0 & 0 & 0 \\
         0 & 0 & 4 & 0 & 0 & 0 \\
+        0 & 0 & 5 & 0 & 0 & 0 \\
+        0 & 0 & 6 & 0 & 0 & 0 \\
         0 & 1 & 0 & 0 & 0 & 0 \\
         0 & 1 & 1 & 0 & 0 & 0 \\
         0 & 1 & 2 & 0 & 0 & 0 \\
         \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-        3 & 1 & 4 & 0 & 0 & 0 \\
+        6 & 1 & 6 & 0 & 0 & 0 \\
     };
     \mymatrixbracetop{1}{3}{$p, d, q$};
     \mymatrixbracetop{4}{6}{$P,D,Q$}
 \end{tikzpicture}
 \end{equation}
 
-De manera análoga, al trabajar con un modelo con algún efecto estacional en una determinada periodicidad, como por ejemplo mensual, la matriz de valores paramétricos al definir el modelo con mayor número de parámetros como un $ARIMA(6,1,6)(6,1,6)_{12}$ es la mostrada en \ref{eqn:matriz_arima_2}:
+**3.** De manera análoga, al trabajar con series cronológicas estacionales, se decide trabajar (para una temporalidad determinada, como mensual) hasta un modelo máximo de $ARIMA(4,1,4)(4,1,4)_{12}$. Así, la matriz de valores paramétricos mostrada en \ref{eqn:matriz_arima_2} posee, en cada línea, una especificación de modelo a estimar:
 
 \begin{equation}
 \label{eqn:matriz_arima_2}
@@ -644,20 +580,24 @@ De manera análoga, al trabajar con un modelo con algún efecto estacional en un
         0 & 0 & 1 & 0 & 0 & 2 \\
         0 & 0 & 1 & 0 & 0 & 3 \\
         0 & 0 & 1 & 0 & 0 & 4 \\
-        0 & 1 & 1 & 0 & 0 & 5 \\
-        0 & 1 & 1 & 0 & 0 & 6 \\
-        0 & 1 & 1 & 0 & 1 & 0 \\
+        0 & 0 & 1 & 0 & 1 & 1 \\
+        0 & 0 & 1 & 0 & 1 & 2 \\
+        0 & 0 & 1 & 0 & 1 & 3 \\
         \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-        6 & 1 & 6 & 6 & 1 & 6 \\
+        4 & 1 & 4 & 4 & 1 & 4 \\
     };
     \mymatrixbracetop{1}{3}{$p, d, q$};
     \mymatrixbracetop{4}{6}{$P,D,Q$}
 \end{tikzpicture}
 \end{equation}
 
-Con la matriz de valores paramétricos, como las mostradas en \ref{eqn:matriz_arima_1} y \ref{eqn:matriz_arima_2}, se estiman los modelos en orden descendente, del modelo con menos parámetros al que tiene más parámetros. Al estimar un nuevo modelo, se evalúa mediante una prueba t [@astsa] para verificar el nuevo término incorporado al modelo es estadísticamente distinto de cero, es decir, el nuevo parámetro está generando un impacto en el modelo. AL tratarse de un proceso iterativo, los cálculos son pueden volverse computacionalmente pesado, es por esta razón que la programación del proceso fue habilitada para realizar procesamiento paralelo y de esta manera reducir el consumo de tiempo en la obtención de resultados.
+**4.** Con la matriz de valores paramétricos, como las mostradas en \ref{eqn:matriz_arima_1} y \ref{eqn:matriz_arima_2}, se inicia la estimación los modelos en orden ascendente, es decir, del modelo con menos parámetros al que tiene más parámetros. Al estimar un nuevo modelo, se evalúa mediante una prueba *t* [@astsa] para verificar que el nuevo término incorporado al modelo es significativamente distinto de cero, es decir, el nuevo parámetro está generando un impacto en el modelo.
 
-Cuando se han realizado las pruebas de significancia estadística a los modelos, son calculadas las medidas de bondad de ajuste y de rendimiento mencionadas con anterioridad. Tras esto, se aplica un método de concenso para seleccionar el modelo más adecuado. Este criterio consiste en darle mayor o menor ponderación a los resultados obtenidos con el conjunto de datos de entrenamiento y el de validación; de forma predeterminada se le da una ponderación de 0.8 a los resultados de validación y un 0.2 a los de entrenamiento, esto porque en la práctica, los datos de validación son considerados como datos más recientes y que, mientras más cercanos sean los pronósticos a estos datos, mejores resultados ofrece el modelo. El método de concenso es utilizado para obtener un puntaje de cada modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
+**5.** Al tratarse de un proceso iterativo, el cálculo puede volverse computacionalmente pesado, es por esta razón que la programación del proceso fue habilitada para realizar procesamiento paralelo y de esta manera reducir el consumo de tiempo en la obtención de resultados.
+
+**6.** Cuando se han realizado las pruebas de significancia estadística a los modelos, son calculadas las medidas de bondad de ajuste y de rendimiento que se mencionarán más adelante. 
+
+**7.** Tras esto, se aplica un método de concenso para seleccionar el modelo más adecuado. Este criterio consiste en darle una mayor o menor ponderación a los resultados obtenidos con el conjunto de datos de entrenamiento y el de validación. De forma predeterminada se le da una ponderación de 0.8 a los resultados de validación y un 0.2 a los de entrenamiento, esto porque en la práctica, los datos de validación son considerados como datos más recientes y que, mientras más cercanos sean los pronósticos a estos datos, mejores resultados ofrece el modelo sleccionado. El método de concenso es utilizado para obtener un puntaje de cada modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
 
 \begin{equation}
 \label{eqn:concenso}
@@ -666,3 +606,89 @@ min\left( \sum_i {m_i}\cdot w_j \right)
 
 Donde $m_i$ representa cada una de las medidas de rendimiento y $w_j$ es el valor de ponderación de los conjunto de entrenamiento y validación mencionados anteriormente. El valor más bajo de todos los modelos es el que se define como el modelo más adecuado.
 
+\subsubsection{Estimación de un modelo ARIMA estándar}
+
+Para contrastar los dos métodos de selección de modelos anteriores (`auto.arima()` y sobreparametrización), se ajusta también un modelo ARIMA más tradicional o estándar. En el caso de las series cronológicas no estacionales se ajusta un modelo $ARIMA(1,1,1)$ y en el caso de las series estacionales se ajusta un modelo $ARIMA(1,1,1),(1,1,1)_S$.
+
+\subsubsection{Análisis de los errores}
+
+Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autorrelación y el supuesto de normalidad de normalidad de los residuales.
+
+standardized residuals, sample ACF of residuals, normal QQ-Plot y Q statistic p-value
+
+\subsubsection{Pronósticos}
+
+Para cada modelo estimado, se realiza un pronóstico de 50 periodos hacia el futuro para realizar una inspección visual de los resultados previo a hacer una comparación numérica mediante dos formas distintas pero complementarias: las medidas de bondad de ajuste y de rendimiento.
+
+\subsubsection{Medidas de bondad de ajuste y de rendimiento}
+
+El objetivo último al estimar un modelo ARIMA es obtener los pronósticos de dicho modelo. Sin embargo, estos pronósticos no pueden asumirse como correctos, sino que se debe evaluar su calidad con las llamadas medidas de bondad de ajuste y de rendimiento, aplicadas a los conjuntos de entrenamiento y validación. Existen múltiples medidas, @medidas menciona, entre otras, las siguientes: 
+
+
+\paragraph{AIC}
+
+Se calcula de la siguiente manera: 
+
+\begin{equation}
+\label{eqn:AIC}
+AIC=-2logL\left(\hat\theta\right)+2k
+\end{equation}
+
+Donde $k$ es el número de parámetros y $n$ el número de datos.
+
+\paragraph{AICc}
+
+Su forma de cálculo se muestra en la ecuación \ref{eqn:AICc}
+\begin{equation}
+\label{eqn:AICc}
+AICc=-2logL\left(\hat\theta\right)+2k+\frac{2k+1}{n-k-1}
+\end{equation}
+
+Donde $k$ es el número de parámetros y $n$ el número de datos.
+
+\paragraph{BIC}
+
+El último estadístico de bondad de ajuste se calcula como se muestran en la ecuación \ref{eqn:BIC}.
+
+\begin{equation}
+\label{eqn:BIC}
+BIC=-2logL\left(\hat\theta\right)+k\cdot log(n)
+\end{equation}
+
+Donde $k$ es el número de parámetros y $n$ el número de datos.
+
+\paragraph{MAE}
+
+El error absoluto medio se define mediante la ecuación \ref{eqn:MAE}
+
+\begin{equation}
+\label{eqn:MAE}
+\frac{1}{n}\sum_{t=1}^n |e_t|
+\end{equation}
+
+\paragraph{MASE}
+
+Esta medida de rendimiento tiene dos casos, uno para series cronológicas no estacionales y otro para series cronológicas estacionales, como se muestra en las ecuaciones \ref{eqn:MASE_no} y \ref{eqn:MASE_si}.
+
+\begin{equation}
+\label{eqn:MASE_no}
+\frac{\frac{1}{J}\sum_j|e_j|}{\frac{1}{T-1}\sum_{t=2}^T|Y_t-Y_{t-1}|}
+\end{equation}
+
+\begin{equation}
+\label{eqn:MASE_si}
+\frac{\frac{1}{J}\sum_j|e_j|}{\frac{1}{T-m}\sum_{t=m+1}^T|Y_t-Y_{t-m}|}
+\end{equation}
+
+Donde $m$ es la temporalidad de la serie.
+
+\paragraph{RMSE}
+
+Es la raíz del error cuadrático medio, como se define en la ecuación \ref{eqn:RMSE}.
+
+\begin{equation}
+\label{eqn:RMSE}
+\sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}
+\end{equation}
+
+De esta manera, cada una de las series cronológicas (simuladas y reales) serán sometidas a un análisis exploratorio y a una partición de los datos con un 80% para el conjunto de entrenamiento y el restante 20% para validación, esto con el fin de estimar modelos mediante la función `auto.arima()`, la sobreparametrización y un ARIMA estándar para evaluar sus correspondientes y la calidad de los pronósticos obtenidos.

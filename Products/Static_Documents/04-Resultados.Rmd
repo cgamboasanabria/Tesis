@@ -1,10 +1,1255 @@
-\subsection{Introducción}
+Este capítulo aborda los principales resultados a partir del procedimiento descrito en la metodología. Cada sección de este capítulo tendrá una subsección donde se aplica cada etapa de análisis a las respectivas series cronológicas.
+
+\subsection{Análisis exploratorio}
+
+Inicialmente, se analizan las series cronológicas para verificar su comportamiento al ajustar un suavizamiento de Loess para buscar señales de tendencia y concavidad en los datos temporales, y buscar indicios de los procesos que gobiernan dichas series, además someterlas a prueba para verificar que se trate de series cronológicas estacionarias.
+
+```{r funcion_exploratorio}
+exploratorio <-
+    function(datos,
+             diferenciar = FALSE,
+             logaritmo = FALSE,
+             diferenciar_logaritmo = FALSE,
+             mostrar=c("comportamiento", "acf", "pacf"),
+             temporalidad=NULL) {
+        
+        if (diferenciar) {
+            datos <- diff(datos)
+        }
+        
+        if (logaritmo) {
+            datos <- log(datos)
+        }
+        
+        if (diferenciar_logaritmo) {
+            datos <- diff(log(datos))
+        }
+        
+        comportamiento <- datos %>%
+            ggplot() +
+            geom_line(color = "#00AFBB", size = 1.3) +
+            stat_smooth(color = "#FC4E07",
+                        fill = "#FC4E07",
+                        method = "loess") +
+            # geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
+            theme_minimal() +
+            theme(text = element_text(size = 9),
+                  axis.text.x = element_text(angle = 0, hjust = 1)) +
+            # labs(caption="Fuente: UED-INEC",
+            #      y="TMII (por cada 1000 nacimientos)",
+            #      x="Año") +
+            theme(
+                plot.title = element_text(hjust = 0.5, face = "plain"),
+                plot.caption = element_text(
+                    hjust = 0,
+                    vjust = 0.5,
+                    margin = margin(t = 1, 10, 10, 10)
+                )
+            )# +
+        # scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+        #scale_x_discrete(expand = c(0,0))
+        
+        if(mostrar=="comportamiento"){
+            return(comportamiento)
+        }
+        
+        if(mostrar=="acf" & is.null(temporalidad)){
+            acf(datos, main="", xlab="Rezagos")
+        }
+        
+        if(mostrar=="pacf" & is.null(temporalidad)){
+            pacf(datos, main="", xlab="Rezagos", ylab="PACF")
+        }
+        
+        if(mostrar=="acf" & !is.null(temporalidad)){
+            ACF <- acf(datos, plot = FALSE, lag.max = temporalidad*3)
+            
+            ACF$lag <- ACF$lag*temporalidad
+            
+            plot(ACF, main="", xlab="Rezagos", ylab="ACF")
+        }
+        
+        if(mostrar=="pacf" & !is.null(temporalidad)){
+            PACF <- pacf(datos, plot = FALSE, lag.max = temporalidad*3)
+            
+            PACF$lag <- PACF$lag*temporalidad
+            
+            plot(PACF, main="", xlab="Rezagos", ylab="PACF")
+        }
+        
+      
+    }
+```
+
+\subsubsection{Datos simulados}
+
+En la figura \ref{fig:series_simuladas} se mostró el comportamiento general de cada una de las series cronológicas simuladas. Al tratarse de datos simulados se conoce de previo el proceso que gobierna a cada una de las series temporales, por lo que verificar la estacioneriedad y obtener los correlogramas sirve para confirmar que los procesos siguen aproximadamente los procesos planteados.
+
+```{r}
+arima100 <- resultados_no_estacional_bajo[[1]]$datos 
+
+arima101 <- resultados_no_estacional_bajo[[2]]$datos 
+
+arima203 <- resultados_no_estacional_alto[[1]]$datos 
+
+arima402 <- resultados_no_estacional_alto[[2]]$datos 
+
+arima001_011 <- resultados_estacional_bajo[[1]]$datos 
+
+arima214_303 <- resultados_estacional_alto[[2]]$datos 
+```
+
+
+\paragraph{ARIMA(1,0,0)}
+
+En la figura \ref{fig:arima100_comportamiento} puede verse como los datos simulados bajo este proceso se comportan de manera aproximadamente estacionaria a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. Además, la figura \ref{fig:arima100_acf} muestra como las autocorrelaciones caen rápidamente a cero y van disminuyendo, mientras que la figura \ref{fig:arima100_pacf} se corta al inicio, lo que sugiere que se está en presencia de un proceso $ARIMA(1,0,0)$, tal y como fue planteado al simular los datos.
+
+```{r arima100_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,0)"}
+exploratorio(arima100, mostrar = "comportamiento")
+```
+
+```{r arima100_acf, fig.cap="Autocorrelación de los datos simulados a partir de un proceso ARIMA(1,0,0)"}
+exploratorio(arima100, mostrar = "acf")
+```
+
+```{r arima100_pacf, fig.cap="Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(1,0,0)"}
+exploratorio(arima100, mostrar = "pacf")
+```
+
+\paragraph{ARIMA(1,0,1)}
+
+En la figura \ref{fig:arima101_comportamiento} también puede verse como los datos simulados bajo este proceso se comportan de manera aproximadamente estacionaria a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. Además, la figura \ref{fig:arima101_acf} muestra como las autocorrelaciones van disminuyendo, misma situación que se aprecia en la figura \ref{fig:arima101_pacf}, pues también va disminuyendo, lo que sugiere que el posible proceso que gobierna los datos podría tratarse de un $ARIMA(1,0,1)$, tal y como fue planteado al simular los datos.
+
+```{r arima101_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,1)"}
+exploratorio(arima101, mostrar = "comportamiento")
+```
+
+```{r arima101_acf, fig.cap="Autocorrelación de los datos simulados a partir de un proceso ARIMA(1,0,1)"}
+exploratorio(arima101, mostrar = "acf")
+```
+
+```{r arima101_pacf, fig.cap="Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(1,0,1)"}
+exploratorio(arima101, mostrar = "pacf")
+```
+
+\paragraph{ARIMA(2,0,3)}
+
+En la figura \ref{fig:arima203_comportamiento} se observa como los datos simulados bajo este proceso no parecen tener ninguna tendencia, si bien podría aplicarse alguna transformación para volverla aún más estacionaria, esto no se considera necesario. La figura \ref{fig:arima203_acf} muestra como las autocorrelaciones van disminuyendo, misma situación que se aprecia en la figura \ref{fig:arima203_pacf}, pues también va disminuyendo, esta situación sugiere que se está en presencia de un proceso $ARMA(p,q)$, por lo que podrían ajustarse varios modelos $ARIMA(p,d,q)$ hasta encontrar el más adecuado.
+
+```{r arima203_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(2,0,3)"}
+exploratorio(arima203, mostrar = "comportamiento")
+```
+
+```{r arima203_acf, fig.cap="Autocorrelación de los datos simulados a partir de un proceso ARIMA(2,0,3)"}
+exploratorio(arima203, mostrar = "acf")
+```
+
+```{r arima203_pacf, fig.cap="Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(2,0,3)"}
+exploratorio(arima203, mostrar = "pacf")
+```
+
+\paragraph{ARIMA(4,0,2)}
+
+En la figura \ref{fig:arima402_comportamiento} se observa como los datos simulados bajo este proceso tampoco parecen tener ninguna tendencia, por lo que no se considera necesario aplicar ninguna transformación. Las figuras \ref{fig:arima402_acf} y \ref{fig:arima402_pacf} presentan una situación similar a la anterior, por lo que podrían ajustarse varios modelos $ARIMA(p,d,q)$ hasta encontrar el más adecuado.
+
+```{r arima402_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(4,0,2)"}
+exploratorio(arima402, mostrar = "comportamiento")
+```
+
+```{r arima402_acf, fig.cap="Autocorrelación de los datos simulados a partir de un proceso ARIMA(4,0,2)"}
+exploratorio(arima402, mostrar = "acf")
+```
+
+```{r arima402_pacf, fig.cap="Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(4,0,2)"}
+exploratorio(arima402, mostrar = "pacf")
+```
+
+\paragraph{ARIMA(0,0,1)(0,1,1)}
+
+En la figura \ref{fig:arima001_011_comportamiento} los datos parecen ser aproximadamente estacionarios; una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional. Las figuras \ref{fig:arima001_011_acf} y \ref{fig:arima001_011_pacf}, sugieren estar en presencia de un proceso estacional cada 12 periodos, por lo que la estimación de modelos $ARIMA$ de bajo nivel podría ser suficiente..
+
+```{r arima001_011_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)"}
+exploratorio(arima001_011, mostrar = "comportamiento")
+```
+
+```{r arima001_011_acf, fig.cap="Autocorrelación de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)"}
+exploratorio(arima001_011, mostrar = "acf", temporalidad = 12)
+```
+
+```{r arima001_011_pacf, fig.cap="Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)"}
+exploratorio(arima001_011, mostrar = "pacf", temporalidad = 12)
+```
+
+\paragraph{ARIMA(2,1,4)(3,0,3)}
+
+En la figura \ref{fig:arima214_303_comportamiento} lucen estacionarios, pues su media se mantiene muy constante a lo largo del tiempo. Las figuras \ref{fig:arima214_303_acf} y \ref{fig:arima214_303_pacf} por su lado sugieren la presencia de procesos estacionales cada 12 periodos tal y como fueron simulados los datos, pero no es claro identificar el proceso que gobierna la serie, por lo que habría que probar distintos modelos $ARIMA$ hasta encontrar el más adecuado.
+
+```{r arima214_303_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)"}
+exploratorio(arima214_303, mostrar = "comportamiento")
+```
+
+```{r arima214_303_acf, fig.cap="Autocorrelación de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)"}
+exploratorio(arima214_303, mostrar = "acf", temporalidad = 12)
+```
+
+```{r arima214_303_pacf, fig.cap="Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)"}
+exploratorio(arima214_303, mostrar = "pacf", temporalidad = 12)
+```
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+```{r}
+base <- popstudy::read_from_dir("TMIIR.xlsx", "References/Results_section_references/01 - Tasa de mortalidad infantil interanual") %>% 
+  read_excel()
+#base <- read_excel("./Material de referencia/Para sección de resultados/01 - Tasa de mortalidad infantil interanual/TMIIR.xlsx")
+TS <- ts(base$tmii, start = c(1989, 1), end = c(2017, 12), frequency = 12)
+```
+
+Como se mostró en la figura \ref{fig:tmiiplotgeneral}, la tasa de mortalidad infantil interanual posee una tendencia claramente decreciente, por lo que su media, por lo que no se trata de una serie cronológica estacionaria. Tras aplicarle una diferenciación, esta situación cambia, tal y como se muestra en la figura \ref{fig:tmii_comportamiento}.
+
+Por otro lado, las figuras \ref{fig:tmii_acf} y \ref{fig:tmii_pacf} sugieren la presencia de procesos estacionales , mientras que en la parte no estacional se observa como la *ACF* va disminuyendo y el *PACF* se corta tras el segundo rezado, lo cual podría ser indicio de un proceso $MA(2)$ o superior.
+
+```{r tmii_comportamiento, fig.cap="Tendencia de los datos diferenciados de la TMII"}
+exploratorio(TS, mostrar = "comportamiento", diferenciar = T)
+```
+
+```{r tmii_acf, fig.cap="Autocorrelación de los datos diferenciados de la TMII"}
+exploratorio(TS, mostrar = "acf", temporalidad = 12, diferenciar = T)
+```
+
+```{r tmii_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la TMII"}
+exploratorio(TS, mostrar = "pacf", temporalidad = 12, diferenciar = T)
+```
+
+\subsubsection{Mortalidad por causa externa}
+
+```{r}
+load(popstudy::read_from_dir("data.RData", "References/Results_section_references/03 - Mortalidad por causa externa"))
+TS <- ts(base$Total, start = c(2000, 1), end = c(2017, 12), frequency = 12)
+```
+
+En la figura \ref{fig:externaplotgeneral} se observó como la tasa de mortalidad por causa externa posee una tendencia ligeramente creciente e inestable a lo largo del tiempo, por lo que no se trata de una serie cronológica estacionaria. Tras aplicarle una diferenciación la serie se comporta como lo mostrado en la figura \ref{fig:externa_comportamiento}. Además, las figuras \ref{fig:externa_acf} y \ref{fig:externa_pacf} muestran indicios de un proceso bajo en la parte no estacional, y si bien no hay indicios claros de patrones estacionales, es sabido que los meses de Enero, Abril y Diciembre son los que cuentan con un mayor número de defunciones por estas causas.
+
+```{r externa_comportamiento, fig.cap="Tendencia de los datos diferenciados de la mortalidad por causa externa"}
+exploratorio(TS, mostrar = "comportamiento", diferenciar = T)
+```
+
+```{r externa_acf, fig.cap="Autocorrelación de los datos diferenciados de la mortalidad por causa externa"}
+exploratorio(TS, mostrar = "acf", temporalidad = 12, diferenciar = T)
+```
+
+```{r externa_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la mortalidad por causa externa"}
+exploratorio(TS, mostrar = "pacf", temporalidad = 12, diferenciar = T)
+```
+
+\subsubsection{Incentivos salariales}
+
+```{r}
+base <- popstudy::read_from_dir("Datos examen1.xlsx", "References/Results_section_references/04 - Incentivos salariales del sector público") %>% 
+  read_excel() %>% 
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\04 - Incentivos salariales del sector público\\Datos examen1.xlsx") %>% 
+  mutate(valor=`Incentivos salariales`,
+         fecha=ymd(Fecha)) %>% 
+  select(fecha, valor)
+TS <- ts(base$valor, start = c(2007, 1), end = c(2015, 06), frequency = 12)
+```
+
+En la figura \ref{fig:incentivosplotgeneral} se observó como la serie de incentivos salariales posee una tendencia creciente y sostenida a lo largo del tiempo, por lo que no se trata de una serie cronológica estacionaria. Tras una diferenciación la serie se comporta como lo mostrado en la figura \ref{fig:incentivos_comportamiento}, que aunque su media se mantiene constante, parece seguir teniendo patrones. Además, las figuras \ref{fig:incentivos_acf} y \ref{fig:incentivos_pacf} no parecen sugerir un proceso en particular tanto para la parte estacional como para la no estacional, a pesar de que es claro que existe un efecto periódico.
+
+```{r incentivos_comportamiento, fig.cap="Tendencia de los datos diferenciados de la serie de incentivos salariales"}
+exploratorio(TS, mostrar = "comportamiento", diferenciar = T)
+```
+
+```{r incentivos_acf, fig.cap="Autocorrelación de los datos diferenciados de la serie de incentivos salariales"}
+exploratorio(TS, mostrar = "acf", temporalidad = 12, diferenciar = T)
+```
+
+```{r incentivos_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la serie de incentivos salariales"}
+exploratorio(TS, mostrar = "pacf", temporalidad = 12, diferenciar = T)
+```
+
+\subsubsection{Intereses y comisiones del sector público}
+
+```{r}
+base <- popstudy::read_from_dir("Datos examen2.xlsx", "References/Results_section_references/05 - Intereses y comisiones del sector público") %>% 
+  read_excel() %>%
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\05 - Intereses y comisiones del sector público\\Datos examen2.xlsx") %>% 
+  mutate(valor=`Intereses y comisiones`,
+         fecha=ymd(Fecha)) %>% 
+  select(fecha, valor) %>% 
+  filter(year(fecha)>=2009)
+TS <- ts(base$valor, start = c(2009, 1), end = c(2018, 06), frequency = 12)
+```
+
+En la figura \ref{fig:interesesplotgeneral} se muestra como la serie de intereses y comisiones del sector público posee una tendencia creciente no lineal, por lo que no se trata de una serie de tiempo estacionaria. Tras utilizar una diferenciación la serie se comporta como lo mostrado en la figura \ref{fig:intereses_comportamiento}, que aunque su media se mantiene constante, pero aún conserva algunos patrones. Las figuras \ref{fig:intereses_acf} y \ref{fig:intereses_pacf} indican que existen un efecto estacional, pero su identificación no es clara.
+
+```{r intereses_comportamiento, fig.cap="Tendencia de los datos diferenciados de la serie de intereses y comisiones del sector público"}
+exploratorio(TS, mostrar = "comportamiento", diferenciar = T)
+```
+
+```{r intereses_acf, fig.cap="Autocorrelación de los datos diferenciados de la serie de intereses y comisiones del sector público"}
+exploratorio(TS, mostrar = "acf", temporalidad = 12, diferenciar = T)
+```
+
+```{r intereses_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la serie de intereses y comisiones del sector público"}
+exploratorio(TS, mostrar = "pacf", temporalidad = 12, diferenciar = T)
+```
+
+\subsection{Partición de los datos}
+
+Como se mencionó en la metodología, la partición utilizada consiste en tomar 80% de las observaciones para generar el serie cronológica de entrenamiento para ajustar los modelos, mientras que el restante 20% corresponde al la serie cronológica utilizada como validación. En el caso de los datos simulados, la ventana de observación de los datos seleccionados se muestra en la figura \ref{fig:particion_series_simuladas} para los datos simulados, y en la figura \ref{fig:particion_series_reales} para las series de tiempo reales.
+
+```{r particion_series_simuladas, fig.cap="Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo simuladas"}
+particiones <-
+    function(serie,
+             training = .8,
+             titulo = "",
+             ejex = "X",
+             ejey = "Y") {
+        corte <- round(length(serie) * training, 0)
+        train <<- subset(serie, end = corte)
+        test <<- subset(serie, start = corte + 1)
+        
+        minimo_training <- attributes(train)$tsp[1]
+        maximo_training <- attributes(train)$tsp[2]
+        
+        minimo_testing <- attributes(test)$tsp[1]
+        maximo_testing <- attributes(test)$tsp[2]
+        
+        exploratorio(serie) +
+            annotate(
+                "rect",
+                xmin = minimo_training,
+                xmax = maximo_training,
+                ymin = min(serie),
+                ymax = Inf,
+                alpha = 0.3,
+                fill = "green",
+                linetype = "dashed"
+            ) +
+            annotate(
+                "rect",
+                xmin = maximo_training,
+                xmax = maximo_testing,
+                ymin = min(serie),
+                ymax = Inf,
+                alpha = 0.3,
+                fill = "blue",
+                linetype = "dashed"
+            ) +
+            labs(y = ejey,
+                 x = ejex) +
+            ggtitle(titulo)
+        
+        
+    }
+
+particion_arima100 <-
+    particiones(arima100,
+                titulo = "ARIMA(1,0,0)",
+                ejex = "t",
+                ejey = "Y")
+
+particion_arima101 <-
+    particiones(arima101,
+                titulo = "ARIMA(1,0,1)",
+                ejex = "t",
+                ejey = "Y")
+
+particion_arima203 <-
+    particiones(arima203,
+                titulo = "ARIMA(2,0,3)",
+                ejex = "t",
+                ejey = "Y")
+
+particion_arima402 <-
+    particiones(arima402,
+                titulo = "ARIMA(4,0,2)",
+                ejex = "t",
+                ejey = "Y")
+
+particion_arima001_011 <-
+    particiones(arima001_011,
+                titulo = "ARIMA(0,0,1)(0,1,1)",
+                ejex = "t",
+                ejey = "Y")
+
+particion_arima214_303 <-
+    particiones(arima214_303,
+                titulo = "ARIMA(2,1,4)(3,0,3)",
+                ejex = "t",
+                ejey = "Y")
+
+ggarrange(
+    particion_arima100,
+    particion_arima101,
+    particion_arima203,
+    particion_arima402,
+    particion_arima001_011,
+    particion_arima214_303,
+    ncol = 3,
+    nrow = 2
+)
+```
+
+```{r particion_series_reales, fig.cap="Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo reales"}
+
+base <-
+    popstudy::read_from_dir(
+        "TMIIR.xlsx",
+        "References/Results_section_references/01 - Tasa de mortalidad infantil interanual"
+    ) %>%
+    read_excel()
+TS_tmii <-
+    ts(
+        base$tmii,
+        start = c(1989, 1),
+        end = c(2017, 12),
+        frequency = 12
+    )
+
+particion_tmii <-
+    particiones(TS_tmii,
+                titulo = "TMII",
+                ejex = "Año",
+                ejey = "Tasa")
+
+#######################
+load(
+    popstudy::read_from_dir(
+        "data.RData",
+        "References/Results_section_references/03 - Mortalidad por causa externa"
+    )
+)
+TS_externa <-
+    ts(
+        base$Total,
+        start = c(2000, 1),
+        end = c(2017, 12),
+        frequency = 12
+    )
+particion_externa <-
+    particiones(TS_externa,
+                titulo = "Mortalidad por causa externa",
+                ejex = "Año",
+                ejey = "Tasa")
+
+#########################
+
+base <-
+    popstudy::read_from_dir(
+        "Datos examen1.xlsx",
+        "References/Results_section_references/04 - Incentivos salariales del sector público"
+    ) %>%
+    read_excel() %>%
+    mutate(valor = `Incentivos salariales`,
+           fecha = ymd(Fecha)) %>%
+    select(fecha, valor)
+TS_incentivos <-
+    ts(
+        base$valor,
+        start = c(2007, 1),
+        end = c(2015, 06),
+        frequency = 12
+    )
+
+particion_incentivos <-
+    particiones(TS_incentivos,
+                titulo = "Incentivos salariales",
+                ejex = "Año",
+                ejey = "Incentivos")
+
+########################
+base <-
+    popstudy::read_from_dir(
+        "Datos examen2.xlsx",
+        "References/Results_section_references/05 - Intereses y comisiones del sector público"
+    ) %>%
+    read_excel() %>%
+    mutate(valor = `Intereses y comisiones`,
+           fecha = ymd(Fecha)) %>%
+    select(fecha, valor) %>%
+    filter(year(fecha) >= 2009)
+TS_intereses <-
+    ts(
+        base$valor,
+        start = c(2009, 1),
+        end = c(2018, 06),
+        frequency = 12
+    )
+particion_intereses <-
+    particiones(TS_intereses,
+                titulo = "Intereses y comisiones",
+                ejex = "Año",
+                ejey = "Intereses y comisiones")
+
+ggarrange(
+    particion_tmii,
+    particion_externa,
+    particion_incentivos,
+    particion_intereses,
+    ncol = 2,
+    nrow = 2
+)
+```
+
+\subsection{Estimación del mejor modelo según la función auto.arima()}
+
+Al ajustar modelos con la función `auto.arima()`, al igual que con cualquier otro método para estimar modelos $ARIMA$, se obtienen estimaciones de coeficientes. En el caso de los datos simulados, donde se conoce el verdadero proceso que gobierna la serie de tiempo, estos valores pueden compararse con los valores obtenidos.
+
+\subsubsection{Datos simulados}
+
+```{r}
+coeficientes_originales <- list(
+    data.frame(
+        tipo="Original",
+        proceso = "ARIMA(1,0,0)",
+        referencia="ARIMA(1,0,0)",
+        coeficiente = names(comparacion_no_estacional_bajo[[1]]$modelos$original$coef),
+        estimacion = comparacion_no_estacional_bajo[[1]]$modelos$original$coef,
+        LI=NA,
+        LS=NA
+    ),
+    data.frame(
+        tipo="Original",
+        proceso = "ARIMA(1,0,1)",
+        referencia="ARIMA(1,0,1)",
+        coeficiente = names(comparacion_no_estacional_bajo[[2]]$modelos$original$coef),
+        estimacion = comparacion_no_estacional_bajo[[2]]$modelos$original$coef,
+        LI=NA,
+        LS=NA
+    ),
+    data.frame(
+        tipo="Original",
+        proceso = "ARIMA(2,0,3)",
+        referencia="ARIMA(2,0,3)",
+        coeficiente = names(comparacion_no_estacional_alto[[1]]$modelos$original$coef),
+        estimacion = comparacion_no_estacional_alto[[1]]$modelos$original$coef,
+        LI=NA,
+        LS=NA
+    ),
+    data.frame(
+        tipo="Original",
+        proceso = "ARIMA(4,0,2)",
+        referencia="ARIMA(4,0,2)",
+        coeficiente = names(comparacion_no_estacional_alto[[2]]$modelos$original$coef),
+        estimacion = comparacion_no_estacional_alto[[2]]$modelos$original$coef,
+        LI=NA,
+        LS=NA
+    ),
+    data.frame(
+        tipo="Original",
+        proceso = "ARIMA(0,0,1)(0,1,1)",
+        referencia="ARIMA(0,0,1)(0,1,1)",
+        coeficiente = names(comparacion_estacional_bajo[[1]]$modelos$original$coef),
+        estimacion = comparacion_estacional_bajo[[1]]$modelos$original$coef,
+        LI=NA,
+        LS=NA
+    ),
+    data.frame(
+        tipo="Original",
+        proceso = "ARIMA(2,1,4)(3,0,3)",
+        referencia="ARIMA(2,1,4)(3,0,3)",
+        coeficiente = names(comparacion_estacional_alto[[2]]$modelos$original$coef),
+        estimacion = comparacion_estacional_alto[[2]]$modelos$original$coef,
+        LI=NA,
+        LS=NA
+    )
+) %>% do.call(rbind, .)
+
+##############################################
+
+coeficientes_auto.arima <- list(
+    data.frame(
+        tipo="auto.arima()",
+        proceso = "ARIMA(1,0,0)",
+        referencia="ARIMA(1,0,0)",
+        coeficiente = names(comparacion_no_estacional_bajo[[1]]$modelos$autoarima$coef),
+        estimacion = comparacion_no_estacional_bajo[[1]]$modelos$autoarima$coef,
+        LI=confint(comparacion_no_estacional_bajo[[1]]$modelos$autoarima)[,1],
+        LS=confint(comparacion_no_estacional_bajo[[1]]$modelos$autoarima)[,2]
+    ),
+    data.frame(
+        tipo="auto.arima()",
+        proceso = "ARIMA(0,0,1)",
+        referencia="ARIMA(1,0,1)",
+        coeficiente = names(comparacion_no_estacional_bajo[[2]]$modelos$autoarima$coef),
+        estimacion = comparacion_no_estacional_bajo[[2]]$modelos$autoarima$coef,
+        LI=confint(comparacion_no_estacional_bajo[[2]]$modelos$autoarima)[,1],
+        LS=confint(comparacion_no_estacional_bajo[[2]]$modelos$autoarima)[,2]
+    ),
+    data.frame(
+        tipo="auto.arima()",
+        proceso = "ARIMA(2,0,2)",
+        referencia="ARIMA(2,0,3)",
+        coeficiente = names(comparacion_no_estacional_alto[[1]]$modelos$autoarima$coef),
+        estimacion = comparacion_no_estacional_alto[[1]]$modelos$autoarima$coef,
+        LI=confint(comparacion_no_estacional_alto[[1]]$modelos$autoarima)[,1],
+        LS=confint(comparacion_no_estacional_alto[[1]]$modelos$autoarima)[,2]
+    ),
+    data.frame(
+        tipo="auto.arima()",
+        proceso = "ARIMA(2,0,3)",
+        referencia="ARIMA(4,0,2)",
+        coeficiente = names(comparacion_no_estacional_alto[[2]]$modelos$autoarima$coef),
+        estimacion = comparacion_no_estacional_alto[[2]]$modelos$autoarima$coef,
+        LI=confint(comparacion_no_estacional_alto[[2]]$modelos$autoarima)[,1],
+        LS=confint(comparacion_no_estacional_alto[[2]]$modelos$autoarima)[,2]
+    ),
+    data.frame(
+        tipo="auto.arima()",
+        proceso = "ARIMA(0,0,1)(0,1,1)",
+        referencia="ARIMA(0,0,1)(0,1,1)",
+        coeficiente = names(comparacion_estacional_bajo[[1]]$modelos$autoarima$coef),
+        estimacion = comparacion_estacional_bajo[[1]]$modelos$autoarima$coef,
+        LI=confint(comparacion_estacional_bajo[[1]]$modelos$autoarima)[,1],
+        LS=confint(comparacion_estacional_bajo[[1]]$modelos$autoarima)[,2]
+    ),
+    data.frame(
+        tipo="auto.arima()",
+        proceso = "ARIMA(2,0,4)(0,0,2)",
+        referencia="ARIMA(2,1,4)(3,0,3)",
+        coeficiente = names(comparacion_estacional_alto[[2]]$modelos$autoarima$coef),
+        estimacion = comparacion_estacional_alto[[2]]$modelos$autoarima$coef,
+        LI=confint(comparacion_estacional_alto[[2]]$modelos$autoarima)[,1],
+        LS=confint(comparacion_estacional_alto[[2]]$modelos$autoarima)[,2]
+    )
+) %>% do.call(rbind, .)
+
+##############################################
+coeficientes_sobreparametrizacion <- list(
+    data.frame(
+        tipo="Sobreparametrización",
+        proceso = "ARIMA(1,0,0)",
+        referencia="ARIMA(1,0,0)",
+        coeficiente = names(comparacion_no_estacional_bajo[[1]]$modelos$sobreparametrizacion$coef),
+        estimacion = comparacion_no_estacional_bajo[[1]]$modelos$sobreparametrizacion$coef,
+        LI=confint(comparacion_no_estacional_bajo[[1]]$modelos$sobreparametrizacion)[,1],
+        LS=confint(comparacion_no_estacional_bajo[[1]]$modelos$sobreparametrizacion)[,2]
+    ),
+    data.frame(
+        tipo="Sobreparametrización",
+        proceso = "ARIMA(0,0,1)",
+        referencia="ARIMA(1,0,1)",
+        coeficiente = names(comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion$coef),
+        estimacion = comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion$coef,
+        LI=confint(comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion)[,1],
+        LS=confint(comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion)[,2]
+    ),
+    data.frame(
+        tipo="Sobreparametrización",
+        proceso = "ARIMA(5,1,1)",
+        referencia="ARIMA(2,0,3)",
+        coeficiente = names(comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion$coef),
+        estimacion = comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion$coef,
+        LI=confint(comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion)[,1],
+        LS=confint(comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion)[,2]
+    ),
+    data.frame(
+        tipo="Sobreparametrización",
+        proceso = "ARIMA(4,0,2)",
+        referencia="ARIMA(4,0,2)",
+        coeficiente = names(comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion$coef),
+        estimacion = comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion$coef,
+        LI=confint(comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion)[,1],
+        LS=confint(comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion)[,2]
+    ),
+    data.frame(
+        tipo="Sobreparametrización",
+        proceso = "ARIMA(0,0,1)(0,1,1)",
+        referencia="ARIMA(0,0,1)(0,1,1)",
+        coeficiente = names(comparacion_estacional_bajo[[1]]$modelos$sobreparametrizacion$coef),
+        estimacion = comparacion_estacional_bajo[[1]]$modelos$sobreparametrizacion$coef,
+        LI=confint(comparacion_estacional_bajo[[1]]$modelos$sobreparametrizacion)[,1],
+        LS=confint(comparacion_estacional_bajo[[1]]$modelos$sobreparametrizacion)[,2]
+    ),
+    data.frame(
+        tipo="Sobreparametrización",
+        proceso = "ARIMA(2,1,3)(0,1,3)",
+        referencia="ARIMA(2,1,4)(3,0,3)",
+        coeficiente = names(comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion$coef),
+        estimacion = comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion$coef,
+        LI=confint(comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion)[,1],
+        LS=confint(comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion)[,2]
+    )
+) %>% do.call(rbind, .)
+###################################
+
+coeficientes_arima_estandar <- list(
+    data.frame(
+        tipo="ARIMA estándar",
+        proceso = "ARIMA(1,1,1)",
+        referencia="ARIMA(1,0,0)",
+        coeficiente = names(comparacion_no_estacional_bajo[[1]]$modelos$arima_estandar$coef),
+        estimacion = comparacion_no_estacional_bajo[[1]]$modelos$arima_estandar$coef,
+        LI=confint(comparacion_no_estacional_bajo[[1]]$modelos$arima_estandar)[,1],
+        LS=confint(comparacion_no_estacional_bajo[[1]]$modelos$arima_estandar)[,2]
+    ),
+    data.frame(
+        tipo="ARIMA estándar",
+        proceso = "ARIMA(1,1,1)",
+        referencia="ARIMA(1,0,1)",
+        coeficiente = names(comparacion_no_estacional_bajo[[2]]$modelos$arima_estandar$coef),
+        estimacion = comparacion_no_estacional_bajo[[2]]$modelos$arima_estandar$coef,
+        LI=confint(comparacion_no_estacional_bajo[[2]]$modelos$arima_estandar)[,1],
+        LS=confint(comparacion_no_estacional_bajo[[2]]$modelos$arima_estandar)[,2]
+    ),
+    data.frame(
+        tipo="ARIMA estándar",
+       proceso = "ARIMA(1,1,1)",
+       referencia="ARIMA(2,0,3)",
+        coeficiente = names(comparacion_no_estacional_alto[[1]]$modelos$arima_estandar$coef),
+        estimacion = comparacion_no_estacional_alto[[1]]$modelos$arima_estandar$coef,
+        LI=confint(comparacion_no_estacional_alto[[1]]$modelos$arima_estandar)[,1],
+        LS=confint(comparacion_no_estacional_alto[[1]]$modelos$arima_estandar)[,2]
+    ),
+    data.frame(
+        tipo="ARIMA estándar",
+        proceso = "ARIMA(1,1,1)",
+        referencia="ARIMA(4,0,2)",
+        coeficiente = names(comparacion_no_estacional_alto[[2]]$modelos$arima_estandar$coef),
+        estimacion = comparacion_no_estacional_alto[[2]]$modelos$arima_estandar$coef,
+        LI=confint(comparacion_no_estacional_alto[[2]]$modelos$arima_estandar)[,1],
+        LS=confint(comparacion_no_estacional_alto[[2]]$modelos$arima_estandar)[,2]
+    ),
+    data.frame(
+        tipo="ARIMA estándar",
+        proceso = "ARIMA(1,1,1)(1,1,1)",
+        referencia="ARIMA(0,0,1)(0,1,1)",
+        coeficiente = names(comparacion_estacional_bajo[[1]]$modelos$arima_estandar$coef),
+        estimacion = comparacion_estacional_bajo[[1]]$modelos$arima_estandar$coef,
+        LI=confint(comparacion_estacional_bajo[[1]]$modelos$arima_estandar)[,1],
+        LS=confint(comparacion_estacional_bajo[[1]]$modelos$arima_estandar)[,2]
+    ),
+    data.frame(
+        tipo="ARIMA estándar",
+        proceso = "ARIMA(1,1,1)(1,1,1)",
+        referencia="ARIMA(2,1,4)(3,0,3)",
+        coeficiente = names(comparacion_estacional_alto[[2]]$modelos$arima_estandar$coef),
+        estimacion = comparacion_estacional_alto[[2]]$modelos$arima_estandar$coef,
+        LI=confint(comparacion_estacional_alto[[2]]$modelos$arima_estandar)[,1],
+        LS=confint(comparacion_estacional_alto[[2]]$modelos$arima_estandar)[,2]
+    )
+) %>% do.call(rbind, .)
+```
+
+El cuadro \ref{tab:coeficientes_original_autoarima} resume los resultados obtenidos en la estimación de los coeficientes. En la columna *Proceso original* se indica el proceso a partir del cual se generó la serie cronológica mediante simulación, en la columna *Coeficiente* se indica el coeficiente al cual pertenecen las estimaciones presentes en las columnas *Valor real* (el valor del coeficiente del proceso original), *Estimación auto.arima()* (valor estimado del coeficiente mediante la función `auto.arima()`), *Límite Inferior* y *Límite Superior* del intervalo de confianza el 95% para los coeficientes estimados en la columna *Estimación auto.arima()*. Como se ha mencionado, la notación más utilizada para los modelos $ARIMA$ es $ARIMA(p,d,q)(P,D,Q)$, que en la columna *Coeficiente* equivale a $ARIMA(ARX, d, MAX)(SARX, D, SMAX)$, con $X=\{1,2,3,4\}$, según corresponda.
+
+De esta manera, a modo de ejemplo, para los datos simulados a partir de un $ARIMA(4,0,2)$, los coeficientes de $AR1$ hasta $AR4$ representan los cuatro coeficientes de la parte autorregresiva no estacional, mientras que $MA1$ y $MA2$ son los dos coeficientes del modelo de medias móviles de la parte no estacional, la celda del *Valor real* correspondiente al coeficiente $MA3$ está vacía porque el modelo original solo tenía dos coeficientes en el modelo de medias móviles, no tres. Así, el modelo estimado con `auto.arima()` estima únicamente los coeficientes $AR1$ y $AR2$ para el modelo autorregresivo, y $MA1$, $MA2$ y $MA3$ para el modelo de medias móviles.
+
+```{r}
+do.call(
+    rbind,
+    list(
+        coeficientes_originales,
+        coeficientes_auto.arima,
+        coeficientes_sobreparametrizacion,
+        coeficientes_arima_estandar
+    )
+) %>%
+    data.frame(row.names = NULL) %>%
+    filter(tipo %in% c("Original", "auto.arima()"),
+           coeficiente != "intercept") %>%
+    select(-proceso) %>%
+    mutate(
+        coeficiente = factor(
+            toupper(coeficiente),
+            levels = c(
+                "INTERCEPT",
+                paste0("AR", 1:6),
+                paste0("MA", 1:6),
+                paste0("SAR", 1:6),
+                paste0("SMA", 1:6)
+            ),
+            ordered = T
+        ),
+        referencia = factor(
+            referencia,
+            levels = c(
+                "ARIMA(1,0,0)",
+                "ARIMA(1,0,1)",
+                "ARIMA(2,0,3)",
+                "ARIMA(4,0,2)",
+                "ARIMA(0,0,1)(0,1,1)",
+                "ARIMA(2,1,4)(3,0,3)"
+            ),
+            ordered = T
+        )
+    ) %>%
+    pivot_wider(names_from = tipo,
+                values_from = c(estimacion, LI, LS)) %>%
+    arrange(referencia, coeficiente) %>%
+    select(-c(LI_Original, LS_Original)) %>%
+    mutate_if(is.numeric, function(x){
+        case_when(
+            x==0 ~ x+.1,
+            TRUE ~ x
+        )
+    }) %>% 
+    mutate_if(is.numeric, function(x) ifelse(is.na(x), "", as.character(round(x, 2)))) %>% 
+    kbl(.,
+        "latex",
+        booktabs = T,
+        escape = F, 
+        align = "r",
+        caption = "\\label{tab:coeficientes_original_autoarima}Coefcientes del proceso original y los estimados con auto.arima()",
+        col.names = c(
+            "Proceso original",
+            "Coeficiente",
+            "Valor real",
+            "Estimación auto.arima()",
+            "Límite Inferior",
+            "Límite Superior"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 5
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>% 
+    column_spec(1, bold = T, extra_css = 'center-align: top !important;')
+```
+
+\subsubsection{Datos reales}
+
+En el caso de las series cronológicas reales, se toma en consideración el mejor modelo sugerido por la función `auto.arima()`. Los coeficientes obtenidos para las distintas series de tiempo costarricenses se muestran en el cuadro \ref{tab:coeficientes_reales_autoarima}.
+
+```{r, results='hide'}
+TMII$arima_estandar <- arima(TMII$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)))
+EXTERNA$arima_estandar <- arima(EXTERNA$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)))
+INCENTIVOS$arima_estandar <- arima(INCENTIVOS$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)))
+INTERESES$arima_estandar <- arima(INTERESES$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)))
+```
+
+
+```{r}
+list(
+    data.frame(
+        Serie="TMII",
+        coeficiente = names(TMII$haa$coef),
+        estimacion = TMII$haa$coef,
+        LI=confint(TMII$haa)[,1],
+        LS=confint(TMII$haa)[,2]
+    ),
+    data.frame(
+        Serie="Mortalidad por causa externa",
+        coeficiente = names(EXTERNA$haa$coef),
+        estimacion = EXTERNA$haa$coef,
+        LI=confint(EXTERNA$haa)[,1],
+        LS=confint(EXTERNA$haa)[,2]
+    ),
+    data.frame(
+        Serie="Incentivos salariales",
+        coeficiente = names(INCENTIVOS$haa$coef),
+        estimacion = INCENTIVOS$haa$coef,
+        LI=confint(INCENTIVOS$haa)[,1],
+        LS=confint(INCENTIVOS$haa)[,2]
+    ),
+    data.frame(
+        Serie="Intereses y comisiones",
+        coeficiente = names(INTERESES$haa$coef),
+        estimacion = INTERESES$haa$coef,
+        LI=confint(INTERESES$haa)[,1],
+        LS=confint(INTERESES$haa)[,2]
+    )
+) %>% 
+    do.call(rbind, .) %>%
+    data.frame(row.names = NULL) %>%
+    filter(coeficiente != "drift") %>%
+    mutate(
+        coeficiente = factor(
+            toupper(coeficiente),
+            levels = c(
+                paste0("AR", 1:6),
+                paste0("MA", 1:6),
+                paste0("SAR", 1:6),
+                paste0("SMA", 1:6)
+            ),
+            ordered = T
+        )
+    ) %>%
+    mutate_if(is.numeric, round, 2) %>% 
+    kbl(.,
+        "latex",
+        booktabs = T,
+        escape = F, 
+        align = "r",
+        caption = "\\label{tab:coeficientes_reales_autoarima}Coefcientes de los modelos ajustados con a las series reales con auto.arima()",
+        col.names = c(
+            "Serie",
+            "Coeficiente",
+            "Estimación",
+            "Límite Inferior",
+            "Límite Superior"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 5
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>% 
+    column_spec(1, bold = T, extra_css = 'center-align: top !important;')
+```
+
+\subsection{Estimación del mejor modelo con sobreparametrización}
+
+De manera análoga al procedimiento realizado con la función `auto.arima()`, se realiza el proceso descrito en la metodología para seleccionar el mejor modelo utilizando la sobreparametrización. Nuevamente, para los datos simulados, se conoce de previo el verdadero proceso que gobierna la serie de temporal, los cuales se comparan con los valores de los coeficientes de cada modelo obtenido mediante la sobreparametrización.
+
+\subsubsection{Datos simulados}
+
+Los mismos conceptos explicados para el cuadro \ref{tab:coeficientes_original_autoarima} aplican ahora para el \ref{tab:coeficientes_original_sobreparametrizacion}.
+
+```{r}
+do.call(
+    rbind,
+    list(
+        coeficientes_originales,
+        coeficientes_auto.arima,
+        coeficientes_sobreparametrizacion,
+        coeficientes_arima_estandar
+    )
+) %>%
+    data.frame(row.names = NULL) %>%
+    filter(tipo %in% c("Original", "Sobreparametrización"),
+           coeficiente != "intercept") %>%
+    select(-proceso) %>%
+    mutate(
+        coeficiente = factor(
+            toupper(coeficiente),
+            levels = c(
+                "INTERCEPT",
+                paste0("AR", 1:6),
+                paste0("MA", 1:6),
+                paste0("SAR", 1:6),
+                paste0("SMA", 1:6)
+            ),
+            ordered = T
+        ),
+        referencia = factor(
+            referencia,
+            levels = c(
+                "ARIMA(1,0,0)",
+                "ARIMA(1,0,1)",
+                "ARIMA(2,0,3)",
+                "ARIMA(4,0,2)",
+                "ARIMA(0,0,1)(0,1,1)",
+                "ARIMA(2,1,4)(3,0,3)"
+            ),
+            ordered = T
+        )
+    ) %>%
+    pivot_wider(names_from = tipo,
+                values_from = c(estimacion, LI, LS)) %>%
+    arrange(referencia, coeficiente) %>%
+    select(-c(LI_Original, LS_Original)) %>%
+    mutate_if(is.numeric, function(x){
+        case_when(
+            x==0 ~ x+.1,
+            TRUE ~ x
+        )
+    }) %>% 
+    mutate_if(is.numeric, function(x) ifelse(is.na(x), "", as.character(round(x, 2)))) %>% 
+    kbl(.,
+        "latex",
+        booktabs = T,
+        escape = F, 
+        align = "r",
+        caption = "\\label{tab:coeficientes_original_sobreparametrizacion}Coefcientes del proceso original y los estimados con sobreparametrización",
+        col.names = c(
+            "Proceso original",
+            "Coeficiente",
+            "Valor real",
+            "Estimación sobreparametrización",
+            "Límite Inferior",
+            "Límite Superior"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 5
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>% 
+    column_spec(1, bold = T, extra_css = 'center-align: top !important;')
+```
+
+\subsubsection{Datos reales}
+
+Para las series cronológicas reales también se toma en consideración el mejor modelo sugerido esta vez por la sobreparametrización. Los coeficientes obtenidos para las distintas series de tiempo costarricenses se muestran en el cuadro \ref{tab:coeficientes_reales_sobreparametrizacion}.
+
+```{r}
+list(
+    data.frame(
+        Serie="TMII",
+        coeficiente = names(TMII$op$best_model$coef),
+        estimacion = TMII$op$best_model$coef,
+        LI=confint(TMII$op$best_model)[,1],
+        LS=confint(TMII$op$best_model)[,2]
+    ),
+    data.frame(
+        Serie="Mortalidad por causa externa",
+        coeficiente = names(EXTERNA$op$best_model$coef),
+        estimacion = EXTERNA$op$best_model$coef,
+        LI=confint(EXTERNA$op$best_model)[,1],
+        LS=confint(EXTERNA$op$best_model)[,2]
+    ),
+    data.frame(
+        Serie="Incentivos salariales",
+        coeficiente = names(INCENTIVOS$op$best_model$coef),
+        estimacion = INCENTIVOS$op$best_model$coef,
+        LI=confint(INCENTIVOS$op$best_model)[,1],
+        LS=confint(INCENTIVOS$op$best_model)[,2]
+    ),
+    data.frame(
+        Serie="Intereses y comisiones",
+        coeficiente = names(INTERESES$op$best_model$coef),
+        estimacion = INTERESES$op$best_model$coef,
+        LI=confint(INTERESES$op$best_model)[,1],
+        LS=confint(INTERESES$op$best_model)[,2]
+    )
+) %>% 
+    do.call(rbind, .) %>%
+    data.frame(row.names = NULL) %>%
+    filter(coeficiente != "drift") %>%
+    mutate(
+        coeficiente = factor(
+            toupper(coeficiente),
+            levels = c(
+                paste0("AR", 1:6),
+                paste0("MA", 1:6),
+                paste0("SAR", 1:6),
+                paste0("SMA", 1:6)
+            ),
+            ordered = T
+        )
+    ) %>%
+    mutate_if(is.numeric, round, 2) %>% 
+    kbl(.,
+        "latex",
+        booktabs = T,
+        escape = F, 
+        align = "r",
+        caption = "\\label{tab:coeficientes_reales_sobreparametrizacion}Coefcientes de los modelos ajustados con a las series reales con sobreparametrización",
+        col.names = c(
+            "Serie",
+            "Coeficiente",
+            "Estimación",
+            "Límite Inferior",
+            "Límite Superior"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 5
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>% 
+    column_spec(1, bold = T, extra_css = 'center-align: top !important;')
+```
+
+\subsection{Estimación de un modelo ARIMA estándar}
+
+Ajustar un modelo ARIMA genérico sirve para referenciar los demás resultados obtenidos, es decir, contrastarlos con los resultados del `auto.arima()` y la sobreparametrización. Nuevamente, para los datos simulados se comparan los coeficientes obtenidos con los que se connocen a priori.
+
+\subsubsection{Datos simulados}
+
+Los mismos conceptos explicados para los cuadros \ref{tab:coeficientes_original_autoarima} y \ref{tab:coeficientes_original_sobreparametrizacion} aplican ahora para el cuadro \ref{tab:coeficientes_original_arima_estandar}.
+
+```{r}
+do.call(
+    rbind,
+    list(
+        coeficientes_originales,
+        coeficientes_auto.arima,
+        coeficientes_sobreparametrizacion,
+        coeficientes_arima_estandar
+    )
+) %>%
+    data.frame(row.names = NULL) %>%
+    filter(tipo %in% c("Original", "ARIMA estándar"),
+           coeficiente != "intercept") %>%
+    select(-proceso) %>%
+    mutate(
+        coeficiente = factor(
+            toupper(coeficiente),
+            levels = c(
+                "INTERCEPT",
+                paste0("AR", 1:6),
+                paste0("MA", 1:6),
+                paste0("SAR", 1:6),
+                paste0("SMA", 1:6)
+            ),
+            ordered = T
+        ),
+        referencia = factor(
+            referencia,
+            levels = c(
+                "ARIMA(1,0,0)",
+                "ARIMA(1,0,1)",
+                "ARIMA(2,0,3)",
+                "ARIMA(4,0,2)",
+                "ARIMA(0,0,1)(0,1,1)",
+                "ARIMA(2,1,4)(3,0,3)"
+            ),
+            ordered = T
+        )
+    ) %>%
+    pivot_wider(names_from = tipo,
+                values_from = c(estimacion, LI, LS)) %>%
+    arrange(referencia, coeficiente) %>%
+    select(-c(LI_Original, LS_Original)) %>%
+    mutate_if(is.numeric, function(x){
+        case_when(
+            x==0 ~ x+.1,
+            TRUE ~ x
+        )
+    }) %>% 
+    mutate_if(is.numeric, function(x) ifelse(is.na(x), "", as.character(round(x, 2)))) %>% 
+    kbl(.,
+        "latex",
+        booktabs = T,
+        escape = F, 
+        align = "r",
+        caption = "\\label{tab:coeficientes_original_arima_estandar}Coefcientes del proceso original y los estimados con un ARIMA estándar",
+        col.names = c(
+            "Proceso original",
+            "Coeficiente",
+            "Valor real",
+            "Estimación ARIMA estándar",
+            "Límite Inferior",
+            "Límite Superior"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 5
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>% 
+    column_spec(1, bold = T, extra_css = 'center-align: top !important;')
+```
+
+\subsubsection{Datos reales}
+
+Las series cronológicas reales, al contar con un componente estacional, se ajustan todas con un $ARIMA(1,1,1)(1,1,1)$. Los resultados aparecen en el cuadro \ref{tab:coeficientes_reales_arima_estandar}.
+
+```{r}
+list(
+    data.frame(
+        Serie="TMII",
+        coeficiente = names(TMII$arima_estandar$coef),
+        estimacion = TMII$arima_estandar$coef,
+        LI=confint(TMII$arima_estandar)[,1],
+        LS=confint(TMII$arima_estandar)[,2]
+    ),
+    data.frame(
+        Serie="Mortalidad por causa externa",
+        coeficiente = names(EXTERNA$arima_estandar$coef),
+        estimacion = EXTERNA$arima_estandar$coef,
+        LI=confint(EXTERNA$arima_estandar)[,1],
+        LS=confint(EXTERNA$arima_estandar)[,2]
+    ),
+    data.frame(
+        Serie="Incentivos salariales",
+        coeficiente = names(INCENTIVOS$arima_estandar$coef),
+        estimacion = INCENTIVOS$arima_estandar$coef,
+        LI=confint(INCENTIVOS$arima_estandar)[,1],
+        LS=confint(INCENTIVOS$arima_estandar)[,2]
+    ),
+    data.frame(
+        Serie="Intereses y comisiones",
+        coeficiente = names(INTERESES$arima_estandar$coef),
+        estimacion = INTERESES$arima_estandar$coef,
+        LI=confint(INTERESES$arima_estandar)[,1],
+        LS=confint(INTERESES$arima_estandar)[,2]
+    )
+) %>% 
+    do.call(rbind, .) %>%
+    data.frame(row.names = NULL) %>%
+    filter(coeficiente != "drift") %>%
+    mutate(
+        coeficiente = factor(
+            toupper(coeficiente),
+            levels = c(
+                paste0("AR", 1:6),
+                paste0("MA", 1:6),
+                paste0("SAR", 1:6),
+                paste0("SMA", 1:6)
+            ),
+            ordered = T
+        )
+    ) %>%
+    mutate_if(is.numeric, round, 2) %>% 
+    kbl(.,
+        "latex",
+        booktabs = T,
+        escape = F, 
+        align = "r",
+        caption = "\\label{tab:coeficientes_reales_arima_estandar}Coefcientes de los modelos ajustados con a las series reales con un ARIMA estándar",
+        col.names = c(
+            "Serie",
+            "Coeficiente",
+            "Estimación",
+            "Límite Inferior",
+            "Límite Superior"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 5
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>% 
+    column_spec(1, bold = T, extra_css = 'center-align: top !important;')
+```
+
+\subsection{Análisis de los errores}
+
+\subsubsection{Datos simulados}
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+\subsubsection{Mortalidad por causa externa}
+
+\subsubsection{Incentivos salariales}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+\subsection{Pronósticos}
+
+\subsubsection{Datos simulados}
+
+\subsubsection{Tasa de mortalidad infantil interanual}
+
+\subsubsection{Mortalidad por causa externa}
+
+\subsubsection{Incentivos salariales}
+
+\subsubsection{Intereses y comisiones del sector público}
+
+\subsection{Medidas de bondad de ajuste y de rendimiento}
 
 
 
 
 
-\subsection{Análisis de simulación en series cronológicas}
+
+
+
 
 
 El cuadro \ref{tab:comparaciones} muestra los valores del MAE, MASE y RMSE para cada proceso estimado y, además, muestra el proceso de origen de las series cronológicas simuladas. Al aplicar la función `auto.arima()` y la sobreparametrización sobre una serie cronológica generada a partir de un $ARIMA(1,0,0)$, se obtienen los mismos resultados, y esto son ligeramente inferiores a los obtenidos mediante un $ARIMA(1,1,1)$. Al generar datos a partir de un $ARIMA(1,0,1)$ los mejores pronósticos se obtienen tanto con el `auto.arima()` como con la sobreparametrización, pues ambos son superiores a los obtenidos mediante un $ARIMA(1,1,1)$. Al ir incorporando términos en las series no estacionales, como es el caso de los datos simulados a partir de un $ARIMA(2,0,3)$, los mejores pronósticos se obtienen mediante el uso de la sobreparametrización, pues la magnitud de sus errores son siempre menores. 

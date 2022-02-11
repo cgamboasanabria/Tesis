@@ -25,7 +25,39 @@
 \contentsline {figure}{\numberline {24}{\ignorespaces Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018\relax }}{37}{figure.caption.24}%
 \contentsline {figure}{\numberline {25}{\ignorespaces Valores de referencia para la simulación de series cronológicas\relax }}{39}{figure.caption.25}%
 \contentsline {figure}{\numberline {26}{\ignorespaces Series cronológicas simuladas\relax }}{39}{figure.caption.26}%
-\contentsline {figure}{\numberline {27}{\ignorespaces Pronósticos de la TMII según método de estimación\relax }}{44}{figure.caption.29}%
-\contentsline {figure}{\numberline {28}{\ignorespaces Pronósticos de la TMII según método de estimación\relax }}{45}{figure.caption.31}%
-\contentsline {figure}{\numberline {29}{\ignorespaces Pronósticos de los incentivos salariales según método de estimación\relax }}{46}{figure.caption.33}%
-\contentsline {figure}{\numberline {30}{\ignorespaces Pronósticos de los intereses y comisiones del sector público según método de estimación\relax }}{47}{figure.caption.35}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,0)\relax }}{46}{figure.caption.27}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Autocorrelación de los datos simulados a partir de un proceso ARIMA(1,0,0)\relax }}{46}{figure.caption.28}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(1,0,0)\relax }}{47}{figure.caption.29}%
+\contentsline {figure}{\numberline {30}{\ignorespaces Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,1)\relax }}{47}{figure.caption.30}%
+\contentsline {figure}{\numberline {31}{\ignorespaces Autocorrelación de los datos simulados a partir de un proceso ARIMA(1,0,1)\relax }}{48}{figure.caption.31}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(1,0,1)\relax }}{48}{figure.caption.32}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Tendencia de los datos simulados a partir de un proceso ARIMA(2,0,3)\relax }}{49}{figure.caption.33}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Autocorrelación de los datos simulados a partir de un proceso ARIMA(2,0,3)\relax }}{49}{figure.caption.34}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(2,0,3)\relax }}{50}{figure.caption.35}%
+\contentsline {figure}{\numberline {36}{\ignorespaces Tendencia de los datos simulados a partir de un proceso ARIMA(4,0,2)\relax }}{50}{figure.caption.36}%
+\contentsline {figure}{\numberline {37}{\ignorespaces Autocorrelación de los datos simulados a partir de un proceso ARIMA(4,0,2)\relax }}{51}{figure.caption.37}%
+\contentsline {figure}{\numberline {38}{\ignorespaces Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(4,0,2)\relax }}{51}{figure.caption.38}%
+\contentsline {figure}{\numberline {39}{\ignorespaces Tendencia de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)\relax }}{52}{figure.caption.39}%
+\contentsline {figure}{\numberline {40}{\ignorespaces Autocorrelación de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)\relax }}{52}{figure.caption.40}%
+\contentsline {figure}{\numberline {41}{\ignorespaces Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)\relax }}{53}{figure.caption.41}%
+\contentsline {figure}{\numberline {42}{\ignorespaces Tendencia de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)\relax }}{53}{figure.caption.42}%
+\contentsline {figure}{\numberline {43}{\ignorespaces Autocorrelación de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)\relax }}{54}{figure.caption.43}%
+\contentsline {figure}{\numberline {44}{\ignorespaces Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)\relax }}{54}{figure.caption.44}%
+\contentsline {figure}{\numberline {45}{\ignorespaces Tendencia de los datos diferenciados de la TMII\relax }}{55}{figure.caption.45}%
+\contentsline {figure}{\numberline {46}{\ignorespaces Autocorrelación de los datos diferenciados de la TMII\relax }}{56}{figure.caption.46}%
+\contentsline {figure}{\numberline {47}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la TMII\relax }}{56}{figure.caption.47}%
+\contentsline {figure}{\numberline {48}{\ignorespaces Tendencia de los datos diferenciados de la mortalidad por causa externa\relax }}{57}{figure.caption.48}%
+\contentsline {figure}{\numberline {49}{\ignorespaces Autocorrelación de los datos diferenciados de la mortalidad por causa externa\relax }}{57}{figure.caption.49}%
+\contentsline {figure}{\numberline {50}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la mortalidad por causa externa\relax }}{58}{figure.caption.50}%
+\contentsline {figure}{\numberline {51}{\ignorespaces Tendencia de los datos diferenciados de la serie de incentivos salariales\relax }}{58}{figure.caption.51}%
+\contentsline {figure}{\numberline {52}{\ignorespaces Autocorrelación de los datos diferenciados de la serie de incentivos salariales\relax }}{59}{figure.caption.52}%
+\contentsline {figure}{\numberline {53}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la serie de incentivos salariales\relax }}{59}{figure.caption.53}%
+\contentsline {figure}{\numberline {54}{\ignorespaces Tendencia de los datos diferenciados de la serie de intereses y comisiones del sector público\relax }}{60}{figure.caption.54}%
+\contentsline {figure}{\numberline {55}{\ignorespaces Autocorrelación de los datos diferenciados de la serie de intereses y comisiones del sector público\relax }}{60}{figure.caption.55}%
+\contentsline {figure}{\numberline {56}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la serie de intereses y comisiones del sector público\relax }}{61}{figure.caption.56}%
+\contentsline {figure}{\numberline {57}{\ignorespaces Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo simuladas\relax }}{61}{figure.caption.57}%
+\contentsline {figure}{\numberline {58}{\ignorespaces Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo reales\relax }}{62}{figure.caption.58}%
+\contentsline {figure}{\numberline {59}{\ignorespaces Pronósticos de la TMII según método de estimación\relax }}{68}{figure.caption.67}%
+\contentsline {figure}{\numberline {60}{\ignorespaces Pronósticos de la TMII según método de estimación\relax }}{69}{figure.caption.69}%
+\contentsline {figure}{\numberline {61}{\ignorespaces Pronósticos de los incentivos salariales según método de estimación\relax }}{70}{figure.caption.71}%
+\contentsline {figure}{\numberline {62}{\ignorespaces Pronósticos de los intereses y comisiones del sector público según método de estimación\relax }}{71}{figure.caption.73}%
