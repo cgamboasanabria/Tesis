@@ -1,0 +1,277 @@
+```{r}
+resumen_resultados <- function(x) {
+    testing <- x$testing
+    
+    medidas_ajuste <- function(modelo) {
+        resid <- modelo$residuals
+        LL <-
+            length(resid) * log(1) - length(resid) * log(sd(resid) * sqrt(2 * pi)) - (sum(resid ^ 2) / (2 * var(resid)))
+        k <- length(modelo$coef) + 1
+        n <- modelo$nobs
+        AIC <- -2 * LL + 2 * (k)
+        AICc <- -2 * LL + 2 * (k) + (2 * k + 1) / (n - k - 1)
+        BIC <- -2 * LL + k * log(n)
+        c(AIC = AIC,
+          AICc = AICc,
+          BIC = BIC)
+    }
+    
+    resultados_reales <-
+        lapply(list(x$haa, x$op$best_model, x$arima_estandar), function(x) {
+            pronostico <- forecast(x, h = length(testing))$mean %>%
+                c
+            medidas <-
+                accuracy(forecast(x, h = length(testing)), testing) %>%
+                as.data.frame() %>%
+                mutate(AIC = medidas_ajuste(x)[1],
+                       AICc = medidas_ajuste(x)[2],
+                       BIC = medidas_ajuste(x)[3])
+            
+            pronostico <-
+                data.frame(pronostico = pronostico) %>% t %>%
+                as.data.frame()
+            
+            list(pronostico = pronostico,
+                 medidas = medidas)
+        })
+    
+    
+ajustados <- tryCatch({
+    
+        lapply(list(
+            fitted(x$haa),
+            fitted(x$op$best_model),
+            fitted(x$arima_estandar),
+            x$haa$x
+        ), function(z) {
+            inicio <- attributes(z)$tsp[1]
+            z %>%
+                as.data.frame() %>%
+                mutate(
+                    x = as.numeric(x),
+                    fecha = seq(
+                        as.Date(paste0(inicio, "-01-01")),
+                        by = "month",
+                        length.out = length(z)
+                    )
+                ) %>%
+                select(valor = x, fecha)
+        })
+}, error=function(e){
+    
+        lapply(list(
+            fitted(x$haa),
+            fitted(x$op$best_model),
+            fitted(x$arima_estandar),
+            x$haa$x
+        ), function(z) {
+            inicio <- 1980
+            z %>%
+                as.data.frame() %>%
+                mutate(
+                    x = as.numeric(x),
+                    fecha = seq(
+                        as.Date(paste0(inicio, "-01-01")),
+                        by = "month",
+                        length.out = length(z)
+                    )
+                ) %>%
+                select(valor = x, fecha)
+        })
+})
+
+    j <- 1
+    for (i in c("autoarima",
+                "sobreparametrizacion",
+                "arima_estandar",
+                "original")) {
+        ajustados[[j]] <- ajustados[[j]] %>%
+            mutate(Serie = i) %>%
+            select(Serie, fecha, valor)
+
+        j <- j + 1
+    }
+    ajustados <- ajustados %>% do.call(rbind, .) %>%
+        mutate(tipo = "estimacion")
+
+    pronostico <-
+        do.call(
+            rbind,
+            list(
+                resultados_reales[[1]]$pronostico,
+                resultados_reales[[2]]$pronostico,
+                data.frame(pronostico = testing) %>%
+                    t %>%
+                    as.data.frame(),
+                resultados_reales[[3]]$pronostico
+            )
+        )
+
+     names(pronostico) <-
+         c(
+             forecast(x[[2]], length(testing)) %>% as.data.frame() %>% rownames() %>% paste("01", .) %>% dmy()
+         )
+
+     if (prod(is.na(names(pronostico))) > 0) {
+         names(pronostico) <-
+             paste0(2000:(2000 + length(names(pronostico)) - 1), "-01-01")
+     }
+    
+    pronostico <- pronostico %>%
+        mutate(Serie = c(
+            "autoarima",
+            "sobreparametrizacion",
+            "original",
+            "arima_estandar"
+        )) %>%
+        gather(fecha, valor, -Serie) %>%
+        mutate(fecha = ymd(fecha),
+               tipo = "pronostico")
+
+    pronostico <- do.call(rbind, list(ajustados, pronostico)) %>%
+        arrange(fecha, Serie) %>%
+        mutate(Serie = factor(
+            Serie,
+            levels = c(
+                "original",
+                "autoarima",
+                "sobreparametrizacion",
+                "arima_estandar"
+            ),
+            labels = c(
+                "Original",
+                "auto.arima()",
+                "Sobreparametrización",
+                "ARIMA estándar"
+            ),
+            ordered = TRUE
+        ))
+
+    #####
+
+    medidas <- do.call(
+        rbind,
+        list(
+            resultados_reales[[1]]$medidas,
+            resultados_reales[[2]]$medidas,
+            resultados_reales[[3]]$medidas
+        )
+    ) %>%
+        mutate(Serie = rep(
+            c("autoarima", "sobreparametrizacion", "arima_estandar"),
+            each = 2
+        ),
+        tipo = rep(c("training", "testing"), 3)) %>%
+        select(Serie, tipo, AIC, AICc, BIC, RMSE, MAE, MAPE) %>%
+        mutate(
+            Serie = factor(
+                Serie,
+                levels = c("autoarima",
+                           "sobreparametrizacion",
+                           "arima_estandar"),
+                labels = c("auto.arima()",
+                           "Sobreparametrización",
+                           "ARIMA estándar"),
+                ordered = TRUE
+            ),
+            tipo = factor(
+                tipo,
+                levels = c("training", "testing"),
+                labels = c("Entrenamiento", "Validación"),
+                ordered = TRUE
+            )
+        ) %>%
+        arrange(tipo, Serie)
+
+    list(pronostico = pronostico,
+         medidas = medidas)
+}
+
+#resumen_resultados(TMII)
+#resumen_resultados(reordena_simulacion(comparacion_no_estacional_bajo[[1]]$modelos, arima100)) 
+resumen_resultados(reordena_simulacion(comparacion_estacional_bajo[[1]]$modelos, arima001_011))
+```
+```{r}
+kk <- reordena_simulacion(comparacion_estacional_bajo[[1]]$modelos, arima001_011)
+lapply(list(
+    fitted(kk$haa),
+    fitted(kk$op$best_model),
+    fitted(kk$arima_estandar),
+    kk$haa$x
+), function(z) {
+    z %>%
+        as.data.frame() %>%
+    mutate(x = as.numeric(x),
+           fecha = seq(
+               as.Date(paste0(1980, "-01-01")),
+               by = "month",
+               length.out = 160
+           )) %>%
+    select(valor = x, fecha)
+    inicio
+})
+```
+
+
+
+```{r}
+reordena_simulacion <- function(modelos, testing){
+
+    l1 <- list(haa=modelos$autoarima,
+         op=list(best_model=modelos$sobreparametrizacion),
+         arima_estandar=modelos$arima_estandar)
+    final <- attributes(l1[[1]]$x)$tsp[2]
+    testing <- window(testing, start=final+1)
+    list(testing=testing,
+         haa=modelos$autoarima,
+         op=list(best_model=modelos$sobreparametrizacion),
+         arima_estandar=modelos$arima_estandar)
+}
+reordena_simulacion(comparacion_no_estacional_bajo[[1]]$modelos, arima100)
+```
+```{r}
+accuracy(forecast(kk$arima_estandar, h=40), kk$testing)
+
+attributes(kk$arima_estandar)
+
+kk$arima_estandar$x
+kk$haa$x
+
+comparacion_no_estacional_bajo[[1]]$modelos$
+```
+
+
+```{r}
+forecast(comparacion_no_estacional_bajo[[1]]$modelos$autoarima, h=length(ts(na.omit(arima100[161:1000L]))), ts(na.omit(arima100[161:1000L])))
+
+attributes(arima100)$tsp[2]-attributes(comparacion_no_estacional_bajo[[1]]$modelos$autoarima$x)$tsp[2]
+
+
+forecast(comparacion_no_estacional_bajo[[1]]$modelos$autoarima,h=40, arima100)
+reordena_simulacion(comparacion_no_estacional_bajo[[1]]$modelos)[[1]]$x 
+window(arima100, start=361)
+TMII$testing
+
+
+comparacion_no_estacional_bajo[[1]]$modelos$arima_estandar$x
+Arima(comparacion_no_estacional_bajo[[1]]$modelos$autoarima$x, order = c(1,1,1))$x
+```
+```{r}
+medidas_ajuste2 <- function(modelo) {
+        resid <- modelo$residuals
+        LL <-
+            length(resid) * log(1) - length(resid) * log(sd(resid) * sqrt(2 * pi)) -
+            (sum(resid ^ 2) / (2 * var(resid)))
+        k <- length(modelo$coef) + 1
+        n <- modelo$nobs
+        AIC <- -2 * LL + 2 * (k)
+        AICc <- -2 * LL + 2 * (k) + (2 * k + 1) / (n - k - 1)
+        BIC <- -2 * LL + k * log(n)
+        c(AIC = AIC,
+          AICc = AICc,
+          BIC = BIC)
+}
+
+medidas_ajuste2(comparacion_no_estacional_bajo[[1]]$modelos$autoarima)
+```
+

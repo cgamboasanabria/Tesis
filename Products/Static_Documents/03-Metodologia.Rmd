@@ -355,7 +355,7 @@ Con este fin, se programó la función que se encuentra en el \ref{simula_series
 
 **1.** Se generan valores aleatorios de alguna distribución de probabilidad. Para esta investigación se escogen 100 valores de una distribución Normal con media 10 y varianza 1. Estos valores se resumen en la figura \ref{fig:datos_simulados}; donde las región azul oscuro representa la densidad de datos entre los percentiles 25 y 75, las líneas punteadas de color naranja marcan la cantidad de desviaciones estándar que los datos se alejan del promedio, y las líneas punteadas de color azul marcan los puntos de corte mínimo, percentiles 25, 50 y 75, y el máximo.
 
-**2.** Se seleccionan mediante un muestreo simple al azar la cantidad de coeficientes a utilizar en los términos del modelo $ARIMA(p,d,q)(P,D,Q)_S$ que gobiernan la serie. Para esta investigación fueron seleccionados los siguientes procesos: $ARIMA(1,0,0), ARIMA(1,0,1),ARIMA(2,0,3), ARIMA(4,0,2), ARIMA(0,0,1)(0,1,1)$ y $ARIMA(2,1,4)(3,0,3)$.
+**2.** Se seleccionan mediante un muestreo simple al azar la cantidad de coeficientes a utilizar en los términos del modelo $ARIMA(p,d,q)(P,D,Q)_S$ que gobiernan la serie. Para esta investigación fueron seleccionados los siguientes procesos: $ARIMA(1,0,0), ARIMA(1,0,1),$ $ARIMA(2,0,3), ARIMA(4,0,2),$ $ARIMA(0,0,1)(0,1,1)$ y $ARIMA(2,1,4)(3,0,3)$.
 
 **3.** Para cada uno de los procesos seleccionados, se genera una secuencia de valores en el intervalo $[-1,1]$ con saltos de 0.1 para posteriormente seleccionar de manera aleatoria el valor que tomaran los coeficientes de cada uno de los procesos mencionados en el punto anterior.
 
@@ -365,6 +365,19 @@ Con este fin, se programó la función que se encuentra en el \ref{simula_series
 
 ```{r, echo=FALSE, results='hide', cache=TRUE}
 load(popstudy::read_from_dir("Resultados simulaciones.RData", "Output/Results"))
+```
+```{r}
+#Aquí corrijo los modelos arima estandar de las simulaciones, porque cuando lo hice (ver línea207 de "Borrador de resultados.Rmd") puse data, cuando era train.
+
+for(i in 1:2){
+    comparacion_no_estacional_bajo[[i]]$modelos$arima_estandar <- Arima(comparacion_no_estacional_bajo[[i]]$modelos$autoarima$x, order = c(1,1,1),method="ML")
+    
+    comparacion_no_estacional_alto[[i]]$modelos$arima_estandar <- Arima(comparacion_no_estacional_alto[[i]]$modelos$autoarima$x, order = c(1,1,1),method="ML")
+    
+    comparacion_estacional_bajo[[i]]$modelos$arima_estandar <- Arima(comparacion_estacional_bajo[[i]]$modelos$autoarima$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)),method="ML")
+    
+    comparacion_estacional_alto[[i]]$modelos$arima_estandar <- Arima(comparacion_estacional_alto[[i]]$modelos$autoarima$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)),method="ML")
+}
 ```
 
 Tras aplicar los pasos anteriores y obtener las correspondientes series cronológicas simuladas, el comportamiento y proceso gobernante de cada una se muestra en la figura \ref{fig:series_simuladas}.
@@ -546,6 +559,9 @@ La estimación de los modelos y posterior selección de los mismos vía sobrepar
 ```{r, eval=FALSE, echo=FALSE}
 Las siguiente matriz se obtuvo de:
 https://tex.stackexchange.com/questions/40/how-do-i-label-different-rows-or-columns-of-a-matrix-using-braces
+
+
+https://otexts.com/fpp2/classical-decomposition.html
 ```
 
 
@@ -614,11 +630,9 @@ Para contrastar los dos métodos de selección de modelos anteriores (`auto.arim
 
 Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autorrelación y el supuesto de normalidad de normalidad de los residuales.
 
-standardized residuals, sample ACF of residuals, normal QQ-Plot y Q statistic p-value
-
 \subsubsection{Pronósticos}
 
-Para cada modelo estimado, se realiza un pronóstico de 50 periodos hacia el futuro para realizar una inspección visual de los resultados previo a hacer una comparación numérica mediante dos formas distintas pero complementarias: las medidas de bondad de ajuste y de rendimiento.
+Para cada modelo estimado, se realiza un pronóstico de $h$ periodos hacia el futuro (donde el valor de $h$ es el tamaño de los conjuntos de validación creados para cada serie) para realizar una inspección visual de los resultados previo a hacer una comparación numérica mediante dos formas distintas pero complementarias: las medidas de bondad de ajuste y de rendimiento.
 
 \subsubsection{Medidas de bondad de ajuste y de rendimiento}
 

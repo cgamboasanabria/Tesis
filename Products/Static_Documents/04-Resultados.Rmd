@@ -817,11 +817,11 @@ do.call(
 
 En el caso de las series cronológicas reales, se toma en consideración el mejor modelo sugerido por la función `auto.arima()`. Los coeficientes obtenidos para las distintas series de tiempo costarricenses se muestran en el cuadro \ref{tab:coeficientes_reales_autoarima}.
 
-```{r, results='hide'}
-TMII$arima_estandar <- arima(TMII$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)))
-EXTERNA$arima_estandar <- arima(EXTERNA$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)))
-INCENTIVOS$arima_estandar <- arima(INCENTIVOS$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)))
-INTERESES$arima_estandar <- arima(INTERESES$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)))
+```{r agregando_arima_estandar_a_series_reales, results='hide'}
+TMII$arima_estandar <- Arima(TMII$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
+EXTERNA$arima_estandar <- Arima(EXTERNA$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
+INCENTIVOS$arima_estandar <- Arima(INCENTIVOS$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
+INTERESES$arima_estandar <- Arima(INTERESES$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
 ```
 
 
@@ -1219,207 +1219,1310 @@ list(
 
 \subsection{Análisis de los errores}
 
+Al ver el comportamiento de los errores buscamos que estos se comporten como ruido blanco, es decir, que no tengan ningún patrón en particular. El autocorrelograma de los residuos también puede usarse para este fin, pues el 95% de los valores debería estar entre las dos líneas azules. Además, un histograma de los residuos es útil para saber si los residuos siguen una distribución aproximadamente Normal; si no existen grandes desviaciones en este gráfico, entonces puede decirse que el cumplimiento de este supuesto es razonable.
+
+```{r}
+analisis_errores <- function(modelo, titulo="") {
+    residuos <- residuals(modelo)
+    
+    g1 <- autoplot(residuos) +
+        xlab("Periodos") +
+        ylab("Residuos")
+    
+    g2 <- ggAcf(residuos, xlab = "Rezagos", main = "")
+    
+    g3 <- gghistogram(residuos, add.normal = T) +
+        xlab("Residuos") +
+        ylab("Conteo")
+
+    annotate_figure(
+        ggarrange(
+            g1,
+            ggarrange(g2, g3, ncol = 2, nrow = 1),
+            ncol = 1,
+            nrow = 2
+        ),
+        top = text_grob(
+            titulo,
+            color = "black",
+            face = "bold",
+            size = 14
+        )
+    )
+}
+```
+
+
 \subsubsection{Datos simulados}
 
-\subsubsection{Tasa de mortalidad infantil interanual}
+Al estimar modelos mediante la función `auto.arima()`, la sobreparametrización y el $ARIMA$ estándar, es necesario analizar el comportamiento de los errores para los seis modelos estimados con cada técnica.
 
-\subsubsection{Mortalidad por causa externa}
+\paragraph{Errores de los modelos estimados con auto.arima()}
 
-\subsubsection{Incentivos salariales}
+Las visualizaciones de los errores de los modelos estimados con la función `auto.arima()` se muestran en las figuras \ref{fig:errores_simulados_autoarima1}, \ref{fig:errores_simulados_autoarima2}, \ref{fig:errores_simulados_autoarima3}, \ref{fig:errores_simulados_autoarima4}, \ref{fig:errores_simulados_autoarima5} y \ref{fig:errores_simulados_autoarima6}. En general, los modelos poseen el comportamiento esperado, aunque cuando se incorporan componentes estacionales los errores varían un poco más en los autocorelogramas y el supuesto de normalidad.
 
-\subsubsection{Intereses y comisiones del sector público}
+```{r}
+errores_simulados_autoarima1 <- analisis_errores(comparacion_no_estacional_bajo[[1]]$modelos$autoarima,"")
+errores_simulados_autoarima2<- analisis_errores(comparacion_no_estacional_bajo[[2]]$modelos$autoarima,"")
+errores_simulados_autoarima3<- analisis_errores(comparacion_no_estacional_alto[[1]]$modelos$autoarima,"")
+errores_simulados_autoarima4<- analisis_errores(comparacion_no_estacional_alto[[2]]$modelos$autoarima,"")
+errores_simulados_autoarima5<- analisis_errores(comparacion_estacional_bajo[[1]]$modelos$autoarima,"")
+errores_simulados_autoarima6<- analisis_errores(comparacion_estacional_alto[[2]]$modelos$autoarima,"")
+```
+
+```{r errores_simulados_autoarima1, fig.cap="Comportamiento de los errores del modelo ARIMA(1,0,0) estimado con auto.arima() para los datos generados con un ARIMA(1,0,0)"}
+errores_simulados_autoarima1
+```
+
+```{r errores_simulados_autoarima2, fig.cap="Comportamiento de los errores del modelo ARIMA(0,0,1) estimado con auto.arima() para los datos generados con un ARIMA(1,0,1)"}
+errores_simulados_autoarima2
+```
+
+```{r errores_simulados_autoarima3, fig.cap="Comportamiento de los errores del modelo ARIMA(2,0,2) estimado con auto.arima() para los datos generados con un ARIMA(2,0,3)"}
+errores_simulados_autoarima3
+```
+
+```{r errores_simulados_autoarima4, fig.cap="Comportamiento de los errores del modelo ARIMA(2,0,3) estimado con auto.arima() para los datos generados con un ARIMA(4,0,2)"}
+errores_simulados_autoarima4
+```
+
+```{r errores_simulados_autoarima5, fig.cap="Comportamiento de los errores del modelo ARIMA(0,0,1)(0,1,1) estimado con auto.arima() para los datos generados con un ARIMA(0,0,1)(0,1,1)"}
+errores_simulados_autoarima5
+```
+
+```{r errores_simulados_autoarima6, fig.cap="Comportamiento de los errores del modelo ARIMA(2,0,4)(0,0,2) estimado con auto.arima() para los datos generados con un ARIMA(2,1,4)(3,0,3)"}
+errores_simulados_autoarima6
+```
+
+\paragraph{Errores de los modelos estimados con sobreparametrización}
+
+Las visualizaciones de los errores de los modelos estimados con sobreparametrización se muestran en las figuras \ref{fig:errores_simulados_sobreparametrizacion1}, \ref{fig:errores_simulados_sobreparametrizacion2}, \ref{fig:errores_simulados_sobreparametrizacion3}, \ref{fig:errores_simulados_sobreparametrizacion4}, \ref{fig:errores_simulados_sobreparametrizacion5} y \ref{fig:errores_simulados_sobreparametrizacion6}. En general, los modelos poseen el comportamiento esperado, incluso con menos problemas en la parte estacional.
+
+```{r}
+errores_simulados_sobreparametrizacion1 <- analisis_errores(comparacion_no_estacional_bajo[[1]]$modelos$sobreparametrizacion,"")
+errores_simulados_sobreparametrizacion2<- analisis_errores(comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion,"")
+errores_simulados_sobreparametrizacion3<- analisis_errores(comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion,"")
+errores_simulados_sobreparametrizacion4<- analisis_errores(comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion,"")
+errores_simulados_sobreparametrizacion5<- analisis_errores(comparacion_estacional_bajo[[1]]$modelos$sobreparametrizacion,"")
+errores_simulados_sobreparametrizacion6<- analisis_errores(comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion,"")
+```
+
+```{r errores_simulados_sobreparametrizacion1, fig.cap="Comportamiento de los errores del modelo ARIMA(1,0,0) estimado con sobreparametrización para los datos generados con un ARIMA(1,0,0)"}
+errores_simulados_sobreparametrizacion1
+```
+
+```{r errores_simulados_sobreparametrizacion2, fig.cap="Comportamiento de los errores del modelo ARIMA(0,0,1) estimado con sobreparametrización para los datos generados con un ARIMA(1,0,1)"}
+errores_simulados_sobreparametrizacion2
+```
+
+```{r errores_simulados_sobreparametrizacion3, fig.cap="Comportamiento de los errores del modelo ARIMA(5,1,1) estimado con sobreparametrización para los datos generados con un ARIMA(2,0,3)"}
+errores_simulados_sobreparametrizacion3
+```
+
+```{r errores_simulados_sobreparametrizacion4, fig.cap="Comportamiento de los errores del modelo ARIMA(4,0,2) estimado con sobreparametrización para los datos generados con un ARIMA(4,0,2)"}
+errores_simulados_sobreparametrizacion4
+```
+
+```{r errores_simulados_sobreparametrizacion5, fig.cap="Comportamiento de los errores del modelo ARIMA(0,0,1)(0,1,1) estimado con sobreparametrización para los datos generados con un ARIMA(0,0,1)(0,1,1)"}
+errores_simulados_sobreparametrizacion5
+```
+
+```{r errores_simulados_sobreparametrizacion6, fig.cap="Comportamiento de los errores del modelo ARIMA(2,1,3)(0,1,3) estimado con sobreparametrización para los datos generados con un ARIMA(2,1,4)(3,0,3)"}
+errores_simulados_sobreparametrizacion6
+```
+
+\paragraph{Errores de los modelos estimados con un modelo ARIMA estándar}
+
+Como ya fue mencionado, para los modelos sin parte estacional se ajustó un modelo $ARIMA(1,1,1)$, mientras que para las series simuladas estacionales se ajustaron modelos $ARIMA(1,1,1)(1,1,1)$. Las visualizaciones de los residuos se muestran en las figuras \ref{fig:errores_simulados_arima_estandar1}, \ref{fig:errores_simulados_arima_estandar2}, \ref{fig:errores_simulados_arima_estandar3}, \ref{fig:errores_simulados_arima_estandar4}, \ref{fig:errores_simulados_arima_estandar5} y \ref{fig:errores_simulados_arima_estandar6}. Este tipo de moelos son los que presentan una mayor cantidad de inconvenientes, particularmente en los autocorelogramas, donde varios modelos se salen de los márgenes.
+
+```{r}
+errores_simulados_arima_estandar1 <- analisis_errores(comparacion_no_estacional_bajo[[1]]$modelos$arima_estandar,"")
+errores_simulados_arima_estandar2<- analisis_errores(comparacion_no_estacional_bajo[[2]]$modelos$arima_estandar,"")
+errores_simulados_arima_estandar3<- analisis_errores(comparacion_no_estacional_alto[[1]]$modelos$arima_estandar,"")
+errores_simulados_arima_estandar4<- analisis_errores(comparacion_no_estacional_alto[[2]]$modelos$arima_estandar,"")
+errores_simulados_arima_estandar5<- analisis_errores(comparacion_estacional_bajo[[1]]$modelos$arima_estandar,"")
+errores_simulados_arima_estandar6<- analisis_errores(comparacion_estacional_alto[[2]]$modelos$arima_estandar,"")
+```
+
+```{r errores_simulados_arima_estandar1, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con los datos generados con un ARIMA(1,0,0)"}
+errores_simulados_arima_estandar1
+```
+
+```{r errores_simulados_arima_estandar2, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con los datos generados con un ARIMA(1,0,1)"}
+errores_simulados_arima_estandar2
+```
+
+```{r errores_simulados_arima_estandar3, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con los datos generados con un ARIMA(2,0,3)"}
+errores_simulados_arima_estandar3
+```
+
+```{r errores_simulados_arima_estandar4, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con los datos generados con un ARIMA(4,0,2)"}
+errores_simulados_arima_estandar4
+```
+
+```{r errores_simulados_arima_estandar5, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1)(1,1,1) estimado con los datos generados con un ARIMA(0,0,1)(0,1,1)"}
+errores_simulados_arima_estandar5
+```
+
+```{r errores_simulados_arima_estandar6, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1)(1,1,1) estimado con los datos generados con un ARIMA(2,1,4)(3,0,3)"}
+errores_simulados_arima_estandar6
+```
+
+\subsubsection{Datos reales}
+
+
+\paragraph{Errores de los modelos estimados con auto.arima()}
+
+Las visualizaciones de los errores de los modelos estimados con la función `auto.arima()` para las series reales se muestran en las figuras \ref{fig:errores_reales_autoarima1}, \ref{fig:errores_reales_autoarima2}, \ref{fig:errores_reales_autoarima3}, \ref{fig:errores_reales_autoarima4}. Los mejores resultados se obtienen al modelar la tasa de mortalidad infantil interanual y la tasa de mortalidad por causa externa, más no en lo otros dos casos.
+
+```{r}
+errores_reales_autoarima1 <- analisis_errores(TMII$haa,"")
+errores_reales_autoarima2<- analisis_errores(EXTERNA$haa, "")
+errores_reales_autoarima3<- analisis_errores(INCENTIVOS$haa,"")
+errores_reales_autoarima4<- analisis_errores(INTERESES$haa,"")
+```
+
+```{r errores_reales_autoarima1, fig.cap="Comportamiento de los errores del modelo ARIMA(2,1,0)(0,0,1) estimado con auto.arima() para la tasa de mortalidad infantl interanual"}
+errores_reales_autoarima1
+```
+
+```{r errores_reales_autoarima2, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con auto.arima() para la tasa de mortalidad por causa externa"}
+errores_reales_autoarima2
+```
+
+```{r errores_reales_autoarima3, fig.cap="Comportamiento de los errores del modelo ARIMA(0,0,1)(1,1,0) estimado con auto.arima() para los incentivos salariales"}
+errores_reales_autoarima3
+```
+
+```{r errores_reales_autoarima4, fig.cap="Comportamiento de los errores del modelo ARIMA(0,0,1)(0,1,0) estimado con auto.arima() para los intereses y comisiones del sector público"}
+errores_reales_autoarima4
+```
+
+\paragraph{Errores de los modelos estimados con sobreparametrización}
+
+Las visualizaciones de los errores de los modelos estimados mediante sobreparametrización para las series reales se muestran en las figuras \ref{fig:errores_reales_sobreparametrizacion1}, \ref{fig:errores_reales_sobreparametrizacion2}, \ref{fig:errores_reales_sobreparametrizacion3}, \ref{fig:errores_reales_sobreparametrizacion4}. Los mejores resultados se obtienen también al modelar la tasa de mortalidad infantil interanual y la tasa de mortalidad por causa externa, pues en las series temporales de incentivos salariales y de intereses y comisiones del sector público, algunos valores se salen de rango.
+
+```{r}
+errores_reales_sobreparametrizacion1 <- analisis_errores(TMII$op$best_model,"")
+errores_reales_sobreparametrizacion2<- analisis_errores(EXTERNA$op$best_model, "")
+errores_reales_sobreparametrizacion3<- analisis_errores(INCENTIVOS$op$best_model,"")
+errores_reales_sobreparametrizacion4<- analisis_errores(INTERESES$op$best_model,"")
+```
+
+```{r errores_reales_sobreparametrizacion1, fig.cap="Comportamiento de los errores del modelo ARIMA(4,1,0)(4,1,0) estimado con sobreparametrización para la tasa de mortalidad infantl interanual"}
+errores_reales_sobreparametrizacion1
+```
+
+```{r errores_reales_sobreparametrizacion2, fig.cap="Comportamiento de los errores del modelo ARIMA(2,0,1)(0,1,1) estimado con sobreparametrización para la tasa de mortalidad por causa externa"}
+errores_reales_sobreparametrizacion2
+```
+
+```{r errores_reales_sobreparametrizacion3, fig.cap="Comportamiento de los errores del modelo ARIMA(2,1,0)(1,2,0) estimado con sobreparametrización para los incentivos salariales"}
+errores_reales_sobreparametrizacion3
+```
+
+```{r errores_reales_sobreparametrizacion4, fig.cap="Comportamiento de los errores del modelo ARIMA(0,1,2)(0,1,0) estimado con sobreparametrización para los intereses y comisiones del sector público"}
+errores_reales_sobreparametrizacion4
+```
+
+\paragraph{Errores de los modelos estimados con un modelo ARIMA estándar}
+
+Las visualizaciones de los errores de los modelos estimados mediante mdelos $ARIMA(1,1,1)(1,1,1)$ para las series reales se muestran en las figuras \ref{fig:errores_reales_arima_estandar1}, \ref{fig:errores_reales_arima_estandar2}, \ref{fig:errores_reales_arima_estandar3}, \ref{fig:errores_reales_arima_estandar4}. De manera muy similar a los casos anteriores, los mejores resultados se obtienen también al modelar la tasa de mortalidad infantil interanual y la tasa de mortalidad por causa externa, mientras que en las series temporales de incentivos salariales y de intereses y comisiones del sector público, algunos valores se salen de rango.
+
+```{r}
+errores_reales_arima_estandar1 <- analisis_errores(TMII$arima_estandar,"")
+errores_reales_arima_estandar2<- analisis_errores(EXTERNA$arima_estandar, "")
+errores_reales_arima_estandar3<- analisis_errores(INCENTIVOS$arima_estandar,"")
+errores_reales_arima_estandar4<- analisis_errores(INTERESES$arima_estandar,"")
+```
+
+```{r errores_reales_arima_estandar1, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1)(1,1,1) para la tasa de mortalidad infantl interanual"}
+errores_reales_arima_estandar1
+```
+
+```{r errores_reales_arima_estandar2, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1)(1,1,1) para la tasa de mortalidad por causa externa"}
+errores_reales_arima_estandar2
+```
+
+```{r errores_reales_arima_estandar3, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1)(1,1,1) para los incentivos salariales"}
+errores_reales_arima_estandar3
+```
+
+```{r errores_reales_arima_estandar4, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,1)(1,1,1) para los intereses y comisiones del sector público"}
+errores_reales_arima_estandar4
+```
 
 \subsection{Pronósticos}
 
+Los pronósticos son parte fundamental del análisis de series cronológicas. En esta sección e realiza una inspección visual tanto para los datos simulados como para las series de tiempo de datos costarricenses. 
+
+
+```{r funcion_resumen_resultados}
+resumen_resultados <- function(x) {
+    testing <- x$testing
+    
+    medidas_ajuste <- function(modelo) {
+        resid <- modelo$residuals
+        LL <-
+            length(resid) * log(1) - length(resid) * log(sd(resid) * sqrt(2 * pi)) - (sum(resid ^ 2) / (2 * var(resid)))
+        k <- length(modelo$coef) + 1
+        n <- modelo$nobs
+        AIC <- -2 * LL + 2 * (k)
+        AICc <- -2 * LL + 2 * (k) + (2 * k + 1) / (n - k - 1)
+        BIC <- -2 * LL + k * log(n)
+        c(AIC = AIC,
+          AICc = AICc,
+          BIC = BIC)
+    }
+    
+    resultados_reales <-
+        lapply(list(x$haa, x$op$best_model, x$arima_estandar), function(x) {
+            pronostico <- forecast(x, h = length(testing))$mean %>%
+                c
+            medidas <-
+                accuracy(forecast(x, h = length(testing)), testing) %>%
+                as.data.frame() %>%
+                mutate(AIC = medidas_ajuste(x)[1],
+                       AICc = medidas_ajuste(x)[2],
+                       BIC = medidas_ajuste(x)[3])
+            
+            pronostico <-
+                data.frame(pronostico = pronostico) %>% t %>%
+                as.data.frame()
+            
+            list(pronostico = pronostico,
+                 medidas = medidas)
+        })
+    
+    
+ajustados <- tryCatch({
+    
+        lapply(list(
+            fitted(x$haa),
+            fitted(x$op$best_model),
+            fitted(x$arima_estandar),
+            x$haa$x
+        ), function(z) {
+            inicio <- attributes(z)$tsp[1]
+            z %>%
+                as.data.frame() %>%
+                mutate(
+                    x = as.numeric(x),
+                    fecha = seq(
+                        as.Date(paste0(inicio, "-01-01")),
+                        by = "month",
+                        length.out = length(z)
+                    )
+                ) %>%
+                select(valor = x, fecha)
+        })
+}, error=function(e){
+    
+        lapply(list(
+            fitted(x$haa),
+            fitted(x$op$best_model),
+            fitted(x$arima_estandar),
+            x$haa$x
+        ), function(z) {
+            inicio <- 1980
+            z %>%
+                as.data.frame() %>%
+                mutate(
+                    x = as.numeric(x),
+                    fecha = seq(
+                        as.Date(paste0(inicio, "-01-01")),
+                        by = "month",
+                        length.out = length(z)
+                    )
+                ) %>%
+                select(valor = x, fecha)
+        })
+})
+
+    j <- 1
+    for (i in c("autoarima",
+                "sobreparametrizacion",
+                "arima_estandar",
+                "original")) {
+        ajustados[[j]] <- ajustados[[j]] %>%
+            mutate(Serie = i) %>%
+            select(Serie, fecha, valor)
+
+        j <- j + 1
+    }
+    ajustados <- ajustados %>% do.call(rbind, .) %>%
+        mutate(tipo = "estimacion")
+
+    pronostico <-
+        do.call(
+            rbind,
+            list(
+                resultados_reales[[1]]$pronostico,
+                resultados_reales[[2]]$pronostico,
+                data.frame(pronostico = testing) %>%
+                    t %>%
+                    as.data.frame(),
+                resultados_reales[[3]]$pronostico
+            )
+        )
+
+     names(pronostico) <-
+         c(
+             forecast(x[[2]], length(testing)) %>% as.data.frame() %>% rownames() %>% paste("01", .) %>% dmy()
+         )
+
+     if (prod(is.na(names(pronostico))) > 0) {
+         names(pronostico) <-
+             paste0(2000:(2000 + length(names(pronostico)) - 1), "-01-01")
+     }
+    
+    pronostico <- pronostico %>%
+        mutate(Serie = c(
+            "autoarima",
+            "sobreparametrizacion",
+            "original",
+            "arima_estandar"
+        )) %>%
+        gather(fecha, valor, -Serie) %>%
+        mutate(fecha = ymd(fecha),
+               tipo = "pronostico")
+
+    pronostico <- do.call(rbind, list(ajustados, pronostico)) %>%
+        arrange(fecha, Serie) %>%
+        mutate(Serie = factor(
+            Serie,
+            levels = c(
+                "original",
+                "autoarima",
+                "sobreparametrizacion",
+                "arima_estandar"
+            ),
+            labels = c(
+                "Original",
+                "auto.arima()",
+                "Sobreparametrización",
+                "ARIMA estándar"
+            ),
+            ordered = TRUE
+        ))
+
+    #####
+
+    medidas <- do.call(
+        rbind,
+        list(
+            resultados_reales[[1]]$medidas,
+            resultados_reales[[2]]$medidas,
+            resultados_reales[[3]]$medidas
+        )
+    ) %>%
+        mutate(Serie = rep(
+            c("autoarima", "sobreparametrizacion", "arima_estandar"),
+            each = 2
+        ),
+        tipo = rep(c("training", "testing"), 3)) %>%
+        select(Serie, tipo, AIC, AICc, BIC, RMSE, MAE, MAPE) %>%
+        mutate(
+            Serie = factor(
+                Serie,
+                levels = c("autoarima",
+                           "sobreparametrizacion",
+                           "arima_estandar"),
+                labels = c("auto.arima()",
+                           "Sobreparametrización",
+                           "ARIMA estándar"),
+                ordered = TRUE
+            ),
+            tipo = factor(
+                tipo,
+                levels = c("training", "testing"),
+                labels = c("Entrenamiento", "Validación"),
+                ordered = TRUE
+            )
+        ) %>%
+        arrange(tipo, Serie)
+
+    list(pronostico = pronostico,
+         medidas = medidas)
+}
+```
+
+```{r funcion_reordena_simulacion}
+reordena_simulacion <- function(modelos, testing){
+
+    l1 <- list(haa=modelos$autoarima,
+         op=list(best_model=modelos$sobreparametrizacion),
+         arima_estandar=modelos$arima_estandar)
+    final <- attributes(l1[[1]]$x)$tsp[2]
+    testing <- window(testing, start=final+1)
+    list(testing=testing,
+         haa=modelos$autoarima,
+         op=list(best_model=modelos$sobreparametrizacion),
+         arima_estandar=modelos$arima_estandar)
+}
+```
+
 \subsubsection{Datos simulados}
 
-\subsubsection{Tasa de mortalidad infantil interanual}
+Las figuras \ref{fig:pronostico_arima100}, \ref{fig:pronostico_arima101}, \ref{fig:pronostico_arima203}, \ref{fig:pronostico_arima402}, \ref{fig:pronostico_arima001_011} y \ref{fig:pronostico_arima214_303} muestran el ajuste y el pronóstico de cada uno de los modelos estimados con la función `auto.arima()`, con sobreparametrización y con el modelo $ARIMA$ estándar. En todos los casos, la línea vertical punteada indica el inicio del periodo de pronóstico.
 
-\subsubsection{Mortalidad por causa externa}
+```{r pronostico_arima100, fig.cap="Pronóstico de los datos generados mediante un ARIMA(1,0,0) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_bajo[[1]]$modelos, arima100))
 
-\subsubsection{Incentivos salariales}
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
 
-\subsubsection{Intereses y comisiones del sector público}
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,0,0)\nSobreparametrización: ARIMA(1,0,0)\nARIMA estándar: ARIMA(1,1,1)",
+         y = "Valor",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r pronostico_arima101, fig.cap="Pronóstico de los datos generados mediante un ARIMA(1,0,1) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_bajo[[2]]$modelos, arima101))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(0,0,1)\nSobreparametrización: ARIMA(0,0,1)\nARIMA estándar: ARIMA(1,1,1)",
+         y = "Valor",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r pronostico_arima203, fig.cap="Pronóstico de los datos generados mediante un ARIMA(2,0,3) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_alto[[1]]$modelos, arima203))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(2,0,2)\nSobreparametrización: ARIMA(5,1,1)\nARIMA estándar: ARIMA(1,1,1)",
+         y = "Valor",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r pronostico_arima402, fig.cap="Pronóstico de los datos generados mediante un ARIMA(4,0,2) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_alto[[2]]$modelos, arima402))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(2,0,3)\nSobreparametrización: ARIMA(4,0,2)\nARIMA estándar: ARIMA(1,1,1)",
+         y = "Valor",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r pronostico_arima001_011, fig.cap="Pronóstico de los datos generados mediante un ARIMA(0,0,1)(0,1,1) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_estacional_bajo[[1]]$modelos, arima001_011))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(0,0,1)(0,1,1)\nSobreparametrización: ARIMA(0,0,1)(0,1,1)\nARIMA estándar: ARIMA(1,1,1)(1,1,1)",
+         y = "Valor",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r pronostico_arima214_303, fig.cap="Pronóstico de los datos generados mediante un ARIMA(2,1,4)(3,0,3) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_estacional_alto[[2]]$modelos, arima214_303))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(2,0,4)(0,0,2)\nSobreparametrización: ARIMA(2,1,3)(0,1,3)\nARIMA estándar: ARIMA(1,1,1)(1,1,1)",
+         y = "Valor",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+\subsubsection{Datos reales}
+
+De la misma manera en que se hizo con los datos simulados, las figuras \ref{fig:pronostico_TMII}, \ref{fig:pronostico_EXTERNA}, \ref{fig:pronostico_INCENTIVOS} y \ref{fig:pronostico_INTERESES}. La línea vertical punteada marca el inicio del pronóstico.
+
+```{r pronostico_TMII, fig.cap="Pronóstico de la TMII según el método de estimación"}
+datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia.\nauto.arima(): ARIMA(2,1,0)(0,0,1).\nSobreparametrización: ARIMA(4,1,0)(4,1,0).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
+         y = "TMII",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    scale_x_date(expand = c(0,0), date_breaks = "3 years", date_labels = "%Y")+
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r pronostico_EXTERNA, fig.cap="Pronóstico de la Tasa de mortalidad por causa externa (TMCE) según el método de estimación"}
+datos <- resumen_resultados(EXTERNA)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia.\nauto.arima(): ARIMA(1,1,1).\nSobreparametrización: ARIMA(2,0,1)(0,1,1).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
+         y = "TMCE",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    scale_x_date(expand = c(0,0), date_breaks = "3 years", date_labels = "%Y")+
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r pronostico_INCENTIVOS, fig.cap="Pronóstico de la serie de incentivos salariales del sector público según el método de estimación"}
+datos <- resumen_resultados(INCENTIVOS)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia.\nauto.arima(): ARIMA(0,0,1)(1,1,0).\nSobreparametrización: ARIMA(2,1,0)(1,2,0).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
+         y = "Incentivos",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    scale_x_date(expand = c(0,0), date_breaks = "3 years", date_labels = "%Y")+
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r pronostico_INTERESES, fig.cap="Pronóstico de la serie de intereses y comisiones del sector público según el método de estimación"}
+datos <- resumen_resultados(INTERESES)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia.\nauto.arima(): ARIMA(0,0,1)(0,1,0).\nSobreparametrización: ARIMA(0,1,2)(0,1,0).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
+         y = "Intereses y comisiones",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    scale_x_date(expand = c(0,0), date_breaks = "3 years", date_labels = "%Y")+
+    scale_y_continuous(expand = c(0, 0))
+```
 
 \subsection{Medidas de bondad de ajuste y de rendimiento}
 
+Para complementar los resultados visualizados en la sección anterior, se calculan las medidas de bondad de ajuste obtenidas con el conjunto de datos de entrenamiento, y las medidas de rendimiento obtenidas tanto en el conjunto de entrenamiento como en el conjunto de validación. Ambos resultados para los datos simulados y para los datos reales. 
 
+\subsubsection{Datos simulados}
 
-
-
-
-
-
-
-
-El cuadro \ref{tab:comparaciones} muestra los valores del MAE, MASE y RMSE para cada proceso estimado y, además, muestra el proceso de origen de las series cronológicas simuladas. Al aplicar la función `auto.arima()` y la sobreparametrización sobre una serie cronológica generada a partir de un $ARIMA(1,0,0)$, se obtienen los mismos resultados, y esto son ligeramente inferiores a los obtenidos mediante un $ARIMA(1,1,1)$. Al generar datos a partir de un $ARIMA(1,0,1)$ los mejores pronósticos se obtienen tanto con el `auto.arima()` como con la sobreparametrización, pues ambos son superiores a los obtenidos mediante un $ARIMA(1,1,1)$. Al ir incorporando términos en las series no estacionales, como es el caso de los datos simulados a partir de un $ARIMA(2,0,3)$, los mejores pronósticos se obtienen mediante el uso de la sobreparametrización, pues la magnitud de sus errores son siempre menores. 
-
-Cuando se consideran series cronológicas estacionales, se presenta un comportamiento similar a lo previamente descrito. Al tener una baja cantidad de parámetros en los datos simulados de un proceso estacional $ARIMA(0,0,1)(0,1,1)_{12}$, la sobreparametrización iguala los resultados obtenidos mediante la función `auto.arima()`; y además, cuando se incorporan más parámetros al modelo generador de los dato como en el caso del $ARIMA(2,1,4)(3,0,3)_{12}$, la sobreparametrización logra captar de mejor manera el comportamiento de los datos, obteniendo así menores mediciones del error, es decir, los pronósticos se acercan más a los datos reales. 
+A partir de las series cronológicas simuladas, las medidas de bondad de ajuste y de rendimiento para cada una de las series simuladas se muestran en las tablas \ref{tab:comparaciones_arima100}, \ref{tab:comparaciones_arima101}, \ref{tab:comparaciones_arima203}, \ref{tab:comparaciones_arima402}, \ref{tab:comparaciones_arima001_011} y \ref{tab:comparaciones_arima214_303}.
 
 ```{r}
-comparaciones %>% 
-    mutate(original=ifelse(modelo=="original", proceso, NA),
-           original=zoo::na.locf(original)) %>% 
-    na.omit() %>% 
-    select(original, modelo:RMSE) %>% 
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_bajo[[1]]$modelos, arima100))
+
+datos <- datos$medidas
+
+#datos <- resumen_resultados(TMII)$medidas
+
+datos %>%
     data.frame(row.names = NULL) %>%
-    mutate(modelo=recode(modelo,
-                         "autoarima"="auto.arima",
-                         "sobreparametrizacion"="Sobreparametrización",
-                         "arima_estandar"="ARIMA estándar")) %>% 
-    # group_by(original) %>% 
-    # mutate_at(vars(MAE, MASE, RMSE), function(x){
-    #     cell_spec(x, "latex",align = "r", color=ifelse(x==min(x), "blue", "black"))
-    # }) %>% 
-    kbl(., "latex", booktabs=T,escape = F, align = "r", caption="\\label{tab:comparaciones}Medidas de rendimiento según método de estimación", col.names = c("Proceso original", "Método", "Proceso", "MAE", "MASE", "RMSE")) %>%
-    kable_styling(latex_options = c("scale_down", "repeat_header", "hold_position"), full_width = T, font_size = 5) %>% 
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_arima100}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(1,0,0)",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
     column_spec(1, width = "2.5cm") %>%
-    collapse_rows(columns = 1:2) %>% 
-    column_spec(2, width = "2.5cm")
-
-#cell_spec(cs_dt$mpg, color = ifelse(cs_dt$mpg > 20, "red", "blue")
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados",
+            "auto.arima(): ARIMA(1,0,0)",
+            "Sobreparametrización: ARIMA(1,0,0)",
+            "ARIMA estándar: ARIMA(1,1,1)"
+        ),
+        general_title = ""
+    ) 
 ```
-
-\subsection{Estimaciones en series cronológicas costarricenses reales}
-
-```{r, eval=FALSE}
-#En el campo demográfico, por ejemplo, las estadísticas vitales son sistematizadas y divulgadas año tras año, por tanto, revelan los cambios acontecidos durante este periodo. Esta información junto con la proveniente de los censos de población constituye la base para construir los diferentes índices, tasas y otros indicadores que revelan la situación demográfica del país, información de gran relevancia para la planificación nacional, regional y local en diversos campos. Uno de estos principales campos de acción es la salud pública, para la cual la tasa de mortalidad infantil se considera uno de los indicadores prioritarios dado que refleja no solo las condiciones de salud de la población infante, sino también los niveles de desarrollo del país, pues depende de la calidad de la atención de la salud, principalmente de la prenatal y perinatal, así como de las condiciones de saneamiento. Por tanto, su continuo monitoreo es fundamental para diseñar, implementar y evaluar políticas de salud pública orientadas a disminuir y erradicar aquellas que son prevenibles [@calidad_vitales].
-```
-
-
-\subsubsection{Tasa de mortalidad infantil interanual}
-
-
-
-Tras tener un panorama más claro del comportamiento de la serie mediante el análisis descriptivo anterior, se modela la serie mediante la función `auto.arima()`, teniendo como mejor modelo un $ARIMA(2,1,0)(0,0,1)$; y utilizando la sobreparametrización se tiene como mejor modelo un $ARIMA(4,1,0)(4,1,0)$. El cuadro \ref{tab:tmiimedidas} muestra como el uso de la sobreparametrización ofrece pronósticos más cercanos al valor real, y aunque los pronósticos están lejos de ser perfectos, el método propuesto logra reproducir de mejor manera el comportamiento de los datos, tal y como se muestra en la figura \ref{fig:tmiiplotpronostico}
 
 ```{r}
-resumen_resultados(TMII, fecha_inicio = '2012-03-01', fecha_fin = '2017-12-01')$medidas %>% 
-  kbl(., "latex", booktabs=T, escape = F, align = "r", caption="\\label{tab:tmiimedidas}Medidas de rendimiento según método de estimación para la TMII", col.names = c("Método", "RMSE", "MAE", "MAPE")) %>%
-    kable_styling(latex_options = c("scale_down", "repeat_header", "hold_position"), 
-                  full_width = T#, font_size = 5
-                  )
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_bajo[[2]]$modelos, arima101))
+
+datos <- datos$medidas
+
+#datos <- resumen_resultados(TMII)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_arima101}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(1,0,1)",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados",
+            "auto.arima(): ARIMA(0,0,1)",
+            "Sobreparametrización: ARIMA(0,0,1)",
+            "ARIMA estándar: ARIMA(1,1,1)"
+        ),
+        general_title = ""
+    ) 
 ```
-
-```{r tmiiplotpronostico, fig.cap="Pronósticos de la TMII según método de estimación"}
-resumen_resultados(TMII, fecha_inicio = '2012-03-01', fecha_fin = '2017-12-01')$pronostico %>% 
-  rename("Método"=Serie) %>% 
-  #filter(Serie %in% c("Original", "Arima")) %>% 
-  ggplot(., aes(x=fecha, y=valor, colour=Método))+
-  geom_line(size = 0.8)+
-  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
-  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
-  theme_minimal() +
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC",
-       y="TMII (por cada 1000 nacimientos)",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_date(expand = c(0,0))+
-  scale_y_continuous(expand=c(0, 0))
-```
-
-\subsubsection{Mortalidad por causa externa}
-
-
-
-De manera similar a lo hecho para pronosticar la TMII, se ajusta un modelo utilizando la función `auto.arima()`, siendo el modelo sugerido un $ARIMA(1,1,1)$; mientras que la sobreparametrización propone como mejor modelo un $ARIMA(2,0,1)(0,1,1)_{12}$. El cuadro \ref{tab:externasmedidas} muestra las medidas de rendimiento obtenidas de los pronósticos realizados con cada método, los cuáles son mejores al utilizar la sobreparametrización; este hecho también se observa gráficamente mediante la figura \ref{fig:externasplotpronostico}
 
 ```{r}
-resumen_resultados(EXTERNA, fecha_inicio="2014-06-01", fecha_fin="2017-12-01")$medidas %>% 
-  kbl(., "latex", booktabs=T, escape = F, align = "r", caption="\\label{tab:externasmedidas}Medidas de rendimiento según método de estimación para la Mortalidad por causa externa", col.names = c("Método", "RMSE", "MAE", "MAPE")) %>%
-    kable_styling(latex_options = c("scale_down", "repeat_header", "hold_position"), 
-                  full_width = T#, font_size = 5
-                  )
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_alto[[1]]$modelos, arima203))
+
+datos <- datos$medidas
+
+#datos <- resumen_resultados(TMII)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_arima203}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(2,0,3)",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados",
+            "auto.arima(): ARIMA(2,0,2)",
+            "Sobreparametrización: ARIMA(5,1,1)",
+            "ARIMA estándar: ARIMA(1,1,1)"
+        ),
+        general_title = ""
+    ) 
 ```
 
-```{r externasplotpronostico, fig.cap="Pronósticos de la TMII según método de estimación"}
-resumen_resultados(EXTERNA, fecha_inicio="2014-06-01", fecha_fin="2017-12-01")$pronostico %>% 
-  rename("Método"=Serie) %>% 
-  #filter(Serie %in% c("Original", "Arima")) %>% 
-  ggplot(., aes(x=fecha, y=valor, colour=Método))+
-  geom_line(size = 0.8)+
-  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
-  #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
-  theme_minimal() +
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC",
-       y="Mortalidad por causa externa (por cada 1000 habitantes)",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_date(expand = c(0,0))+
-  scale_y_continuous(expand=c(0, 0))
-```
-
-\subsubsection{Incentivos salariales del sector público}
-
-
-
-Nuevamente, se ajustaron dos modelos ARIMA, el primero de ellos mediante la función `auto.arima()`, siendo el modelo sugerido un $ARIMA(0,0,1)(1,1,0)_{12}$;y el segudo modelo sugerido, utilizando la sobreparametrización, es un $ARIMA(2,1,0)(1,2,0)_{12}$. Tanto el cuadro \ref{tab:incentivosmedidas} como la figura \ref{fig:incentivosplotpronostico} muestran que nuevamente los pronósticos obtenidos son superiores utilizando la sobreparametrización.
 
 ```{r}
-resumen_resultados(INCENTIVOS, fecha_inicio="2013-11-01", fecha_fin="2015-06-01")$medidas %>% 
-  kbl(., "latex", booktabs=T, escape = F, align = "r", caption="\\label{tab:incentivosmedidas}Medidas de rendimiento según método de estimación para los incentivos salariales", col.names = c("Método", "RMSE", "MAE", "MAPE")) %>%
-    kable_styling(latex_options = c("scale_down", "repeat_header", "hold_position"), 
-                  full_width = T#, font_size = 5
-                  )
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_alto[[2]]$modelos, arima402))
+
+datos <- datos$medidas
+
+#datos <- resumen_resultados(TMII)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_arima402}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(4,0,2)",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados",
+            "auto.arima(): ARIMA(2,0,3)",
+            "Sobreparametrización: ARIMA(4,0,2)",
+            "ARIMA estándar: ARIMA(1,1,1)"
+        ),
+        general_title = ""
+    ) 
 ```
-
-```{r incentivosplotpronostico, fig.cap="Pronósticos de los incentivos salariales según método de estimación"}
-resumen_resultados(INCENTIVOS, fecha_inicio="2013-11-01", fecha_fin="2015-06-01")$pronostico %>% 
-  rename("Método"=Serie) %>% 
-  ggplot(., aes(x=fecha, y=valor, colour=Método))+
-  geom_line(size = 0.8)+
-  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
-  theme_minimal() +
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Contraloría General de la República de Costa Rica",
-       y="Incentivos salariales",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_date(expand = c(0,0))+
-  scale_y_continuous(expand=c(0, 0))
-```
-
-\subsubsection{Intereses y comisiones del sector público}
-
-
-
-Por último, los modelos ajustados para pronosticar los intereses y comisiones del sector público con un $ARIMA(0,0,1)(0,1,0)_{12}$ para el caso de la función `auto.arima()`; y un $ARIMA(0,1,2)(0,1,0)_{12}$ En este caso, la sobreparametrización es superior en dos de las tres medidas de rendimiento tal y como muestra el cuadro \ref{tab:interesesmedidas}, mientras que la figura \ref{fig:interesesplotpronostico} muestra de manera gráfica los pronósticos obtenidos, que son bastante similares pues ambos modelos difieren solamente en un parámetro para la parte estacional.
 
 ```{r}
-resumen_resultados(INTERESES, fecha_inicio="2016-08-01", fecha_fin="2018-06-01")$medidas %>% 
-  kbl(., "latex", booktabs=T, escape = F, align = "r", caption="\\label{tab:interesesmedidas}Medidas de rendimiento según método de estimación para los intereses y comisiones del sector público", col.names = c("Método", "RMSE", "MAE", "MAPE")) %>%
-    kable_styling(latex_options = c("scale_down", "repeat_header", "hold_position"), 
-                  full_width = T#, font_size = 5
-                  )
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_estacional_bajo[[1]]$modelos, arima001_011))
+
+datos <- datos$medidas
+
+#datos <- resumen_resultados(TMII)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_arima001_011}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(0,0,1)(0,1,1)",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados",
+            "auto.arima(): ARIMA(0,0,1)(0,1,1)",
+            "Sobreparametrización: ARIMA(0,0,1)(0,1,1)",
+            "ARIMA estándar: ARIMA(1,1,1)(1,1,1)"
+        ),
+        general_title = ""
+    ) 
 ```
 
-```{r interesesplotpronostico, fig.cap="Pronósticos de los intereses y comisiones del sector público según método de estimación"}
-resumen_resultados(INTERESES, fecha_inicio="2016-08-01", fecha_fin="2018-06-01")$pronostico %>% 
-  rename("Método"=Serie) %>% 
-  ggplot(., aes(x=fecha, y=valor, colour=Método))+
-  geom_line(size = 0.8)+
-  scale_color_manual(values=c("limegreen", "orangered1", "blue"))+
-  theme_minimal() +
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Contraloría General de la República de Costa Rica",
-       y="Intereses y comisiones del sector público",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_date(expand = c(0,0))+
-  scale_y_continuous(expand=c(0, 0))
+```{r}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_estacional_alto[[2]]$modelos, arima214_303))
+
+datos <- datos$medidas
+
+#datos <- resumen_resultados(TMII)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_arima214_303}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(2,1,4)(3,0,3)",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados",
+            "auto.arima(): ARIMA(2,0,4)(0,0,2)",
+            "Sobreparametrización: ARIMA(2,1,3)(0,1,3)",
+            "ARIMA estándar: ARIMA(1,1,1)(1,1,1)"
+        ),
+        general_title = ""
+    ) 
 ```
 
+\subsubsection{Datos reales}
+
+De manera análoga, se muestran las medidas de bondad de ajuste y de rendimiento para las series cronológicas reales en los cuadros \ref{tab:comparaciones_TMII}, \ref{tab:comparaciones_EXTERNA}, \ref{tab:comparaciones_INCENTIVOS} y \ref{tab:comparaciones_INTERESES}.
+
+```{r}
+datos <- resumen_resultados(TMII)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_TMII}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados para la TMII",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia",
+            "auto.arima(): ARIMA(2,1,0)(0,0,1)",
+            "Sobreparametrización: ARIMA(4,1,0)(4,1,0)",
+            "ARIMA estándar: ARIMA(1,1,1)(1,1,1)"
+        ),
+        general_title = ""
+    ) 
+```
+
+```{r}
+datos <- resumen_resultados(EXTERNA)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_EXTERNA}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados para la TMCE",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia",
+            "auto.arima(): ARIMA(1,1,1)",
+            "Sobreparametrización: ARIMA(2,0,1)(0,1,1)",
+            "ARIMA estándar: ARIMA(1,1,1)(1,1,1)"
+        ),
+        general_title = ""
+    ) 
+```
+
+```{r}
+datos <- resumen_resultados(INCENTIVOS)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_INCENTIVOS}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados para la serie de incentivos salariales del sector público",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia",
+            "auto.arima(): ARIMA(0,0,1)(1,1,0)",
+            "Sobreparametrización: ARIMA(2,1,0)(1,2,0)",
+            "ARIMA estándar: ARIMA(1,1,1)(1,1,1)"
+        ),
+        general_title = ""
+    ) 
+```
+
+```{r}
+datos <- resumen_resultados(INTERESES)$medidas
+
+datos %>%
+    data.frame(row.names = NULL) %>%
+    select(tipo, Serie, everything()) %>%
+    mutate_if(is.numeric, function(x)
+        as.character(round(x, 4))) %>%
+    mutate(
+        AIC = ifelse(tipo == "Validación", "", AIC),
+        AICc = ifelse(tipo == "Validación", "", AICc),
+        BIC = ifelse(tipo == "Validación", "", BIC)
+    ) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_INTERESES}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados para la serie de intereses y comisiones del sector público",
+        col.names = c(
+            "Conjunto de datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    collapse_rows(columns = 1) %>%
+    column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia",
+            "auto.arima(): ARIMA(0,0,1)(0,1,0)",
+            "Sobreparametrización: ARIMA(0,1,2)(0,1,0)",
+            "ARIMA estándar: ARIMA(1,1,1)(1,1,1)"
+        ),
+        general_title = ""
+    ) 
+```

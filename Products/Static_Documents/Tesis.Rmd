@@ -51,7 +51,7 @@ csl: apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
-                      dev="jpeg", out.width = '100%', out.height='100%', fig.pos="!h",
+                      dev="jpeg", out.width = '100%', out.height='100%', fig.pos="H",
                       echo=FALSE)
 
 popstudy::required_packages(knitr, kableExtra, readxl, gridExtra, ggpubr, ggplot2, lubridate, 
@@ -140,10 +140,30 @@ César Andrés Gamboa Sanabria\\
 \addcontentsline{toc}{section}{RESUMEN}
 \section*{RESUMEN}
 
+Estimar modelos de series cronológicas es una labor ampliamente extendida en múltiples campos d ela investigación y su objetivo último es generar pronósticos de la forma más precisa posible dentro de un horizonte determinado. Existe una amplia gama de modelos que puede utilizarse con este fin, entre ellos están los modelos Autorregresivos Integrados de Medias Móviles ($ARIMA$), e incluso existen diversos métodos de estimación automática o semi-automática para esta rama de la estadística. 
+
+A pesar de esto, encontrar un modelo que posea un buen ajuste a los datos no es tarea fácil, pues deben considerarse diversos aspectos teóricos, prácticos, y de la temática de estudio para así obtener un modelo adecuado que genere pronósticos realistas y pertinentes para la toma de decisiones dentro de lo posible.
+
+EN esta investigación se propone hacer uso de la sobreparametrización en conjunto con el método de permutaciones del análisis combinatorio para someter a prueba una espectro más amplio de posibles modelos $ARIMA$. En las selección de modelos ARIMA los métodos más tradicionales como los correlogramas u otros, no suelen cubrir muchas alternativas para definir la cantidad de coeficientes a estimar en el modelo, lo cual representa un método de estimación que no es el mejor, por esto, la presente tesis propone una metodología para obtener pronósticos más precisos en comparación a los métodos tradicionales.
+
+Se realiza un ejercicio de simulación de series cronológicas para ajustar modelos $ARIMA$ con la función `auto.arima()`, la sobreparametrización y un modelo $ARIMA$ de orden bajo a partir los datos generados y cuatro series de tiempo reales utilizando una partición del 80% para entrenar los modelos y el restante 20% para validación de los pronósticos. La calidad de los resultados de cada modelo se mide mediante medidas de bondad de ajuste y de rendimiento.
+
+Entre los principales resultados se concluye que al tener datos que vienen de un proceso con bajo número de parámetros, el uso de la sobreparametrización logra captar de buena manera el comportamiento de la serie en comparación a las otras alternativas más utilizadas y, además, cuando el proceso que gobierna la serie es de un mayor grado, la metodología propuesta, al considerar un mayor espectro paramétrico, es capaz de capturar de mejor forma el comportamiento de la serie y conseguir pronósticos con una precisión mayor al de los métodos más tradicionales.
+
 \cleardoublepage
 
 \addcontentsline{toc}{section}{ABSTRACT}
 \section*{ABSTRACT}
+
+Estimating time series models is a widely extended task in multiple fields of research, and its final goal is to forecast as accurately as possible within a given horizon. A wide range of models can be used for this purpose, including the Autoregressive Integrated Moving Average models ($ARIMA$), and there are even various automatic or half-automatic estimation methods for this topic. 
+
+Despite this, finding a model that has an excellent fit to the data is not an easy task since it must have theoretical, practical, and thematic aspects to obtain an adequate model that generates realistic and relevant forecasts for decision-making. 
+
+In this research, the use of overparameterization is proposed with combinatorial analysis to test a broader spectrum of possible $ARIMA$ models. In the selection of ARIMA models, the most traditional methods such as correlograms or others, do not usually cover many alternatives to define the number of coefficients to be estimated in the model, which represents an estimation method that is not the best, for this reason, the present thesis proposes a methodology to obtain more accurate forecasts compared to traditional methods. 
+
+A time-series simulation exercise is performed to fit $ARIMA$ models with the `auto.arima()` function, overparameterization, and a low order $ARIMA$ model from the generated data and four local time series using a partition of 80% to train the models and the remaining 20% for forecast validation. The quality of the results of each model is checked with the goodness of fit and accuracy measures.
+
+Among the main results, it is concluded that data that comes from a lower process, the overparameterization, has a good fit compared to traditional methods. In addition, when the data has a higher process, the proposed methodology, by considering a larger parametric spectrum, can fit the time series and reach forecasts with greater precision than more traditional methods. 
 
 \cleardoublepage
 
@@ -174,7 +194,7 @@ César Andrés Gamboa Sanabria\\
 ```{r, child="04-Resultados.Rmd"}
 ```
 
-
+\newpage
 \newpage
 
 \section{CONCLUSIONES}
