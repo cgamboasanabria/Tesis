@@ -1,7 +1,8 @@
 ```{r}
 #"https://stats.andrewheiss.com/misc/gantt.html
 library(readxl)
-tasks <- read_excel("Material de referencia/Cronograma detallado.xlsx") %>% mutate_all(as.character)
+popstudy::required_packages(tidyverse, lubridate, scales, Cairo)
+tasks <- read_excel("Cronograma detallado.xlsx") %>% mutate_all(as.character)
 
 
 tasks.long <- tasks %>%
@@ -43,12 +44,12 @@ timeline <- ggplot(tasks.long, aes(x=Task, y=task.date, colour=Project)) +
   geom_vline(xintercept=x.breaks, colour="grey80", linetype="dotted") + 
   guides(colour=guide_legend(title=NULL)) +
   labs(x=NULL, y=NULL, title="Cronograma tentativo") + coord_flip() +
-  scale_y_date(date_breaks="2 weeks", labels=date_format("%b ‘%y")) +
+  scale_y_date(date_breaks="4 weeks", labels=date_format("%b ‘%y")) +
   theme_gantt() + theme(axis.text.x=element_text(angle=45, hjust=1), plot.title = element_text(hjust = 0.5, face="plain"))
 timeline
 
 
-ggsave(timeline, filename="~/Desktop/cronograma.pdf",
+ggsave(timeline, filename="cronograma.pdf",
        width=6.5, height=6.5, units="in", device=cairo_pdf)
 ```
 
