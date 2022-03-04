@@ -507,9 +507,10 @@ privada, seguros de vida y asuntos hipotecarios
 La estimación de series de tiempo es una labor común en distintos campos
 de investigación: el objetivo es poder pronosticar de forma correcta lo
 que sucederá dentro de los próximos periodos. Métodos actuales como el
-\texttt{auto.arima()} solamente realizan aproximaciones analíticas no
-óptimas, por lo que suelen omitir procesos que describirían de una mejor
-manera el comportamiento futuro de una serie cronológica.
+\texttt{auto.arima()} solamente realizan aproximaciones analíticas
+basadas principalmente en criterios de bondad de ajuste, las cuales
+pueden omitir procesos que al momento de pronosticar describirían de una
+mejor manera el comportamiento futuro de una serie cronológica.
 
 Estimar modelos ARIMA considerando diversas permutaciones en sus
 estimadores, permite mitigar las falencias de otras aproximaciones
@@ -591,11 +592,11 @@ convertidas a su vez en observaciones discretas. De esta manera, una
 serie de tiempo puede considerarse una muestra aleatoria, pues para un
 determinado tiempo \(t\), que se considera el momento actual, la serie
 tiene tres momentos: el pasado, que son los rezagos denotados como
-\(Y_{t-1}, Y_{t-2}, \cdots, Y_{t-k}\), el momento presente, denotado
-como \(Y_t\), y los pronósticos, denotados como
-\(Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}\); así, una serie temporal
-univariada, con lapsos equidistantes entre los tiempos, puede
-representarse como
+\(Y_{t-1}, Y_{t-2}, \cdots, Y_{t-k}\) donde \(k\) es el primer momento
+de referencia, el momento presente, denotado como \(Y_t\), y los
+pronósticos, denotados como \(Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}\); así,
+una serie temporal univariada, con lapsos equidistantes entre los
+tiempos, puede representarse como
 \(Y_{t-k}, \cdots, Y_{t-2}, Y_{t-1}, Y_t, Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}\).
 
 A partir de lo anterior, la serie cronológica se compone de dos partes:
@@ -685,9 +686,9 @@ el momento en el tiempo. Esta perspectiva clásica del análisis de series
 de tiempo permite realizar un análisis descriptivo del comportamiento de
 la serie en cuestión; cada una de sus partes se definen en posteriores
 apartados. De manera visual, una serie cronológica aditiva posee un
-comportamiento similar al mostrado en la figura
+comportamiento similar al mostrado en la Figura
 \ref{fig:ejemplo_aditiva}, mientras que un comportamiento multiplicativo
-puede apreciarse en la figura \ref{fig:ejemplo_multiplicativa}.
+puede apreciarse en la Figura \ref{fig:ejemplo_multiplicativa}.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1} \caption{Número de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_aditiva}
@@ -706,8 +707,8 @@ general de una serie cronológica se refiere al crecimiento,
 decrecimiento o lateralización de sus movimientos a lo largo del periodo
 de estudio. La descomposición clásica de la tendencia-ciclo de este
 componente se mantiene constante de un periodo al siguiente y se obtiene
-a partir de una media móvil de \(m\) periodos
-\(\left(\bar y_{m}\right)\). De esta manera la forma matemática de la
+a partir de una media móvil de \(m\) periodos desde el momento \(t\)
+\(\left(\bar y_{t,m}\right)\). De esta manera la forma matemática de la
 tendencia-ciclo para una serie cronológica se muestra en la ecuación
 \ref{eqn:descomposicion_tendencia}.
 
@@ -715,14 +716,14 @@ tendencia-ciclo para una serie cronológica se muestra en la ecuación
 \label{eqn:descomposicion_tendencia}
 T(t)=
 \begin{cases}
-2\bar y_{m}, & \text{si}\ \text{m es par} \\
-\bar y_{m}, & \text{si}\ \text{m es impar} \\
+2\bar y_{t,m}, & \text{si}\ \text{m es par} \\
+\bar y_{t, m}, & \text{si}\ \text{m es impar} \\
 \end{cases}
 \end{equation}
 
 Un ejemplo es la serie cronológica del número de matrimonios en Costa
 Rica para el periodo 1978-1983, que con el tiempo su crecimiento suele
-comportarse de una forma creciente tal y como muestra la figura
+comportarse de una forma creciente tal y como muestra la Figura
 \ref{fig:ejemplo_tendencia}.
 
 \begin{figure}[H]
@@ -736,11 +737,11 @@ los periodos cíclicos, por su parte, se refieren a los cambios que se
 dan en una serie cronológica en el mediano-largo plazo, que son causados
 por determinados eventos que suelen repetirse. Estos ciclos suelen tener
 una duración determinada, como es el caso de los índice bursátil
-NASDAQ-100. Este indicador resume el estado los 100 valores de las
+NASDAQ-100. Este indicador resume el estado de los 100 valores de las
 compañías más importantes del sector de la industria de la tecnología, y
 sus ciclos suelen presentar un auge, seguido por un descenso que,
 posteriormente, se vuelve una depresión, y que finalmente se convierte
-en una recuperación a su estado inicial. La figura
+en una recuperación a su estado inicial. La Figura
 \ref{fig:ejemplo_ciclo} muestra como el índice NASDAQ-100 inicia un auge
 alrededor de enero de 1995 (primera línea azul punteada), para luego
 experimentar una fuerte caída a partir de junio del año 2000 (línea roja
@@ -758,28 +759,31 @@ del año 2009 (segunda línea azul punteada).
 refiere a los cambios estacionales que se presentan en una serie de
 tiempo, los cuales se relacionan con las fluctuaciones naturales del
 fenómeno dentro de una temporada de observaciones. Visualmente los
-efectos estacionales puede apreciarse en la figura
+efectos estacionales puede apreciarse en la Figura
 \ref{fig:ejemplo_multiplicativa}, en donde los picos más altos de
 turistas siempre se ubican entres los meses de diciembre y enero.
-Matemáticamente, el componente estacional puede definirse como se indica
-en la ecuación \ref{eqn:descomposicion_estacional}:
+Matemáticamente en su forma clásica, el componente estacional puede
+calcularse como se indica en la ecuación
+\ref{eqn:descomposicion_estacional}:
 
 \begin{equation}
 \label{eqn:descomposicion_estacional}
-S(t)=\bar{y}_{s_t}-\bar{y}_{k};
+S(t)=\psi_{t,a}-\psi^*
 \begin{cases}
-\bar{y}_{s_t} = \frac{\sum \bar{y}_s}{n} \\
-\bar{y}_k = \frac{\sum y_k}{n-m} \\
-\bar{y}_s = \sum_{j=1}^s y_{k_j} \\
-y_k = y_t - \bar{y}_{mc_t} \\
-\bar{y}_{mc_t} = \frac{\bar{y}_{m_t} + \bar{y}_{m_{t-1}}}{2} \\
-\bar{y}_{m_t} = \frac{\sum_{t=1}^m y_t}{m} \\
+\psi_{t,a} = \frac{\sum_{i=0}^a \hat{y}_{t+a\cdot i}}{a} \\
+\psi^*=\frac{\sum_{i=0}^n \hat{y}_{t+i}}{n} \\
+\hat{y}_t=y_t-\bar{y}_{t,S,m} \\
+\bar{y}_{t,S,m}=\frac{\sum_{i=1}^m \bar{y}_{t+i-m,S}}{m} \\
+\bar{y}_{t,S}=\frac{\sum_{i=1}^S y_{t-i+\frac{S}{2}}}{S} \\
 \end{cases}
 \end{equation}
 
-donde \(m\) representa la cantidad de periodos y \(s\) la frecuencia
-estacional. Gráficamente, el componente estacional se muestra en la
-figura \ref{fig:ejemplo_estacional}.
+donde \(S\) representa la frecuencia estacional (por ejemplo cada 12
+meses), \(a\) es la cantidad de periodos estacionales disponibles (por
+ejemplo, si se tienen 6 periodios completos de 12 meses, se tienen 6
+años) y \(m\) es la cantidad de periodos que se utiliza para centrar las
+medias móviles. Gráficamente, el componente estacional se muestra en la
+Figura \ref{fig:ejemplo_estacional}.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1} \caption{Componente aleatorio de la serie de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_estacional}
@@ -796,7 +800,7 @@ determinado. Matemáticamente su descomposición se obtiene a partir de
 los otros componentes así como de la propia serie cronológica \(y(t)\),
 tal y como se muestra en la ecuación \ref{eqn:descomposicion_irregular}.
 Visualmente, la magnitud del componente aleatorio se muestra en la
-figura \ref{fig:ejemplo_aleatorio}
+Figura \ref{fig:ejemplo_aleatorio}
 
 \begin{equation}
 \label{eqn:descomposicion_irregular}
@@ -824,20 +828,35 @@ gobierna a toda la serie cronológica
 (\protect\hyperlink{ref-Zhang}{Zhang, 2003}).
 
 En un proceso determinístico, es posible predecir con certeza lo que
-ocurrirá en el futuro; las series cronológicas, sin embargo, carecen de
-esta condición. El análisis de series cronológicas asume que las
-observaciones pueden ajustarse a un determinado modelo estadístico, esto
-se conoce como un proceso estocástico. Es de esta manera que
+ocurrirá en el futuro pues carecen de aleatoriedad, razón por la cual el
+proceso definirse fácilmente mediante una ecuación matemática; las
+series cronológicas, sin embargo, carecen de esta condición. Por el
+contrario, los procesos no determinísticos son aquellos que no pueden
+describirse con exactitud mediante una ecuación matemática, sino que
+deben aproximarse debido al componente aleatorio que poseen de forma
+intrínseca. Una serie de tiempo puede tratarse de un proceso no
+determinístico porque usualmente, toda la información que se necesita
+para describir el proceso de manera determinística es desconocida, o
+bien porque la naturaleza de la información involucra la aleatoriedad,
+de esta manera, como los procesos no determinísticos consideran un
+aspecto aleatorio, pueden estimarse mediante leyes probabilísticas.
 \protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
 (\protect\hyperlink{ref-Hipel}{1994}) sugieren que una serie cronológica
 puede considerarse como una muestra aleatoria de una serie mucho más
-grande. Este componente no determinístico es lo que define a un procesos
-estocástico (aleatorio) como un conjunto de variables aleatorias
-ordenadas en el tiempo
-(\protect\hyperlink{ref-definicion_estocastico}{Elmabrouk, n.d.}). De
-acuerdo con \protect\hyperlink{ref-introduccion_series}{Ramírez}
+grande, es decir, una serie cronológica puede verse como una colección
+de variables aleatorias ordenadas de manera cronológica. La magnitud de
+estas variaciones aleatorias pueden variar en función del tiempo, esta
+condición se conoce como un proceso estocástico (aleatorio)
+(\protect\hyperlink{ref-definicion_estocastico}{Elmabrouk, n.d.}).
+
+De acuerdo con \protect\hyperlink{ref-stationary_def}{Agrawal \&
+Adhikari} (\protect\hyperlink{ref-stationary_def}{2013}), una serie se
+considera estacionaria cuando su nivel medio y su variancia son
+aproximadamente las mismas durante todo el periodo, es decir, el tiempo
+no afecta a estos estadísticos de variabilidad. A partir del texto de
+\protect\hyperlink{ref-introduccion_series}{Ramírez}
 (\protect\hyperlink{ref-introduccion_series}{2007}), una forma de
-definir un proceso estocástico \(Y_t\) es mediante los momentos
+definir un proceso estacionario \(Y_t\) es mediante los momentos
 poblacionales de primer y segundo orden tal y como se define en la
 ecuación \ref{eqn:ecuacion_estocastico}.
 
@@ -851,45 +870,33 @@ COV(T_t,Y_s) = E\left[(Y_t-\mu_t)(Y_s-\mu_s)\right], \forall t,s \\
 \end{cases}
 \end{equation}
 
-Lo anterior implica que la media, la varianza y la covarianza dependen
-del tiempo. De esto se desprende además que existen dos tipos de
-procesos estocásticos: estacionarios y no estacionarios. De acuerdo con
-\protect\hyperlink{ref-stationary_def}{Agrawal \& Adhikari}
-(\protect\hyperlink{ref-stationary_def}{2013}), una serie se considera
-estacionaria cuando su nivel medio y su variancia son aproximadamente
-las mismas durante todo el periodo, es decir, el tiempo no afecta a
-estos estadísticos de variabilidad. Este supuesto busca simplificar la
-identificación del proceso estocástico con el objetivo de obtener un
-modelo adecuado para generar los pronósticos. De acuerdo con
+El supuesto de estacionariedad busca simplificar la identificación del
+proceso con el objetivo de obtener un modelo adecuado para generar los
+pronósticos. De acuerdo con
 (\protect\hyperlink{ref-definicion_estocastico}{Elmabrouk, n.d.}), se
-dice que una serie cronológica \(Y_t\) es fuertemente estacionaria si
-satisface las siguientes tres condiciones:
+dice que una serie cronológica \(Y_t\) es fuertemente estacionaria
+cuando la distribución de probabilidad de dicho proceso en cualquier
+momento \(t\) es aproximadamente la misma para cualquier momento en el
+tiempo, mientras que es débilmente estacionaria si su media y su función
+de correlación no varía en el tiempo. Si una serie cronológica posee
+tendencias o patrones estacionales hace que esta sea no estacionaria. En
+la práctica, una serie puede volverse estacionaria al aplicarle
+transformaciones o diferenciaciones de distinto orden.
 
-\textbf{1.} La media de \(Y_t\) se mantiene constante e el tiempo.
-
-\textbf{2.} La variabilidad de \(Y_t\) se mantiene constante en el
-tiempo y además es finita.
-
-\textbf{3.} La covarianza entre \(Y_t\) y \(Y_{t-k}\) únicamente depende
-de la distancia entre \(t\) y \(t-k\).
-
-Un proceso estocástico es débilmente estacionario si alguna de las tres
-condiciones previas no se cumple, en particular la última. Si una serie
-cronológica posee tendencias o patrones estacionales hace que esta sea
-no estacionaria. En la práctica, una serie puede volverse estacionaria
-al aplicarle transformaciones o diferenciaciones de distinto orden.
-
-Como una serie de tiempo puede considerarse como un proceso estocástico,
-éstas se encuentran sujetas a múltiples supuestos. El más fundamental de
-ellos es que todas las observaciones son independientes e idénticamente
-distribuidas (i.i.d.), que según
+Como una serie temporal es una observación o una realización de un
+proceso estocástico, éstas se encuentran sujetas a múltiples supuestos.
+Uno de ellos es que todas las observaciones son independientes e
+idénticamente distribuidas (i.i.d.), que según
 \protect\hyperlink{ref-definicion_iid}{Evans \& Rosenthal}
 (\protect\hyperlink{ref-definicion_iid}{2005}), un conjunto de variables
 aleatorias \(Y_1,...,Y_n\) son independientes e idénticamente
 distribuidas si el conjunto es independiente y además cada una de las n
 variables sigue la misma distribución, que usualmente se define como una
-distribución aproximadamente Normal, con una media y variancia dadas.
-Este supuesto puede dividirse según el tipo de variable aleatoria:
+distribución aproximadamente Normal, con una media y variancia dadas;
+esta condición es deseable, pues un proceso estocástico puede no ser
+independiente al tener una estructura que genere un patrón reiterado en
+el tiempo. Este supuesto puede dividirse según el tipo de variable
+aleatoria:
 
 \textbf{1.}: Si el conjunto de variables \(Y_1,...,Y_n\) pertenecen a
 una distribución discreta, cada función de probabilidad es idéntica, de
@@ -956,7 +963,7 @@ observación rezagada \((Y_{t-1})\), sino también con múltiples rezagos
 \((Y_{t-2}), (Y_{t-3}), \cdots,(Y_{t-n})\). Para esto se hace uso del
 coeficiente de autocorrelación.
 
-El coeficiente de autocorrelación (\emph{ACF} por sus siglas en inglés)
+La función de autocorrelación (\emph{ACF} por sus siglas en inglés)
 recibe su nombre debido a que se utiliza el coeficiente de correlación
 para pares de observaciones \(r_{Y_t, Y_{t-1}}\) de la serie
 cronológica. Al conjunto de todas las autocorrelaciones se le llama
@@ -973,7 +980,7 @@ de ecuación \ref{eqn:pearson_adaptada_autocorrelacion}.
 
 \begin{equation}
 \label{eqn:pearson_adaptada_autocorrelacion}
-r_{{Y_t},{Y_{t-k}}}=\frac{E({Y_t}{Y_{t-k}})}{\sigma_{Y_t} \sigma_{Y_{t-k}}} = \frac{\sum_{i=1}^n \left({Y_t}_i- \bar {Y_t}\right) \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)}{\sqrt{\sum_{i=1}^n \left({Y_t}_i- \bar {Y_t}\right)^2 \sum_{i=1}^n \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)^2}}
+r_{{Y_t},{Y_{t-k}}}=\frac{E({Y_t}{Y_{t-k}})}{\sigma_{Y_t} \sigma_{Y_{t-k}}} = \frac{\sum_{i=1}^n \left({Y_t}_i- \bar{Y}_t \right) \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)}{\sqrt{\sum_{i=1}^n \left({Y_t}_i- \bar{Y}_t \right)^2 \sum_{i=1}^n \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)^2}}
 \end{equation}
 
 De lo anterior se deduce entonces que un las k observaciones previas
@@ -1075,8 +1082,8 @@ x_t=\sum_{j=0}^{\infty} \psi_j\varepsilon_{t-j}+\kappa_t
 
 donde
 \(\forall \psi_j \in \mathbb{R}, \psi_0=1, \sum_{j=0}^{\infty} \psi_j^2<\infty\),
-y \(\varepsilon_t\) representa un ruido blanco i.i.d., es decir,
-\(\varepsilon_t \sim N(0, \sigma^2)\); además, \(\kappa_t\) es el
+y \(\varepsilon_t\) representa un ruido blanco gaussiano i.i.d., es
+decir, \(\varepsilon_t \sim N(0, \sigma^2)\); además, \(\kappa_t\) es el
 componente lineal determinístico de forma tal que
 \(cov(\kappa_t,\varepsilon_{t-j}=0)\), lo cual implica que este
 componente determinístico es independiente de la suma infinita de los
@@ -1165,7 +1172,7 @@ se desprende que \(\varphi(L)=1-\sum_{i=1}^p \varphi_iL^i\), y que
 \(\theta(L)=1+\sum_{j=1}^q\theta_jL^j\).
 
 Los modelos \(ARMA\), sin embargo, solamente pueden ser utilizados en
-series cronológicas suyo proceso es estacionario. Esto, en la práctica,
+series cronológicas cuyo proceso es estacionario. Esto, en la práctica,
 es poco común, pues una serie de tiempo a menudo posee tendencias y
 ciertos patrones estacionales y, además, como menciona
 \protect\hyperlink{ref-Hamzacebi}{Hamzaçebi}
@@ -1326,7 +1333,7 @@ Para la identificación de los términos \(p\) y \(q\):
 \end{itemize}
 
 Para ejemplificar el uso de los autocorrelogramas en la identificación
-de modelos, se presenta en la figura \ref{fig:ejemplo_ucr} la serie
+de modelos, se presenta en la Figura \ref{fig:ejemplo_ucr} la serie
 cronológica expuesta por \protect\hyperlink{ref-oscarh-1}{Hernández}
 (\protect\hyperlink{ref-oscarh-1}{2011}) de graduados de la Universidad
 de Costa Rica (UCR) para el periodo 1965-2002.
@@ -1339,7 +1346,7 @@ Tal y como menciona el autor, la serie cronológica posee una clara
 tendencia creciente a lo largo del tiempo, lo cual sugiere que no se
 trata de una serie estacionaria. Esto se confirma al analizar las
 funciones de autocorrelación simple y parcial de la serie cronológica en
-als figuras \ref{fig:auto_ucr1} y \ref{fig:parcial_ucr1}; pues la
+las Figuras \ref{fig:auto_ucr1} y \ref{fig:parcial_ucr1}; pues la
 función de autocorrelación no cae rápidamente a cero, sino que posee un
 descenso más pausado.
 
@@ -1353,13 +1360,13 @@ descenso más pausado.
 
 Dado que la serie mostrada no es estacionaria, es posible aplicar una
 diferenciación para hacerla cumplir esta condición, tal y como se
-muestra en la figura \ref{fig:ejemplo_ucr_diferenciada}. Al analizar la
-figura \ref{fig:auto_ucr2} se observa cómo la función de autocorrelación
+muestra en la Figura \ref{fig:ejemplo_ucr_diferenciada}. Al analizar la
+Figura \ref{fig:auto_ucr2} se observa cómo la función de autocorrelación
 cae rápidamente a cero, lo cual confirma que se posee una serie
 estacionaria. Posteriormente, para intentar identificar el proceso que
 gobierna la serie cronológica, puede verse que hay dos barras en la
-figura \ref{fig:parcial_ucr2} y que además la función de autocorrelación
-de la figura \ref{fig:auto_ucr2} cae rápidamente hacia cero, lo cual
+Figura \ref{fig:parcial_ucr2} y que además la función de autocorrelación
+de la Figura \ref{fig:auto_ucr2} cae rápidamente hacia cero, lo cual
 sugiere que se está en presencia de un modelo autorregresivo de orden 2.
 
 \begin{figure}[H]
@@ -1413,13 +1420,13 @@ principio de adición, el cual indica que si se tienen dos procedimientos
 \(A\) y \(B\), los cuales pueden realizarse de \(k_A\) y \(K_B\)
 maneras, respectivamente, entonces la cantidad de maneras que se puede
 realizar uno u otro procedimiento es \(k_A + k_B\). Por otro lado se
-tiene el principio de multiplicación, con el cual, si si el
-procedimiento \(A\) se puede realizar de \(k_A\) formas distintas,
-seguido de otro procedimiento \(B\) que puede realizarse de \(k_B\)
-formas, entonces si a cada forma de realizar el procedimiento \(A\) se
-puede asociar a cualquiera de las \(k_B\) maneras de realizar el
-procedimiento \(B\), entonces ambos procedimientos pueden realizarse de
-\(k_A \cdot k_B\) formas distintas.
+tiene el principio de multiplicación, con el cual, si el procedimiento
+\(A\) se puede realizar de \(k_A\) formas distintas, seguido de otro
+procedimiento \(B\) que puede realizarse de \(k_B\) formas, entonces si
+a cada forma de realizar el procedimiento \(A\) se puede asociar a
+cualquiera de las \(k_B\) maneras de realizar el procedimiento \(B\),
+entonces ambos procedimientos pueden realizarse de \(k_A \cdot k_B\)
+formas distintas.
 
 Es a partir de estos dos principios que pueden obtenerse la cantidad de
 formas distintas que pueden ordenarse \(m\) elementos tomando \(r\)
@@ -1555,7 +1562,7 @@ Dado que la medición de la TMII se hace partiendo de un determinado mes
 y a partir de éste se consideran los 11 meses anteriores, el primer
 valor de la base de datos fue medido a partir de Enero de 2000, que
 corresponde al período interanual Febrero 1999 -- Enero 2000. Todos los
-periodos siguientes se muestran en la figura \ref{fig:tmiiplotgeneral}.
+periodos siguientes se muestran en la Figura \ref{fig:tmiiplotgeneral}.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1} \caption{Tasa de Mortalidad Infantil Interanual 1989 - 2017}\label{fig:tmiiplotgeneral}
@@ -1571,13 +1578,13 @@ punto será más difícil que la TMII vuelva a alcanzar valores similares a
 los mostrados al inicio de la serie. Además, al presentarse dos caídas y
 subidas abruptas en la TMII, esta tiende a estabilizarse.
 
-Mediante un análisis visual, la figura \ref{fig:tmiiplotperiodos} parece
+Mediante un análisis visual, la Figura \ref{fig:tmiiplotperiodos} parece
 respaldar el supuesto de que la mortalidad no posee efectos estacionales
 determinantes, pues para cada uno de los 12 períodos, en ninguno parecen
 existir mayores diferencias. El efecto que se mantiene en cada uno de
 los períodos es el de la tendencia, pues en cada uno ésta sigue
 descendiendo con el pasar de los años. Este hecho coincide con lo
-observado en la figura \ref{fig:tmiiplotgeneral}.
+observado en la Figura \ref{fig:tmiiplotgeneral}.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1} \caption{Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos}\label{fig:tmiiplotperiodos}
@@ -1585,9 +1592,9 @@ observado en la figura \ref{fig:tmiiplotgeneral}.
 
 Para hacer la descomposición de la serie se hizo una transformación de
 Box-Cox con \(\lambda=1\) para aplicarla de manera multiplicativa. Esto
-se debe a que en la figura \ref{fig:tmiiplotgeneral} pueden observarse
+se debe a que en la Figura \ref{fig:tmiiplotgeneral} pueden observarse
 cambios considerables en la variabilidad de la serie a lo largo del
-tiempo. la figura \ref{fig:tmiiplotdescomposicion} muestra, como se
+tiempo. la Figura \ref{fig:tmiiplotdescomposicion} muestra, como se
 mencionó previamente, una tendencia decreciente y una estacionalidad que
 no es reiterada a lo largo del tiempo. Además, el componente aleatorio
 muestra como los errores no son constantes durante todo el período.
@@ -1642,7 +1649,7 @@ mínimo este tipo de eventos.
 Dado que los registros de defunciones por causa externa se realizan
 diariamente, conviene analizar su comportamiento de manera mensual desde
 inicios del milenio de una manera más general, dicho comportamiento
-puede observarse en la figura \ref{fig:externaplotgeneral}.
+puede observarse en la Figura \ref{fig:externaplotgeneral}.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/externaplotgeneral-1} \caption{Mortalidad por causa externa 2000 - 2017}\label{fig:externaplotgeneral}
@@ -1656,7 +1663,7 @@ motocicletas, pues en un período de cinco años esta cifra creció en un
 verificar el comportamiento a lo interno de la serie en referencias a
 las categorías de las causas externas.
 
-De la figura \ref{fig:externasplotperiodos} puede notarse que cada mes
+De la Figura \ref{fig:externasplotperiodos} puede notarse que cada mes
 tiene sus picos y valles durante cada mes a lo largo del periodo, siendo
 los meses de Enero, Abril y Diciembre los que presentaron valores
 ligeramente más altos entre los años 2000 y 2017.
@@ -1667,7 +1674,7 @@ ligeramente más altos entre los años 2000 y 2017.
 
 La descomposición de la serie se hará de forma aditiva debido a que en
 el gráfico 1 no se observan grandes cambios en la variabilidad a lo
-largo del tiempo. La figura \ref{fig:externasplotdescomposicion} muestra
+largo del tiempo. La Figura \ref{fig:externasplotdescomposicion} muestra
 que la tendencia se mantiene casi constante a lo largo del tiempo,
 mientras que parece haber estacionalidad en ciertos lapsos de la segunda
 mitad del año. Además, el componente aleatorio muestra como los errores
@@ -1691,12 +1698,12 @@ seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros.
 Esta serie cronológica representa los incentivos salariales en millones
 de colones del sector público de Costa Rica de enero 2007 a junio 2015.
 
-De manera análoga a las secciones anteriores, la figura
+De manera análoga a las secciones anteriores, la Figura
 \ref{fig:incentivosplotgeneral} muestra el comportamiento general de la
 serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio
 de concavidad a partir de Julio 2008, lo cual sugiere que a partir de
 este momento los incentivos salariales vuelvan a alcanzar valores
-similares a los mostrados al inicio de la serie. La figura
+similares a los mostrados al inicio de la serie. La Figura
 \ref{fig:incentivosplotperiodos} muestra cómo hay un crecimiento
 sostenido de los incentivos en cada mes a lo largo de todo el periodo.
 Sin embargo, este crecimiento se da a una tasa mucho mayor en la época
@@ -1710,7 +1717,7 @@ de fin y principio de año.
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1} \caption{Incentivos salariales en el sector público 2007 - 2018 según mes}\label{fig:incentivosplotperiodos}
 \end{figure}
 
-En la figura \ref{fig:incentivosplotdescomposicion} se muestra la
+En la Figura \ref{fig:incentivosplotdescomposicion} se muestra la
 descomposición de la serie en sus distintos componentes. Pueden
 observarse, además de un crecimiento a lo largo del tiempo, los picos y
 las caídas en la parte estacional, esto hace referencia a los meses de
@@ -1744,18 +1751,18 @@ sector público, así como las diferencias por tipo de cambio por
 operaciones financieras; y también el pago de intereses moratorios
 correspondientes a la deuda pública.
 
-Para iniciar el análisis exploratorio de esta serie, la figura
+Para iniciar el análisis exploratorio de esta serie, la Figura
 \ref{fig:interesesplotgeneral} muestra que hay un ligero cambio de
 concavidad a partir de Julio 2010, esto sugiere que a partir de este
 momento los intereses y comisiones inician una tendencia al alza, la
-cual se sostiene hasta Junio del 2018. Por su parte, la figura
+cual se sostiene hasta Junio del 2018. Por su parte, la Figura
 \ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento
 sostenido de los intereses y comisiones del sector público al final de
 cada trimestre durante todo el periodo, mientras que se mantiene casi
 constante durante los primeros dos meses de cada trimestre. La caída más
 pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento
 más rápida parece darse al final del primer trimestre. Además, en la
-figura \ref{fig:interesesplotdescomposicion} se muestra la
+Figura \ref{fig:interesesplotdescomposicion} se muestra la
 descomposición de la serie en sus distintos componentes. Puede
 observarse, además de un crecimiento a lo largo del tiempo posterior a
 una disminución, los picos y las caídas en la parte estacional, esto en
@@ -1773,7 +1780,7 @@ cambios.
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1} \caption{Intereses y comisiones del sector público en el periodo 2007-2018 según mes}\label{fig:interesesplotperiodos}
 \end{figure}
 
-En la figura \ref{fig:interesesplotdescomposicion} se muestra la
+En la Figura \ref{fig:interesesplotdescomposicion} se muestra la
 descomposición de la serie en sus distintos componentes. Pueden
 observarse, además de un crecimiento a lo largo del tiempo posterior a
 una disminución, los picos y las caídas en la parte estacional. El
@@ -1828,7 +1835,7 @@ Con este fin, se programó una función que sigue los siguientes pasos:
 \textbf{1.} Se generan valores aleatorios de alguna distribución de
 probabilidad. Para esta investigación se escogen 100 valores de una
 distribución Normal con media 10 y varianza 1. Estos valores se resumen
-en la figura \ref{fig:datos_simulados}; donde las región azul oscuro
+en la Figura \ref{fig:datos_simulados}; donde las región azul oscuro
 representa la densidad de datos entre los percentiles 25 y 75, las
 líneas punteadas de color naranja marcan la cantidad de desviaciones
 estándar que los datos se alejan del promedio, y las líneas punteadas de
@@ -1858,7 +1865,7 @@ dichos modelos.
 
 Tras aplicar los pasos anteriores y obtener las correspondientes series
 cronológicas simuladas, el comportamiento y proceso gobernante de cada
-una se muestra en la figura \ref{fig:series_simuladas}.
+una se muestra en la Figura \ref{fig:series_simuladas}.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/datos_simulados-1} \caption{Valores de referencia para la simulación de series cronológicas}\label{fig:datos_simulados}
@@ -2242,8 +2249,6 @@ se muestra en el índice de este documento.
 \newpage
 
 \section{ANEXOS}
-
-\includepdf[pages=-]{C:\\Users\\Dell\\OneDrive\\GitHub\\Tesis\\References\\Others\\cronograma.pdf}
 
 \newpage
 

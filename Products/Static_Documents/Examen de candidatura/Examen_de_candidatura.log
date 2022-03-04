@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.2.10)  24 FEB 2022 07:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.3)  3 MAR 2022 22:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Examen_de_candidatura.tex
 (./Examen_de_candidatura.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-02-05> (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
+L3 programming layer <2022-02-24> (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
 dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
@@ -203,7 +203,7 @@ File: x11nam.def 2021/10/31 v2.13 Predefined colors according to Unix/X11 (UK)
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.s
 ty
-Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+Package: hyperref 2022-02-21 v7.00n Hypertext links for LaTeX
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftex
 cmds.sty
@@ -241,14 +241,9 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 \Hy@pagecounter=\count273
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2022-02-21 v7.00n Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-)
-(c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-l
-angpatches.def
-File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
-nguages
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.s
 ty
@@ -260,24 +255,24 @@ Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count274
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2022-02-21 v7.00n Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `unicode' set `true' on input line 4073.
-Package hyperref Info: Hyper figures OFF on input line 4192.
-Package hyperref Info: Link nesting OFF on input line 4197.
-Package hyperref Info: Hyper index ON on input line 4200.
-Package hyperref Info: Plain pages OFF on input line 4207.
-Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Option `unicode' set `true' on input line 4018.
+Package hyperref Info: Hyper figures OFF on input line 4137.
+Package hyperref Info: Link nesting OFF on input line 4142.
+Package hyperref Info: Hyper index ON on input line 4145.
+Package hyperref Info: Plain pages OFF on input line 4152.
+Package hyperref Info: Backreferencing OFF on input line 4157.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4445.
+Package hyperref Info: Bookmarks ON on input line 4390.
 \c@Hy@tempcnt=\count275
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4804.
+LaTeX Info: Redefining \url on input line 4749.
 \XeTeXLinkMargin=\dimen149
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
@@ -291,15 +286,15 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 \Fld@menulength=\count276
 \Field@Width=\dimen150
 \Fld@charsize=\dimen151
-Package hyperref Info: Hyper figures OFF on input line 6076.
-Package hyperref Info: Link nesting OFF on input line 6081.
-Package hyperref Info: Hyper index ON on input line 6084.
-Package hyperref Info: backreferencing OFF on input line 6091.
-Package hyperref Info: Link coloring OFF on input line 6096.
-Package hyperref Info: Link coloring with OCG OFF on input line 6101.
-Package hyperref Info: PDF/A mode OFF on input line 6106.
-LaTeX Info: Redefining \ref on input line 6146.
-LaTeX Info: Redefining \pageref on input line 6150.
+Package hyperref Info: Hyper figures OFF on input line 6027.
+Package hyperref Info: Link nesting OFF on input line 6032.
+Package hyperref Info: Hyper index ON on input line 6035.
+Package hyperref Info: backreferencing OFF on input line 6042.
+Package hyperref Info: Link coloring OFF on input line 6047.
+Package hyperref Info: Link coloring with OCG OFF on input line 6052.
+Package hyperref Info: PDF/A mode OFF on input line 6057.
+LaTeX Info: Redefining \ref on input line 6097.
+LaTeX Info: Redefining \pageref on input line 6101.
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.s
 ty
@@ -314,7 +309,7 @@ Package hyperref Info: Driver (autodetected): hpdftex.
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.de
 f
-File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
+File: hpdftex.def 2022-02-21 v7.00n Hyperref driver for pdfTeX
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.
 sty
@@ -398,7 +393,7 @@ LaTeX Info: Redefining \addtolength on input line 81.
 ty
 Package: setspace 2011/12/19 v6.7a set line spacing
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2022/01/26 3.70 The Babel package
+Package: babel 2022/02/26 3.73 The Babel package
 \babel@savecnt=\count288
 \U@D=\dimen164
 \l@unhyphenated=\language6
@@ -493,18 +488,19 @@ Package: titlesec 2021/07/05 v2.14 Sectioning titles
 \titlewidthfirst=\dimen173
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+Package: caption 2022/02/28 v3.6a Customizing captions (AR)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption3.st
 y
-Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
-\captionmargin=\dimen174
-\captionmargin@=\dimen175
-\captionwidth=\dimen176
-\caption@tempdima=\dimen177
-\caption@indent=\dimen178
-\caption@parindent=\dimen179
-\caption@hangindent=\dimen180
+Package: caption3 2022/02/28 v2.3a caption3 kernel (AR)
+\caption@tempdima=\dimen174
+\captionmargin=\dimen175
+\caption@leftmargin=\dimen176
+\caption@rightmargin=\dimen177
+\caption@width=\dimen178
+\caption@indent=\dimen179
+\caption@parindent=\dimen180
+\caption@hangindent=\dimen181
 Package caption Info: Standard document class detected.
 )
 \c@caption@flags=\count293
@@ -528,23 +524,23 @@ rs
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.s
 ty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen181
-\lightrulewidth=\dimen182
-\cmidrulewidth=\dimen183
-\belowrulesep=\dimen184
-\belowbottomsep=\dimen185
-\aboverulesep=\dimen186
-\abovetopsep=\dimen187
-\cmidrulesep=\dimen188
-\cmidrulekern=\dimen189
-\defaultaddspace=\dimen190
+\heavyrulewidth=\dimen182
+\lightrulewidth=\dimen183
+\cmidrulewidth=\dimen184
+\belowrulesep=\dimen185
+\belowbottomsep=\dimen186
+\aboverulesep=\dimen187
+\abovetopsep=\dimen188
+\cmidrulesep=\dimen189
+\cmidrulekern=\dimen190
+\defaultaddspace=\dimen191
 \@cmidla=\count295
 \@cmidlb=\count296
-\@aboverulesep=\dimen191
-\@belowrulesep=\dimen192
+\@aboverulesep=\dimen192
+\@belowrulesep=\dimen193
 \@thisruleclass=\count297
 \@lastruleclass=\count298
-\@thisrulewidth=\dimen193
+\@thisrulewidth=\dimen194
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
@@ -553,7 +549,7 @@ Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \LTpre=\skip104
 \LTpost=\skip105
 \LTchunksize=\count299
-\LTcapwidth=\dimen194
+\LTcapwidth=\dimen195
 \LT@head=\box53
 \LT@firsthead=\box54
 \LT@foot=\box55
@@ -566,9 +562,9 @@ Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \LT@p@ftn=\toks27
 ) (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
 Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
-\col@sep=\dimen195
+\col@sep=\dimen196
 \ar@mcellbox=\box58
-\extrarowheight=\dimen196
+\extrarowheight=\dimen197
 \NC@list=\toks28
 \extratabsurround=\skip106
 \backup@length=\skip107
@@ -580,11 +576,11 @@ Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \multirow@colwidth=\skip108
 \multirow@cntb=\count304
 \multirow@dima=\skip109
-\bigstrutjot=\dimen197
+\bigstrutjot=\dimen198
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen198
-\WF@size=\dimen199
+\wrapoverhang=\dimen199
+\WF@size=\dimen256
 \c@WF@wrappedlines=\count305
 \WF@box=\box60
 \WF@everypar=\toks29
@@ -612,8 +608,8 @@ ty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box61
 \sift@deathcycles=\count306
-\@vwid@loff=\dimen256
-\@vwid@roff=\dimen257
+\@vwid@loff=\dimen257
+\@vwid@roff=\dimen258
 )
 \c@taburow=\count307
 \tabu@nbcols=\count308
@@ -621,15 +617,15 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \tabu@Xcol=\count310
 \tabu@alloc=\count311
 \tabu@nested=\count312
-\tabu@target=\dimen258
-\tabu@spreadtarget=\dimen259
-\tabu@naturalX=\dimen260
-\tabucolX=\dimen261
-\tabu@Xsum=\dimen262
-\extrarowdepth=\dimen263
-\abovetabulinesep=\dimen264
-\belowtabulinesep=\dimen265
-\tabustrutrule=\dimen266
+\tabu@target=\dimen259
+\tabu@spreadtarget=\dimen260
+\tabu@naturalX=\dimen261
+\tabucolX=\dimen262
+\tabu@Xsum=\dimen263
+\extrarowdepth=\dimen264
+\abovetabulinesep=\dimen265
+\belowtabulinesep=\dimen266
+\tabustrutrule=\dimen267
 \tabu@thebody=\toks31
 \tabu@footnotes=\toks32
 \tabu@box=\box62
@@ -660,17 +656,17 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \UL@hyphenbox=\box68
 \UL@skip=\skip113
 \UL@hook=\toks33
-\UL@height=\dimen267
+\UL@height=\dimen268
 \UL@pe=\count313
-\UL@pixel=\dimen268
+\UL@pixel=\dimen269
 \ULC@box=\box69
 Package: ulem 2019/11/18
-\ULdepth=\dimen269
+\ULdepth=\dimen270
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/makecell/makecell.s
 ty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
-\rotheadsize=\dimen270
+\rotheadsize=\dimen271
 \c@nlinenum=\count314
 \TeXr@lab=\toks34
 )
@@ -682,12 +678,12 @@ Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
-\ESO@tempdima=\dimen271
-\ESO@tempdimb=\dimen272
+\ESO@tempdima=\dimen272
+\ESO@tempdimb=\dimen273
 )
-\AM@pagewidth=\dimen273
-\AM@pageheight=\dimen274
-\AM@fboxrule=\dimen275
+\AM@pagewidth=\dimen274
+\AM@pageheight=\dimen275
+\AM@fboxrule=\dimen276
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.d
 ef
@@ -713,9 +709,9 @@ Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 
 \FR@everyfloat=\toks38
 \flrow@foot=\insert252
-\FB@wd=\dimen276
-\FBo@wd=\dimen277
-\FBc@wd=\dimen278
+\FB@wd=\dimen277
+\FBo@wd=\dimen278
+\FBc@wd=\dimen279
 \FBo@ht=\skip114
 \FBc@ht=\skip115
 \FBf@ht=\skip116
@@ -731,7 +727,7 @@ Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 \Zhsize=\skip122
 \sZhsize=\skip123
 \flrow@rowbox=\box74
-\FR@Zunitlength=\dimen279
+\FR@Zunitlength=\dimen280
 \c@FBcnt=\count323
 \FPOScnt=\count324
 \LTleft=\skip124
@@ -751,8 +747,8 @@ s.sty
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 util-common.tex
 \pgfutil@everybye=\toks40
-\pgfutil@tempdima=\dimen280
-\pgfutil@tempdimb=\dimen281
+\pgfutil@tempdima=\dimen281
+\pgfutil@tempdimb=\dimen282
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 util-common-lists.tex))
@@ -785,16 +781,16 @@ keys.code.tex
 keysfiltered.code.tex
 \pgfkeys@tmptoks=\toks43
 ))
-\pgf@x=\dimen282
-\pgf@y=\dimen283
-\pgf@xa=\dimen284
-\pgf@ya=\dimen285
-\pgf@xb=\dimen286
-\pgf@yb=\dimen287
-\pgf@xc=\dimen288
-\pgf@yc=\dimen289
-\pgf@xd=\dimen290
-\pgf@yd=\dimen291
+\pgf@x=\dimen283
+\pgf@y=\dimen284
+\pgf@xa=\dimen285
+\pgf@ya=\dimen286
+\pgf@xb=\dimen287
+\pgf@yb=\dimen288
+\pgf@xc=\dimen289
+\pgf@yc=\dimen290
+\pgf@xd=\dimen291
+\pgf@yd=\dimen292
 \w@pgf@writea=\write3
 \r@pgf@reada=\read3
 \c@pgf@counta=\count326
@@ -842,7 +838,7 @@ alc.code.tex
 til.code.tex)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathp
 arser.code.tex
-\pgfmath@dimen=\dimen292
+\pgfmath@dimen=\dimen293
 \pgfmath@count=\count333
 \pgfmath@box=\box76
 \pgfmath@toks=\toks47
@@ -876,32 +872,32 @@ ode.tex)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepoints.code.tex
 File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@picminx=\dimen293
-\pgf@picmaxx=\dimen294
-\pgf@picminy=\dimen295
-\pgf@picmaxy=\dimen296
-\pgf@pathminx=\dimen297
-\pgf@pathmaxx=\dimen298
-\pgf@pathminy=\dimen299
-\pgf@pathmaxy=\dimen300
-\pgf@xx=\dimen301
-\pgf@xy=\dimen302
-\pgf@yx=\dimen303
-\pgf@yy=\dimen304
-\pgf@zx=\dimen305
-\pgf@zy=\dimen306
+\pgf@picminx=\dimen294
+\pgf@picmaxx=\dimen295
+\pgf@picminy=\dimen296
+\pgf@picmaxy=\dimen297
+\pgf@pathminx=\dimen298
+\pgf@pathmaxx=\dimen299
+\pgf@pathminy=\dimen300
+\pgf@pathmaxy=\dimen301
+\pgf@xx=\dimen302
+\pgf@xy=\dimen303
+\pgf@yx=\dimen304
+\pgf@yy=\dimen305
+\pgf@zx=\dimen306
+\pgf@zy=\dimen307
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepathconstruct.code.tex
 File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@path@lastx=\dimen307
-\pgf@path@lasty=\dimen308
+\pgf@path@lastx=\dimen308
+\pgf@path@lasty=\dimen309
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepathusage.code.tex
 File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@shorten@end@additional=\dimen309
-\pgf@shorten@start@additional=\dimen310
+\pgf@shorten@end@additional=\dimen310
+\pgf@shorten@start@additional=\dimen311
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorescopes.code.tex
@@ -914,14 +910,14 @@ File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgflinewidth=\dimen311
+\pgflinewidth=\dimen312
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoretransformations.code.tex
 File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@pt@x=\dimen312
-\pgf@pt@y=\dimen313
-\pgf@pt@temp=\dimen314
+\pgf@pt@x=\dimen313
+\pgf@pt@y=\dimen314
+\pgf@pt@temp=\dimen315
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorequick.code.tex
@@ -938,12 +934,12 @@ File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorearrows.code.tex
 File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfarrowsep=\dimen315
+\pgfarrowsep=\dimen316
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoreshade.code.tex
 File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@max=\dimen316
+\pgf@max=\dimen317
 \pgf@sys@shading@range@num=\count336
 \pgf@shadingcount=\count337
 )
@@ -984,8 +980,8 @@ File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/p
 gfcomp-version-0-65.sty
 Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@nodesepstart=\dimen317
-\pgf@nodesepend=\dimen318
+\pgf@nodesepstart=\dimen318
+\pgf@nodesepend=\dimen319
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/p
 gfcomp-version-1-18.sty
@@ -1007,8 +1003,8 @@ Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.
 code.tex)
-\pgffor@iter=\dimen319
-\pgffor@skip=\dimen320
+\pgffor@iter=\dimen320
+\pgffor@skip=\dimen321
 \pgffor@stack=\toks50
 \pgffor@toks=\toks51
 ))
@@ -1020,16 +1016,16 @@ Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
 libraryplothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@plot@mark@count=\count338
-\pgfplotmarksize=\dimen321
+\pgfplotmarksize=\dimen322
 )
-\tikz@lastx=\dimen322
-\tikz@lasty=\dimen323
-\tikz@lastxsaved=\dimen324
-\tikz@lastysaved=\dimen325
-\tikz@lastmovetox=\dimen326
-\tikz@lastmovetoy=\dimen327
-\tikzleveldistance=\dimen328
-\tikzsiblingdistance=\dimen329
+\tikz@lastx=\dimen323
+\tikz@lasty=\dimen324
+\tikz@lastxsaved=\dimen325
+\tikz@lastysaved=\dimen326
+\tikz@lastmovetox=\dimen327
+\tikz@lastmovetoy=\dimen328
+\tikzleveldistance=\dimen329
+\tikzsiblingdistance=\dimen330
 \tikz@figbox=\box82
 \tikz@figbox@bg=\box83
 \tikz@tempbox=\box84
@@ -1062,14 +1058,14 @@ File: tikzlibrarymatrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 /tikz/libraries/tikzlibrarydecorations.code.tex
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmo
 duledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen330
-\pgfdecoratedremainingdistance=\dimen331
-\pgfdecoratedinputsegmentcompleteddistance=\dimen332
-\pgfdecoratedinputsegmentremainingdistance=\dimen333
-\pgf@decorate@distancetomove=\dimen334
+\pgfdecoratedcompleteddistance=\dimen331
+\pgfdecoratedremainingdistance=\dimen332
+\pgfdecoratedinputsegmentcompleteddistance=\dimen333
+\pgfdecoratedinputsegmentremainingdistance=\dimen334
+\pgf@decorate@distancetomove=\dimen335
 \pgf@decorate@repeatstate=\count347
-\pgfdecorationsegmentamplitude=\dimen335
-\pgfdecorationsegmentlength=\dimen336
+\pgfdecorationsegmentamplitude=\dimen336
+\pgfdecorationsegmentlength=\dimen337
 )
 \tikz@lib@dec@box=\box86
 )
@@ -1186,7 +1182,7 @@ Package caption Info: longtable package is loaded.
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.s
 ty
-Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: Fixing longtable code of `floatrow' package.
 Package caption Info: threeparttable package is loaded.
@@ -1310,7 +1306,7 @@ File: Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg Graphic f
 ile (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_aditi
-va-1.jpeg  used on input line 693.
+va-1.jpeg  used on input line 694.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 <Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg, id=604
 , 469.755pt x 325.215pt>
@@ -1318,7 +1314,7 @@ File: Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg Gr
 aphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_multi
-plicativa-1.jpeg  used on input line 697.
+plicativa-1.jpeg  used on input line 698.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [7 <./Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg, id=614, 469
@@ -1327,7 +1323,7 @@ File: Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg Graphic
  file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_tende
-ncia-1.jpeg  used on input line 729.
+ncia-1.jpeg  used on input line 730.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [8 <./Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg, id=625, 469.755
@@ -1336,7 +1332,7 @@ File: Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg Graphic fil
 e (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ciclo
--1.jpeg  used on input line 751.
+-1.jpeg  used on input line 752.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [9 <./Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg, id=635, 46
@@ -1345,7 +1341,7 @@ File: Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg Graphi
 c file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_estac
-ional-1.jpeg  used on input line 785.
+ional-1.jpeg  used on input line 789.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [10 <./Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg, id=648, 469
@@ -1354,12 +1350,12 @@ File: Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg Graphic
  file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_aleat
-orio-1.jpeg  used on input line 811.
+orio-1.jpeg  used on input line 815.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [11 <./Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg>] [12
  <./Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg>] [13] [1
 4]
-Overfull \hbox (3.64937pt too wide) detected at line 998
+Overfull \hbox (3.64937pt too wide) detected at line 1005
 [][]\OML/lmm/m/it/10 ^^M[] \OT1/lmr/m/n/10 = \OML/lmm/m/it/10 E [] \OT1/lmr/m/n
 /10 = \OML/lmm/m/it/10 ^^^[]^^M[] \OT1/lmr/m/n/10 + \OML/lmm/m/it/10 ^^^[]^^M[]
  \OT1/lmr/m/n/10 + [] + \OML/lmm/m/it/10 ^^^[]^^M[]
@@ -1372,7 +1368,7 @@ File: Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg Graphic file
 (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1
-.jpeg  used on input line 1335.
+.jpeg  used on input line 1342.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [20]
 <Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg, id=808, 469.755pt x
@@ -1381,7 +1377,7 @@ File: Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg Graphic file (t
 ype jpg)
 <use Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/auto_ucr1-1.j
-peg  used on input line 1347.
+peg  used on input line 1354.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [21 <./Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg, id=813, 469.755p
@@ -1390,7 +1386,7 @@ File: Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg Graphic file
  (type jpg)
 <use Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/parcial_ucr1-
-1.jpeg  used on input line 1351.
+1.jpeg  used on input line 1358.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [22 <./Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg> <./Examen_de_
 candidatura_files/figure-latex/parcial_ucr1-1.jpeg>]
@@ -1400,7 +1396,7 @@ File: Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg
 Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ucr_d
-iferenciada-1.jpeg  used on input line 1366.
+iferenciada-1.jpeg  used on input line 1373.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 <Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg, id=823, 469.755pt x
  325.215pt>
@@ -1408,7 +1404,7 @@ File: Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg Graphic file (t
 ype jpg)
 <use Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/auto_ucr2-1.j
-peg  used on input line 1370.
+peg  used on input line 1377.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [23 <./Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg
 >]
@@ -1418,7 +1414,7 @@ File: Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg Graphic file
  (type jpg)
 <use Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/parcial_ucr2-
-1.jpeg  used on input line 1374.
+1.jpeg  used on input line 1381.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [24 <./Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg> <./Examen_de_
 candidatura_files/figure-latex/parcial_ucr2-1.jpeg>] [25] [26] [27]
@@ -1428,7 +1424,7 @@ File: Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg Graphic f
 ile (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotgener
-al-1.jpeg  used on input line 1561.
+al-1.jpeg  used on input line 1568.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [28]
 <Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg, id=875, 469.
@@ -1437,7 +1433,7 @@ File: Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg Graphic
 file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotperio
-dos-1.jpeg  used on input line 1583.
+dos-1.jpeg  used on input line 1590.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [29 <./Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=882
@@ -1446,7 +1442,7 @@ File: Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg Gr
 aphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotdesco
-mposicion-1.jpeg  used on input line 1596.
+mposicion-1.jpeg  used on input line 1603.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [30 <./Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg>] [31 <
 ./Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg>]
@@ -1456,7 +1452,7 @@ File: Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg Graphi
 c file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externaplotge
-neral-1.jpeg  used on input line 1648.
+neral-1.jpeg  used on input line 1655.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [32 <./Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg, id=913, 
@@ -1465,7 +1461,7 @@ File: Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg Grap
 hic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externasplotp
-eriodos-1.jpeg  used on input line 1665.
+eriodos-1.jpeg  used on input line 1672.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 <Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jpeg, id
 =915, 469.755pt x 325.215pt>
@@ -1474,7 +1470,7 @@ g Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jpeg
 >
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externasplotd
-escomposicion-1.jpeg  used on input line 1677.
+escomposicion-1.jpeg  used on input line 1684.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [33 <./Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg, id=922,
@@ -1483,7 +1479,7 @@ File: Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg Gra
 phic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tgeneral-1.jpeg  used on input line 1706.
+tgeneral-1.jpeg  used on input line 1713.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [34 <./Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jp
 eg>]
@@ -1493,7 +1489,7 @@ File: Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg Gr
 aphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tperiodos-1.jpeg  used on input line 1710.
+tperiodos-1.jpeg  used on input line 1717.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [35 <./Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg> <
 ./Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg>]
@@ -1504,7 +1500,7 @@ peg Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.jp
 eg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tdescomposicion-1.jpeg  used on input line 1723.
+tdescomposicion-1.jpeg  used on input line 1730.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [36 <./Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.
 jpeg>]
@@ -1514,7 +1510,7 @@ File: Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg Grap
 hic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-general-1.jpeg  used on input line 1769.
+general-1.jpeg  used on input line 1776.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 <Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg, id=942,
  469.755pt x 325.215pt>
@@ -1522,7 +1518,7 @@ File: Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg Gra
 phic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-periodos-1.jpeg  used on input line 1773.
+periodos-1.jpeg  used on input line 1780.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [37 <./Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.jpeg, i
@@ -1532,12 +1528,12 @@ eg Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.jpe
 g>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-descomposicion-1.jpeg  used on input line 1786.
+descomposicion-1.jpeg  used on input line 1793.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [38 <./Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg>] 
 [39 <./Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.j
 peg>]
-Underfull \hbox (badness 1577) in paragraph at lines 1838--1844
+Underfull \hbox (badness 1577) in paragraph at lines 1845--1851
 \T1/lmr/m/n/10 in-ves-ti-ga-ción fue-ron se-lec-cio-na-dos los si-guien-tes pro
 -ce-sos: $\OML/lmm/m/it/10 ARIMA\OT1/lmr/m/n/10 (1\OML/lmm/m/it/10 ; \OT1/lmr/m
 /n/10 0\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 0)\OML/lmm/m/it/10 ; ARIMA\OT1/lmr/m/
@@ -1551,7 +1547,7 @@ File: Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg Graphic f
 ile (type jpg)
 <use Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/datos_simulad
-os-1.jpeg  used on input line 1864.
+os-1.jpeg  used on input line 1871.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [40]
 <Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg, id=987, 469.
@@ -1560,7 +1556,7 @@ File: Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg Graphic
 file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/series_simula
-das-1.jpeg  used on input line 1868.
+das-1.jpeg  used on input line 1875.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [41 <./Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg> <./Exam
 en_de_candidatura_files/figure-latex/series_simuladas-1.jpeg>] [42]
@@ -1570,37 +1566,37 @@ Missing character: There is no ; in font nullfont!
 Overfull \vbox (320.59103pt too high) has occurred while \output is active []
 
 [48] [49]
-Underfull \hbox (badness 1721) in paragraph at lines 2296--2301
+Underfull \hbox (badness 1721) in paragraph at lines 2303--2308
 []\T1/lmr/m/n/10 Calderón, C. E. (2012). Es-ta-dís-ti-ca pa-ra es-tu-dian-tes d
 e ad-mi-nis-tra-ción de em-pre-sas de
  []
 
 
-Underfull \hbox (badness 2617) in paragraph at lines 2296--2301
+Underfull \hbox (badness 2617) in paragraph at lines 2303--2308
 \T1/lmr/m/n/10 la uni-ver-si-dad na-cio-nal del ca-llao. \T1/lmr/m/it/10 Edi-to
 -rial San Mar-cos, 2da Edi-ción, Li-ma Pe-rú\T1/lmr/m/n/10 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2296--2301
+Underfull \hbox (badness 10000) in paragraph at lines 2303--2308
 [][]$\T1/lmr/m/n/10 https : / / unac . edu . pe / documentos / organizacion / v
 ri / cdcitra / Informes _ Finales _ Investigacion /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2308--2313
+Underfull \hbox (badness 10000) in paragraph at lines 2315--2320
 [][]$\T1/lmr/m/n/10 https : / / www . researchgate . net / publication / 274885
 475 _ Mortalidad _ por _ causa _ externas _
  []
 
 [50]
-Underfull \hbox (badness 10000) in paragraph at lines 2335--2339
+Underfull \hbox (badness 10000) in paragraph at lines 2342--2346
 \T1/lmr/m/n/10 academia . edu / 7140606 / Measuring _ Reliability _ of _ Statio
 nary _ Stochastic _ Processes ? auto =
  []
 
 
-Underfull \hbox (badness 3861) in paragraph at lines 2345--2349
+Underfull \hbox (badness 3861) in paragraph at lines 2352--2356
 \T1/lmr/m/it/10 lia\T1/lmr/m/n/10 . [][]$http : / / www . prres . net / papers 
 / Flaherty _ Modelling _ Private _ New _ Housing _ Starts _ In _
  []
@@ -1613,10 +1609,10 @@ Package rerunfilecheck Info: File `Examen_de_candidatura.out' has not changed.
 (rerunfilecheck)             Checksum: FF317CE3826374B5F1B31ED316689448;16471.
  ) 
 Here is how much of TeX's memory you used:
- 30069 strings out of 480197
- 583285 string characters out of 5892287
- 876326 words of memory out of 5000000
- 47187 multiletter control sequences out of 15000+600000
+ 30081 strings out of 480195
+ 583538 string characters out of 5892231
+ 876586 words of memory out of 5000000
+ 47204 multiletter control sequences out of 15000+600000
  535449 words of font info for 74 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,15n,80p,1210b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1642,8 +1638,8 @@ pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
 
 {c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}
-{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}
 {c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.
+enc}{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.
 enc}{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hit.enc}{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm
 -mathex.enc}<c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publi
@@ -1668,7 +1664,7 @@ pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><c:/Users/Dell
 ell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Use
 rs/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/
 msbm10.pfb>
-Output written on Examen_de_candidatura.pdf (59 pages, 28188727 bytes).
+Output written on Examen_de_candidatura.pdf (59 pages, 28190695 bytes).
 PDF statistics:
  1313 PDF objects out of 1440 (max. 8388607)
  1172 compressed objects within 12 object streams

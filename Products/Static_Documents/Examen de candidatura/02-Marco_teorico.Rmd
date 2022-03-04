@@ -2,7 +2,7 @@ Las series cronológicas han sido un importante tema de investigación durante d
 
 Sin embargo, encontrar un modelo que presente un buen comportamiento con respecto a los datos no es sencillo, pues deben considerarse diversos aspectos teóricos, prácticos, y de la temática de estudio para así obtener un modelo adecuado que logre generar pronósticos realistas y pertinentes para la toma de decisiones [@tsa_decision_making].
 
-Una serie temporal se define como una secuencia de datos observados, cuyas mediciones ocurren de manera sucesiva durante un periodo de tiempo. Los registros de estos datos pueden referirse a una única variable en cuyo caso de dice que es una serie univariada. Según @Hipel, cada observación puede ser continua o discreta, como la temperatura de una ciudad durante el día o las variaciones diarias del precio de un activo financiero, respectivamente; las observaciones continuas, además, pueden ser convertidas a su vez en observaciones discretas. De esta manera, una serie de tiempo puede considerarse una muestra aleatoria, pues para un determinado tiempo $t$, que se considera el momento actual, la serie tiene tres momentos: el pasado, que son los rezagos denotados como $Y_{t-1}, Y_{t-2}, \cdots, Y_{t-k}$, el momento presente, denotado como $Y_t$, y los pronósticos, denotados como $Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}$; así, una serie temporal univariada, con lapsos equidistantes entre los tiempos, puede representarse como $Y_{t-k}, \cdots, Y_{t-2}, Y_{t-1}, Y_t, Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}$. 
+Una serie temporal se define como una secuencia de datos observados, cuyas mediciones ocurren de manera sucesiva durante un periodo de tiempo. Los registros de estos datos pueden referirse a una única variable en cuyo caso de dice que es una serie univariada. Según @Hipel, cada observación puede ser continua o discreta, como la temperatura de una ciudad durante el día o las variaciones diarias del precio de un activo financiero, respectivamente; las observaciones continuas, además, pueden ser convertidas a su vez en observaciones discretas. De esta manera, una serie de tiempo puede considerarse una muestra aleatoria, pues para un determinado tiempo $t$, que se considera el momento actual, la serie tiene tres momentos: el pasado, que son los rezagos denotados como $Y_{t-1}, Y_{t-2}, \cdots, Y_{t-k}$ donde $k$ es el primer momento de referencia, el momento presente, denotado como $Y_t$, y los pronósticos, denotados como $Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}$; así, una serie temporal univariada, con lapsos equidistantes entre los tiempos, puede representarse como $Y_{t-k}, \cdots, Y_{t-2}, Y_{t-1}, Y_t, Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}$. 
 
 A partir de lo anterior, la serie cronológica se compone de dos partes: la estocástica, que contiene una parte conocida (sistemática) y susceptible de predecir y de una parte totalmente desconocida o aleatoria; y una parte determinística, que representa una ecuación matemática sin error, dado que no posee más que ese componente determinístico, se trata de una variable que está determinada o fija y que no cambia de una muestra a otra. De esta manera, puede concluirse que una serie cronológica cuenta con dos características fundamentales: Los valores se encuentran ordenados cronológicamente y, además, existe una dependencia o correlación entre los valores de dicha serie de tiempo; de no presentarse estas dos condiciones, no se estaría en presencia de una serie cronológica. Así, puede decirse que las series de tiempo se enfocan en tres grandes objetivos que serán detallados en secciones posteriores: la descripción de la serie, la adecuación de un modelo o técnica estocástica, y el pronóstico para hasta un horizonte $h$ determinado; el análisis de la serie debe preguntarse sobre el tipo de serie que se está analizando, el tipo de datos y el periodo de referencia utilizado para ajustar el modelo que servirá para realizar los pronósticos.
 
@@ -22,7 +22,7 @@ Y(t)=T(t)+S(t)+I(t)
 Y(t)=T(t)\times S(t)\times I(t)
 \end{equation}
 
-Donde $Y$ es la serie cronológica, $T$ es la tendencia-ciclo, $S$ es la parte estacional, $I$ la parte irregular o aleatoria, y $t$ es el momento en el tiempo. Esta perspectiva clásica del análisis de series de tiempo permite realizar un análisis descriptivo del comportamiento de la serie en cuestión; cada una de sus partes se definen en posteriores apartados. De manera visual, una serie cronológica aditiva posee un comportamiento similar al mostrado en la figura \ref{fig:ejemplo_aditiva}, mientras que un comportamiento multiplicativo puede apreciarse en la figura \ref{fig:ejemplo_multiplicativa}.
+Donde $Y$ es la serie cronológica, $T$ es la tendencia-ciclo, $S$ es la parte estacional, $I$ la parte irregular o aleatoria, y $t$ es el momento en el tiempo. Esta perspectiva clásica del análisis de series de tiempo permite realizar un análisis descriptivo del comportamiento de la serie en cuestión; cada una de sus partes se definen en posteriores apartados. De manera visual, una serie cronológica aditiva posee un comportamiento similar al mostrado en la Figura \ref{fig:ejemplo_aditiva}, mientras que un comportamiento multiplicativo puede apreciarse en la Figura \ref{fig:ejemplo_multiplicativa}.
 
 ```{r ejemplo_aditiva, fig.cap="Número de matrimonios en Costa Rica para el periodo 1978-1983"}
 library(dplyr)
@@ -72,18 +72,18 @@ ggplot(TS)+
 
 \subsubsection{La tendencia-ciclo}
 
-A partir del texto de @calderon2012estadistica, la tendencia general de una serie cronológica se refiere al crecimiento, decrecimiento o lateralización de sus movimientos a lo largo del periodo de estudio. La descomposición clásica de la tendencia-ciclo de este componente se mantiene constante de un periodo al siguiente y se obtiene a partir de una media móvil de $m$ periodos $\left(\bar y_{m}\right)$. De esta manera la forma matemática de la tendencia-ciclo para una serie cronológica se muestra en la ecuación \ref{eqn:descomposicion_tendencia}.
+A partir del texto de @calderon2012estadistica, la tendencia general de una serie cronológica se refiere al crecimiento, decrecimiento o lateralización de sus movimientos a lo largo del periodo de estudio. La descomposición clásica de la tendencia-ciclo de este componente se mantiene constante de un periodo al siguiente y se obtiene a partir de una media móvil de $m$ periodos desde el momento $t$ $\left(\bar y_{t,m}\right)$. De esta manera la forma matemática de la tendencia-ciclo para una serie cronológica se muestra en la ecuación \ref{eqn:descomposicion_tendencia}.
 
 \begin{equation}
 \label{eqn:descomposicion_tendencia}
 T(t)=
 \begin{cases}
-2\bar y_{m}, & \text{si}\ \text{m es par} \\
-\bar y_{m}, & \text{si}\ \text{m es impar} \\
+2\bar y_{t,m}, & \text{si}\ \text{m es par} \\
+\bar y_{t, m}, & \text{si}\ \text{m es impar} \\
 \end{cases}
 \end{equation}
 
-Un ejemplo es la serie cronológica del número de matrimonios en Costa Rica para el periodo 1978-1983, que con el tiempo su crecimiento suele comportarse de una forma creciente tal y como muestra la figura \ref{fig:ejemplo_tendencia}. 
+Un ejemplo es la serie cronológica del número de matrimonios en Costa Rica para el periodo 1978-1983, que con el tiempo su crecimiento suele comportarse de una forma creciente tal y como muestra la Figura \ref{fig:ejemplo_tendencia}. 
 
 ```{r ejemplo_tendencia, fig.cap="Tendencia del número de matrimonios en Costa Rica para el periodo 1978-1983"}
 TS <- ts(c(2522,2750,2210,3154,2392,2288,2800,2178,2316,1782,2068,3436,2344,2980,3334,2184,2212,2838,2560,2380,2254,1956,2270,3410,2264,3144,3400,2260,2924,2440,2550,2788,2114,2068,2516,3488,2320,2858,2716,2340,2638,2374,2550,2746,2160,2388,2194,3010,2504,2898,3124,2544,3010,2494,3330,2494,2278,2446,2436,3676,2630,2928,3218,3012,2794,2778,3322,2734,2600,2734,2664,3546), 
@@ -105,9 +105,9 @@ ggplot(TS)+
                                   margin=margin(t=1,10,10,10)))
 ```
 
-Del informe elaborado también por @calderon2012estadistica se desprende que los periodos cíclicos, por su parte, se refieren a los cambios que se dan en una serie cronológica en el mediano-largo plazo, que son causados por determinados eventos que suelen repetirse. Estos ciclos suelen tener una duración determinada, como es el caso de los índice bursátil NASDAQ-100. Este indicador resume el estado los 100 valores de las compañías más importantes del sector de la industria de la tecnología, y sus ciclos suelen presentar un auge, seguido por un descenso que, posteriormente, se vuelve una depresión, y que finalmente se convierte en una recuperación a su estado inicial. La figura \ref{fig:ejemplo_ciclo} muestra como el índice NASDAQ-100 inicia un auge alrededor de enero de 1995 (primera línea azul punteada), para luego experimentar una fuerte caída a partir de junio del año 2000 (línea roja punteada) y posteriormente iniciar un periodo de recuperación en enero del año 2009 (segunda línea azul punteada).
+Del informe elaborado también por @calderon2012estadistica se desprende que los periodos cíclicos, por su parte, se refieren a los cambios que se dan en una serie cronológica en el mediano-largo plazo, que son causados por determinados eventos que suelen repetirse. Estos ciclos suelen tener una duración determinada, como es el caso de los índice bursátil NASDAQ-100. Este indicador resume el estado de los 100 valores de las compañías más importantes del sector de la industria de la tecnología, y sus ciclos suelen presentar un auge, seguido por un descenso que, posteriormente, se vuelve una depresión, y que finalmente se convierte en una recuperación a su estado inicial. La Figura \ref{fig:ejemplo_ciclo} muestra como el índice NASDAQ-100 inicia un auge alrededor de enero de 1995 (primera línea azul punteada), para luego experimentar una fuerte caída a partir de junio del año 2000 (línea roja punteada) y posteriormente iniciar un periodo de recuperación en enero del año 2009 (segunda línea azul punteada).
 
-```{r ejemplo_ciclo, fig.cap="Índice bursatil NASDAQ-100 para el periodo enero 1990 - junio 2021", message=FALSE, }
+```{r ejemplo_ciclo, fig.cap="Índice bursatil NASDAQ-100 para el periodo enero 1990 - junio 2021", message=FALSE}
 ggplot(log(ts(readr::read_csv(read_from_dir("^NDX.csv", "Data/Raw"))$Close, 
    start = c(1990, 1), end = c(2021, 6), frequency = 12))) +
   geom_line(color = "#00AFBB", size = 1.3) +
@@ -125,22 +125,21 @@ ggplot(log(ts(readr::read_csv(read_from_dir("^NDX.csv", "Data/Raw"))$Close,
 
 \subsubsection{Componentes estacionales}
 
-@calderon2012estadistica también se refiere a los cambios estacionales que se presentan en una serie de tiempo, los cuales se relacionan con las fluctuaciones naturales del fenómeno dentro de una temporada de observaciones. Visualmente los efectos estacionales puede apreciarse en la figura \ref{fig:ejemplo_multiplicativa}, en donde los picos más altos de turistas siempre se ubican entres los meses de diciembre y enero. Matemáticamente, el componente estacional puede definirse como se indica en la ecuación \ref{eqn:descomposicion_estacional}:
+@calderon2012estadistica también se refiere a los cambios estacionales que se presentan en una serie de tiempo, los cuales se relacionan con las fluctuaciones naturales del fenómeno dentro de una temporada de observaciones. Visualmente los efectos estacionales puede apreciarse en la Figura \ref{fig:ejemplo_multiplicativa}, en donde los picos más altos de turistas siempre se ubican entres los meses de diciembre y enero. Matemáticamente en su forma clásica, el componente estacional puede calcularse como se indica en la ecuación \ref{eqn:descomposicion_estacional}:
 
 \begin{equation}
 \label{eqn:descomposicion_estacional}
-S(t)=\bar{y}_{s_t}-\bar{y}_{k};
+S(t)=\psi_{t,a}-\psi^*
 \begin{cases}
-\bar{y}_{s_t} = \frac{\sum \bar{y}_s}{n} \\
-\bar{y}_k = \frac{\sum y_k}{n-m} \\
-\bar{y}_s = \sum_{j=1}^s y_{k_j} \\
-y_k = y_t - \bar{y}_{mc_t} \\
-\bar{y}_{mc_t} = \frac{\bar{y}_{m_t} + \bar{y}_{m_{t-1}}}{2} \\
-\bar{y}_{m_t} = \frac{\sum_{t=1}^m y_t}{m} \\
+\psi_{t,a} = \frac{\sum_{i=0}^a \hat{y}_{t+a\cdot i}}{a} \\
+\psi^*=\frac{\sum_{i=0}^n \hat{y}_{t+i}}{n} \\
+\hat{y}_t=y_t-\bar{y}_{t,S,m} \\
+\bar{y}_{t,S,m}=\frac{\sum_{i=1}^m \bar{y}_{t+i-m,S}}{m} \\
+\bar{y}_{t,S}=\frac{\sum_{i=1}^S y_{t-i+\frac{S}{2}}}{S} \\
 \end{cases}
 \end{equation}
 
-donde $m$ representa la cantidad de periodos y $s$ la frecuencia estacional. Gráficamente, el componente estacional se muestra en la figura \ref{fig:ejemplo_estacional}.
+donde $S$ representa la frecuencia estacional (por ejemplo cada 12 meses), $a$ es la cantidad de periodos estacionales disponibles (por ejemplo, si se tienen 6 periodios completos de 12 meses, se tienen 6 años) y $m$ es la cantidad de periodos que se utiliza para centrar las medias móviles. Gráficamente, el componente estacional se muestra en la Figura \ref{fig:ejemplo_estacional}.
 
 ```{r ejemplo_estacional, fig.cap="Componente aleatorio de la serie de matrimonios en Costa Rica para el periodo 1978-1983"}
 TS <- ts(c(2522,2750,2210,3154,2392,2288,2800,2178,2316,1782,2068,3436,2344,2980,3334,2184,2212,2838,2560,2380,2254,1956,2270,3410,2264,3144,3400,2260,2924,2440,2550,2788,2114,2068,2516,3488,2320,2858,2716,2340,2638,2374,2550,2746,2160,2388,2194,3010,2504,2898,3124,2544,3010,2494,3330,2494,2278,2446,2436,3676,2630,2928,3218,3012,2794,2778,3322,2734,2600,2734,2664,3546), 
@@ -164,7 +163,7 @@ ggplot(decompose(TS)$seasonal)+
 
 \subsubsection{Componente irregular}
 
-Finalmente, la irregularidad de una serie cronológica, siguiendo a @calderon2012estadistica, se refiere a las fluctuaciones propias de un fenómeno que no pueden ser predichas. Estos cambios no se dan de manera regular, es decir, no siguen un patrón determinado. Matemáticamente su descomposición se obtiene a partir de los otros componentes así como de la propia serie cronológica $y(t)$, tal y como se muestra en la ecuación \ref{eqn:descomposicion_irregular}. Visualmente, la magnitud del componente aleatorio se muestra en la figura \ref{fig:ejemplo_aleatorio}
+Finalmente, la irregularidad de una serie cronológica, siguiendo a @calderon2012estadistica, se refiere a las fluctuaciones propias de un fenómeno que no pueden ser predichas. Estos cambios no se dan de manera regular, es decir, no siguen un patrón determinado. Matemáticamente su descomposición se obtiene a partir de los otros componentes así como de la propia serie cronológica $y(t)$, tal y como se muestra en la ecuación \ref{eqn:descomposicion_irregular}. Visualmente, la magnitud del componente aleatorio se muestra en la Figura \ref{fig:ejemplo_aleatorio}
 
 \begin{equation}
 \label{eqn:descomposicion_irregular}
@@ -203,7 +202,9 @@ ggplot(decompose(TS)$random)+
 
 El análisis de series temporales, según @Hipel, representa un método para comprender la naturaleza de la serie en cuestión y poder utilizarla para generar pronósticos. Es en este sentido que entran en escena las observaciones recolectadas de la serie, pues ellas son analizadas y sujetas a modelados matemáticos que logren capturar el proceso que gobierna a toda la serie cronológica [@Zhang].
 
-En un proceso determinístico, es posible predecir con certeza lo que ocurrirá en el futuro; las series cronológicas, sin embargo, carecen de esta condición. El análisis de series cronológicas asume que las observaciones pueden ajustarse a un determinado modelo estadístico, esto se conoce como un proceso estocástico. Es de esta manera que @Hipel sugieren que una serie cronológica puede considerarse como una muestra aleatoria de una serie mucho más grande. Este componente no determinístico es lo que define a un procesos estocástico (aleatorio) como un conjunto de variables aleatorias ordenadas en el tiempo [@definicion_estocastico]. De acuerdo con @introduccion_series, una forma de definir un proceso estocástico $Y_t$ es mediante los momentos poblacionales de primer y segundo orden tal y como se define en la ecuación \ref{eqn:ecuacion_estocastico}.
+En un proceso determinístico, es posible predecir con certeza lo que ocurrirá en el futuro pues carecen de aleatoriedad, razón por la cual el proceso definirse fácilmente mediante una ecuación matemática; las series cronológicas, sin embargo, carecen de esta condición. Por el contrario, los procesos no determinísticos son aquellos que no pueden describirse con exactitud mediante una ecuación matemática, sino que deben aproximarse debido al componente aleatorio que poseen de forma intrínseca. Una serie de tiempo puede tratarse de un proceso no determinístico porque usualmente, toda la información que se necesita para describir el proceso de manera determinística es desconocida, o bien porque la naturaleza de la información involucra la aleatoriedad, de esta manera, como los procesos no determinísticos consideran un aspecto aleatorio, pueden estimarse mediante leyes probabilísticas. @Hipel sugieren que una serie cronológica puede considerarse como una muestra aleatoria de una serie mucho más grande, es decir, una serie cronológica puede verse como una colección de variables aleatorias ordenadas de manera cronológica. La magnitud de estas variaciones aleatorias pueden variar en función del tiempo, esta condición se conoce como un proceso estocástico (aleatorio) [@definicion_estocastico]. 
+
+De acuerdo con @stationary_def, una serie se considera estacionaria cuando su nivel medio y su variancia son aproximadamente las mismas durante todo el periodo, es decir, el tiempo no afecta a estos estadísticos de variabilidad. A partir del texto de @introduccion_series, una forma de definir un proceso estacionario $Y_t$ es mediante los momentos poblacionales de primer y segundo orden tal y como se define en la ecuación \ref{eqn:ecuacion_estocastico}.
 
 ```{r, eval=FALSE, echo=FALSE}
 # Se encontró en el siguiente enlace:
@@ -221,22 +222,14 @@ COV(T_t,Y_s) = E\left[(Y_t-\mu_t)(Y_s-\mu_s)\right], \forall t,s \\
 \end{cases}
 \end{equation}
 
-Lo anterior implica que la media, la varianza y la covarianza dependen del tiempo. De esto se desprende además que existen dos tipos de procesos estocásticos: estacionarios y no estacionarios. De acuerdo con @stationary_def, una serie se considera estacionaria cuando su nivel medio y su variancia son aproximadamente las mismas durante todo el periodo, es decir, el tiempo no afecta a estos estadísticos de variabilidad. Este supuesto busca simplificar la identificación del proceso estocástico con el objetivo de obtener un modelo adecuado para generar los pronósticos. De acuerdo con [@definicion_estocastico], se dice que una serie cronológica $Y_t$ es fuertemente estacionaria si satisface las siguientes tres condiciones:
-
-**1.** La media de $Y_t$ se mantiene constante e el tiempo.
-
-**2.** La variabilidad de $Y_t$ se mantiene constante en el tiempo y además es finita.
-
-**3.** La covarianza entre $Y_t$ y $Y_{t-k}$ únicamente depende de la distancia entre $t$ y $t-k$.
-
-Un proceso estocástico es débilmente estacionario si alguna de las tres condiciones previas no se cumple, en particular la última. Si una serie cronológica posee tendencias o patrones estacionales hace que esta sea no estacionaria. En la práctica, una serie puede volverse estacionaria al aplicarle transformaciones o diferenciaciones de distinto orden.
+El supuesto de estacionariedad busca simplificar la identificación del proceso con el objetivo de obtener un modelo adecuado para generar los pronósticos. De acuerdo con [@definicion_estocastico], se dice que una serie cronológica $Y_t$ es fuertemente estacionaria cuando la distribución de probabilidad de dicho proceso en cualquier momento $t$ es aproximadamente la misma para cualquier momento en el tiempo, mientras que es débilmente estacionaria si su media y su función de correlación no varía en el tiempo. Si una serie cronológica posee tendencias o patrones estacionales hace que esta sea no estacionaria. En la práctica, una serie puede volverse estacionaria al aplicarle transformaciones o diferenciaciones de distinto orden.
 
 ```{r, eval=FALSE, echo=FALSE}
 # Ver página 121
 # https://books.google.co.cr/books?id=ZU3MEKZFgsMC&pg=PA121&dq=independiente+e+id%C3%A9nticamente+distribu%C3%ADda&hl=es-419&sa=X&ved=2ahUKEwiH8cjA2b_xAhV2nWoFHcE6BdQQ6AEwAHoECAYQAg#v=onepage&q=independiente%20e%20id%C3%A9nticamente%20distribu%C3%ADda&f=false
 ```
 
-Como una serie de tiempo puede considerarse como un proceso estocástico, éstas se encuentran sujetas a múltiples supuestos. El más fundamental de ellos es que todas las observaciones son independientes e idénticamente distribuidas (i.i.d.), que según @definicion_iid, un conjunto de variables aleatorias $Y_1,...,Y_n$ son independientes e idénticamente distribuidas si el conjunto es independiente y además cada una de las n variables sigue la misma distribución, que usualmente se define como una distribución aproximadamente Normal, con una media y variancia dadas. Este supuesto puede dividirse según el tipo de variable aleatoria:
+Como una serie temporal es una observación o una realización de un proceso estocástico, éstas se encuentran sujetas a múltiples supuestos. Uno de ellos es que todas las observaciones son independientes e idénticamente distribuidas (i.i.d.), que según @definicion_iid, un conjunto de variables aleatorias $Y_1,...,Y_n$ son independientes e idénticamente distribuidas si el conjunto es independiente y además cada una de las n variables sigue la misma distribución, que usualmente se define como una distribución aproximadamente Normal, con una media y variancia dadas; esta condición es deseable, pues un proceso estocástico puede no ser independiente al tener una estructura que genere un patrón reiterado en el tiempo. Este supuesto puede dividirse según el tipo de variable aleatoria:
 
 **1.**: Si el conjunto de variables $Y_1,...,Y_n$ pertenecen a una distribución discreta, cada función de probabilidad es idéntica, de manera que $p_{y_1}(y)=p_{y_2}(y)=\cdots=p_{y_n}(y)\equiv p(y)$, y además $p_{y_1,...,y_n}(y_1,...,y_n)=p_{y_1}(y_1)p_{y_2}(y_2)\cdots p_{y_n}(y_n)=p(y_1)p(y_2)\cdots p(y_n)$.
 
@@ -259,13 +252,13 @@ r_{X,Y}=\frac{E(XY)}{\sigma_X \sigma_Y} = \frac{\sum_{i=1}^n \left(X_i- \bar X\r
 
 Este mismo concepto puede aplicarse a las series cronológicas para comparar el valor de la misma en el tiempo $t$, con su valor en el tiempo $t-1$, es decir, se comparan las observaciones consecutivas $Y_t$ con $Y_{t-1}$. Esto también es aplicable a no solo una observación rezagada $(Y_{t-1})$, sino también con múltiples rezagos $(Y_{t-2}), (Y_{t-3}), \cdots,(Y_{t-n})$. Para esto se hace uso del coeficiente de autocorrelación.
 
-El coeficiente de autocorrelación (*ACF* por sus siglas en inglés) recibe su nombre debido a que se utiliza el coeficiente de correlación para pares de observaciones $r_{Y_t, Y_{t-1}}$ de la serie cronológica. Al conjunto de todas las autocorrelaciones se le llama función de autocorrelación.
+La función de autocorrelación (*ACF* por sus siglas en inglés) recibe su nombre debido a que se utiliza el coeficiente de correlación para pares de observaciones $r_{Y_t, Y_{t-1}}$ de la serie cronológica. Al conjunto de todas las autocorrelaciones se le llama función de autocorrelación.
 
 La función de autocorrelación parcial[^5], busca medir la asociación lineal entre las observaciones $Y_t$ y $Y_{t-k}$, es decir, la correlación entres dos observaciones distintas separadas por $k$ periodos, descartando los efectos de los rezagos $1,2, \cdots ,k-1$; esta correlación puede obtenerse a partir de la ecuación \ref{eqn:pearson}, que al adaptarse a dos observaciones de la misma serie cronológica se obtiene el resultado de ecuación \ref{eqn:pearson_adaptada_autocorrelacion}.
 
 \begin{equation}
 \label{eqn:pearson_adaptada_autocorrelacion}
-r_{{Y_t},{Y_{t-k}}}=\frac{E({Y_t}{Y_{t-k}})}{\sigma_{Y_t} \sigma_{Y_{t-k}}} = \frac{\sum_{i=1}^n \left({Y_t}_i- \bar {Y_t}\right) \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)}{\sqrt{\sum_{i=1}^n \left({Y_t}_i- \bar {Y_t}\right)^2 \sum_{i=1}^n \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)^2}}
+r_{{Y_t},{Y_{t-k}}}=\frac{E({Y_t}{Y_{t-k}})}{\sigma_{Y_t} \sigma_{Y_{t-k}}} = \frac{\sum_{i=1}^n \left({Y_t}_i- \bar{Y}_t \right) \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)}{\sqrt{\sum_{i=1}^n \left({Y_t}_i- \bar{Y}_t \right)^2 \sum_{i=1}^n \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)^2}}
 \end{equation}
 
 De lo anterior se deduce entonces que un las k observaciones previas pueden utilizarse para obtener el valor de de la serie cronológica en el momento $t$, como muestra la ecuación \ref{eqn:ecuacion_autocorrelaciones}.
@@ -327,7 +320,7 @@ Según @sargent_macro, cualquier proceso estacionario puede ser representado med
 x_t=\sum_{j=0}^{\infty} \psi_j\varepsilon_{t-j}+\kappa_t
 \end{equation}
 
-donde $\forall \psi_j \in \mathbb{R}, \psi_0=1, \sum_{j=0}^{\infty} \psi_j^2<\infty$, y $\varepsilon_t$ representa un ruido blanco i.i.d., es decir, $\varepsilon_t \sim N(0, \sigma^2)$; además, $\kappa_t$ es el componente lineal determinístico de forma tal que $cov(\kappa_t,\varepsilon_{t-j}=0)$, lo cual implica que este componente determinístico es independiente de la suma infinita de los choques pasados.
+donde $\forall \psi_j \in \mathbb{R}, \psi_0=1, \sum_{j=0}^{\infty} \psi_j^2<\infty$, y $\varepsilon_t$ representa un ruido blanco gaussiano i.i.d., es decir, $\varepsilon_t \sim N(0, \sigma^2)$; además, $\kappa_t$ es el componente lineal determinístico de forma tal que $cov(\kappa_t,\varepsilon_{t-j}=0)$, lo cual implica que este componente determinístico es independiente de la suma infinita de los choques pasados.
 
 De lo anterior, si se omite la parte determinística $\kappa_t$ de \ref{eqn:proceso_estacionario}, el remanente es la suma ponderada infinita, lo cual implica que si se conocen los ponderadores $\psi_j$, y si además se conoce $\sigma_\varepsilon^2$, es posible obtener una representación para cualquier proceso estacionario; este concepto es conocido como *media móvil infinita*.
 
@@ -372,7 +365,7 @@ y_t=c+\varepsilon_t+\sum_{i=1}^p \varphi_iy_{t-i}+\sum_{j=1}^q \theta_j \varepsi
 
 @Cochrane menciona que los modelos $ARMA(p,q)$ suelen manipularse mediante lo que se conoce como operador de rezagos, denotado como $Ly_t=y_{t-1}$. Esto significa que en un $AR(p)$ se tiene que $\varepsilon_t=\varphi(L)y_t$, mientras que en $MA(q)$ se tiene que $y_t=\theta(L)\varepsilon_t$, y por consiguiente en un $ARMA(p,q)$ se tiene $\varphi(L)y_t=\theta(L)\varepsilon_t$. Por lo tanto, de lo anterior se desprende que $\varphi(L)=1-\sum_{i=1}^p \varphi_iL^i$, y que $\theta(L)=1+\sum_{j=1}^q\theta_jL^j$.
 
-Los modelos $ARMA$, sin embargo, solamente pueden ser utilizados en series cronológicas suyo proceso es estacionario. Esto, en la práctica, es poco común, pues una serie de tiempo a menudo posee tendencias y ciertos patrones estacionales y, además, como menciona @Hamzacebi, presentan procesos no estacionarios por naturaleza. Esta condición hace necesaria la introducción de una generalización de los modelos $ARMA$, la cual se conoce como los modelos $ARIMA$ [@box-jenkins].
+Los modelos $ARMA$, sin embargo, solamente pueden ser utilizados en series cronológicas cuyo proceso es estacionario. Esto, en la práctica, es poco común, pues una serie de tiempo a menudo posee tendencias y ciertos patrones estacionales y, además, como menciona @Hamzacebi, presentan procesos no estacionarios por naturaleza. Esta condición hace necesaria la introducción de una generalización de los modelos $ARMA$, la cual se conoce como los modelos $ARIMA$ [@box-jenkins].
 
 \subsubsection{Modelos Autorregresivos}
 
@@ -434,7 +427,7 @@ Para la identificación de los términos $p$ y $q$:
  - Si la suma de los coeficientes del modelo $AR$ es muy cercana a la unidad, es necesario reducir la cantidad de términos en uno y aumentar el orden de la diferenciación en uno.
  - Si la suma de los coeficientes del modelo $MA$ es muy cercana a la unidad, es necesario reducir la cantidad de términos en uno y disminuir el orden de la diferenciación en uno.
 
-Para ejemplificar el uso de los autocorrelogramas en la identificación de modelos, se presenta en la figura \ref{fig:ejemplo_ucr} la serie cronológica expuesta por @oscarh-1 de graduados de la Universidad de Costa Rica (UCR) para el periodo 1965-2002.
+Para ejemplificar el uso de los autocorrelogramas en la identificación de modelos, se presenta en la Figura \ref{fig:ejemplo_ucr} la serie cronológica expuesta por @oscarh-1 de graduados de la Universidad de Costa Rica (UCR) para el periodo 1965-2002.
 
 ```{r ejemplo_ucr, fig.cap="Número anual de graduados de la Universidad de Costa Rica para el periodo 1965-2002"}
 library(dplyr)
@@ -461,7 +454,7 @@ ggplot(TS)+
   #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
 ```
 
-Tal y como menciona el autor, la serie cronológica posee una clara tendencia creciente a lo largo del tiempo, lo cual sugiere que no se trata de una serie estacionaria. Esto se confirma al analizar las funciones de autocorrelación simple y parcial de la serie cronológica en als figuras \ref{fig:auto_ucr1} y \ref{fig:parcial_ucr1}; pues la función de autocorrelación no cae rápidamente a cero, sino que posee un descenso más pausado.
+Tal y como menciona el autor, la serie cronológica posee una clara tendencia creciente a lo largo del tiempo, lo cual sugiere que no se trata de una serie estacionaria. Esto se confirma al analizar las funciones de autocorrelación simple y parcial de la serie cronológica en las Figuras \ref{fig:auto_ucr1} y \ref{fig:parcial_ucr1}; pues la función de autocorrelación no cae rápidamente a cero, sino que posee un descenso más pausado.
 
 ```{r auto_ucr1, fig.cap="Función de autocorrelación simple de la serie de graduados de la UCR"}
 acf(TS, main="", xlab="Rezagos")
@@ -471,7 +464,7 @@ acf(TS, main="", xlab="Rezagos")
 pacf(TS, main="", xlab="Rezagos")
 ```
 
-Dado que la serie mostrada no es estacionaria, es posible aplicar una diferenciación para hacerla cumplir esta condición, tal y como se muestra en la figura \ref{fig:ejemplo_ucr_diferenciada}. Al analizar la figura \ref{fig:auto_ucr2} se observa cómo la función de autocorrelación cae rápidamente a cero, lo cual confirma que se posee una serie estacionaria. Posteriormente, para intentar identificar el proceso que gobierna la serie cronológica, puede verse que hay dos barras en la figura \ref{fig:parcial_ucr2} y que además la función de autocorrelación de la figura \ref{fig:auto_ucr2} cae rápidamente hacia cero, lo cual sugiere que se está en presencia de un modelo autorregresivo de orden 2.
+Dado que la serie mostrada no es estacionaria, es posible aplicar una diferenciación para hacerla cumplir esta condición, tal y como se muestra en la Figura \ref{fig:ejemplo_ucr_diferenciada}. Al analizar la Figura \ref{fig:auto_ucr2} se observa cómo la función de autocorrelación cae rápidamente a cero, lo cual confirma que se posee una serie estacionaria. Posteriormente, para intentar identificar el proceso que gobierna la serie cronológica, puede verse que hay dos barras en la Figura \ref{fig:parcial_ucr2} y que además la función de autocorrelación de la Figura \ref{fig:auto_ucr2} cae rápidamente hacia cero, lo cual sugiere que se está en presencia de un modelo autorregresivo de orden 2.
 
 ```{r ejemplo_ucr_diferenciada, fig.cap="Serie diferenciada de graduados de la Universidad de Costa Rica para el periodo 1965-2002"}
 library(dplyr)
@@ -512,7 +505,7 @@ Tener en consideración estos y otros posibles criterios para la identificación
 
 La identificación visual mediante los autocorrelogramas puede llevar a decisiones erradas acerca del proceso que gobierna la serie cronológica. Una alternativa es considerar estimaciones procesos de ordenes bajos, como un $ARMA(1,1)$ y poco a poco ir incorporando términos, este proceso de revisión permite encontrar los puntos en que agregar un coeficiente más al modelo no aporta ninguna mejora en los resultados del pronóstico, y así considerar únicamente aquellos modelos que tengan coeficientes con un aporte estadísticamente significativo. Este procedimiento es conocido como sobreparametrización. Dependiendo de la cantidad de observaciones y del rango con que se trabajen los coeficientes, la comparación de los modelos puede volverse muy extensa y complicada, razón por la cual resulta imperativo generar un procedimiento sistemático que logre seleccionar el mejor modelo con base en sus medidas de ajuste y rendimiento.
 
-Es aquí donde entra en escena el análisis combinatorio, pues a partir de sus procedimientos es posible conocer la cantidad de modelos que deben ser probados. Resulta pertinente discutir dos principios fundamentales del análisis combinatorio mencionados por @analisis_combinatorio: Uno es el principio de adición, el cual indica que si se tienen dos procedimientos $A$ y $B$, los cuales pueden realizarse de $k_A$ y $K_B$ maneras, respectivamente, entonces la cantidad de maneras que se puede realizar uno u otro procedimiento es $k_A + k_B$. Por otro lado se tiene el principio de multiplicación, con el cual, si si el procedimiento $A$ se puede realizar de $k_A$ formas distintas, seguido de otro procedimiento $B$ que puede realizarse de $k_B$ formas, entonces si a cada forma de realizar el procedimiento $A$ se puede asociar a cualquiera de las $k_B$ maneras de realizar el procedimiento $B$, entonces ambos procedimientos pueden realizarse de $k_A \cdot k_B$ formas distintas.
+Es aquí donde entra en escena el análisis combinatorio, pues a partir de sus procedimientos es posible conocer la cantidad de modelos que deben ser probados. Resulta pertinente discutir dos principios fundamentales del análisis combinatorio mencionados por @analisis_combinatorio: Uno es el principio de adición, el cual indica que si se tienen dos procedimientos $A$ y $B$, los cuales pueden realizarse de $k_A$ y $K_B$ maneras, respectivamente, entonces la cantidad de maneras que se puede realizar uno u otro procedimiento es $k_A + k_B$. Por otro lado se tiene el principio de multiplicación, con el cual, si el procedimiento $A$ se puede realizar de $k_A$ formas distintas, seguido de otro procedimiento $B$ que puede realizarse de $k_B$ formas, entonces si a cada forma de realizar el procedimiento $A$ se puede asociar a cualquiera de las $k_B$ maneras de realizar el procedimiento $B$, entonces ambos procedimientos pueden realizarse de $k_A \cdot k_B$ formas distintas.
 
 Es a partir de estos dos principios que pueden obtenerse la cantidad de formas distintas que pueden ordenarse $m$ elementos tomando $r$ elementos a la vez. Uno de ellos son las permutaciones, descritos en la ecuación \ref{eqn:permutacion}, la cual describe la forma de calcular la cantidad de formas distintas que puede ordenarse $m$ elementos tomando $r$ a la vez, donde el orden sí importa, a modo de ejemplo, si se quiere saber la cantidad formas que pueden ordenarse las letras $A, B$ y $C$ tomando dos letras a la vez, se tendría que existen $\frac{3!}{(3-1)!}=6$ formas distintas, que son $AB, AC, BC, BA, CA$ y $CB$. De manera similar, se tienen las combinaciones, cuya fórmula se describe en la ecuación \ref{eqn:combinacion}, que brinda la cantidad de maneras distintas en que pueden ordenarse $m$ elementos tomando $r$ a la vez donde el orden no importa; es decir, si se desean ordenar las letras $A, B$ y $C$ tomando dos a la vez, se tendrían $\frac{3!}{2!(3-1)!}=3$ formas distintas, las cuales son $AB, AC$ y $BC$.
 
