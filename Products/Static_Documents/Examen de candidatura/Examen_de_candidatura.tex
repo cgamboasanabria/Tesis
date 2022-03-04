@@ -41,8 +41,6 @@ Ciudad Universitaria Rodrigo Facio, Costa Rica\\
 \strut \\}
 \date{2022}
 
-\usepackage{pdfpages}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -209,6 +207,7 @@ Ciudad Universitaria Rodrigo Facio, Costa Rica\\
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
+\usepackage{pdfpages}
 
 \usepackage{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
@@ -2156,164 +2155,29 @@ evaluar sus correspondientes y la calidad de los pronósticos obtenidos.
 
 \section{RESULTADOS}
 
-Este capítulo aborda los principales resultados a partir del
+Este capítulo abordará los principales resultados a partir del
 procedimiento descrito en la metodología. Cada sección de este capítulo
 tendrá una subsección donde se aplica cada etapa de análisis a las
-respectivas series cronológicas.
+respectivas series cronológicas, en el cuál se espera que los resultados
+obtenidos mediante la sobreparametrización igualen o mejoren los
+obtenidos con los métodos tradicionales. La estructura de este capítulo
+se muestra en el índice de este documento.
 
 \subsection{Análisis exploratorio}
 
-Inicialmente, se analizan las series cronológicas para verificar su
-comportamiento al ajustar un suavizamiento de Loess para buscar señales
-de tendencia y concavidad en los datos temporales, y buscar indicios de
-los procesos que gobiernan dichas series, además someterlas a prueba
-para verificar que se trate de series cronológicas estacionarias.
-
 \subsubsection{Datos simulados}
-
-En la figura \ref{fig:series_simuladas} se mostró el comportamiento
-general de cada una de las series cronológicas simuladas. Al tratarse de
-datos simulados se conoce de previo el proceso que gobierna a cada una
-de las series temporales, por lo que verificar la estacioneriedad y
-obtener los correlogramas sirve para confirmar que los procesos siguen
-aproximadamente los procesos planteados.
 
 \paragraph{ARIMA(1,0,0)}
 
-En la figura \ref{fig:arima100_comportamiento} puede verse como los
-datos simulados bajo este proceso se comportan de manera aproximadamente
-estacionaria a lo largo del tiempo sin necesidad de aplicar ninguna
-transformación a los datos. Además, la figura \ref{fig:arima100_acf}
-muestra como las autocorrelaciones caen rápidamente a cero y van
-disminuyendo, mientras que la figura \ref{fig:arima100_pacf} se corta al
-inicio, lo que sugiere que se está en presencia de un proceso
-\(ARIMA(1,0,0)\), tal y como fue planteado al simular los datos.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima100_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,0)}\label{fig:arima100_comportamiento}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima100_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(1,0,0)}\label{fig:arima100_acf}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima100_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(1,0,0)}\label{fig:arima100_pacf}
-\end{figure}
-
 \paragraph{ARIMA(1,0,1)}
-
-En la figura \ref{fig:arima101_comportamiento} también puede verse como
-los datos simulados bajo este proceso se comportan de manera
-aproximadamente estacionaria a lo largo del tiempo sin necesidad de
-aplicar ninguna transformación a los datos. Además, la figura
-\ref{fig:arima101_acf} muestra como las autocorrelaciones van
-disminuyendo, misma situación que se aprecia en la figura
-\ref{fig:arima101_pacf}, pues también va disminuyendo, lo que sugiere
-que el posible proceso que gobierna los datos podría tratarse de un
-\(ARIMA(1,0,1)\), tal y como fue planteado al simular los datos.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima101_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,1)}\label{fig:arima101_comportamiento}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima101_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(1,0,1)}\label{fig:arima101_acf}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima101_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(1,0,1)}\label{fig:arima101_pacf}
-\end{figure}
 
 \paragraph{ARIMA(2,0,3)}
 
-En la figura \ref{fig:arima203_comportamiento} se observa como los datos
-simulados bajo este proceso no parecen tener ninguna tendencia, si bien
-podría aplicarse alguna transformación para volverla aún más
-estacionaria, esto no se considera necesario. La figura
-\ref{fig:arima203_acf} muestra como las autocorrelaciones van
-disminuyendo, misma situación que se aprecia en la figura
-\ref{fig:arima203_pacf}, pues también va disminuyendo, esta situación
-sugiere que se está en presencia de un proceso \(ARMA(p,q)\), por lo que
-podrían ajustarse varios modelos \(ARIMA(p,d,q)\) hasta encontrar el más
-adecuado.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima203_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(2,0,3)}\label{fig:arima203_comportamiento}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima203_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(2,0,3)}\label{fig:arima203_acf}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima203_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(2,0,3)}\label{fig:arima203_pacf}
-\end{figure}
-
 \paragraph{ARIMA(4,0,2)}
-
-En la figura \ref{fig:arima402_comportamiento} se observa como los datos
-simulados bajo este proceso tampoco parecen tener ninguna tendencia, por
-lo que no se considera necesario aplicar ninguna transformación. Las
-figuras \ref{fig:arima402_acf} y \ref{fig:arima402_pacf} presentan una
-situación similar a la anterior, por lo que podrían ajustarse varios
-modelos \(ARIMA(p,d,q)\) hasta encontrar el más adecuado.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima402_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(4,0,2)}\label{fig:arima402_comportamiento}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima402_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(4,0,2)}\label{fig:arima402_acf}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima402_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(4,0,2)}\label{fig:arima402_pacf}
-\end{figure}
 
 \paragraph{ARIMA(0,0,1)(0,1,1)}
 
-En la figura \ref{fig:arima001_011_comportamiento} los datos parecen ser
-aproximadamente estacionarios; una transformación no es estrictamente
-necesaria, pero puede aplicarse para corregir ligeramente la parte
-estacional. Las figuras \ref{fig:arima001_011_acf} y
-\ref{fig:arima001_011_pacf}, sugieren estar en presencia de un proceso
-estacional cada 12 periodos, por lo que la estimación de modelos
-\(ARIMA\) de bajo nivel podría ser suficiente..
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima001_011_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)}\label{fig:arima001_011_comportamiento}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima001_011_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)}\label{fig:arima001_011_acf}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima001_011_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)}\label{fig:arima001_011_pacf}
-\end{figure}
-
 \paragraph{ARIMA(2,1,4)(3,0,3)}
-
-En la figura \ref{fig:arima214_303_comportamiento} lucen estacionarios,
-pues su media se mantiene muy constante a lo largo del tiempo. Las
-figuras \ref{fig:arima214_303_acf} y \ref{fig:arima214_303_pacf} por su
-lado sugieren la presencia de procesos estacionales cada 12 periodos tal
-y como fueron simulados los datos, pero no es claro identificar el
-proceso que gobierna la serie, por lo que habría que probar distintos
-modelos \(ARIMA\) hasta encontrar el más adecuado.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima214_303_comportamiento-1} \caption{Tendencia de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)}\label{fig:arima214_303_comportamiento}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima214_303_acf-1} \caption{Autocorrelación de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)}\label{fig:arima214_303_acf}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/arima214_303_pacf-1} \caption{Autocorrelación parcial de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)}\label{fig:arima214_303_pacf}
-\end{figure}
 
 \subsubsection{Tasa de mortalidad infantil interanual}
 
@@ -2325,451 +2189,33 @@ modelos \(ARIMA\) hasta encontrar el más adecuado.
 
 \subsection{Partición de los datos}
 
-Como se mencionó en la metodología, la partición utilizada consiste en
-tomar 80\% de las observaciones para generar el serie cronológica de
-entrenamiento para ajustar los modelos, mientras que el restante 20\%
-corresponde al la serie cronológica utilizada como validación. En el
-caso de los datos simulados, la ventana de observación de los datos
-seleccionados se muestra en la figura
-\ref{fig:particion_series_simuladas} para los datos simulados, y en la
-figura \ref{fig:particion_series_reales} para las series de tiempo
-reales.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/particion_series_simuladas-1} \caption{Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo simuladas}\label{fig:particion_series_simuladas}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/particion_series_reales-1} \caption{Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo reales}\label{fig:particion_series_reales}
-\end{figure}
-
 \subsection{Estimación del mejor modelo según la función auto.arima()}
 
-Al ajustar modelos con la función \texttt{auto.arima()}, al igual que
-con cualquier otro método para estimar modelos \(ARIMA\), se obtienen
-estimaciones de coeficientes. En el caso de los datos simulados, donde
-se conoce el verdadero proceso que gobierna la serie de tiempo, estos
-valores pueden compararse con los valores obtenidos.
-
 \subsubsection{Datos simulados}
-
-El cuadro \ref{tab:coeficientes_original_autoarima} resume los
-resultados obtenidos en la estimación de los coeficientes. En la columna
-\emph{Proceso original} se indica el proceso a partir del cual se generó
-la serie cronológica mediante simulación, en la columna
-\emph{Coeficiente} se indica el coeficiente al cual pertenecen las
-estimaciones presentes en las columnas \emph{Valor real} (el valor del
-coeficiente del proceso original), \emph{Estimación auto.arima()} (valor
-estimado del coeficiente mediante la función \texttt{auto.arima()}),
-\emph{Límite Inferior} y \emph{Límite Superior} del intervalo de
-confianza el 95\% para los coeficientes estimados en la columna
-\emph{Estimación auto.arima()}. Como se ha mencionado, la notación más
-utilizada para los modelos \(ARIMA\) es \(ARIMA(p,d,q)(P,D,Q)\), que en
-la columna \emph{Coeficiente} equivale a
-\(ARIMA(ARX, d, MAX)(SARX, D, SMAX)\), con \(X=\{1,2,3,4\}\), según
-corresponda.
-
-De esta manera, a modo de ejemplo, para los datos simulados a partir de
-un \(ARIMA(4,0,2)\), los coeficientes de \(AR1\) hasta \(AR4\)
-representan los cuatro coeficientes de la parte autorregresiva no
-estacional, mientras que \(MA1\) y \(MA2\) son los dos coeficientes del
-modelo de medias móviles de la parte no estacional, la celda del
-\emph{Valor real} correspondiente al coeficiente \(MA3\) está vacía
-porque el modelo original solo tenía dos coeficientes en el modelo de
-medias móviles, no tres. Así, el modelo estimado con
-\texttt{auto.arima()} estima únicamente los coeficientes \(AR1\) y
-\(AR2\) para el modelo autorregresivo, y \(MA1\), \(MA2\) y \(MA3\) para
-el modelo de medias móviles.
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-20}\label{tab:coeficientes_original_autoarima}Coefcientes del proceso original y los estimados con auto.arima()}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{5}{7}\selectfont
-\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Proceso original & Coeficiente & Valor real & Estimación auto.arima() & Límite Inferior & Límite Superior\\
-\midrule
-\textbf{ARIMA(1,0,0)} & AR1 & -0.5 & -0.52 & -0.65 & -0.39\\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.4 &  &  & \\
-\cmidrule{2-6}
-\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,1)}} & MA1 & -0.3 & -0.66 & -0.78 & -0.55\\
-\cmidrule{1-6}
-\textbf{} & AR1 & 0.8 & 1.08 & 0.65 & 1.5\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.1 & -0.37 & -0.74 & 0.01\\
-\cmidrule{2-6}
-\textbf{} & MA1 & 0.1 & -0.22 & -0.62 & 0.19\\
-\cmidrule{2-6}
-\textbf{} & MA2 & 0.5 & 0.55 & 0.41 & 0.69\\
-\cmidrule{2-6}
-\textbf{\multirow{-5}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,0,3)}} & MA3 & 0.2 &  &  & \\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.1 & 0.33 & 0.08 & 0.57\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.3 & -0.68 & -0.88 & -0.47\\
-\cmidrule{2-6}
-\textbf{} & AR3 & -0.4 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & AR4 & -0.2 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & MA1 & 0.1 & -0.41 & -0.65 & -0.17\\
-\cmidrule{2-6}
-\textbf{} & MA2 & 0.2 & 0.67 & 0.44 & 0.89\\
-\cmidrule{2-6}
-\textbf{\multirow{-7}{2.5cm}{\raggedleft\arraybackslash ARIMA(4,0,2)}} & MA3 &  & -0.37 & -0.52 & -0.21\\
-\cmidrule{1-6}
-\textbf{} & MA1 & 0.9 & 0.86 & 0.79 & 0.94\\
-\cmidrule{2-6}
-\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(0,0,1)(0,1,1)}} & SMA1 & -0.5 & -0.55 & -0.72 & -0.39\\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.7 & -0.62 & -0.72 & -0.52\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.9 & -0.84 & -0.93 & -0.75\\
-\cmidrule{2-6}
-\textbf{} & MA1 & -0.8 & 0.37 & 0.19 & 0.55\\
-\cmidrule{2-6}
-\textbf{} & MA2 & -0.9 & -0.55 & -0.77 & -0.33\\
-\cmidrule{2-6}
-\textbf{} & MA3 & 0.9 & 0.31 & 0.16 & 0.46\\
-\cmidrule{2-6}
-\textbf{} & MA4 & 0.1 & 0.27 & 0.12 & 0.43\\
-\cmidrule{2-6}
-\textbf{} & SAR1 & -0.7 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SAR2 & 0.2 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SAR3 & 0.1 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SMA1 & 0.5 & -0.62 & -0.83 & -0.41\\
-\cmidrule{2-6}
-\textbf{} & SMA2 & -0.3 & 0.63 & 0.46 & 0.8\\
-\cmidrule{2-6}
-\textbf{\multirow{-12}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,1,4)(3,0,3)}} & SMA3 & 0.9 &  &  & \\
-\bottomrule
-\end{tabu}}
-\end{table}
 
 \subsubsection{Datos reales}
 
 \subsection{Estimación del mejor modelo con sobreparametrización}
 
-De manera análoga al procedimiento realizado con la función
-\texttt{auto.arima()}, se realiza el proceso descrito en la metodología
-para seleccionar el mejor modelo utilizando la sobreparametrización.
-Nuevamente, para los datos simulados, se conoce de previo el verdadero
-proceso que gobierna la serie de temporal, los cuales se comparan con
-los valores de los coeficientes de cada modelo obtenido mediante la
-sobreparametrización.
-
 \subsubsection{Datos simulados}
-
-Los mismos conceptos explicados para el cuadro
-\ref{tab:coeficientes_original_autoarima} aplican ahora para el
-\ref{tab:coeficientes_original_sobreparametrizacion}.
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-21}\label{tab:coeficientes_original_sobreparametrizacion}Coefcientes del proceso original y los estimados con sobreparametrización}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{5}{7}\selectfont
-\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Proceso original & Coeficiente & Valor real & Estimación sobreparametrización & Límite Inferior & Límite Superior\\
-\midrule
-\textbf{ARIMA(1,0,0)} & AR1 & -0.5 & -0.52 & -0.65 & -0.39\\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.4 &  &  & \\
-\cmidrule{2-6}
-\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,1)}} & MA1 & -0.3 & -0.66 & -0.78 & -0.55\\
-\cmidrule{1-6}
-\textbf{} & AR1 & 0.8 & 0.85 & 0.7 & 1\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.1 & 0.39 & 0.2 & 0.59\\
-\cmidrule{2-6}
-\textbf{} & AR3 &  & -0.38 & -0.57 & -0.19\\
-\cmidrule{2-6}
-\textbf{} & AR4 &  & -0.35 & -0.54 & -0.16\\
-\cmidrule{2-6}
-\textbf{} & AR5 &  & 0.27 & 0.12 & 0.42\\
-\cmidrule{2-6}
-\textbf{} & MA1 & 0.1 & -1 & -1.03 & -0.97\\
-\cmidrule{2-6}
-\textbf{} & MA2 & 0.5 &  &  & \\
-\cmidrule{2-6}
-\textbf{\multirow{-8}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,0,3)}} & MA3 & 0.2 &  &  & \\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.1 & -0.77 & -1.13 & -0.41\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.3 & -0.52 & -0.82 & -0.22\\
-\cmidrule{2-6}
-\textbf{} & AR3 & -0.4 & -0.42 & -0.6 & -0.25\\
-\cmidrule{2-6}
-\textbf{} & AR4 & -0.2 & -0.4 & -0.56 & -0.25\\
-\cmidrule{2-6}
-\textbf{} & MA1 & 0.1 & 0.7 & 0.3 & 1.1\\
-\cmidrule{2-6}
-\textbf{\multirow{-6}{2.5cm}{\raggedleft\arraybackslash ARIMA(4,0,2)}} & MA2 & 0.2 & 0.39 & 0.09 & 0.68\\
-\cmidrule{1-6}
-\textbf{} & MA1 & 0.9 & 0.86 & 0.79 & 0.94\\
-\cmidrule{2-6}
-\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(0,0,1)(0,1,1)}} & SMA1 & -0.5 & -0.55 & -0.72 & -0.39\\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.7 & -0.63 & -0.71 & -0.55\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.9 & -0.87 & -0.94 & -0.8\\
-\cmidrule{2-6}
-\textbf{} & MA1 & -0.8 & -0.87 & -0.99 & -0.75\\
-\cmidrule{2-6}
-\textbf{} & MA2 & -0.9 & -0.87 & -1.08 & -0.66\\
-\cmidrule{2-6}
-\textbf{} & MA3 & 0.9 & 1 & 0.88 & 1.12\\
-\cmidrule{2-6}
-\textbf{} & MA4 & 0.1 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SAR1 & -0.7 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SAR2 & 0.2 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SAR3 & 0.1 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SMA1 & 0.5 & -1.75 & -2.09 & -1.41\\
-\cmidrule{2-6}
-\textbf{} & SMA2 & -0.3 & 1.37 & 1 & 1.74\\
-\cmidrule{2-6}
-\textbf{\multirow{-12}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,1,4)(3,0,3)}} & SMA3 & 0.9 & -0.62 & -0.87 & -0.37\\
-\bottomrule
-\end{tabu}}
-\end{table}
 
 \subsubsection{Datos reales}
 
 \subsection{Estimación de un modelo ARIMA estándar}
 
-Ajustar un modelo ARIMA genérico sirve para referenciar los demás
-resultados obtenidos, es decir, contrastarlos con los resultados del
-\texttt{auto.arima()} y la sobreparametrización. Nuevamente, para los
-datos simulados se comparan los coeficientes obtenidos con los que se
-connocen a priori.
-
 \subsubsection{Datos simulados}
-
-Los mismos conceptos explicados para los cuadros
-\ref{tab:coeficientes_original_autoarima} y
-\ref{tab:coeficientes_original_sobreparametrizacion} aplican ahora para
-el cuadro \ref{tab:coeficientes_original_arima_estandar}.
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-22}\label{tab:coeficientes_original_arima_estandar}Coefcientes del proceso original y los estimados con un ARIMA estándar}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{5}{7}\selectfont
-\begin{tabu} to \linewidth {>{}r>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Proceso original & Coeficiente & Valor real & Estimación ARIMA estándar & Límite Inferior & Límite Superior\\
-\midrule
-\textbf{} & AR1 & -0.5 & -0.52 & -0.66 & -0.39\\
-\cmidrule{2-6}
-\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,0)}} & MA1 &  & -0.98 & -1.03 & -0.92\\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.4 & -0.56 & -0.69 & -0.44\\
-\cmidrule{2-6}
-\textbf{\multirow{-2}{2.5cm}{\raggedleft\arraybackslash ARIMA(1,0,1)}} & MA1 & -0.3 & -1 & -1.03 & -0.97\\
-\cmidrule{1-6}
-\textbf{} & AR1 & 0.8 & 0.84 & 0.75 & 0.92\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.1 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & MA1 & 0.1 & -1 & -1.03 & -0.97\\
-\cmidrule{2-6}
-\textbf{} & MA2 & 0.5 &  &  & \\
-\cmidrule{2-6}
-\textbf{\multirow{-5}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,0,3)}} & MA3 & 0.2 &  &  & \\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.1 & -0.03 & -0.18 & 0.13\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.3 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & AR3 & -0.4 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & AR4 & -0.2 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & MA1 & 0.1 & -1 & -1.06 & -0.94\\
-\cmidrule{2-6}
-\textbf{\multirow{-6}{2.5cm}{\raggedleft\arraybackslash ARIMA(4,0,2)}} & MA2 & 0.2 &  &  & \\
-\cmidrule{1-6}
-\textbf{} & AR1 &  & -0.52 & -0.71 & -0.34\\
-\cmidrule{2-6}
-\textbf{} & MA1 & 0.9 & 0.9 & 0.82 & 0.99\\
-\cmidrule{2-6}
-\textbf{} & SAR1 &  & 0.38 & 0.03 & 0.74\\
-\cmidrule{2-6}
-\textbf{\multirow{-4}{2.5cm}{\raggedleft\arraybackslash ARIMA(0,0,1)(0,1,1)}} & SMA1 & -0.5 & -0.84 & -1.18 & -0.49\\
-\cmidrule{1-6}
-\textbf{} & AR1 & -0.7 & -0.3 & -0.46 & -0.15\\
-\cmidrule{2-6}
-\textbf{} & AR2 & -0.9 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & MA1 & -0.8 & -1 & -1.06 & -0.94\\
-\cmidrule{2-6}
-\textbf{} & MA2 & -0.9 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & MA3 & 0.9 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & MA4 & 0.1 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SAR1 & -0.7 & -0.66 & -0.76 & -0.55\\
-\cmidrule{2-6}
-\textbf{} & SAR2 & 0.2 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SAR3 & 0.1 &  &  & \\
-\cmidrule{2-6}
-\textbf{} & SMA1 & 0.5 & -1 & -1.15 & -0.85\\
-\cmidrule{2-6}
-\textbf{} & SMA2 & -0.3 &  &  & \\
-\cmidrule{2-6}
-\textbf{\multirow{-12}{2.5cm}{\raggedleft\arraybackslash ARIMA(2,1,4)(3,0,3)}} & SMA3 & 0.9 &  &  & \\
-\bottomrule
-\end{tabu}}
-\end{table}
 
 \subsubsection{Datos reales}
 
 \subsection{Análisis de los errores}
 
-Al ver el comportamiento de los errores buscamos que estos se comporten
-como ruido blanco, es decir, que no tengan ningún patrón en particular.
-El autocorrelograma de los residuos también puede usarse para este fin,
-pues el 95\% de los valores debería estar entre las dos líneas azules.
-Además, un histograma de los residuos es útil para saber si los residuos
-siguen una distribución aproximadamente Normal; si no existen grandes
-desviaciones en este gráfico, entonces puede decirse que el cumplimiento
-de este supuesto es razonable.
-
 \subsubsection{Datos simulados}
-
-Al estimar modelos mediante la función \texttt{auto.arima()}, la
-sobreparametrización y el \(ARIMA\) estándar, es necesario analizar el
-comportamiento de los errores para los seis modelos estimados con cada
-técnica.
 
 \paragraph{Errores de los modelos estimados con auto.arima()}
 
-Las visualizaciones de los errores de los modelos estimados con la
-función \texttt{auto.arima()} se muestran en las figuras
-\ref{fig:errores_simulados_autoarima1},
-\ref{fig:errores_simulados_autoarima2},
-\ref{fig:errores_simulados_autoarima3},
-\ref{fig:errores_simulados_autoarima4},
-\ref{fig:errores_simulados_autoarima5} y
-\ref{fig:errores_simulados_autoarima6}. En general, los modelos poseen
-el comportamiento esperado, aunque cuando se incorporan componentes
-estacionales los errores varían un poco más en los autocorelogramas y el
-supuesto de normalidad.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima1-1} \caption{Comportamiento de los errores del modelo ARIMA(1,0,0) estimado con auto.arima() para los datos generados con un ARIMA(1,0,0)}\label{fig:errores_simulados_autoarima1}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima2-1} \caption{Comportamiento de los errores del modelo ARIMA(0,0,1) estimado con auto.arima() para los datos generados con un ARIMA(1,0,1)}\label{fig:errores_simulados_autoarima2}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima3-1} \caption{Comportamiento de los errores del modelo ARIMA(2,0,2) estimado con auto.arima() para los datos generados con un ARIMA(2,0,3)}\label{fig:errores_simulados_autoarima3}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima4-1} \caption{Comportamiento de los errores del modelo ARIMA(2,0,3) estimado con auto.arima() para los datos generados con un ARIMA(4,0,2)}\label{fig:errores_simulados_autoarima4}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima5-1} \caption{Comportamiento de los errores del modelo ARIMA(0,0,1)(0,1,1) estimado con auto.arima() para los datos generados con un ARIMA(0,0,1)(0,1,1)}\label{fig:errores_simulados_autoarima5}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima6-1} \caption{Comportamiento de los errores del modelo ARIMA(2,0,4)(0,0,2) estimado con auto.arima() para los datos generados con un ARIMA(2,1,4)(3,0,3)}\label{fig:errores_simulados_autoarima6}
-\end{figure}
-
 \paragraph{Errores de los modelos estimados con sobreparametrización}
 
-Las visualizaciones de los errores de los modelos estimados con
-sobreparametrización se muestran en las figuras
-\ref{fig:errores_simulados_sobreparametrizacion1},
-\ref{fig:errores_simulados_sobreparametrizacion2},
-\ref{fig:errores_simulados_sobreparametrizacion3},
-\ref{fig:errores_simulados_sobreparametrizacion4},
-\ref{fig:errores_simulados_sobreparametrizacion5} y
-\ref{fig:errores_simulados_sobreparametrizacion6}. En general, los
-modelos poseen el comportamiento esperado, incluso con menos problemas
-en la parte estacional.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacion1-1} \caption{Comportamiento de los errores del modelo ARIMA(1,0,0) estimado con sobreparametrización para los datos generados con un ARIMA(1,0,0)}\label{fig:errores_simulados_sobreparametrizacion1}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacion2-1} \caption{Comportamiento de los errores del modelo ARIMA(0,0,1) estimado con sobreparametrización para los datos generados con un ARIMA(1,0,1)}\label{fig:errores_simulados_sobreparametrizacion2}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacion3-1} \caption{Comportamiento de los errores del modelo ARIMA(5,1,1) estimado con sobreparametrización para los datos generados con un ARIMA(2,0,3)}\label{fig:errores_simulados_sobreparametrizacion3}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacion4-1} \caption{Comportamiento de los errores del modelo ARIMA(4,0,2) estimado con sobreparametrización para los datos generados con un ARIMA(4,0,2)}\label{fig:errores_simulados_sobreparametrizacion4}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacion5-1} \caption{Comportamiento de los errores del modelo ARIMA(0,0,1)(0,1,1) estimado con sobreparametrización para los datos generados con un ARIMA(0,0,1)(0,1,1)}\label{fig:errores_simulados_sobreparametrizacion5}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacion6-1} \caption{Comportamiento de los errores del modelo ARIMA(2,1,3)(0,1,3) estimado con sobreparametrización para los datos generados con un ARIMA(2,1,4)(3,0,3)}\label{fig:errores_simulados_sobreparametrizacion6}
-\end{figure}
-
 \paragraph{Errores de los modelos estimados con un modelo ARIMA estándar}
-
-Como ya fue mencionado, para los modelos sin parte estacional se ajustó
-un modelo \(ARIMA(1,1,1)\), mientras que para las series simuladas
-estacionales se ajustaron modelos \(ARIMA(1,1,1)(1,1,1)\). Las
-visualizaciones de los residuos se muestran en las figuras
-\ref{fig:errores_simulados_arima_estandar1},
-\ref{fig:errores_simulados_arima_estandar2},
-\ref{fig:errores_simulados_arima_estandar3},
-\ref{fig:errores_simulados_arima_estandar4},
-\ref{fig:errores_simulados_arima_estandar5} y
-\ref{fig:errores_simulados_arima_estandar6}. Este tipo de moelos son los
-que presentan una mayor cantidad de inconvenientes, particularmente en
-los autocorelogramas, donde varios modelos se salen de los márgenes.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar1-1} \caption{Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con los datos generados con un ARIMA(1,0,0)}\label{fig:errores_simulados_arima_estandar1}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar2-1} \caption{Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con los datos generados con un ARIMA(1,0,1)}\label{fig:errores_simulados_arima_estandar2}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar3-1} \caption{Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con los datos generados con un ARIMA(2,0,3)}\label{fig:errores_simulados_arima_estandar3}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar4-1} \caption{Comportamiento de los errores del modelo ARIMA(1,1,1) estimado con los datos generados con un ARIMA(4,0,2)}\label{fig:errores_simulados_arima_estandar4}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar5-1} \caption{Comportamiento de los errores del modelo ARIMA(1,1,1)(1,1,1) estimado con los datos generados con un ARIMA(0,0,1)(0,1,1)}\label{fig:errores_simulados_arima_estandar5}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar6-1} \caption{Comportamiento de los errores del modelo ARIMA(1,1,1)(1,1,1) estimado con los datos generados con un ARIMA(2,1,4)(3,0,3)}\label{fig:errores_simulados_arima_estandar6}
-\end{figure}
 
 \subsubsection{Datos reales}
 
@@ -2781,250 +2227,21 @@ los autocorelogramas, donde varios modelos se salen de los márgenes.
 
 \subsection{Pronósticos}
 
-Los pronósticos son parte fundamental del análisis de series
-cronológicas. En esta sección e realiza una inspección visual tanto para
-los datos simulados como para las series de tiempo de datos
-costarricenses.
-
 \subsubsection{Datos simulados}
-
-Las figuras \ref{fig:pronostico_arima100},
-\ref{fig:pronostico_arima101}, \ref{fig:pronostico_arima203},
-\ref{fig:pronostico_arima402}, \ref{fig:pronostico_arima001_011} y
-\ref{fig:pronostico_arima214_303} muestran el ajuste y el pronóstico de
-cada uno de los modelos estimados con la función \texttt{auto.arima()},
-con sobreparametrización y con el modelo \(ARIMA\) estándar. En todos
-los casos, la línea vertical punteada indica el inicio del periodo de
-pronóstico.
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/pronostico_arima100-1} \caption{Pronóstico de los datos generados mediante un ARIMA(1,0,0) según el método de estimación}\label{fig:pronostico_arima100}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/pronostico_arima101-1} \caption{Pronóstico de los datos generados mediante un ARIMA(1,0,1) según el método de estimación}\label{fig:pronostico_arima101}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/pronostico_arima203-1} \caption{Pronóstico de los datos generados mediante un ARIMA(2,0,3) según el método de estimación}\label{fig:pronostico_arima203}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/pronostico_arima402-1} \caption{Pronóstico de los datos generados mediante un ARIMA(4,0,2) según el método de estimación}\label{fig:pronostico_arima402}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/pronostico_arima001_011-1} \caption{Pronóstico de los datos generados mediante un ARIMA(0,0,1)(0,1,1) según el método de estimación}\label{fig:pronostico_arima001_011}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/pronostico_arima214_303-1} \caption{Pronóstico de los datos generados mediante un ARIMA(2,1,4)(3,0,3) según el método de estimación}\label{fig:pronostico_arima214_303}
-\end{figure}
 
 \subsubsection{Datos reales}
 
 \subsection{Medidas de bondad de ajuste y de rendimiento}
 
-Para complementar los resultados visualizados en la sección anterior, se
-calculan las medidas de bondad de ajuste obtenidas con el conjunto de
-datos de entrenamiento, y las medidas de rendimiento obtenidas tanto en
-el conjunto de entrenamiento como en el conjunto de validación. Ambos
-resultados para los datos simulados y para los datos reales.
-
 \subsubsection{Datos simulados}
 
-A partir de las series cronológicas simuladas, las medidas de bondad de
-ajuste y de rendimiento para cada una de las series simuladas se
-muestran en las tablas \ref{tab:comparaciones_arima100},
-\ref{tab:comparaciones_arima101}, \ref{tab:comparaciones_arima203},
-\ref{tab:comparaciones_arima402}, \ref{tab:comparaciones_arima001_011} y
-\ref{tab:comparaciones_arima214_303}.
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-27}\label{tab:comparaciones_arima100}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(1,0,0)}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{7}{9}\selectfont
-\begin{tabu} to \linewidth {>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Conjunto de datos & Estimación & AIC & AICc & BIC & RMSE & MAE & MAPE\\
-\midrule
- & auto.arima() & 521.6386 & 521.6834 & 530.8641 & 1.2122 & 0.9653 & 10.2467\\
-\cmidrule{2-8}
- & Sobreparametrización & 521.6386 & 521.6834 & 530.8641 & 1.2122 & 0.9653 & 10.2467\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Entrenamiento} & ARIMA estándar & 523.2153 & 523.2605 & 532.422 & 1.2182 & 0.964 & 10.1938\\
-\cmidrule{1-8}
- & auto.arima() &  &  &  & 1.6104 & 1.2735 & 13.5453\\
-\cmidrule{2-8}
- & Sobreparametrización &  &  &  & 1.6104 & 1.2735 & 13.5453\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Validación} & ARIMA estándar &  &  &  & 1.6116 & 1.2755 & 13.6352\\
-\bottomrule
-\multicolumn{8}{l}{\rule{0pt}{1em}Fuente: Elaboración propia a partir de datos simulados}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}auto.arima(): ARIMA(1,0,0)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}Sobreparametrización: ARIMA(1,0,0)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}ARIMA estándar: ARIMA(1,1,1)}\\
-\end{tabu}}
-\end{table}
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-28}\label{tab:comparaciones_arima101}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(1,0,1)}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{7}{9}\selectfont
-\begin{tabu} to \linewidth {>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Conjunto de datos & Estimación & AIC & AICc & BIC & RMSE & MAE & MAPE\\
-\midrule
- & auto.arima() & 518.7534 & 518.7982 & 527.9789 & 1.2013 & 0.9242 & 9.9128\\
-\cmidrule{2-8}
- & Sobreparametrización & 518.7534 & 518.7982 & 527.9789 & 1.2013 & 0.9242 & 9.9128\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Entrenamiento} & ARIMA estándar & 524.9585 & 525.0036 & 534.1652 & 1.2248 & 0.9348 & 9.9803\\
-\cmidrule{1-8}
- & auto.arima() &  &  &  & 1.4052 & 1.1026 & 11.9318\\
-\cmidrule{2-8}
- & Sobreparametrización &  &  &  & 1.4052 & 1.1026 & 11.9318\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Validación} & ARIMA estándar &  &  &  & 1.4086 & 1.1124 & 12.0233\\
-\bottomrule
-\multicolumn{8}{l}{\rule{0pt}{1em}Fuente: Elaboración propia a partir de datos simulados}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}auto.arima(): ARIMA(0,0,1)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}Sobreparametrización: ARIMA(0,0,1)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}ARIMA estándar: ARIMA(1,1,1)}\\
-\end{tabu}}
-\end{table}
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-29}\label{tab:comparaciones_arima203}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(2,0,3)}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{7}{9}\selectfont
-\begin{tabu} to \linewidth {>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Conjunto de datos & Estimación & AIC & AICc & BIC & RMSE & MAE & MAPE\\
-\midrule
- & auto.arima() & 535.9678 & 536.0527 & 554.4188 & 1.2441 & 0.9865 & 10.6383\\
-\cmidrule{2-8}
- & Sobreparametrización & 533.3344 & 533.4338 & 554.8168 & 1.2263 & 0.9702 & 10.4155\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Entrenamiento} & ARIMA estándar & 572.2804 & 572.3256 & 581.4871 & 1.42 & 1.1414 & 12.3904\\
-\cmidrule{1-8}
- & auto.arima() &  &  &  & 2.1835 & 1.6709 & 20.9806\\
-\cmidrule{2-8}
- & Sobreparametrización &  &  &  & 2.1819 & 1.6752 & 21.0401\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Validación} & ARIMA estándar &  &  &  & 2.1634 & 1.65 & 20.8013\\
-\bottomrule
-\multicolumn{8}{l}{\rule{0pt}{1em}Fuente: Elaboración propia a partir de datos simulados}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}auto.arima(): ARIMA(2,0,2)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}Sobreparametrización: ARIMA(5,1,1)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}ARIMA estándar: ARIMA(1,1,1)}\\
-\end{tabu}}
-\end{table}
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-30}\label{tab:comparaciones_arima402}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(4,0,2)}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{7}{9}\selectfont
-\begin{tabu} to \linewidth {>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Conjunto de datos & Estimación & AIC & AICc & BIC & RMSE & MAE & MAPE\\
-\midrule
- & auto.arima() & 481.4909 & 481.5896 & 503.0171 & 1.0429 & 0.8341 & 8.7629\\
-\cmidrule{2-8}
- & Sobreparametrización & 479.7228 & 479.8354 & 504.3242 & 1.0306 & 0.8149 & 8.5647\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Entrenamiento} & ARIMA estándar & 503.5687 & 503.6139 & 512.7754 & 1.1456 & 0.8977 & 9.5797\\
-\cmidrule{1-8}
- & auto.arima() &  &  &  & 1.2473 & 1.0456 & 11.0813\\
-\cmidrule{2-8}
- & Sobreparametrización &  &  &  & 1.2711 & 1.0668 & 11.3276\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Validación} & ARIMA estándar &  &  &  & 1.2632 & 1.0655 & 11.3145\\
-\bottomrule
-\multicolumn{8}{l}{\rule{0pt}{1em}Fuente: Elaboración propia a partir de datos simulados}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}auto.arima(): ARIMA(2,0,3)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}Sobreparametrización: ARIMA(4,0,2)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}ARIMA estándar: ARIMA(1,1,1)}\\
-\end{tabu}}
-\end{table}
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-31}\label{tab:comparaciones_arima001_011}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(0,0,1)(0,1,1)}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{7}{9}\selectfont
-\begin{tabu} to \linewidth {>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Conjunto de datos & Estimación & AIC & AICc & BIC & RMSE & MAE & MAPE\\
-\midrule
- & auto.arima() & 732.172 & 732.2206 & 741.1636 & 2.3404 & 1.7807 & 86.2929\\
-\cmidrule{2-8}
- & Sobreparametrización & 732.172 & 732.2206 & 741.1636 & 2.3404 & 1.7807 & 86.2929\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Entrenamiento} & ARIMA estándar & 781.3164 & 781.3944 & 796.2685 & 2.695 & 2.0342 & 79.5335\\
-\cmidrule{1-8}
- & auto.arima() &  &  &  & 3.6185 & 3.0153 & 92.1823\\
-\cmidrule{2-8}
- & Sobreparametrización &  &  &  & 3.6185 & 3.0153 & 92.1823\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Validación} & ARIMA estándar &  &  &  & 5.0877 & 4.3417 & 137.1594\\
-\bottomrule
-\multicolumn{8}{l}{\rule{0pt}{1em}Fuente: Elaboración propia a partir de datos simulados}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}auto.arima(): ARIMA(0,0,1)(0,1,1)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}Sobreparametrización: ARIMA(0,0,1)(0,1,1)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}ARIMA estándar: ARIMA(1,1,1)(1,1,1)}\\
-\end{tabu}}
-\end{table}
-
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-32}\label{tab:comparaciones_arima214_303}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de un ARIMA(2,1,4)(3,0,3)}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{7}{9}\selectfont
-\begin{tabu} to \linewidth {>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft\arraybackslash}p{2.5cm}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\toprule
-Conjunto de datos & Estimación & AIC & AICc & BIC & RMSE & MAE & MAPE\\
-\midrule
- & auto.arima() & 1089.7923 & 1089.9332 & 1120.544 & 6.8493 & 5.4671 & 57.058\\
-\cmidrule{2-8}
- & Sobreparametrización & 1012.4006 & 1012.5392 & 1039.3145 & 5.4117 & 4.2376 & 63.9969\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Entrenamiento} & ARIMA estándar & 1457.0824 & 1457.1604 & 1472.0345 & 22.2688 & 16.7727 & 179.3555\\
-\cmidrule{1-8}
- & auto.arima() &  &  &  & 36.131 & 31.8461 & 40577.7819\\
-\cmidrule{2-8}
- & Sobreparametrización &  &  &  & 31.3749 & 27.4177 & 38008.8937\\
-\cmidrule{2-8}
-\multirow{-3}{2.5cm}{\raggedleft\arraybackslash Validación} & ARIMA estándar &  &  &  & 20.6537 & 17.0805 & 20763.9283\\
-\bottomrule
-\multicolumn{8}{l}{\rule{0pt}{1em}Fuente: Elaboración propia a partir de datos simulados}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}auto.arima(): ARIMA(2,0,4)(0,0,2)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}Sobreparametrización: ARIMA(2,1,3)(0,1,3)}\\
-\multicolumn{8}{l}{\rule{0pt}{1em}ARIMA estándar: ARIMA(1,1,1)(1,1,1)}\\
-\end{tabu}}
-\end{table}
-
 \subsubsection{Datos reales}
-
-\newpage
-\newpage
 
 \section{CONCLUSIONES}
 
 \newpage
 
 \section{ANEXOS}
-
 
 \includepdf[pages=-]{C:\\Users\\Dell\\OneDrive\\GitHub\\Tesis\\References\\Others\\cronograma.pdf}
 

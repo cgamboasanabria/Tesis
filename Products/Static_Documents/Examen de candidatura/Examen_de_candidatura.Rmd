@@ -150,9 +150,6 @@ César Andrés Gamboa Sanabria\\
 ```{r, child="04-Resultados.Rmd"}
 ```
 
-\newpage
-\newpage
-
 \section{CONCLUSIONES}
 
 ```{r, child="05-Conclusiones.Rmd"}

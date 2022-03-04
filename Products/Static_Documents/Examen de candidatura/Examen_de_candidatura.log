@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.2.10)  23 FEB 2022 14:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.2.10)  24 FEB 2022 07:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -674,46 +674,73 @@ Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \c@nlinenum=\count314
 \TeXr@lab=\toks34
 )
+(c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pdfpages.s
+ty
+Package: pdfpages 2022/01/29 v0.5u Insert pages of external PDF documents (AM)
+(c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
+\ESO@tempdima=\dimen271
+\ESO@tempdimb=\dimen272
+)
+\AM@pagewidth=\dimen273
+\AM@pageheight=\dimen274
+\AM@fboxrule=\dimen275
+
+(c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.d
+ef
+File: pppdftex.def 2022/01/29 v0.5u Pdfpages driver for pdfTeX (AM)
+)
+\pdfpages@includegraphics@status=\count315
+\AM@pagebox=\box70
+\AM@global@opts=\toks35
+\AM@pagecnt=\count316
+\AM@toc@title=\toks36
+\c@AM@survey=\count317
+\AM@templatesizebox=\box71
+)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/floatrow/floatrow.s
 ty
 Package: floatrow 2008/08/02 v0.3b floatrow: float package extension
-\c@float@type=\count315
-\float@exts=\toks35
-\float@box=\box70
-\@floatcapt=\box71
+\c@float@type=\count318
+\float@exts=\toks37
+\float@box=\box72
+\@floatcapt=\box73
 Package floatrow Info: Modified float package code loaded on input line 455.
 Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 
-\FR@everyfloat=\toks36
+\FR@everyfloat=\toks38
 \flrow@foot=\insert252
-\FB@wd=\dimen271
-\FBo@wd=\dimen272
-\FBc@wd=\dimen273
+\FB@wd=\dimen276
+\FBo@wd=\dimen277
+\FBc@wd=\dimen278
 \FBo@ht=\skip114
 \FBc@ht=\skip115
 \FBf@ht=\skip116
 \FBo@max=\skip117
 \FBc@max=\skip118
 \FBf@max=\skip119
-\c@FBl@b=\count316
-\floatbox@depth=\count317
-\c@FRobj=\count318
-\c@FRsobj=\count319
+\c@FBl@b=\count319
+\floatbox@depth=\count320
+\c@FRobj=\count321
+\c@FRsobj=\count322
 \Xhsize=\skip120
 \sXhsize=\skip121
 \Zhsize=\skip122
 \sZhsize=\skip123
-\flrow@rowbox=\box72
-\FR@Zunitlength=\dimen274
-\c@FBcnt=\count320
-\FPOScnt=\count321
+\flrow@rowbox=\box74
+\FR@Zunitlength=\dimen279
+\c@FBcnt=\count323
+\FPOScnt=\count324
 \LTleft=\skip124
 \LTright=\skip125
 \LTleft=\skip126
 \LTright=\skip127
-\flrow@types=\toks37
+\flrow@types=\toks39
 )
-\c@chunk=\count322
+\c@chunk=\count325
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/frontendlayer/t
 ikz.sty
@@ -723,15 +750,15 @@ sty
 s.sty
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 util-common.tex
-\pgfutil@everybye=\toks38
-\pgfutil@tempdima=\dimen275
-\pgfutil@tempdimb=\dimen276
+\pgfutil@everybye=\toks40
+\pgfutil@tempdima=\dimen280
+\pgfutil@tempdimb=\dimen281
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 util-common-lists.tex))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 util-latex.def
-\pgfutil@abb=\box73
+\pgfutil@abb=\box75
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 rcs.code.tex
@@ -751,33 +778,33 @@ Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 keys.code.tex
-\pgfkeys@pathtoks=\toks39
-\pgfkeys@temptoks=\toks40
+\pgfkeys@pathtoks=\toks41
+\pgfkeys@temptoks=\toks42
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgf
 keysfiltered.code.tex
-\pgfkeys@tmptoks=\toks41
+\pgfkeys@tmptoks=\toks43
 ))
-\pgf@x=\dimen277
-\pgf@y=\dimen278
-\pgf@xa=\dimen279
-\pgf@ya=\dimen280
-\pgf@xb=\dimen281
-\pgf@yb=\dimen282
-\pgf@xc=\dimen283
-\pgf@yc=\dimen284
-\pgf@xd=\dimen285
-\pgf@yd=\dimen286
+\pgf@x=\dimen282
+\pgf@y=\dimen283
+\pgf@xa=\dimen284
+\pgf@ya=\dimen285
+\pgf@xb=\dimen286
+\pgf@yb=\dimen287
+\pgf@xc=\dimen288
+\pgf@yc=\dimen289
+\pgf@xd=\dimen290
+\pgf@yd=\dimen291
 \w@pgf@writea=\write3
 \r@pgf@reada=\read3
-\c@pgf@counta=\count323
-\c@pgf@countb=\count324
-\c@pgf@countc=\count325
-\c@pgf@countd=\count326
-\t@pgf@toka=\toks42
-\t@pgf@tokb=\toks43
-\t@pgf@tokc=\toks44
-\pgf@sys@id@count=\count327
+\c@pgf@counta=\count326
+\c@pgf@countb=\count327
+\c@pgf@countc=\count328
+\c@pgf@countd=\count329
+\t@pgf@toka=\toks44
+\t@pgf@tokb=\toks45
+\t@pgf@tokc=\toks46
+\pgf@sys@id@count=\count330
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gf.cfg
@@ -796,8 +823,8 @@ File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfsyssoftpath@smallbuffer@items=\count328
-\pgfsyssoftpath@bigbuffer@items=\count329
+\pgfsyssoftpath@smallbuffer@items=\count331
+\pgfsyssoftpath@bigbuffer@items=\count332
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/p
 gfsysprotocol.code.tex
@@ -815,12 +842,12 @@ alc.code.tex
 til.code.tex)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathp
 arser.code.tex
-\pgfmath@dimen=\dimen287
-\pgfmath@count=\count330
-\pgfmath@box=\box74
-\pgfmath@toks=\toks45
-\pgfmath@stack@operand=\toks46
-\pgfmath@stack@operation=\toks47
+\pgfmath@dimen=\dimen292
+\pgfmath@count=\count333
+\pgfmath@box=\box76
+\pgfmath@toks=\toks47
+\pgfmath@stack@operand=\toks48
+\pgfmath@stack@operation=\toks49
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathf
 unctions.code.tex
@@ -842,59 +869,59 @@ unctions.misc.code.tex)
 unctions.integerarithmetics.code.tex)))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathf
 loat.code.tex
-\c@pgfmathroundto@lastzeros=\count331
+\c@pgfmathroundto@lastzeros=\count334
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.c
 ode.tex)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepoints.code.tex
 File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@picminx=\dimen288
-\pgf@picmaxx=\dimen289
-\pgf@picminy=\dimen290
-\pgf@picmaxy=\dimen291
-\pgf@pathminx=\dimen292
-\pgf@pathmaxx=\dimen293
-\pgf@pathminy=\dimen294
-\pgf@pathmaxy=\dimen295
-\pgf@xx=\dimen296
-\pgf@xy=\dimen297
-\pgf@yx=\dimen298
-\pgf@yy=\dimen299
-\pgf@zx=\dimen300
-\pgf@zy=\dimen301
+\pgf@picminx=\dimen293
+\pgf@picmaxx=\dimen294
+\pgf@picminy=\dimen295
+\pgf@picmaxy=\dimen296
+\pgf@pathminx=\dimen297
+\pgf@pathmaxx=\dimen298
+\pgf@pathminy=\dimen299
+\pgf@pathmaxy=\dimen300
+\pgf@xx=\dimen301
+\pgf@xy=\dimen302
+\pgf@yx=\dimen303
+\pgf@yy=\dimen304
+\pgf@zx=\dimen305
+\pgf@zy=\dimen306
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepathconstruct.code.tex
 File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@path@lastx=\dimen302
-\pgf@path@lasty=\dimen303
+\pgf@path@lastx=\dimen307
+\pgf@path@lasty=\dimen308
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorepathusage.code.tex
 File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@shorten@end@additional=\dimen304
-\pgf@shorten@start@additional=\dimen305
+\pgf@shorten@end@additional=\dimen309
+\pgf@shorten@start@additional=\dimen310
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorescopes.code.tex
 File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfpic=\box75
-\pgf@hbox=\box76
-\pgf@layerbox@main=\box77
-\pgf@picture@serial@count=\count332
+\pgfpic=\box77
+\pgf@hbox=\box78
+\pgf@layerbox@main=\box79
+\pgf@picture@serial@count=\count335
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgflinewidth=\dimen306
+\pgflinewidth=\dimen311
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoretransformations.code.tex
 File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@pt@x=\dimen307
-\pgf@pt@y=\dimen308
-\pgf@pt@temp=\dimen309
+\pgf@pt@x=\dimen312
+\pgf@pt@y=\dimen313
+\pgf@pt@temp=\dimen314
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorequick.code.tex
@@ -911,14 +938,14 @@ File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorearrows.code.tex
 File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfarrowsep=\dimen310
+\pgfarrowsep=\dimen315
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoreshade.code.tex
 File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@max=\dimen311
-\pgf@sys@shading@range@num=\count333
-\pgf@shadingcount=\count334
+\pgf@max=\dimen316
+\pgf@sys@shading@range@num=\count336
+\pgf@shadingcount=\count337
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoreimage.code.tex
@@ -927,7 +954,7 @@ File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcoreexternal.code.tex
 File: pgfcoreexternal.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfexternal@startupbox=\box78
+\pgfexternal@startupbox=\box80
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pg
 fcorelayers.code.tex
@@ -948,7 +975,7 @@ File: pgfcorerdf.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmo
 duleshapes.code.tex
 File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfnodeparttextbox=\box79
+\pgfnodeparttextbox=\box81
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmo
 duleplot.code.tex
@@ -957,8 +984,8 @@ File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/p
 gfcomp-version-0-65.sty
 Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@nodesepstart=\dimen312
-\pgf@nodesepend=\dimen313
+\pgf@nodesepstart=\dimen317
+\pgf@nodesepend=\dimen318
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/p
 gfcomp-version-1-18.sty
@@ -980,10 +1007,10 @@ Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.
 code.tex)
-\pgffor@iter=\dimen314
-\pgffor@skip=\dimen315
-\pgffor@stack=\toks48
-\pgffor@toks=\toks49
+\pgffor@iter=\dimen319
+\pgffor@skip=\dimen320
+\pgffor@stack=\toks50
+\pgffor@toks=\toks51
 ))
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer
 /tikz/tikz.code.tex
@@ -992,34 +1019,34 @@ Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgf
 libraryplothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@plot@mark@count=\count335
-\pgfplotmarksize=\dimen316
+\pgf@plot@mark@count=\count338
+\pgfplotmarksize=\dimen321
 )
-\tikz@lastx=\dimen317
-\tikz@lasty=\dimen318
-\tikz@lastxsaved=\dimen319
-\tikz@lastysaved=\dimen320
-\tikz@lastmovetox=\dimen321
-\tikz@lastmovetoy=\dimen322
-\tikzleveldistance=\dimen323
-\tikzsiblingdistance=\dimen324
-\tikz@figbox=\box80
-\tikz@figbox@bg=\box81
-\tikz@tempbox=\box82
-\tikz@tempbox@bg=\box83
-\tikztreelevel=\count336
-\tikznumberofchildren=\count337
-\tikznumberofcurrentchild=\count338
-\tikz@fig@count=\count339
+\tikz@lastx=\dimen322
+\tikz@lasty=\dimen323
+\tikz@lastxsaved=\dimen324
+\tikz@lastysaved=\dimen325
+\tikz@lastmovetox=\dimen326
+\tikz@lastmovetoy=\dimen327
+\tikzleveldistance=\dimen328
+\tikzsiblingdistance=\dimen329
+\tikz@figbox=\box82
+\tikz@figbox@bg=\box83
+\tikz@tempbox=\box84
+\tikz@tempbox@bg=\box85
+\tikztreelevel=\count339
+\tikznumberofchildren=\count340
+\tikznumberofcurrentchild=\count341
+\tikz@fig@count=\count342
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmo
 dulematrix.code.tex
 File: pgfmodulematrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfmatrixcurrentrow=\count340
-\pgfmatrixcurrentcolumn=\count341
-\pgf@matrix@numberofcolumns=\count342
+\pgfmatrixcurrentrow=\count343
+\pgfmatrixcurrentcolumn=\count344
+\pgf@matrix@numberofcolumns=\count345
 )
-\tikz@expandcount=\count343
+\tikz@expandcount=\count346
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer
 /tikz/libraries/tikzlibrarytopaths.code.tex
@@ -1035,16 +1062,16 @@ File: tikzlibrarymatrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 /tikz/libraries/tikzlibrarydecorations.code.tex
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmo
 duledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen325
-\pgfdecoratedremainingdistance=\dimen326
-\pgfdecoratedinputsegmentcompleteddistance=\dimen327
-\pgfdecoratedinputsegmentremainingdistance=\dimen328
-\pgf@decorate@distancetomove=\dimen329
-\pgf@decorate@repeatstate=\count344
-\pgfdecorationsegmentamplitude=\dimen330
-\pgfdecorationsegmentlength=\dimen331
+\pgfdecoratedcompleteddistance=\dimen330
+\pgfdecoratedremainingdistance=\dimen331
+\pgfdecoratedinputsegmentcompleteddistance=\dimen332
+\pgfdecoratedinputsegmentremainingdistance=\dimen333
+\pgf@decorate@distancetomove=\dimen334
+\pgf@decorate@repeatstate=\count347
+\pgfdecorationsegmentamplitude=\dimen335
+\pgfdecorationsegmentlength=\dimen336
 )
-\tikz@lib@dec@box=\box84
+\tikz@lib@dec@box=\box86
 )
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/dec
 orations/pgflibrarydecorations.pathreplacing.code.tex))
@@ -1055,32 +1082,32 @@ File: tikzlibrarycalc.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend
 -pdftex.def
 File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count345
-\l__pdf_internal_box=\box85
+\l__color_backend_stack_int=\count348
+\l__pdf_internal_box=\box87
 ) (./Examen_de_candidatura.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
 \openout1 = `Examen_de_candidatura.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 294.
-LaTeX Font Info:    ... okay on input line 294.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 295.
+LaTeX Font Info:    ... okay on input line 295.
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstop
 df-base.sty
@@ -1093,7 +1120,7 @@ f-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 294.
+Package hyperref Info: Link coloring ON on input line 295.
 
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.st
 y
@@ -1107,11 +1134,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ttitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count346
+\c@section@level=\count349
 )
-LaTeX Info: Redefining \ref on input line 294.
-LaTeX Info: Redefining \pageref on input line 294.
-LaTeX Info: Redefining \nameref on input line 294.
+LaTeX Info: Redefining \ref on input line 295.
+LaTeX Info: Redefining \pageref on input line 295.
+LaTeX Info: Redefining \nameref on input line 295.
 (./Examen_de_candidatura.out) (./Examen_de_candidatura.out)
 \@outlinefile=\write4
 \openout4 = `Examen_de_candidatura.out'.
@@ -1150,8 +1177,8 @@ LaTeX Info: Redefining \nameref on input line 294.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \. on input line 294.
-LaTeX Info: Redefining \% on input line 294.
+LaTeX Info: Redefining \. on input line 295.
+LaTeX Info: Redefining \% on input line 295.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: floatrow package is loaded.
@@ -1170,42 +1197,42 @@ Package caption Info: End \AtBeginDocument code.
 le.sty
 Package: fr-longtable 2007/11/28 v0.1b (beta) floatrow: additions for longtable
 
-\flrow@LT@lasthead=\box86
-\flrow@LT@prelastfoot=\box87
-\c@FBLTpage=\count347
+\flrow@LT@lasthead=\box88
+\flrow@LT@prelastfoot=\box89
+\c@FBLTpage=\count350
 )
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 2
-96.
+97.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
-96.
+97.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-296.
+297.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-296.
+297.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 296.
+(Font)              <12> on input line 297.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 296.
+(Font)              <8> on input line 297.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 296.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 296
+(Font)              <6> on input line 297.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 297
 .
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 296
+LaTeX Font Info:    Trying to load font information for U+msb on input line 297
 .
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1216,7 +1243,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.346 \cleardoublepage
+l.347 \cleardoublepage
                        [2
 
 
@@ -1240,7 +1267,7 @@ l.37 ...2.7}PronÃ³sticos}{45}{subsubsection.3.2.7}
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.73 ...6.2}Datos reales}{74}{subsubsection.4.6.2}
+l.73 ...6.2}Datos reales}{48}{subsubsection.4.6.2}
                                                   % [4])
 \tf@toc=\write5
 \openout5 = `Examen_de_candidatura.toc'.
@@ -1259,20 +1286,8 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.3 ...odo 1991-2000\relax }}{8}{figure.caption.2}
-                                                  % [5]pdfTeX warning (ext4): d
-estination with the same identifier (name{page.}) has been already used, duplic
-ate ignored
-<to be read again> 
-                   \relax 
-l.35 ...IMA(2,0,3)\relax }}{52}{figure.caption.34}
-                                                  % [6]pdfTeX warning (ext4): d
-estination with the same identifier (name{page.}) has been already used, duplic
-ate ignored
-<to be read again> 
-                   \relax 
-l.58 ...,1)(0,1,1)\relax }}{70}{figure.caption.60}
-                                                  % [7])
+l.17 ...000 - 2017\relax }}{32}{figure.caption.16}
+                                                  % [5])
 \tf@lof=\write7
 \openout7 = `Examen_de_candidatura.lof'.
 
@@ -1280,249 +1295,249 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.352 \cleardoublepage
-                       [8] [1
+l.353 \cleardoublepage
+                       [6] [1
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-37.
+38.
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [2] [3] [4] [5] [6]
-<Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg, id=753, 469.7
+<Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg, id=603, 469.7
 55pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg Graphic f
 ile (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_aditi
-va-1.jpeg  used on input line 692.
+va-1.jpeg  used on input line 693.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg, id=754
+<Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg, id=604
 , 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg Gr
 aphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_multi
-plicativa-1.jpeg  used on input line 696.
+plicativa-1.jpeg  used on input line 697.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [7 <./Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg, id=763, 469
+<Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg, id=614, 469
 .755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg Graphic
  file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_tende
-ncia-1.jpeg  used on input line 728.
+ncia-1.jpeg  used on input line 729.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [8 <./Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg, id=774, 469.755
+<Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg, id=625, 469.755
 pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg Graphic fil
 e (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ciclo
--1.jpeg  used on input line 750.
+-1.jpeg  used on input line 751.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [9 <./Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg, id=784, 46
+<Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg, id=635, 46
 9.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg Graphi
 c file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_estac
-ional-1.jpeg  used on input line 784.
+ional-1.jpeg  used on input line 785.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [10 <./Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg, id=797, 469
+<Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg, id=648, 469
 .755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg Graphic
  file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_aleat
-orio-1.jpeg  used on input line 810.
+orio-1.jpeg  used on input line 811.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [11 <./Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg>] [12
  <./Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg>] [13] [1
 4]
-Overfull \hbox (3.64937pt too wide) detected at line 997
+Overfull \hbox (3.64937pt too wide) detected at line 998
 [][]\OML/lmm/m/it/10 ^^M[] \OT1/lmr/m/n/10 = \OML/lmm/m/it/10 E [] \OT1/lmr/m/n
 /10 = \OML/lmm/m/it/10 ^^^[]^^M[] \OT1/lmr/m/n/10 + \OML/lmm/m/it/10 ^^^[]^^M[]
  \OT1/lmr/m/n/10 + [] + \OML/lmm/m/it/10 ^^^[]^^M[]
  []
 
 [15] [16] [17] [18] [19]
-<Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg, id=950, 469.755pt
+<Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg, id=801, 469.755pt
  x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg Graphic file 
 (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1
-.jpeg  used on input line 1334.
+.jpeg  used on input line 1335.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [20]
-<Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg, id=957, 469.755pt x
+<Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg, id=808, 469.755pt x
  325.215pt>
 File: Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg Graphic file (t
 ype jpg)
 <use Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/auto_ucr1-1.j
-peg  used on input line 1346.
+peg  used on input line 1347.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [21 <./Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg, id=962, 469.755p
+<Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg, id=813, 469.755p
 t x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg Graphic file
  (type jpg)
 <use Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/parcial_ucr1-
-1.jpeg  used on input line 1350.
+1.jpeg  used on input line 1351.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [22 <./Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg> <./Examen_de_
 candidatura_files/figure-latex/parcial_ucr1-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg, id=9
-71, 469.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg, id=8
+22, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg 
 Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ucr_d
-iferenciada-1.jpeg  used on input line 1365.
+iferenciada-1.jpeg  used on input line 1366.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg, id=972, 469.755pt x
+<Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg, id=823, 469.755pt x
  325.215pt>
 File: Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg Graphic file (t
 ype jpg)
 <use Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/auto_ucr2-1.j
-peg  used on input line 1369.
+peg  used on input line 1370.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [23 <./Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg
 >]
-<Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg, id=978, 469.755p
+<Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg, id=828, 469.755p
 t x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg Graphic file
  (type jpg)
 <use Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/parcial_ucr2-
-1.jpeg  used on input line 1373.
+1.jpeg  used on input line 1374.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [24 <./Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg> <./Examen_de_
 candidatura_files/figure-latex/parcial_ucr2-1.jpeg>] [25] [26] [27]
-<Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg, id=1011, 469.
-755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg, id=862, 469.7
+55pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg Graphic f
 ile (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotgener
-al-1.jpeg  used on input line 1560.
+al-1.jpeg  used on input line 1561.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [28]
-<Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg, id=1024, 469
-.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg, id=875, 469.
+755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg Graphic 
 file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotperio
-dos-1.jpeg  used on input line 1582.
+dos-1.jpeg  used on input line 1583.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [29 <./Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=103
-2, 469.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=882
+, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg Gr
 aphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotdesco
-mposicion-1.jpeg  used on input line 1595.
+mposicion-1.jpeg  used on input line 1596.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [30 <./Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg>] [31 <
 ./Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg, id=1050, 4
-69.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg, id=902, 46
+9.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg Graphi
 c file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externaplotge
-neral-1.jpeg  used on input line 1647.
+neral-1.jpeg  used on input line 1648.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [32 <./Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg, id=1062,
- 469.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg, id=913, 
+469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg Grap
 hic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externasplotp
-eriodos-1.jpeg  used on input line 1664.
+eriodos-1.jpeg  used on input line 1665.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 <Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jpeg, id
-=1064, 469.755pt x 325.215pt>
+=915, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jpe
 g Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jpeg
 >
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externasplotd
-escomposicion-1.jpeg  used on input line 1676.
+escomposicion-1.jpeg  used on input line 1677.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [33 <./Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg, id=1071
-, 469.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg, id=922,
+ 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg Gra
 phic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tgeneral-1.jpeg  used on input line 1705.
+tgeneral-1.jpeg  used on input line 1706.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [34 <./Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jp
 eg>]
-<Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg, id=107
-6, 469.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg, id=927
+, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg Gr
 aphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tperiodos-1.jpeg  used on input line 1709.
+tperiodos-1.jpeg  used on input line 1710.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [35 <./Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg> <
 ./Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.jpeg, 
-id=1083, 469.755pt x 325.215pt>
+id=933, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.j
 peg Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.jp
 eg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tdescomposicion-1.jpeg  used on input line 1722.
+tdescomposicion-1.jpeg  used on input line 1723.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [36 <./Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.
 jpeg>]
-<Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg, id=1091,
- 469.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg, id=941, 
+469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg Grap
 hic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-general-1.jpeg  used on input line 1768.
+general-1.jpeg  used on input line 1769.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg, id=1092
-, 469.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg, id=942,
+ 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg Gra
 phic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-periodos-1.jpeg  used on input line 1772.
+periodos-1.jpeg  used on input line 1773.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [37 <./Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.jpeg, i
-d=1098, 469.755pt x 325.215pt>
+d=949, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.jp
 eg Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.jpe
 g>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-descomposicion-1.jpeg  used on input line 1785.
+descomposicion-1.jpeg  used on input line 1786.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [38 <./Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg>] 
 [39 <./Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.j
 peg>]
-Underfull \hbox (badness 1577) in paragraph at lines 1837--1843
+Underfull \hbox (badness 1577) in paragraph at lines 1838--1844
 \T1/lmr/m/n/10 in-ves-ti-ga-ción fue-ron se-lec-cio-na-dos los si-guien-tes pro
 -ce-sos: $\OML/lmm/m/it/10 ARIMA\OT1/lmr/m/n/10 (1\OML/lmm/m/it/10 ; \OT1/lmr/m
 /n/10 0\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 0)\OML/lmm/m/it/10 ; ARIMA\OT1/lmr/m/
@@ -1530,653 +1545,67 @@ n/10 (1\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 0\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 1
 )\OML/lmm/m/it/10 ;$
  []
 
-<Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg, id=1131, 469.
-755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg, id=982, 469.7
+55pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg Graphic f
 ile (type jpg)
 <use Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/datos_simulad
-os-1.jpeg  used on input line 1863.
+os-1.jpeg  used on input line 1864.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [40]
-<Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg, id=1136, 469
-.755pt x 325.215pt>
+<Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg, id=987, 469.
+755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg Graphic 
 file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/series_simula
-das-1.jpeg  used on input line 1867.
+das-1.jpeg  used on input line 1868.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [41 <./Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg> <./Exam
 en_de_candidatura_files/figure-latex/series_simuladas-1.jpeg>] [42]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[43] [44] [45] [46]
-<Examen_de_candidatura_files/figure-latex/arima100_comportamiento-1.jpeg, id=11
-99, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima100_comportamiento-1.jpeg G
-raphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima100_comportamiento-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima100_comp
-ortamiento-1.jpeg  used on input line 2191.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[47]
-<Examen_de_candidatura_files/figure-latex/arima100_acf-1.jpeg, id=1205, 469.755
-pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima100_acf-1.jpeg Graphic file
- (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima100_acf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima100_acf-
-1.jpeg  used on input line 2195.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/arima100_pacf-1.jpeg, id=1206, 469.75
-5pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima100_pacf-1.jpeg Graphic fil
-e (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima100_pacf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima100_pacf
--1.jpeg  used on input line 2199.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[48 <./Examen_de_candidatura_files/figure-latex/arima100_comportamiento-1.jpeg>
- <./Examen_de_candidatura_files/figure-latex/arima100_acf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima101_comportamiento-1.jpeg, id=12
-14, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima101_comportamiento-1.jpeg G
-raphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima101_comportamiento-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima101_comp
-ortamiento-1.jpeg  used on input line 2215.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[49 <./Examen_de_candidatura_files/figure-latex/arima100_pacf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima101_acf-1.jpeg, id=1219, 469.755
-pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima101_acf-1.jpeg Graphic file
- (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima101_acf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima101_acf-
-1.jpeg  used on input line 2219.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/arima101_pacf-1.jpeg, id=1220, 469.75
-5pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima101_pacf-1.jpeg Graphic fil
-e (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima101_pacf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima101_pacf
--1.jpeg  used on input line 2223.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[50 <./Examen_de_candidatura_files/figure-latex/arima101_comportamiento-1.jpeg>
- <./Examen_de_candidatura_files/figure-latex/arima101_acf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima203_comportamiento-1.jpeg, id=12
-28, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima203_comportamiento-1.jpeg G
-raphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima203_comportamiento-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima203_comp
-ortamiento-1.jpeg  used on input line 2240.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[51 <./Examen_de_candidatura_files/figure-latex/arima101_pacf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima203_acf-1.jpeg, id=1233, 469.755
-pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima203_acf-1.jpeg Graphic file
- (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima203_acf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima203_acf-
-1.jpeg  used on input line 2244.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/arima203_pacf-1.jpeg, id=1234, 469.75
-5pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima203_pacf-1.jpeg Graphic fil
-e (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima203_pacf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima203_pacf
--1.jpeg  used on input line 2248.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[52 <./Examen_de_candidatura_files/figure-latex/arima203_comportamiento-1.jpeg>
- <./Examen_de_candidatura_files/figure-latex/arima203_acf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima402_comportamiento-1.jpeg, id=12
-42, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima402_comportamiento-1.jpeg G
-raphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima402_comportamiento-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima402_comp
-ortamiento-1.jpeg  used on input line 2261.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[53 <./Examen_de_candidatura_files/figure-latex/arima203_pacf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima402_acf-1.jpeg, id=1248, 469.755
-pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima402_acf-1.jpeg Graphic file
- (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima402_acf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima402_acf-
-1.jpeg  used on input line 2265.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/arima402_pacf-1.jpeg, id=1249, 469.75
-5pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima402_pacf-1.jpeg Graphic fil
-e (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima402_pacf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima402_pacf
--1.jpeg  used on input line 2269.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[54 <./Examen_de_candidatura_files/figure-latex/arima402_comportamiento-1.jpeg>
- <./Examen_de_candidatura_files/figure-latex/arima402_acf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima001_011_comportamiento-1.jpeg, i
-d=1257, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima001_011_comportamiento-1.jp
-eg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima001_011_comportamiento-1.jpe
-g>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima001_011_
-comportamiento-1.jpeg  used on input line 2283.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[55 <./Examen_de_candidatura_files/figure-latex/arima402_pacf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima001_011_acf-1.jpeg, id=1262, 469
-.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima001_011_acf-1.jpeg Graphic 
-file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima001_011_acf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima001_011_
-acf-1.jpeg  used on input line 2287.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/arima001_011_pacf-1.jpeg, id=1263, 46
-9.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima001_011_pacf-1.jpeg Graphic
- file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima001_011_pacf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima001_011_
-pacf-1.jpeg  used on input line 2291.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-
-Underfull \hbox (badness 1221) in paragraph at lines 2291--2291
-[]\T1/lmr/m/n/10 Figura 41: |Au-to-co-rre-la-ción par-cial de los da-tos si-mu-
-la-dos a par-tir de un pro-ce-so ARI-
- []
-
-[56 <./Examen_de_candidatura_files/figure-latex/arima001_011_comportamiento-1.j
-peg> <./Examen_de_candidatura_files/figure-latex/arima001_011_acf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima214_303_comportamiento-1.jpeg, i
-d=1271, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima214_303_comportamiento-1.jp
-eg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima214_303_comportamiento-1.jpe
-g>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima214_303_
-comportamiento-1.jpeg  used on input line 2305.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[57 <./Examen_de_candidatura_files/figure-latex/arima001_011_pacf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/arima214_303_acf-1.jpeg, id=1277, 469
-.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima214_303_acf-1.jpeg Graphic 
-file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima214_303_acf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima214_303_
-acf-1.jpeg  used on input line 2309.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/arima214_303_pacf-1.jpeg, id=1278, 46
-9.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/arima214_303_pacf-1.jpeg Graphic
- file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/arima214_303_pacf-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/arima214_303_
-pacf-1.jpeg  used on input line 2313.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-
-Underfull \hbox (badness 1221) in paragraph at lines 2313--2313
-[]\T1/lmr/m/n/10 Figura 44: |Au-to-co-rre-la-ción par-cial de los da-tos si-mu-
-la-dos a par-tir de un pro-ce-so ARI-
- []
-
-[58 <./Examen_de_candidatura_files/figure-latex/arima214_303_comportamiento-1.j
-peg> <./Examen_de_candidatura_files/figure-latex/arima214_303_acf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/particion_series_simuladas-1.jpeg, id
-=1285, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/particion_series_simuladas-1.jpe
-g Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/particion_series_simuladas-1.jpeg
->
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/particion_ser
-ies_simuladas-1.jpeg  used on input line 2337.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[59 <./Examen_de_candidatura_files/figure-latex/arima214_303_pacf-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/particion_series_reales-1.jpeg, id=12
-91, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/particion_series_reales-1.jpeg G
-raphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/particion_series_reales-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/particion_ser
-ies_reales-1.jpeg  used on input line 2341.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[60 <./Examen_de_candidatura_files/figure-latex/particion_series_simuladas-1.jp
-eg> <./Examen_de_candidatura_files/figure-latex/particion_series_reales-1.jpeg>
-]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[61]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[62]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima1-1.jpeg, 
-id=1318, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima1-1.j
-peg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima1-1.jp
-eg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_autoarima1-1.jpeg  used on input line 2673.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[63]
-Overfull \vbox (19.07605pt too high) has occurred while \output is active []
-
-[64 <./Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima1-1.
-jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima2-1.jpeg, 
-id=1327, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima2-1.j
-peg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima2-1.jp
-eg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_autoarima2-1.jpeg  used on input line 2677.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima3-1.jpeg, 
-id=1328, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima3-1.j
-peg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima3-1.jp
-eg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_autoarima3-1.jpeg  used on input line 2681.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima4-1.jpeg, 
-id=1329, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima4-1.j
-peg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima4-1.jp
-eg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_autoarima4-1.jpeg  used on input line 2685.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[65 <./Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima2-1.
-jpeg> <./Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima3-
-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima5-1.jpeg, 
-id=1335, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima5-1.j
-peg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima5-1.jp
-eg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_autoarima5-1.jpeg  used on input line 2689.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima6-1.jpeg, 
-id=1336, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima6-1.j
-peg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima6-1.jp
-eg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_autoarima6-1.jpeg  used on input line 2693.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[66 <./Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima4-1.
-jpeg> <./Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima5-
-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacio
-n1-1.jpeg, id=1347, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametri
-zacion1-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametriz
-acion1-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_sobreparametrizacion1-1.jpeg  used on input line 2710.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[67 <./Examen_de_candidatura_files/figure-latex/errores_simulados_autoarima6-1.
-jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacio
-n2-1.jpeg, id=1352, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametri
-zacion2-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametriz
-acion2-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_sobreparametrizacion2-1.jpeg  used on input line 2714.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacio
-n3-1.jpeg, id=1353, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametri
-zacion3-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametriz
-acion3-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_sobreparametrizacion3-1.jpeg  used on input line 2718.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[68 <./Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametr
-izacion1-1.jpeg> <./Examen_de_candidatura_files/figure-latex/errores_simulados_
-sobreparametrizacion2-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacio
-n4-1.jpeg, id=1358, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametri
-zacion4-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametriz
-acion4-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_sobreparametrizacion4-1.jpeg  used on input line 2722.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacio
-n5-1.jpeg, id=1359, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametri
-zacion5-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametriz
-acion5-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_sobreparametrizacion5-1.jpeg  used on input line 2726.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[69 <./Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametr
-izacion3-1.jpeg> <./Examen_de_candidatura_files/figure-latex/errores_simulados_
-sobreparametrizacion4-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametrizacio
-n6-1.jpeg, id=1364, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametri
-zacion6-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametriz
-acion6-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_sobreparametrizacion6-1.jpeg  used on input line 2730.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-
-Underfull \hbox (badness 1946) in paragraph at lines 2735--2747
-[]\T1/lmr/m/n/10 Como ya fue men-cio-na-do, pa-ra los mo-de-los sin par-te es-t
-a-cio-nal se ajus-tó un mo-de-lo
- []
-
-[70 <./Examen_de_candidatura_files/figure-latex/errores_simulados_sobreparametr
-izacion5-1.jpeg> <./Examen_de_candidatura_files/figure-latex/errores_simulados_
-sobreparametrizacion6-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar1-1.j
-peg, id=1376, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar
-1-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar1
--1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_arima_estandar1-1.jpeg  used on input line 2749.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar2-1.j
-peg, id=1377, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar
-2-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar2
--1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_arima_estandar2-1.jpeg  used on input line 2753.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[71 <./Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estanda
-r1-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar3-1.j
-peg, id=1383, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar
-3-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar3
--1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_arima_estandar3-1.jpeg  used on input line 2757.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar4-1.j
-peg, id=1384, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar
-4-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar4
--1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_arima_estandar4-1.jpeg  used on input line 2761.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[72 <./Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estanda
-r2-1.jpeg> <./Examen_de_candidatura_files/figure-latex/errores_simulados_arima_
-estandar3-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar5-1.j
-peg, id=1389, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar
-5-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar5
--1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_arima_estandar5-1.jpeg  used on input line 2765.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar6-1.j
-peg, id=1390, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar
-6-1.jpeg Graphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estandar6
--1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/errores_simul
-ados_arima_estandar6-1.jpeg  used on input line 2769.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[73 <./Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estanda
-r4-1.jpeg> <./Examen_de_candidatura_files/figure-latex/errores_simulados_arima_
-estandar5-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/pronostico_arima100-1.jpeg, id=1401, 
-469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/pronostico_arima100-1.jpeg Graph
-ic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/pronostico_arima100-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/pronostico_ar
-ima100-1.jpeg  used on input line 2799.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[74 <./Examen_de_candidatura_files/figure-latex/errores_simulados_arima_estanda
-r6-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/pronostico_arima101-1.jpeg, id=1406, 
-469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/pronostico_arima101-1.jpeg Graph
-ic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/pronostico_arima101-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/pronostico_ar
-ima101-1.jpeg  used on input line 2803.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/pronostico_arima203-1.jpeg, id=1407, 
-469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/pronostico_arima203-1.jpeg Graph
-ic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/pronostico_arima203-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/pronostico_ar
-ima203-1.jpeg  used on input line 2807.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[75 <./Examen_de_candidatura_files/figure-latex/pronostico_arima100-1.jpeg> <./
-Examen_de_candidatura_files/figure-latex/pronostico_arima101-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/pronostico_arima402-1.jpeg, id=1412, 
-469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/pronostico_arima402-1.jpeg Graph
-ic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/pronostico_arima402-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/pronostico_ar
-ima402-1.jpeg  used on input line 2811.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/pronostico_arima001_011-1.jpeg, id=14
-13, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/pronostico_arima001_011-1.jpeg G
-raphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/pronostico_arima001_011-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/pronostico_ar
-ima001_011-1.jpeg  used on input line 2815.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[76 <./Examen_de_candidatura_files/figure-latex/pronostico_arima203-1.jpeg> <./
-Examen_de_candidatura_files/figure-latex/pronostico_arima402-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/pronostico_arima214_303-1.jpeg, id=14
-18, 469.755pt x 325.215pt>
-File: Examen_de_candidatura_files/figure-latex/pronostico_arima214_303-1.jpeg G
-raphic file (type jpg)
-<use Examen_de_candidatura_files/figure-latex/pronostico_arima214_303-1.jpeg>
-Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/pronostico_ar
-ima214_303-1.jpeg  used on input line 2819.
-(pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-[77 <./Examen_de_candidatura_files/figure-latex/pronostico_arima001_011-1.jpeg>
- <./Examen_de_candidatura_files/figure-latex/pronostico_arima214_303-1.jpeg>]
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2867--2867
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2867--2867
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2896--2896
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2896--2896
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2925--2925
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2925--2925
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2954--2954
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2954--2954
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2983--2983
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 2983--2983
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Overfull \hbox (2.73068pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 1089.7923|
- []
-
-
-Overfull \hbox (2.73068pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 1089.9332|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (2.73068pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 1012.4006|
- []
-
-
-Overfull \hbox (2.73068pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 1012.5392|
- []
-
-
-Overfull \hbox (2.73068pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 1039.3145|
- []
-
-
-Overfull \hbox (2.73068pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 1457.0824|
- []
-
-
-Overfull \hbox (2.73068pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 1457.1604|
- []
-
-
-Overfull \hbox (2.73068pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 1472.0345|
- []
-
-
-Overfull \hbox (6.71667pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 40577.7819|
- []
-
-
-Overfull \hbox (4.28407pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 Sobreparametrización|
- []
-
-
-Overfull \hbox (6.71667pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 38008.8937|
- []
-
-
-Overfull \hbox (6.71667pt too wide) in paragraph at lines 3012--3012
- []\T1/lmr/m/n/7 20763.9283|
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[78] [79] [80]
-Underfull \hbox (badness 1721) in paragraph at lines 3076--3081
+[43] [44] [45] [46] [47]
+Overfull \vbox (320.59103pt too high) has occurred while \output is active []
+
+[48] [49]
+Underfull \hbox (badness 1721) in paragraph at lines 2296--2301
 []\T1/lmr/m/n/10 Calderón, C. E. (2012). Es-ta-dís-ti-ca pa-ra es-tu-dian-tes d
 e ad-mi-nis-tra-ción de em-pre-sas de
  []
 
 
-Underfull \hbox (badness 2617) in paragraph at lines 3076--3081
+Underfull \hbox (badness 2617) in paragraph at lines 2296--2301
 \T1/lmr/m/n/10 la uni-ver-si-dad na-cio-nal del ca-llao. \T1/lmr/m/it/10 Edi-to
 -rial San Mar-cos, 2da Edi-ción, Li-ma Pe-rú\T1/lmr/m/n/10 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3076--3081
+Underfull \hbox (badness 10000) in paragraph at lines 2296--2301
 [][]$\T1/lmr/m/n/10 https : / / unac . edu . pe / documentos / organizacion / v
 ri / cdcitra / Informes _ Finales _ Investigacion /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3088--3093
+Underfull \hbox (badness 10000) in paragraph at lines 2308--2313
 [][]$\T1/lmr/m/n/10 https : / / www . researchgate . net / publication / 274885
 475 _ Mortalidad _ por _ causa _ externas _
  []
 
-[81]
-Underfull \hbox (badness 10000) in paragraph at lines 3115--3119
+[50]
+Underfull \hbox (badness 10000) in paragraph at lines 2335--2339
 \T1/lmr/m/n/10 academia . edu / 7140606 / Measuring _ Reliability _ of _ Statio
 nary _ Stochastic _ Processes ? auto =
  []
 
 
-Underfull \hbox (badness 3861) in paragraph at lines 3125--3129
+Underfull \hbox (badness 3861) in paragraph at lines 2345--2349
 \T1/lmr/m/it/10 lia\T1/lmr/m/n/10 . [][]$http : / / www . prres . net / papers 
 / Flaherty _ Modelling _ Private _ New _ Housing _ Starts _ In _
  []
 
-[82] [83] [84] (./Examen_de_candidatura.aux
+[51] [52] [53] (./Examen_de_candidatura.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
@@ -2184,13 +1613,13 @@ Package rerunfilecheck Info: File `Examen_de_candidatura.out' has not changed.
 (rerunfilecheck)             Checksum: FF317CE3826374B5F1B31ED316689448;16471.
  ) 
 Here is how much of TeX's memory you used:
- 30328 strings out of 480197
- 630523 string characters out of 5892287
- 908753 words of memory out of 5000000
- 47332 multiletter control sequences out of 15000+600000
- 538434 words of font info for 75 fonts, out of 8000000 for 9000
+ 30069 strings out of 480197
+ 583285 string characters out of 5892287
+ 876326 words of memory out of 5000000
+ 47187 multiletter control sequences out of 15000+600000
+ 535449 words of font info for 74 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,17n,80p,1210b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,15n,80p,1210b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.7} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -2220,30 +1649,29 @@ hit.enc}{c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm
 -mathex.enc}<c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publi
 c/lm/lmbx10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
 ublic/lm/lmbx12.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
-e1/public/lm/lmbx5.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/
-type1/public/lm/lmex10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fo
-nts/type1/public/lm/lmmi10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dis
-t/fonts/type1/public/lm/lmmi5.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/tex
-mf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/
-texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/Dell/AppData/Roaming/TinyT
-eX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/Dell/AppData/Roaming/Ti
-nyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/Dell/AppData/Roaming/
-TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/Dell/AppData/Roamin
-g/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/Dell/AppData/Roam
-ing/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Dell/AppData/Ro
-aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/Dell/AppDat
-a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb><c:/Users/Dell/App
-Data/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/Dell
-/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><c:/Users/D
-ell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/User
-s/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/
-Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbo
-ls/msbm10.pfb>
-Output written on Examen_de_candidatura.pdf (92 pages, 72606945 bytes).
+e1/public/lm/lmex10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts
+/type1/public/lm/lmmi10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/f
+onts/type1/public/lm/lmmi5.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dis
+t/fonts/type1/public/lm/lmmi7.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-
+dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/tex
+mf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/Dell/AppData/Roaming/TinyTeX/
+texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/Dell/AppData/Roaming/TinyT
+eX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/Dell/AppData/Roaming/Tin
+yTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/Dell/AppData/Roaming/T
+inyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/Dell/AppData/Roaming
+/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Dell/AppData/Roami
+ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/Dell/AppData/R
+oaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb><c:/Users/Dell/AppDat
+a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/Dell/Ap
+pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><c:/Users/Dell
+/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/D
+ell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Use
+rs/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/
+msbm10.pfb>
+Output written on Examen_de_candidatura.pdf (59 pages, 28188727 bytes).
 PDF statistics:
- 1720 PDF objects out of 1728 (max. 8388607)
- 1496 compressed objects within 15 object streams
- 348 named destinations out of 1000 (max. 500000)
- 1035 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1313 PDF objects out of 1440 (max. 8388607)
+ 1172 compressed objects within 12 object streams
+ 264 named destinations out of 1000 (max. 500000)
+ 815 words of extra memory for PDF output out of 10000 (max. 10000000)
 

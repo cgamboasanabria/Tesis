@@ -1,0 +1,4 @@
+```{r, echo=FALSE, eval=FALSE}
+#\includepdf[pages=-]{C:\\Users\\Dell\\OneDrive\\GitHub\\Tesis\\References\\Others\\cronograma.pdf}
+```
+
