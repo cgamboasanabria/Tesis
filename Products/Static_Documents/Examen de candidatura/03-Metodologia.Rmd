@@ -355,11 +355,18 @@ Con este fin, se programó una función que sigue los siguientes pasos:
 
 **1.** Se generan valores aleatorios de alguna distribución de probabilidad. Para esta investigación se escogen 100 valores de una distribución Normal con media 10 y varianza 1. Estos valores se resumen en la Figura \ref{fig:datos_simulados}; donde las región azul oscuro representa la densidad de datos entre los percentiles 25 y 75, las líneas punteadas de color naranja marcan la cantidad de desviaciones estándar que los datos se alejan del promedio, y las líneas punteadas de color azul marcan los puntos de corte mínimo, percentiles 25, 50 y 75, y el máximo.
 
-**2.** Se seleccionan mediante un muestreo simple al azar la cantidad de coeficientes a utilizar en los términos del modelo $ARIMA(p,d,q)(P,D,Q)_S$ que gobiernan la serie. Para esta investigación fueron seleccionados los siguientes procesos: $ARIMA(1,0,0), ARIMA(1,0,1),$ $ARIMA(2,0,3), ARIMA(4,0,2),$ $ARIMA(0,0,1)(0,1,1)$ y $ARIMA(2,1,4)(3,0,3)$.
+**2.** Se seleccionan mediante un muestreo simple al azar la cantidad de coeficientes a utilizar en los términos del modelo $ARIMA(p,d,q)(P,D,Q)_S$ que gobierna la serie. Para esta investigación fueron seleccionados los siguientes procesos: $ARIMA(1,0,0), ARIMA(1,0,1),$ $ARIMA(2,0,3), ARIMA(4,0,2),$ $ARIMA(0,0,1)(0,1,1)_12$ y $ARIMA(2,1,4)(3,0,3)_12$.
 
-**3.** Para cada uno de los procesos seleccionados, se genera una secuencia de valores en el intervalo $[-1,1]$ con saltos de 0.1 para posteriormente seleccionar de manera aleatoria el valor que tomaran los coeficientes de cada uno de los procesos mencionados en el punto anterior.
+**3.** Para cada uno de los procesos seleccionados, se generan valores aleatorios de una distribución uniforme con un valor mínimo de 0 y un valor máximo de 0.99. La cantidad de valores simulados depende de la cantidad de parámetros escogidos en $p, q, P, Q$. Estos valores aleatorios son transformados de manera tal que los polinomios de la parte autorregresiva y de medias móviles no comparta raíces unitarias para que de esta manera el proceso generado sea invertible y estacionario.
 
-**4.** Con los valores simulados, la cantidad de parámetros y sus respectivos valors definidos en los puntos anteriores, se ajusta cada uno de los modelos $ARIMA$ descritos en el inciso **2.**.
+```{r, eval=FALSE}
+# https://arxiv.org/pdf/1611.01387.pdf
+# https://github.com/cran/arfima/blob/master/R/InvertibleQ.R
+# https://github.com/cran/arfima/blob/master/R/ARToPacf.R
+```
+
+
+**4.** Con los valores simulados, la cantidad de parámetros y sus respectivos valores definidos en los puntos anteriores, se ajusta cada uno de los modelos $ARIMA$ descritos en el inciso **2.**.
 
 **5.** Con cada modelo ajustado, se utiliza la función `simulate.Arima()` para generar 200 observaciones basadas en dichos modelos.
 
@@ -532,11 +539,11 @@ ggarrange(arima100, arima101, arima203, arima402,
 
 \subsection{Métodos}
 
-En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos. Para cada serie de tiempo, se estima el mejor modelo utilizando la función `auto.arima()`, la sobreparametrización y un modelo ARIMA estándar, que pueed ser un $ARIMA(1,1,1)$ para las series no estacionales, o un $ARIMA(1,1,1)(1,1,1)$ en el caso de las series cronológicas estacionales. Una vez obtenidos estos modelos, se analizan los residuales obtenidos. En última instancia, se obtienen los pronósticos y sus medidas de bondad de ajuste y de rendimiento.
+En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos. Para cada serie de tiempo, se estima el mejor modelo utilizando la función `auto.arima()`, la sobreparametrización y un modelo ARIMA estándar, que puede ser un $ARIMA(1,1,1)$ para las series no estacionales, o un $ARIMA(1,1,1)(1,1,1)_S$ en el caso de las series cronológicas estacionales. Una vez obtenidos estos modelos, se analizan los residuales obtenidos. En última instancia, se obtienen los pronósticos y sus medidas de bondad de ajuste y de rendimiento.
 
 \subsubsection{Análisis exploratorio}
 
-Como fue mencionado en el Marco Teórico, debe corroborarse que la serie cronológica a trabajar posea un comportamiento estacionario y, de no serlo, someterla a procesos matemáticos para asegurar esta condición, estando entre los más comunes la diferenciación o la aplicación del logaritmo natural. Posteriormente, se realiza una identificación del posible proceso que gobierna la serie cronológica al graficar las funciones de autocorrelación y autocorrelación parcial, las cuales también sirven para verificar si la serie (transformada o no) es estacionaria.
+Como fue mencionado en el Marco Teórico, debe corroborarse que la serie cronológica a trabajar posea un comportamiento estacionario y, de no serlo, someterla a transformaciones para asegurar esta condición, estando entre los más comunes la diferenciación o la aplicación del logaritmo natural. Posteriormente, se realiza una identificación del posible proceso que gobierna la serie cronológica al graficar las funciones de autocorrelación y autocorrelación parcial, las cuales también sirven para verificar si la serie (transformada o no) es estacionaria.
 
 \subsubsection{Partición de los datos}
 
@@ -554,7 +561,7 @@ La estimación de los modelos y posterior selección de los mismos vía sobrepar
 
 **1.** Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide en valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. 
 
-**2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero (porque precisamente, no se estiman coeficientes para la parte estacional). Se estiman todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
+**2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero (porque precisamente, no se estiman coeficientes para la parte estacional). Se estiman para esta investigación todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$, aunque el orden del modelo más grande puede permitir un mayor número de diferenciaciones o de parámetros. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
 
 ```{r, eval=FALSE, echo=FALSE}
 Las siguiente matriz se obtuvo de:

@@ -235,7 +235,7 @@ Como una serie temporal es una observación o una realización de un proceso est
 
 **2.**: Si el conjunto de variables $Y_1,...,Y_n$ pertenecen a una distribución continua, cada función de probabilidad es idéntica, de manera que $f_{y_1}(y)=f_{y_2}(y)=\cdots=f_{y_n}(y)\equiv f(y)$, y además $f_{y_1,...,y_n}(y_1,...,y_n)=f_{y_1}(y_1)f_{y_2}(y_2)\cdots f_{y_n}(y_n)=f(y_1)f(y_2)\cdots f(y_n)$.
 
-Lo anterior es contrario al uso de las observaciones pasadas para pronosticar el futuro, por lo que este supuesto, según @Cochrane, no es exacto pues una una serie de tiempo no es exactamente, i.i.d., sino que siguen un patrón medianamente regular en el largo plazo.
+Lo anterior es contrario al uso de las observaciones pasadas para pronosticar el futuro, por lo que este supuesto, según @Cochrane, no es exacto pues una una serie de tiempo no es exactamente, i.i.d., sino que siguen un patrón medianamente regular en el largo plazo. Además, los coeficientes del proceso que gobierna la serie cronológica, como mencionan @invertible_estacionario3, son polinomios que no deben compartir raíces comunes.
 
 El último supuesto, y quizá el que más debate genera, es el criterio de parsimonia. Como mencionan @Zhang y @Hipel, este principio sugiere que se prioricen modelos sencillos, con pocos parámetros, para representar una serie de datos. Mientras más grande y complicado sea el modelo, mayor será el riesgo de sobre ajuste, lo que implica que el ajuste sea muy bueno en el conjunto de datos con que se generó el modelo, pero que los pronósticos generados sean pobres ante nuevos conjuntos de datos. Este problema, sin embargo, se presenta al considerar un único modelo con muchos parámetros; pero si se consideran varios modelos y estos son sometidos a distintos criterios, puede obtenerse un modelo sobreparametrizado que ofrezca buenos pronósticos.
 
@@ -254,14 +254,14 @@ Este mismo concepto puede aplicarse a las series cronológicas para comparar el 
 
 La función de autocorrelación (*ACF* por sus siglas en inglés) recibe su nombre debido a que se utiliza el coeficiente de correlación para pares de observaciones $r_{Y_t, Y_{t-1}}$ de la serie cronológica. Al conjunto de todas las autocorrelaciones se le llama función de autocorrelación.
 
-La función de autocorrelación parcial[^5], busca medir la asociación lineal entre las observaciones $Y_t$ y $Y_{t-k}$, es decir, la correlación entres dos observaciones distintas separadas por $k$ periodos, descartando los efectos de los rezagos $1,2, \cdots ,k-1$; esta correlación puede obtenerse a partir de la ecuación \ref{eqn:pearson}, que al adaptarse a dos observaciones de la misma serie cronológica se obtiene el resultado de ecuación \ref{eqn:pearson_adaptada_autocorrelacion}.
+La función de autocorrelación parcial (*PACF* por sus siglas en inglés), busca medir la asociación lineal entre las observaciones $Y_t$ y $Y_{t-k}$, es decir, la correlación entres dos observaciones distintas separadas por $k$ periodos, descartando los efectos de los rezagos $1,2, \cdots ,k-1$; esta correlación puede obtenerse a partir de la ecuación \ref{eqn:pearson}, que al adaptarse a dos observaciones de la misma serie cronológica se obtiene el resultado de la ecuación \ref{eqn:pearson_adaptada_autocorrelacion}.
 
 \begin{equation}
 \label{eqn:pearson_adaptada_autocorrelacion}
 r_{{Y_t},{Y_{t-k}}}=\frac{E({Y_t}{Y_{t-k}})}{\sigma_{Y_t} \sigma_{Y_{t-k}}} = \frac{\sum_{i=1}^n \left({Y_t}_i- \bar{Y}_t \right) \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)}{\sqrt{\sum_{i=1}^n \left({Y_t}_i- \bar{Y}_t \right)^2 \sum_{i=1}^n \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)^2}}
 \end{equation}
 
-De lo anterior se deduce entonces que un las k observaciones previas pueden utilizarse para obtener el valor de de la serie cronológica en el momento $t$, como muestra la ecuación \ref{eqn:ecuacion_autocorrelaciones}.
+De lo anterior se deduce entonces que las k observaciones previas pueden utilizarse para obtener el valor de de la serie cronológica en el momento $t$, como muestra la ecuación \ref{eqn:ecuacion_autocorrelaciones}.
 
 \begin{equation}
 \label{eqn:ecuacion_autocorrelaciones}
@@ -301,8 +301,6 @@ Como resultado del sistema de ecuaciones mostrado en \ref{eqn:sistema_yule_walke
 \label{eqn:sistema_yule_walker_matricial}
 \left[ \begin{array}{c} \rho_1 \\ \rho_2 \\ \vdots \\ \rho_k \end{array} \right] = \begin{bmatrix} 1 & \rho_1 & \rho_2 & \cdots & \rho_{k-1} \\ \rho_1 & 1 & \rho_1 & \cdots & \rho_{k-2} \\ \vdots & \vdots & \vdots & \cdots & \vdots \\ \rho_{k-1} & \rho_{k-2} & \rho_{k-3} & \cdots & 1 &\end{bmatrix} \left[ \begin{array}{c} \phi_{k1} \\ \phi_{k2}  \\ \vdots \\ \phi_{kk} \end{array} \right]\end{equation}
 
-[^5]: *PACF* por sus siglas en inglés
-
 Cuando se tiene el modelo ARIMA debidamente identificado, es importante realizar los pronósticos. Sin embargo, estos pronósticos no son imperativos, sino que se debe evaluar su calidad con las llamadas medidas de rendimiento. Estas mediciones son hechas comparando el pronóstico y su diferencia con el valor real. Existen múltiples medidas de rendimiento, @medidas menciona entre ellas el *MAE*, *MAPE*, *RMSE*, *MASE*, *AIC*, *AICc* y el *BIC*.
 
 \subsection{Modelos Autorregresivos Integrados de Medias Móviles}
@@ -324,7 +322,7 @@ donde $\forall \psi_j \in \mathbb{R}, \psi_0=1, \sum_{j=0}^{\infty} \psi_j^2<\in
 
 De lo anterior, si se omite la parte determinística $\kappa_t$ de \ref{eqn:proceso_estacionario}, el remanente es la suma ponderada infinita, lo cual implica que si se conocen los ponderadores $\psi_j$, y si además se conoce $\sigma_\varepsilon^2$, es posible obtener una representación para cualquier proceso estacionario; este concepto es conocido como *media móvil infinita*.
 
-Sabiendo que $\varepsilon_t \sim N(0, \sigma^2)$, se tiene que $\varepsilon_t$ tiene media 0, es decir, está centrado en este valor. De esta manera el ruido blanco es por definición un proceso centrado, lo cual implica que la suma ponderada infinita está centrada en sí misma. De esta manera, la representación de Wold de un proceso $x_t$ supone que se suman los choques pasados más un componente determinístico que no es otro que el valor esperado del proceso: $\kappa_t=m$, donde $m$ es una constante cualquiera. Así, la ecuación \ref{eqn:proceso_estacionario} puede sustuirse por:
+Sabiendo que $\varepsilon_t \sim N(0, \sigma^2)$, se tiene que $\varepsilon_t$ tiene media 0, es decir, está centrado en este valor. De esta manera el ruido blanco es por definición un proceso centrado, lo cual implica que la suma ponderada infinita está centrada en sí misma. De esta manera, la representación de Wold de un proceso $x_t$ supone que se suman los choques pasados más un componente determinístico que no es otro que el valor esperado del proceso estacionario: $\kappa_t=m$, donde $m$ es una constante cualquiera. Así, la ecuación \ref{eqn:proceso_estacionario} puede sustuirse por:
 
 \begin{equation}
 \label{eqn:proceso_estacionario2}
@@ -342,7 +340,7 @@ La principal consecuencia del teorema de Wold es que, si se conocen los ponderad
 
 \begin{equation}
 \label{eqn:prevision}
-\hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-j+1}
+\hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-j+1}+m
 \end{equation}
 
 De la ecuación \ref{eqn:prevision} se desprende que el error de previsión asociado está dado por:

@@ -915,7 +915,11 @@ pronosticar el futuro, por lo que este supuesto, según
 \protect\hyperlink{ref-Cochrane}{Cochrane}
 (\protect\hyperlink{ref-Cochrane}{1997}), no es exacto pues una una
 serie de tiempo no es exactamente, i.i.d., sino que siguen un patrón
-medianamente regular en el largo plazo.
+medianamente regular en el largo plazo. Además, los coeficientes del
+proceso que gobierna la serie cronológica, como mencionan
+\protect\hyperlink{ref-invertible_estacionario3}{McLeod}
+(\protect\hyperlink{ref-invertible_estacionario3}{1999}), son polinomios
+que no deben compartir raíces comunes.
 
 El último supuesto, y quizá el que más debate genera, es el criterio de
 parsimonia. Como mencionan \protect\hyperlink{ref-Zhang}{Zhang}
@@ -969,22 +973,22 @@ para pares de observaciones \(r_{Y_t, Y_{t-1}}\) de la serie
 cronológica. Al conjunto de todas las autocorrelaciones se le llama
 función de autocorrelación.
 
-La función de autocorrelación parcial\footnote{\emph{PACF} por sus
-  siglas en inglés}, busca medir la asociación lineal entre las
-observaciones \(Y_t\) y \(Y_{t-k}\), es decir, la correlación entres dos
-observaciones distintas separadas por \(k\) periodos, descartando los
-efectos de los rezagos \(1,2, \cdots ,k-1\); esta correlación puede
-obtenerse a partir de la ecuación \ref{eqn:pearson}, que al adaptarse a
-dos observaciones de la misma serie cronológica se obtiene el resultado
-de ecuación \ref{eqn:pearson_adaptada_autocorrelacion}.
+La función de autocorrelación parcial (\emph{PACF} por sus siglas en
+inglés), busca medir la asociación lineal entre las observaciones
+\(Y_t\) y \(Y_{t-k}\), es decir, la correlación entres dos observaciones
+distintas separadas por \(k\) periodos, descartando los efectos de los
+rezagos \(1,2, \cdots ,k-1\); esta correlación puede obtenerse a partir
+de la ecuación \ref{eqn:pearson}, que al adaptarse a dos observaciones
+de la misma serie cronológica se obtiene el resultado de la ecuación
+\ref{eqn:pearson_adaptada_autocorrelacion}.
 
 \begin{equation}
 \label{eqn:pearson_adaptada_autocorrelacion}
 r_{{Y_t},{Y_{t-k}}}=\frac{E({Y_t}{Y_{t-k}})}{\sigma_{Y_t} \sigma_{Y_{t-k}}} = \frac{\sum_{i=1}^n \left({Y_t}_i- \bar{Y}_t \right) \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)}{\sqrt{\sum_{i=1}^n \left({Y_t}_i- \bar{Y}_t \right)^2 \sum_{i=1}^n \left({Y_{t-k}}_i- \bar {Y_{t-k}}\right)^2}}
 \end{equation}
 
-De lo anterior se deduce entonces que un las k observaciones previas
-pueden utilizarse para obtener el valor de de la serie cronológica en el
+De lo anterior se deduce entonces que las k observaciones previas pueden
+utilizarse para obtener el valor de de la serie cronológica en el
 momento \(t\), como muestra la ecuación
 \ref{eqn:ecuacion_autocorrelaciones}.
 
@@ -1102,8 +1106,8 @@ De esta manera el ruido blanco es por definición un proceso centrado, lo
 cual implica que la suma ponderada infinita está centrada en sí misma.
 De esta manera, la representación de Wold de un proceso \(x_t\) supone
 que se suman los choques pasados más un componente determinístico que no
-es otro que el valor esperado del proceso: \(\kappa_t=m\), donde \(m\)
-es una constante cualquiera. Así, la ecuación
+es otro que el valor esperado del proceso estacionario: \(\kappa_t=m\),
+donde \(m\) es una constante cualquiera. Así, la ecuación
 \ref{eqn:proceso_estacionario} puede sustuirse por:
 
 \begin{equation}
@@ -1131,7 +1135,7 @@ Wold, la mejor previsión posible para un proceso \(x_t\) para el momento
 
 \begin{equation}
 \label{eqn:prevision}
-\hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-j+1}
+\hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-j+1}+m
 \end{equation}
 
 De la ecuación \ref{eqn:prevision} se desprende que el error de
@@ -1844,19 +1848,22 @@ el máximo.
 
 \textbf{2.} Se seleccionan mediante un muestreo simple al azar la
 cantidad de coeficientes a utilizar en los términos del modelo
-\(ARIMA(p,d,q)(P,D,Q)_S\) que gobiernan la serie. Para esta
-investigación fueron seleccionados los siguientes procesos:
+\(ARIMA(p,d,q)(P,D,Q)_S\) que gobierna la serie. Para esta investigación
+fueron seleccionados los siguientes procesos:
 \(ARIMA(1,0,0), ARIMA(1,0,1),\) \(ARIMA(2,0,3), ARIMA(4,0,2),\)
-\(ARIMA(0,0,1)(0,1,1)\) y \(ARIMA(2,1,4)(3,0,3)\).
+\(ARIMA(0,0,1)(0,1,1)_12\) y \(ARIMA(2,1,4)(3,0,3)_12\).
 
-\textbf{3.} Para cada uno de los procesos seleccionados, se genera una
-secuencia de valores en el intervalo \([-1,1]\) con saltos de 0.1 para
-posteriormente seleccionar de manera aleatoria el valor que tomaran los
-coeficientes de cada uno de los procesos mencionados en el punto
-anterior.
+\textbf{3.} Para cada uno de los procesos seleccionados, se generan
+valores aleatorios de una distribución uniforme con un valor mínimo de 0
+y un valor máximo de 0.99. La cantidad de valores simulados depende de
+la cantidad de parámetros escogidos en \(p, q, P, Q\). Estos valores
+aleatorios son transformados de manera tal que los polinomios de la
+parte autorregresiva y de medias móviles no comparta raíces unitarias
+para que de esta manera el proceso generado sea invertible y
+estacionario.
 
 \textbf{4.} Con los valores simulados, la cantidad de parámetros y sus
-respectivos valors definidos en los puntos anteriores, se ajusta cada
+respectivos valores definidos en los puntos anteriores, se ajusta cada
 uno de los modelos \(ARIMA\) descritos en el inciso \textbf{2.}.
 
 \textbf{5.} Con cada modelo ajustado, se utiliza la función
@@ -1887,8 +1894,8 @@ diferenciación. Se describe además el proceso de partición de los datos
 tanto para ajustar los modelos como para validar los pronósticos. Para
 cada serie de tiempo, se estima el mejor modelo utilizando la función
 \texttt{auto.arima()}, la sobreparametrización y un modelo ARIMA
-estándar, que pueed ser un \(ARIMA(1,1,1)\) para las series no
-estacionales, o un \(ARIMA(1,1,1)(1,1,1)\) en el caso de las series
+estándar, que puede ser un \(ARIMA(1,1,1)\) para las series no
+estacionales, o un \(ARIMA(1,1,1)(1,1,1)_S\) en el caso de las series
 cronológicas estacionales. Una vez obtenidos estos modelos, se analizan
 los residuales obtenidos. En última instancia, se obtienen los
 pronósticos y sus medidas de bondad de ajuste y de rendimiento.
@@ -1897,7 +1904,7 @@ pronósticos y sus medidas de bondad de ajuste y de rendimiento.
 
 Como fue mencionado en el Marco Teórico, debe corroborarse que la serie
 cronológica a trabajar posea un comportamiento estacionario y, de no
-serlo, someterla a procesos matemáticos para asegurar esta condición,
+serlo, someterla a transformaciones para asegurar esta condición,
 estando entre los más comunes la diferenciación o la aplicación del
 logaritmo natural. Posteriormente, se realiza una identificación del
 posible proceso que gobierna la serie cronológica al graficar las
@@ -1949,9 +1956,11 @@ máximo de los parámetros \(p,d,q,P,D,Q\) del modelo
 
 \textbf{2.} Para el caso de series cronológicas no estacionales, los
 valores \(P,D\) y \(Q\) son iguales a cero (porque precisamente, no se
-estiman coeficientes para la parte estacional). Se estiman todas las
-permutaciones de parámetros \(p,d,q\) hasta tener como máximo un modelo
-\(ARIMA(6,1,6)\). Para ello se genera una matriz con cada una de estas
+estiman coeficientes para la parte estacional). Se estiman para esta
+investigación todas las permutaciones de parámetros \(p,d,q\) hasta
+tener como máximo un modelo \(ARIMA(6,1,6)\), aunque el orden del modelo
+más grande puede permitir un mayor número de diferenciaciones o de
+parámetros. Para ello se genera una matriz con cada una de estas
 permutaciones, denominada matriz de valores paramétricos, en donde cada
 fila representa la especificación del modelo \(ARIMA(p,d,q)\) que se va
 a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
@@ -2167,82 +2176,86 @@ procedimiento descrito en la metodología. Cada sección de este capítulo
 tendrá una subsección donde se aplica cada etapa de análisis a las
 respectivas series cronológicas, en el cuál se espera que los resultados
 obtenidos mediante la sobreparametrización igualen o mejoren los
-obtenidos con los métodos tradicionales. La estructura de este capítulo
-se muestra en el índice de este documento.
+obtenidos con los métodos tradicionales. La estructura propuesta de este
+capítulo se muestra a continuación:
 
-\subsection{Análisis exploratorio}
+\textbf{4.1} Análisis exploratorio
 
-\subsubsection{Datos simulados}
+\textbf{4.1.1} Datos simulados
 
-\paragraph{ARIMA(1,0,0)}
+\textbf{4.1.1.1} ARIMA(1,0,0)
 
-\paragraph{ARIMA(1,0,1)}
+\textbf{4.1.1.2} ARIMA(1,0,1)
 
-\paragraph{ARIMA(2,0,3)}
+\textbf{4.1.1.3} ARIMA(2,0,3)
 
-\paragraph{ARIMA(4,0,2)}
+\textbf{4.1.1.4} ARIMA(4,0,2)
 
-\paragraph{ARIMA(0,0,1)(0,1,1)}
+\textbf{4.1.1.5} ARIMA(0,0,1)(0,1,1)
 
-\paragraph{ARIMA(2,1,4)(3,0,3)}
+\textbf{4.1.1.6} ARIMA(2,1,4)(3,0,3)
 
-\subsubsection{Tasa de mortalidad infantil interanual}
+\textbf{4.1.2} Tasa de mortalidad infantil interanual
 
-\subsubsection{Mortalidad por causa externa}
+\textbf{4.1.3} Mortalidad por causa externa
 
-\subsubsection{Incentivos salariales}
+\textbf{4.1.4} Incentivos salariales
 
-\subsubsection{Intereses y comisiones del sector público}
+\textbf{4.1.5} Intereses y comisiones del sector público
 
-\subsection{Partición de los datos}
+\textbf{4.2} Partición de los datos
 
-\subsection{Estimación del mejor modelo según la función auto.arima()}
+\textbf{4.3} Estimación del mejor modelo según la función auto.arima()
 
-\subsubsection{Datos simulados}
+\textbf{4.3.1} Datos simulado
 
-\subsubsection{Datos reales}
+\textbf{4.3.2} Datos reales
 
-\subsection{Estimación del mejor modelo con sobreparametrización}
+\textbf{4.4} Estimación del mejor modelo con sobreparametrización
 
-\subsubsection{Datos simulados}
+\textbf{4.4.1} Datos simulados
 
-\subsubsection{Datos reales}
+\textbf{4.4.2} Datos reales
 
-\subsection{Estimación de un modelo ARIMA estándar}
+\textbf{4.5} Estimación de un modelo ARIMA estándar
 
-\subsubsection{Datos simulados}
+\textbf{4.5.1} Datos simulados
 
-\subsubsection{Datos reales}
+\textbf{4.5.2} Datos reales
 
-\subsection{Análisis de los errores}
+\textbf{4.6} Análisis de los errores
 
-\subsubsection{Datos simulados}
+\textbf{4.6.1} Datos simulados
 
-\paragraph{Errores de los modelos estimados con auto.arima()}
+\textbf{4.6.1.1} Errores de los modelos estimados con auto.arima()
 
-\paragraph{Errores de los modelos estimados con sobreparametrización}
+\textbf{4.6.1.2} Errores de los modelos estimados con
+sobreparametrización
 
-\paragraph{Errores de los modelos estimados con un modelo ARIMA estándar}
+\textbf{4.6.1.3} Errores de los modelos estimados con un modelo ARIMA
+estándar
 
-\subsubsection{Datos reales}
+\textbf{4.6.2} Datos reales
 
-\paragraph{Errores de los modelos estimados con auto.arima()}
+\textbf{4.6.2.1} Errores de los modelos estimados con auto.arima()
 
-\paragraph{Errores de los modelos estimados con sobreparametrización}
+\textbf{4.6.2.2} Errores de los modelos estimados con
+sobreparametrización
 
-\paragraph{Errores de los modelos estimados con un modelo ARIMA estándar}
+\textbf{4.6.2.3} Errores de los modelos estimados con un modelo ARIMA
+estándar
 
-\subsection{Pronósticos}
+\textbf{4.7} Pronósticos
 
-\subsubsection{Datos simulados}
+\textbf{4.7.1} Datos simulados
 
-\subsubsection{Datos reales}
+\textbf{4.7.2} Datos reales
 
-\subsection{Medidas de bondad de ajuste y de rendimiento}
+\textbf{4.8} Medidas de bondad de ajuste y de rendimiento
 
-\subsubsection{Datos simulados}
+\textbf{4.8.1} Datos simulados
 
-\subsubsection{Datos reales}
+\textbf{4.8.2} Datos reales
 
 \section{CONCLUSIONES}
 
@@ -2432,6 +2445,11 @@ León, B. ;. E., R.; Gallegos. (1998). {Mortalidad infantil: Análisis de
 un decenio}. \emph{{Revista Cubana de Medicina General Integral}},
 \emph{14}, 606--610.
 \url{http://scielo.sld.cu/scielo.php?script=sci_arttext\&pid=S0864-21251998000600017\&nrm=iso}
+
+\leavevmode\vadjust pre{\hypertarget{ref-invertible_estacionario3}{}}%
+McLeod, A. I. (1999). Necessary and sufficient condition for nonsingular
+fisher information matrix in ARMA and fractional ARIMA models. \emph{The
+American Statistician}, \emph{53}(1), 71--72.
 
 \leavevmode\vadjust pre{\hypertarget{ref-nacion}{}}%
 Nación. (2013). Morbilidad y mortalidad en costa rica. \emph{La Nacion}.

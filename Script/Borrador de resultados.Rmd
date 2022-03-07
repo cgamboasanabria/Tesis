@@ -12,53 +12,146 @@ carlians::requeridos(readxl, gridExtra, ggplot2, lubridate,
 ## Función para simular procesos
 
 ```{r}
-simular.proceso <- function(data, n, temporalidad, 
-                            no.estacional, estacional=c(0,0,0), 
-                            p=NULL, q=NULL, P=NULL, Q=NULL){
-  
-  require(forecast)
-  tryCatch({
-      coeficientes <- list(p, q, P, Q)
-      coeficientes.simulados <- lapply(c(no.estacional[c(1,3)], 
-                                         estacional[c(1,3)]), 
-                                       function(x) sample(seq(-1,1,.1), x))
-      
-    pos <- which(sapply(coeficientes, is.null)==TRUE)
-    pos2 <- which(sapply(coeficientes.simulados, length)>0)
+simular.proceso <- function(data,
+                            n,
+                            temporalidad,
+                            no.estacional,
+                            estacional = c(0, 0, 0),
+                            p = NULL,
+                            q = NULL,
+                            P = NULL,
+                            Q = NULL) {
+    require(arfima)
+    verificacion <-
+        function(p = numeric(0),
+                 q = numeric(0),
+                 P = numeric(0),
+                 Q = numeric(0),
+                 tempo) {
+            if (is.null(p)) {
+                p <- numeric(0)
+            }
+            
+            if (is.null(q)) {
+                q <- numeric(0)
+            }
+            
+            if (is.null(P)) {
+                P <- numeric(0)
+            }
+            
+            if (is.null(Q)) {
+                Q <- numeric(0)
+            }
+            
+            list(
+                orden_no_estacional = c(length(p), length(d), length(q)),
+                orden_estacional = c(length(P), length(D), length(Q)),
+                p = p,
+                d = d,
+                q = q,
+                P = P,
+                D = D,
+                Q = Q,
+                cumple = IdentInvertQ(
+                    phi = p,
+                    theta = q,
+                    phiseas = P,
+                    thetaseas = Q,
+                    period = ifelse(sum(estacional)==0, 0, tempo)
+                )
+            )
+            
+        }
     
-    coeficientes[pos] <- coeficientes.simulados[pos]
+    generar_coeficientes_invertibles <- function(n) {
+        pi <- runif(n = n, 0, .99)
+        L <- length(pi)
+        if (L == 0)
+            return(numeric(0))
+        if (L == 1)
+            return(pi)
+        phik <- pi[1]
+        for (k in 2:L) {
+            phikm1 <- phik
+            phik <- c(phikm1 - pi[k] * rev(phikm1), pi[k])
+        }
+        phik
+    }
     
-    names(coeficientes) <- c("p", "q", "P", "Q")
-    coeficientes <- coeficientes[pos2]
+    invertible_estacionario_identificable <- list(cumple = FALSE)
+
+    while(invertible_estacionario_identificable$cumple == FALSE) {
+        require(forecast)
+        require(arfima)
+        
+        coeficientes <- list(p, q, P, Q)
+        coeficientes.simulados <-
+            lapply(c(no.estacional[c(1, 3)],
+                     estacional[c(1, 3)]),
+                   function(x)
+                       generar_coeficientes_invertibles(x))
+        
+        pos <- which(sapply(coeficientes, is.null) == TRUE)
+        pos2 <-
+            which(sapply(coeficientes.simulados, length) > 0)
+        
+        coeficientes[pos] <- coeficientes.simulados[pos]
+        
+        names(coeficientes) <- c("p", "q", "P", "Q")
+        coeficientes <- coeficientes[pos2]
+        
+        invertible_estacionario_identificable <-
+            verificacion(
+                p = coeficientes$p,
+                q = coeficientes$q,
+                P = coeficientes$P,
+                Q = coeficientes$Q,
+                tempo = temporalidad
+            )
+        #list(coeficientes, invertible_estacionario_identificable)
+    }
     
-    if(TRUE %in% (c("P", "Q") %in% names(coeficientes))){
-        modelo <- Arima(ts(data=data, freq=temporalidad), 
-                    order = no.estacional, 
+    #print("¡Coeficientes encontrados!")
+    ######################################################
+    tryCatch({
+
+            if (TRUE %in% (c("P", "Q") %in% names(coeficientes))) {
+                modelo <- Arima(
+                    ts(data = data, frequency = temporalidad),
+                    order = no.estacional,
                     seasonal = estacional,
-                    fixed=c(unlist(coeficientes)))
-    }else({
-        modelo <- Arima(ts(data=data, freq=temporalidad), 
-                    order = no.estacional, 
-                    seasonal = estacional,
-                    fixed=c(unlist(coeficientes), NA))
-    })
-    
-    datos <- simulate(modelo, nsim=(n+length(data)))
-    
-    datos <- subset(datos, start=length(data)+1)
-    list(modelo=modelo, datos=datos)}, 
-    error = function(e) simular.proceso(data, n, temporalidad,
-                                        no.estacional, estacional, 
-                                        p, q, P, Q))
+                    fixed = c(unlist(coeficientes))
+                )
+            } else
+                ({
+                    modelo <- Arima(
+                        ts(data = data, freq = temporalidad),
+                        order = no.estacional,
+                        seasonal = estacional,
+                        fixed = c(unlist(coeficientes), NA)
+                    )
+                })
+
+            datos <- simulate(modelo, nsim=(n+length(data)))
+
+            datos <- subset(datos, start=length(data)+1)
+            lista <- list(modelo=modelo, datos=datos)},
+            error = function(e)
+                simular.proceso(
+                    data,
+                    n,
+                    temporalidad,
+                    no.estacional,
+                    estacional,
+                    p,
+                    q,
+                    P,
+                    Q
+                ))
+    lista
+
 }
-# simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=12,
-#                 no.estacional=c(1,0,3),
-#                 estacional = c(1,2,2),
-#                 q=c(.1, .5, .9))
-# simular.proceso(data=rnorm(100, 15, 2), n=500, temporalidad=1,
-#                 no.estacional=c(1,0,3),
-#                 estacional = c(0,0,0),
-#                 q=c(.1, .5, .9))
 ```
 
 ## Escenarios para simulación de series
