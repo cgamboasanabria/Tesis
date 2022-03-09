@@ -387,8 +387,8 @@ temática\footnote{Muchas de ellas incluyen recompensas económicas que
   van desde los \$500 hasta los \$100,000 para aquellos que logren
   obtener los mejor pronósticos.}.
 
-Asimismo, los pronósticos (estimación futura de una partícula en una
-serie temporal) son utilizados por instituciones públicas o del sector
+Asimismo, los pronósticos (estimación futura de un segmento en una serie
+temporal) son utilizados por instituciones públicas o del sector
 privado, centros nacionales o regionales de investigación y
 organizaciones no gubernamentales dedicadas al desarrollo social. Si las
 entidades previamente mencionadas cuentan con proyecciones de calidad,
@@ -413,7 +413,7 @@ serie temporal. Para indagar los términos en el proceso de investigación
 se suele utilizar la identificación de parámetros mediante
 autocorrelogramas parciales y totales. Sin embargo, los
 autocorrelogramas formados no analizan de forma exhaustiva y óptima los
-posibles coeficientes que podrían contemplarse la ecuación de Wold.
+posibles coeficientes que podrían contemplarse en la ecuación de Wold.
 Según su definición matemática, esta posee infinitos coeficientes, y la
 aproximación mediante los autocorrelogramas no es una forma exacta de
 aproximar el proceso que gobierna la serie. Por lo tanto, se debe buscar
@@ -653,7 +653,7 @@ introducen los métodos para la identificación de los modelos. El quinto
 apartado abarca los componentes relacionados a los autocorrelogramas, la
 forma más difundida para la selección de modelos y, finalmente, el sexto
 apartado introduce el principal aporte de este estudio, la
-sobreparametrización como método selección de casos.
+sobreparametrización como método de selección de casos.
 
 \subsection{Componentes de una serie cronológica}
 
@@ -885,18 +885,19 @@ transformaciones o diferenciaciones de distinto orden.
 
 Como una serie temporal es una observación o una realización de un
 proceso estocástico, éstas se encuentran sujetas a múltiples supuestos.
-Uno de ellos es que todas las observaciones son independientes e
-idénticamente distribuidas (i.i.d.), que según
+En los modelos lineales definidos como procesos estocásticos uno de
+ellos es que todas las observaciones son independientes e idénticamente
+distribuidas (i.i.d.), que según
 \protect\hyperlink{ref-definicion_iid}{Evans \& Rosenthal}
 (\protect\hyperlink{ref-definicion_iid}{2005}), un conjunto de variables
 aleatorias \(Y_1,...,Y_n\) son independientes e idénticamente
 distribuidas si el conjunto es independiente y además cada una de las n
 variables sigue la misma distribución, que usualmente se define como una
 distribución aproximadamente Normal, con una media y variancia dadas;
-esta condición es deseable, pues un proceso estocástico puede no ser
-independiente al tener una estructura que genere un patrón reiterado en
-el tiempo. Este supuesto puede dividirse según el tipo de variable
-aleatoria:
+esta condición es deseable, sin embargo, en un modelo de series de
+tiempo un proceso estocástico puede no ser independiente al tener una
+estructura que genere un patrón reiterado en el tiempo. Este supuesto
+puede dividirse según el tipo de variable aleatoria:
 
 \textbf{1.}: Si el conjunto de variables \(Y_1,...,Y_n\) pertenecen a
 una distribución discreta, cada función de probabilidad es idéntica, de
@@ -921,8 +922,9 @@ proceso que gobierna la serie cronológica, como mencionan
 (\protect\hyperlink{ref-invertible_estacionario3}{1999}), son polinomios
 que no deben compartir raíces comunes.
 
-El último supuesto, y quizá el que más debate genera, es el criterio de
-parsimonia. Como mencionan \protect\hyperlink{ref-Zhang}{Zhang}
+Además, existe un principio deseable que es quizá el que más debate
+genera, este es el criterio de parsimonia. Como mencionan
+\protect\hyperlink{ref-Zhang}{Zhang}
 (\protect\hyperlink{ref-Zhang}{2003}) y
 \protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
 (\protect\hyperlink{ref-Hipel}{1994}), este principio sugiere que se
@@ -1089,7 +1091,7 @@ donde
 y \(\varepsilon_t\) representa un ruido blanco gaussiano i.i.d., es
 decir, \(\varepsilon_t \sim N(0, \sigma^2)\); además, \(\kappa_t\) es el
 componente lineal determinístico de forma tal que
-\(cov(\kappa_t,\varepsilon_{t-j}=0)\), lo cual implica que este
+\(cor(\kappa_t,\varepsilon_{t-j})=0\), lo cual implica que este
 componente determinístico es independiente de la suma infinita de los
 choques pasados.
 
@@ -1190,11 +1192,12 @@ conoce como los modelos \(ARIMA\)
 
 Un modelo autorregresivo de orden \emph{p}, denotado como \(AR(p)\),
 considera los valores futuros de una serie cronológica como una
-combinación lineal las \(p\) observaciones predecesoras, un componente
-aleatorio y un término constante. \protect\hyperlink{ref-Hipel}{Hipel \&
-McLeod} (\protect\hyperlink{ref-Hipel}{1994}) y
-\protect\hyperlink{ref-Lee}{Lee} (\protect\hyperlink{ref-Lee}{n.d.})
-emplean la notación de la ecuación \ref{eqn:modelo_AR}.
+combinación lineal de las \(p\) observaciones predecesoras, un
+componente aleatorio y un término constante.
+\protect\hyperlink{ref-Hipel}{Hipel \& McLeod}
+(\protect\hyperlink{ref-Hipel}{1994}) y \protect\hyperlink{ref-Lee}{Lee}
+(\protect\hyperlink{ref-Lee}{n.d.}) emplean la notación de la ecuación
+\ref{eqn:modelo_AR}.
 
 \begin{equation}
 \label{eqn:modelo_AR}
@@ -1401,7 +1404,7 @@ cantidad de modelos, es decir, utilizar la sobreparametrización.
 
 La identificación visual mediante los autocorrelogramas puede llevar a
 decisiones erradas acerca del proceso que gobierna la serie cronológica.
-Una alternativa es considerar estimaciones procesos de ordenes bajos,
+Una alternativa es considerar estimaciones de procesos de ordenes bajos,
 como un \(ARMA(1,1)\) y poco a poco ir incorporando términos, este
 proceso de revisión permite encontrar los puntos en que agregar un
 coeficiente más al modelo no aporta ninguna mejora en los resultados del
@@ -1421,7 +1424,7 @@ del análisis combinatorio mencionados por
 \protect\hyperlink{ref-analisis_combinatorio}{Hernández}
 (\protect\hyperlink{ref-analisis_combinatorio}{2008}): Uno es el
 principio de adición, el cual indica que si se tienen dos procedimientos
-\(A\) y \(B\), los cuales pueden realizarse de \(k_A\) y \(K_B\)
+\(A\) y \(B\), los cuales pueden realizarse de \(k_A\) y \(k_B\)
 maneras, respectivamente, entonces la cantidad de maneras que se puede
 realizar uno u otro procedimiento es \(k_A + k_B\). Por otro lado se
 tiene el principio de multiplicación, con el cual, si el procedimiento
@@ -1541,8 +1544,11 @@ periodos correspondientes (\protect\hyperlink{ref-infantiles}{INEC,
 periodos desde el año 1989 y hasta 2017, y no de manera mensual simple,
 pues dada la volatilidad del fenómeno de estudio, hacer un estudio
 interanual permite analizar de una mejor manera los cambios entre
-periodos. Es decir, se analizará la TMII desde el periodo Febrero 1989
--- Enero 1990 hasta el periodo Enero 2017 -- Diciembre 2017.
+periodos. Esta forma de definit la TMII genera una autocorrelación
+natural en los datos, pues la información utilizada en el momento \(t\)
+coincide en alrededor de 92\% con la TMII del mes periodo inmediatemente
+anterior. Se analizará entonces la TMII desde el periodo Febrero 1989 --
+Enero 1990 hasta el periodo Enero 2017 -- Diciembre 2017.
 
 La importancia de este proceso, aparte de servir de parámetro para
 evaluar el sistema de salud, está en su estrecha relación con las
@@ -1642,7 +1648,7 @@ En Costa Rica para el año 2011, las muertes por causas externas ocuparon
 el tercer lugar, siendo solo superadas por las enfermedades del sistema
 circulatorio, en particular las enfermedades cardiovasculares, y los
 tumores, ambos casos mostraron una tendencia ascendente
-(\protect\hyperlink{ref-nacion}{Nación, 2013}). Es debido a los elevados
+(\protect\hyperlink{ref-nacion}{INEC, 2013}). Es debido a los elevados
 costos económicos y sociales
 (\protect\hyperlink{ref-ccpexternas}{Cardona, 2013}) que se aborda la
 imperiosa necesidad comprender el comportamiento de las defunciones
@@ -2067,8 +2073,8 @@ el caso de las series estacionales se ajusta un modelo
 
 Una vez que se selecciona un modelo de cada tipo (\texttt{auto.arima()},
 sobreparametrización y ARIMA estándar), se realiza un análisis de los
-residuos estandarizados, la autorrelación y el supuesto de normalidad de
-normalidad de los residuales.
+residuos estandarizados, la autocorrelación y el supuesto de normalidad
+de normalidad de los residuales.
 
 \subsubsection{Pronósticos}
 
@@ -2159,6 +2165,13 @@ Es la raíz del error cuadrático medio, como se define en la ecuación
 \label{eqn:RMSE}
 \sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}
 \end{equation}
+
+\subsubsection{Tiempo de procesamiento}
+
+Para cada uno de los modelos estimados mediante sobreparametrización, se
+mostrará el tiempo de procesamiento requerido en cada serie cronológica,
+esto con el fin de evaluar la viabilidad del método propuesto para la
+obtención de resultados.
 
 De esta manera, cada una de las series cronológicas (simuladas y reales)
 serán sometidas a un análisis exploratorio y a una partición de los
@@ -2418,6 +2431,10 @@ The forecast package for r. \emph{Journal of Statistical Software,
 Articles}, \emph{27}(3), 1--22.
 \url{https://doi.org/10.18637/jss.v027.i03}
 
+\leavevmode\vadjust pre{\hypertarget{ref-nacion}{}}%
+INEC. (2013). Morbilidad y mortalidad en costa rica. \emph{La Nacion}.
+\url{https://bit.ly/2xWUeXU}
+
 \leavevmode\vadjust pre{\hypertarget{ref-infantiles}{}}%
 INEC. (2004). \emph{Documento metodológico de defunciones infantiles}.
 INEC.
@@ -2450,10 +2467,6 @@ un decenio}. \emph{{Revista Cubana de Medicina General Integral}},
 McLeod, A. I. (1999). Necessary and sufficient condition for nonsingular
 fisher information matrix in ARMA and fractional ARIMA models. \emph{The
 American Statistician}, \emph{53}(1), 71--72.
-
-\leavevmode\vadjust pre{\hypertarget{ref-nacion}{}}%
-Nación. (2013). Morbilidad y mortalidad en costa rica. \emph{La Nacion}.
-\url{https://bit.ly/2xWUeXU}
 
 \leavevmode\vadjust pre{\hypertarget{ref-CIE10}{}}%
 OPS. (2016). \emph{Clasificación estadística internacional de

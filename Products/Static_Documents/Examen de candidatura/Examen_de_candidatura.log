@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.3)  7 MAR 2022 11:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.3)  9 MAR 2022 17:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1277,7 +1277,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.17 ...000 - 2017\relax }}{32}{figure.caption.16}
+l.16 ...000 - 2017\relax }}{31}{figure.caption.15}
                                                   % [4])
 \tf@lof=\write7
 \openout7 = `Examen_de_candidatura.lof'.
@@ -1295,7 +1295,7 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
 (c:/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [2] [3] [4] [5] [6]
-<Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg, id=414, 469.7
+<Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg, id=419, 469.7
 55pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg Graphic f
 ile (type jpg)
@@ -1303,7 +1303,7 @@ ile (type jpg)
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_aditi
 va-1.jpeg  used on input line 694.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg, id=415
+<Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg, id=420
 , 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg Gr
 aphic file (type jpg)
@@ -1312,7 +1312,7 @@ Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_multi
 plicativa-1.jpeg  used on input line 698.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [7 <./Examen_de_candidatura_files/figure-latex/ejemplo_aditiva-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg, id=424, 469
+<Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg, id=429, 469
 .755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg Graphic
  file (type jpg)
@@ -1321,7 +1321,7 @@ Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_tende
 ncia-1.jpeg  used on input line 730.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [8 <./Examen_de_candidatura_files/figure-latex/ejemplo_multiplicativa-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg, id=436, 469.755
+<Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg, id=441, 469.755
 pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg Graphic fil
 e (type jpg)
@@ -1330,7 +1330,7 @@ Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ciclo
 -1.jpeg  used on input line 752.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [9 <./Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg, id=446, 46
+<Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg, id=451, 46
 9.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg Graphi
 c file (type jpg)
@@ -1339,7 +1339,7 @@ Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_estac
 ional-1.jpeg  used on input line 789.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [10 <./Examen_de_candidatura_files/figure-latex/ejemplo_ciclo-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg, id=459, 469
+<Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg, id=464, 469
 .755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg Graphic
  file (type jpg)
@@ -1350,185 +1350,185 @@ orio-1.jpeg  used on input line 815.
 [11 <./Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1.jpeg>] [12
  <./Examen_de_candidatura_files/figure-latex/ejemplo_aleatorio-1.jpeg>] [13] [1
 4]
-Overfull \hbox (3.64937pt too wide) detected at line 1009
+Overfull \hbox (3.64937pt too wide) detected at line 1011
 [][]\OML/lmm/m/it/10 ^^M[] \OT1/lmr/m/n/10 = \OML/lmm/m/it/10 E [] \OT1/lmr/m/n
 /10 = \OML/lmm/m/it/10 ^^^[]^^M[] \OT1/lmr/m/n/10 + \OML/lmm/m/it/10 ^^^[]^^M[]
  \OT1/lmr/m/n/10 + [] + \OML/lmm/m/it/10 ^^^[]^^M[]
  []
 
 [15] [16] [17] [18] [19]
-<Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg, id=611, 469.755pt
+<Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg, id=616, 469.755pt
  x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg Graphic file 
 (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1
-.jpeg  used on input line 1346.
+.jpeg  used on input line 1349.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [20]
-<Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg, id=619, 469.755pt x
+<Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg, id=624, 469.755pt x
  325.215pt>
 File: Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg Graphic file (t
 ype jpg)
 <use Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/auto_ucr1-1.j
-peg  used on input line 1358.
+peg  used on input line 1361.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [21 <./Examen_de_candidatura_files/figure-latex/ejemplo_ucr-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg, id=624, 469.755p
+<Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg, id=629, 469.755p
 t x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg Graphic file
  (type jpg)
 <use Examen_de_candidatura_files/figure-latex/parcial_ucr1-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/parcial_ucr1-
-1.jpeg  used on input line 1362.
+1.jpeg  used on input line 1365.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [22 <./Examen_de_candidatura_files/figure-latex/auto_ucr1-1.jpeg> <./Examen_de_
 candidatura_files/figure-latex/parcial_ucr1-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg, id=6
-33, 469.755pt x 325.215pt>
+38, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg 
 Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/ejemplo_ucr_d
-iferenciada-1.jpeg  used on input line 1377.
+iferenciada-1.jpeg  used on input line 1380.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg, id=634, 469.755pt x
+<Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg, id=639, 469.755pt x
  325.215pt>
 File: Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg Graphic file (t
 ype jpg)
 <use Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/auto_ucr2-1.j
-peg  used on input line 1381.
+peg  used on input line 1384.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [23 <./Examen_de_candidatura_files/figure-latex/ejemplo_ucr_diferenciada-1.jpeg
 >]
-<Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg, id=639, 469.755p
+<Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg, id=644, 469.755p
 t x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg Graphic file
  (type jpg)
 <use Examen_de_candidatura_files/figure-latex/parcial_ucr2-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/parcial_ucr2-
-1.jpeg  used on input line 1385.
+1.jpeg  used on input line 1388.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [24 <./Examen_de_candidatura_files/figure-latex/auto_ucr2-1.jpeg> <./Examen_de_
 candidatura_files/figure-latex/parcial_ucr2-1.jpeg>] [25] [26] [27]
-<Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg, id=673, 469.7
+<Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg, id=678, 469.7
 55pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg Graphic f
 ile (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotgener
-al-1.jpeg  used on input line 1572.
+al-1.jpeg  used on input line 1578.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [28]
-<Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg, id=686, 469.
+<Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg, id=691, 469.
 755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg Graphic 
 file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotperio
-dos-1.jpeg  used on input line 1594.
+dos-1.jpeg  used on input line 1600.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [29 <./Examen_de_candidatura_files/figure-latex/tmiiplotgeneral-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=693
+<Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=698
 , 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg Gr
 aphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/tmiiplotdesco
-mposicion-1.jpeg  used on input line 1607.
+mposicion-1.jpeg  used on input line 1613.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [30 <./Examen_de_candidatura_files/figure-latex/tmiiplotperiodos-1.jpeg>] [31 <
 ./Examen_de_candidatura_files/figure-latex/tmiiplotdescomposicion-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg, id=711, 46
+<Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg, id=716, 46
 9.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg Graphi
 c file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externaplotge
-neral-1.jpeg  used on input line 1659.
+neral-1.jpeg  used on input line 1665.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [32 <./Examen_de_candidatura_files/figure-latex/externaplotgeneral-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg, id=724, 
+<Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg, id=729, 
 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg Grap
 hic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externasplotp
-eriodos-1.jpeg  used on input line 1676.
+eriodos-1.jpeg  used on input line 1682.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 <Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jpeg, id
-=726, 469.755pt x 325.215pt>
+=731, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jpe
 g Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jpeg
 >
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/externasplotd
-escomposicion-1.jpeg  used on input line 1688.
+escomposicion-1.jpeg  used on input line 1694.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [33 <./Examen_de_candidatura_files/figure-latex/externasplotperiodos-1.jpeg>]
-<Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg, id=733,
+<Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg, id=738,
  469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg Gra
 phic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tgeneral-1.jpeg  used on input line 1717.
+tgeneral-1.jpeg  used on input line 1723.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [34 <./Examen_de_candidatura_files/figure-latex/externasplotdescomposicion-1.jp
 eg>]
-<Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg, id=738
+<Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg, id=743
 , 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg Gr
 aphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tperiodos-1.jpeg  used on input line 1721.
+tperiodos-1.jpeg  used on input line 1727.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [35 <./Examen_de_candidatura_files/figure-latex/incentivosplotgeneral-1.jpeg> <
 ./Examen_de_candidatura_files/figure-latex/incentivosplotperiodos-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.jpeg, 
-id=744, 469.755pt x 325.215pt>
+id=749, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.j
 peg Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.jp
 eg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/incentivosplo
-tdescomposicion-1.jpeg  used on input line 1734.
+tdescomposicion-1.jpeg  used on input line 1740.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [36 <./Examen_de_candidatura_files/figure-latex/incentivosplotdescomposicion-1.
 jpeg>]
-<Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg, id=752, 
+<Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg, id=757, 
 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg Grap
 hic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-general-1.jpeg  used on input line 1780.
+general-1.jpeg  used on input line 1786.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg, id=753,
+<Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg, id=758,
  469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg Gra
 phic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-periodos-1.jpeg  used on input line 1784.
+periodos-1.jpeg  used on input line 1790.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [37 <./Examen_de_candidatura_files/figure-latex/interesesplotgeneral-1.jpeg>]
 <Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.jpeg, i
-d=759, 469.755pt x 325.215pt>
+d=764, 469.755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.jp
 eg Graphic file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.jpe
 g>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/interesesplot
-descomposicion-1.jpeg  used on input line 1797.
+descomposicion-1.jpeg  used on input line 1803.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [38 <./Examen_de_candidatura_files/figure-latex/interesesplotperiodos-1.jpeg>] 
 [39 <./Examen_de_candidatura_files/figure-latex/interesesplotdescomposicion-1.j
 peg>]
-Underfull \hbox (badness 1577) in paragraph at lines 1849--1855
+Underfull \hbox (badness 1577) in paragraph at lines 1855--1861
 \T1/lmr/m/n/10 in-ves-ti-ga-ción fue-ron se-lec-cio-na-dos los si-guien-tes pro
 -ce-sos: $\OML/lmm/m/it/10 ARIMA\OT1/lmr/m/n/10 (1\OML/lmm/m/it/10 ; \OT1/lmr/m
 /n/10 0\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 0)\OML/lmm/m/it/10 ; ARIMA\OT1/lmr/m/
@@ -1536,75 +1536,75 @@ n/10 (1\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 0\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 1
 )\OML/lmm/m/it/10 ;$
  []
 
-<Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg, id=793, 469.7
+<Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg, id=798, 469.7
 55pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg Graphic f
 ile (type jpg)
 <use Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/datos_simulad
-os-1.jpeg  used on input line 1878.
+os-1.jpeg  used on input line 1884.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [40]
-<Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg, id=798, 469.
+<Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg, id=803, 469.
 755pt x 325.215pt>
 File: Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg Graphic 
 file (type jpg)
 <use Examen_de_candidatura_files/figure-latex/series_simuladas-1.jpeg>
 Package pdftex.def Info: Examen_de_candidatura_files/figure-latex/series_simula
-das-1.jpeg  used on input line 1882.
+das-1.jpeg  used on input line 1888.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [41 <./Examen_de_candidatura_files/figure-latex/datos_simulados-1.jpeg> <./Exam
 en_de_candidatura_files/figure-latex/series_simuladas-1.jpeg>] [42]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[43] [44] [45] [46] [47] [48] [49]
-Underfull \hbox (badness 1721) in paragraph at lines 2316--2321
+[43] [44] [45] [46] [47] [48] [49] [50]
+Underfull \hbox (badness 1721) in paragraph at lines 2329--2334
 []\T1/lmr/m/n/10 Calderón, C. E. (2012). Es-ta-dís-ti-ca pa-ra es-tu-dian-tes d
 e ad-mi-nis-tra-ción de em-pre-sas de
  []
 
 
-Underfull \hbox (badness 2617) in paragraph at lines 2316--2321
+Underfull \hbox (badness 2617) in paragraph at lines 2329--2334
 \T1/lmr/m/n/10 la uni-ver-si-dad na-cio-nal del ca-llao. \T1/lmr/m/it/10 Edi-to
 -rial San Mar-cos, 2da Edi-ción, Li-ma Pe-rú\T1/lmr/m/n/10 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2316--2321
+Underfull \hbox (badness 10000) in paragraph at lines 2329--2334
 [][]$\T1/lmr/m/n/10 https : / / unac . edu . pe / documentos / organizacion / v
 ri / cdcitra / Informes _ Finales _ Investigacion /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2328--2333
+Underfull \hbox (badness 10000) in paragraph at lines 2341--2346
 [][]$\T1/lmr/m/n/10 https : / / www . researchgate . net / publication / 274885
 475 _ Mortalidad _ por _ causa _ externas _
  []
 
-[50]
-Underfull \hbox (badness 10000) in paragraph at lines 2355--2359
+[51]
+Underfull \hbox (badness 10000) in paragraph at lines 2368--2372
 \T1/lmr/m/n/10 academia . edu / 7140606 / Measuring _ Reliability _ of _ Statio
 nary _ Stochastic _ Processes ? auto =
  []
 
 
-Underfull \hbox (badness 3861) in paragraph at lines 2365--2369
+Underfull \hbox (badness 3861) in paragraph at lines 2378--2382
 \T1/lmr/m/it/10 lia\T1/lmr/m/n/10 . [][]$http : / / www . prres . net / papers 
 / Flaherty _ Modelling _ Private _ New _ Housing _ Starts _ In _
  []
 
-[51] [52] [53] (./Examen_de_candidatura.aux
+[52] [53] [54] (./Examen_de_candidatura.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
 Package rerunfilecheck Info: File `Examen_de_candidatura.out' has not changed.
-(rerunfilecheck)             Checksum: 582DB0A5DEC2EE42821DA81D469BFD30;8623.
+(rerunfilecheck)             Checksum: 30191AB79C133492834BC77B6FDEA21A;8812.
  ) 
 Here is how much of TeX's memory you used:
- 30005 strings out of 480195
- 582182 string characters out of 5892231
- 876552 words of memory out of 5000000
- 47166 multiletter control sequences out of 15000+600000
+ 30008 strings out of 480195
+ 582229 string characters out of 5892231
+ 877552 words of memory out of 5000000
+ 47167 multiletter control sequences out of 15000+600000
  531185 words of font info for 73 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,15n,80p,1210b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1652,10 +1652,10 @@ pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/Dell
 /AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/
 Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msb
 m10.pfb>
-Output written on Examen_de_candidatura.pdf (58 pages, 28172976 bytes).
+Output written on Examen_de_candidatura.pdf (59 pages, 28173727 bytes).
 PDF statistics:
- 1112 PDF objects out of 1200 (max. 8388607)
- 976 compressed objects within 10 object streams
- 227 named destinations out of 1000 (max. 500000)
- 519 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1122 PDF objects out of 1200 (max. 8388607)
+ 985 compressed objects within 10 object streams
+ 229 named destinations out of 1000 (max. 500000)
+ 527 words of extra memory for PDF output out of 10000 (max. 10000000)
 

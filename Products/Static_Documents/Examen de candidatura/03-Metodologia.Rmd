@@ -14,7 +14,7 @@ En algunos países en vías de desarrollo de Asia, África y América Latina, la
 
 [^9]: http://www.inec.go.cr/
 
-En el INEC, cada mes se publica el boletín de la TMI interanual (TMII), que analiza la TMI de un mes y los 11 meses previos para comparar los periodos correspondientes [@infantiles]. Este apartado busca hacer un análisis de la TMII para los 12 periodos desde el año 1989 y hasta 2017, y no de manera mensual simple, pues dada la volatilidad del fenómeno de estudio, hacer un estudio interanual permite analizar de una mejor manera los cambios entre periodos. Es decir, se analizará la TMII desde el periodo Febrero 1989 – Enero 1990 hasta el periodo Enero 2017 – Diciembre 2017.
+En el INEC, cada mes se publica el boletín de la TMI interanual (TMII), que analiza la TMI de un mes y los 11 meses previos para comparar los periodos correspondientes [@infantiles]. Este apartado busca hacer un análisis de la TMII para los 12 periodos desde el año 1989 y hasta 2017, y no de manera mensual simple, pues dada la volatilidad del fenómeno de estudio, hacer un estudio interanual permite analizar de una mejor manera los cambios entre periodos. Esta forma de definit la TMII genera una autocorrelación natural en los datos, pues la información utilizada en el momento $t$ coincide en alrededor de 92% con la TMII del mes periodo inmediatemente anterior. Se analizará entonces la TMII desde el periodo Febrero 1989 – Enero 1990 hasta el periodo Enero 2017 – Diciembre 2017.
 
 La importancia de este proceso, aparte de servir de parámetro para evaluar el sistema de salud, está en su estrecha relación con las proyecciones de población, pues como se mencionó previamente, la TMII analiza la mortalidad en el grupo de edad de menores de un año, que es el primer grupo al generar tablas de mortalidad, ya sea de la forma clásica o mediante la mortalidad óptima [@mortalidad_optima]. Uno de los métodos más conocidos para realizar estas estimaciones es el método de los componentes de cambio demográfico, que son la fecundidad, la mortalidad y la migración. En el caso de la mortalidad, uno de los puntos de partida es la estimación de las tasas de mortalidad por grupos de edad, siendo de particular interés la de menores de cinco años, pues esta a su vez se subdivide en los grupos de menores de un año y el de uno a cuatro años. Conocer el comportamiento de la mortalidad infantil es importante porque es en este grupo de edad en el que pueden existir cambios muy bruscos en la mortalidad y la fecundidad [@Rincon].
 
@@ -635,7 +635,7 @@ Para contrastar los dos métodos de selección de modelos anteriores (`auto.arim
 
 \subsubsection{Análisis de los errores}
 
-Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autorrelación y el supuesto de normalidad de normalidad de los residuales.
+Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autocorrelación y el supuesto de normalidad de normalidad de los residuales.
 
 \subsubsection{Pronósticos}
 
@@ -711,5 +711,9 @@ Es la raíz del error cuadrático medio, como se define en la ecuación \ref{eqn
 \label{eqn:RMSE}
 \sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}
 \end{equation}
+
+\subsubsection{Tiempo de procesamiento}
+
+Para cada uno de los modelos estimados mediante sobreparametrización, se mostrará el tiempo de procesamiento requerido en cada serie cronológica, esto con el fin de evaluar la viabilidad del método propuesto para la obtención de resultados.
 
 De esta manera, cada una de las series cronológicas (simuladas y reales) serán sometidas a un análisis exploratorio y a una partición de los datos con un 80% para el conjunto de entrenamiento y el restante 20% para validación, esto con el fin de estimar modelos mediante la función `auto.arima()`, la sobreparametrización y un ARIMA estándar para evaluar sus correspondientes y la calidad de los pronósticos obtenidos.
