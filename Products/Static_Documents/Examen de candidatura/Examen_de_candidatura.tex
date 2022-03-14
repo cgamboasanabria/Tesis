@@ -706,25 +706,30 @@ A partir del texto de
 general de una serie cronológica se refiere al crecimiento,
 decrecimiento o lateralización de sus movimientos a lo largo del periodo
 de estudio. La descomposición clásica de la tendencia-ciclo de este
-componente se mantiene constante de un periodo al siguiente y se obtiene
-a partir de una media móvil de \(m\) periodos desde el momento \(t\)
-\(\left(\bar y_{t,m}\right)\). De esta manera la forma matemática de la
-tendencia-ciclo para una serie cronológica se muestra en la ecuación
+componente se mantiene constante de un periodo al siguiente. De esta
+manera la forma matemática de la tendencia-ciclo para una serie
+cronológica se muestra en la ecuación
 \ref{eqn:descomposicion_tendencia}.
 
 \begin{equation}
 \label{eqn:descomposicion_tendencia}
 T(t)=
 \begin{cases}
-2\bar y_{t,m}, & \text{si}\ \text{m es par} \\
-\bar y_{t, m}, & \text{si}\ \text{m es impar} \\
+2\bar y_{t,m} & \text{si}\ \text{m es par} \\
+\bar y_{t, m} & \text{si}\ \text{m es impar} \\
 \end{cases}
 \end{equation}
 
-Un ejemplo es la serie cronológica del número de matrimonios en Costa
-Rica para el periodo 1978-1983, que con el tiempo su crecimiento suele
-comportarse de una forma creciente tal y como muestra la Figura
-\ref{fig:ejemplo_tendencia}.
+Donde \(\bar y_{t,m}\) representa el promedio móvil de orden \(m\)
+alrededor del momento \(t\), que es un promedio de \(m\) observaciones
+consecutivas de la serie de tiempo \(y_t\). En el caso de una media
+móvil de 12 periodos su cálculo está dado por
+\(\bar{y}_{t, 12}=\frac{y_{t-6}+\cdots+y_{t-1}+y_t+y_{t+1}+\cdots+y_{t+5}}{12}\),
+con \(t=7,\cdots,n-5\), siendo \(n\) el total de observaciones de la
+serie cronológica. Un ejemplo es la serie cronológica del número de
+matrimonios en Costa Rica para el periodo 1978-1983, que con el tiempo
+su crecimiento suele comportarse de una forma creciente tal y como
+muestra la Figura \ref{fig:ejemplo_tendencia}.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/ejemplo_tendencia-1} \caption{Tendencia del número de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_tendencia}
@@ -762,8 +767,8 @@ fenómeno dentro de una temporada de observaciones. Visualmente los
 efectos estacionales puede apreciarse en la Figura
 \ref{fig:ejemplo_multiplicativa}, en donde los picos más altos de
 turistas siempre se ubican entres los meses de diciembre y enero.
-Matemáticamente en su forma clásica, el componente estacional puede
-calcularse como se indica en la ecuación
+Matemáticamente, el componente estacional puede calcularse utilizando la
+descomposición clásica como se indica en la ecuación
 \ref{eqn:descomposicion_estacional}:
 
 \begin{equation}
@@ -780,10 +785,18 @@ S(t)=\psi_{t,a}-\psi^*
 
 donde \(S\) representa la frecuencia estacional (por ejemplo cada 12
 meses), \(a\) es la cantidad de periodos estacionales disponibles (por
-ejemplo, si se tienen 6 periodios completos de 12 meses, se tienen 6
-años) y \(m\) es la cantidad de periodos que se utiliza para centrar las
-medias móviles. Gráficamente, el componente estacional se muestra en la
-Figura \ref{fig:ejemplo_estacional}.
+ejemplo, si se tienen 6 periodos completos de 12 meses, se tienen 6
+años), \(m\) es la cantidad de periodos que se utiliza para centrar las
+medias móviles, \(y_t\) es la observación de la serie cronológica \(y\)
+en el momento \(t\), \(\bar{y}_{t,S}\) es el promedio móvil de \(S\)
+periodos alrededor del momento \(t\) de las serie \(y_t\),
+\(\bar{y}_{t,S,m}\) es el promedio móvil centrado de en \(m\) periodos
+de la serie \(y_t\), \(\hat{y}_t\) es la serie de tiempo \(y_t\) sin el
+efecto de la tendencia-ciclo, \(\psi^*\) es el promedio de los valores
+obtenidos para \(\hat{y}_t\), y \(\psi_{t,a}\) es el promedio de los
+\(a\) periodos estacionales sin el efecto de la tendencia-ciclo.
+Gráficamente, el componente estacional se muestra en la Figura
+\ref{fig:ejemplo_estacional}.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Examen_de_candidatura_files/figure-latex/ejemplo_estacional-1} \caption{Componente aleatorio de la serie de matrimonios en Costa Rica para el periodo 1978-1983}\label{fig:ejemplo_estacional}
@@ -856,9 +869,10 @@ aproximadamente las mismas durante todo el periodo, es decir, el tiempo
 no afecta a estos estadísticos de variabilidad. A partir del texto de
 \protect\hyperlink{ref-introduccion_series}{Ramírez}
 (\protect\hyperlink{ref-introduccion_series}{2007}), una forma de
-definir un proceso estacionario \(Y_t\) es mediante los momentos
-poblacionales de primer y segundo orden tal y como se define en la
-ecuación \ref{eqn:ecuacion_estocastico}.
+definir un proceso débilmente estacionario o estacionario de segundo
+orden \(Y_t\) es mediante los momentos poblacionales de primer y segundo
+orden tal y como se define en la ecuación
+\ref{eqn:ecuacion_estocastico}.
 
 \begin{equation}
 \label{eqn:ecuacion_estocastico}
@@ -992,11 +1006,19 @@ r_{{Y_t},{Y_{t-k}}}=\frac{E({Y_t}{Y_{t-k}})}{\sigma_{Y_t} \sigma_{Y_{t-k}}} = \f
 De lo anterior se deduce entonces que las k observaciones previas pueden
 utilizarse para obtener el valor de de la serie cronológica en el
 momento \(t\), como muestra la ecuación
-\ref{eqn:ecuacion_autocorrelaciones}.
+\ref{eqn:ecuacion_autocorrelaciones}, por lo que la formulación
+matemática de la función de autocorrelación parcial de \(k\) rezagos de
+la serie \(y_t\) es como se muestra en la ecuación
+\ref{eqn:ecuacion_PACF}.
 
 \begin{equation}
 \label{eqn:ecuacion_autocorrelaciones}
 y_t=\phi_{k1}y_{t-1}+\phi_{k2}y_{t-2}+\cdots+\phi_{kk}y_{t-k}+u_t,k=1,2,...,K
+\end{equation}
+
+\begin{equation}
+\label{eqn:ecuacion_PACF}
+PACF(y_t,k)=\frac{Cov\left(\left(y_t|y_{t-1},y_{t-2}\cdots,y_{t-k+1}\right),\left(y_{t-k}|y_{t-1},y_{t-2}\cdots,y_{t-k+1}\right)\right)}{\sigma_{\left(y_t|y_{t-1},y_{t-2}\cdots,y_{t-k+1}\right)}\sigma_{\left(y_{t-k}|y_{t-1},y_{t-2}\cdots,y_{t-k+1}\right)}}
 \end{equation}
 
 Los valores de cada término \(\phi_{kk}\), asumiendo que pertenecen a un
@@ -1246,8 +1268,10 @@ notación de rezagos descrita anteriormente, según
 
 \begin{equation}
 \label{eqn:modelo_ARIMApdq}
-\varphi(L)(1-L)^dy_t=\theta(L)\varepsilon_t\\
+\begin{array}{lll}
+\varphi(L)(1-L)^dy_t=\theta(L)\varepsilon_t \\
 \left(1-\sum_{i=1}^p \varphi_iL^i \right)(1-L)^d y_t=\left(1+\sum_{j=1}^q \theta_jL^j \right) \varepsilon_t
+\end{array}
 \end{equation}
 
 Donde los términos \(p, d\) y \(q\) son positivos y mayores a cero y
@@ -1857,16 +1881,17 @@ cantidad de coeficientes a utilizar en los términos del modelo
 \(ARIMA(p,d,q)(P,D,Q)_S\) que gobierna la serie. Para esta investigación
 fueron seleccionados los siguientes procesos:
 \(ARIMA(1,0,0), ARIMA(1,0,1),\) \(ARIMA(2,0,3), ARIMA(4,0,2),\)
-\(ARIMA(0,0,1)(0,1,1)_12\) y \(ARIMA(2,1,4)(3,0,3)_12\).
+\(ARIMA(0,0,1)(0,1,1)_{12}\) y \(ARIMA(2,1,4)(3,0,3)_{12}\).
 
 \textbf{3.} Para cada uno de los procesos seleccionados, se generan
 valores aleatorios de una distribución uniforme con un valor mínimo de 0
 y un valor máximo de 0.99. La cantidad de valores simulados depende de
 la cantidad de parámetros escogidos en \(p, q, P, Q\). Estos valores
 aleatorios son transformados de manera tal que los polinomios de la
-parte autorregresiva y de medias móviles no comparta raíces unitarias
-para que de esta manera el proceso generado sea invertible y
-estacionario.
+parte autorregresiva y de medias móviles no comparta raíces unitarias,
+este es un proceso iterativo que se completa hasta que los coeficientes
+obtenidos tanto para la parte autorregresiva como para la parte de
+medias móviles generen un proceso invertible y estacionario.
 
 \textbf{4.} Con los valores simulados, la cantidad de parámetros y sus
 respectivos valores definidos en los puntos anteriores, se ajusta cada
