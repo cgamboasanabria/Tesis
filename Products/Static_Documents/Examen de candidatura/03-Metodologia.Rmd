@@ -559,7 +559,7 @@ A partir del mismo conjunto de datos de entrenamiento de la correspondiente seri
 
 La estimación de los modelos y posterior selección de los mismos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R, el cuál fue construido haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación:
 
-**1.** Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide en valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. 
+**1.** Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide el valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. 
 
 **2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero (porque precisamente, no se estiman coeficientes para la parte estacional). Se estiman para esta investigación todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$, aunque el orden del modelo más grande puede permitir un mayor número de diferenciaciones o de parámetros. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
 
@@ -620,7 +620,7 @@ https://otexts.com/fpp2/classical-decomposition.html
 
 **6.** Cuando se han realizado las pruebas de significancia estadística a los modelos, son calculadas las medidas de bondad de ajuste y de rendimiento que se mencionarán más adelante. 
 
-**7.** Tras esto, se aplica un método de concenso para seleccionar el modelo más adecuado. Este criterio consiste en darle una mayor o menor ponderación a los resultados obtenidos con el conjunto de datos de entrenamiento y el de validación. De forma predeterminada se le da una ponderación de 0.8 a los resultados de validación y un 0.2 a los de entrenamiento, esto porque en la práctica, los datos de validación son considerados como datos más recientes y que, mientras más cercanos sean los pronósticos a estos datos, mejores resultados ofrece el modelo sleccionado. El método de concenso es utilizado para obtener un puntaje de cada modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
+**7.** Tras esto, se aplica un método de concenso para seleccionar el modelo más adecuado. Este criterio consiste en darle una mayor o menor ponderación a los resultados obtenidos con el conjunto de datos de entrenamiento y el de validación. De forma predeterminada se le da una ponderación de 0.8 a los resultados de validación y un 0.2 a los de entrenamiento, esto porque en la práctica, los datos de validación son considerados como datos más recientes y que, mientras más cercanos sean los pronósticos a estos datos, mejores resultados ofrece el modelo seleccionado. El método de concenso es utilizado para obtener un puntaje de cada modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
 
 \begin{equation}
 \label{eqn:concenso}
@@ -635,7 +635,7 @@ Para contrastar los dos métodos de selección de modelos anteriores (`auto.arim
 
 \subsubsection{Análisis de los errores}
 
-Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autocorrelación y el supuesto de normalidad de normalidad de los residuales.
+Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autocorrelación y el supuesto de normalidad de los residuales.
 
 \subsubsection{Pronósticos}
 

@@ -394,7 +394,7 @@ Donde $\mu$ representa el valor medio de la serie cronológica y cada valor de $
 
 \subsubsection{Modelos ARIMA}
 
-Partiendo de una serie con un proceso no estacionario, es posible aplicar transformaciones o diferenciaciones (*d*)a los datos con el objetivo de convertirlos en un proceso estacionario. Utilizar la notación de rezagos descrita anteriormente, según @Lombardo, permite plantear un modelo $ARIMA(p,d,q)$ como se describe en la ecuación \ref{eqn:modelo_ARIMApdq}.
+Partiendo de una serie con un proceso no estacionario, es posible aplicar transformaciones o diferenciaciones (*d*) a los datos con el objetivo de convertirlos en un proceso estacionario. Utilizar la notación de rezagos descrita anteriormente, según @Lombardo, permite plantear un modelo $ARIMA(p,d,q)$ como se describe en la ecuación \ref{eqn:modelo_ARIMApdq}.
 
 \begin{equation}
 \label{eqn:modelo_ARIMApdq}
