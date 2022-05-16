@@ -14,11 +14,11 @@ En algunos países en vías de desarrollo de Asia, África y América Latina, la
 
 [^9]: http://www.inec.go.cr/
 
-En el INEC, cada mes se publica el boletín de la TMI interanual (TMII), que analiza la TMI de un mes y los 11 meses previos para comparar los periodos correspondientes [@infantiles]. Este apartado busca hacer un análisis de la TMII para los 12 periodos desde el año 1989 y hasta 2017, y no de manera mensual simple, pues dada la volatilidad del fenómeno de estudio, hacer un estudio interanual permite analizar de una mejor manera los cambios entre periodos. Es decir, se analizará la TMII desde el periodo Febrero 1989 – Enero 1990 hasta el periodo Enero 2017 – Diciembre 2017.
+En el INEC, cada mes se publica el boletín de la TMI interanual (TMII), que analiza la TMI de un mes y los 11 meses previos para comparar los periodos correspondientes [@infantiles]. Este apartado busca hacer un análisis de la TMII para los 12 periodos desde el año 1989 y hasta 2017, y no de manera mensual simple, pues dada la volatilidad del fenómeno de estudio, hacer un estudio interanual permite analizar de una mejor manera los cambios entre periodos. Esta forma de definit la TMII genera una autocorrelación natural en los datos, pues la información utilizada en el momento $t$ coincide en alrededor de 92% con la TMII del mes periodo inmediatemente anterior. Se analizará entonces la TMII desde el periodo Febrero 1989 – Enero 1990 hasta el periodo Enero 2017 – Diciembre 2017.
 
 La importancia de este proceso, aparte de servir de parámetro para evaluar el sistema de salud, está en su estrecha relación con las proyecciones de población, pues como se mencionó previamente, la TMII analiza la mortalidad en el grupo de edad de menores de un año, que es el primer grupo al generar tablas de mortalidad, ya sea de la forma clásica o mediante la mortalidad óptima [@mortalidad_optima]. Uno de los métodos más conocidos para realizar estas estimaciones es el método de los componentes de cambio demográfico, que son la fecundidad, la mortalidad y la migración. En el caso de la mortalidad, uno de los puntos de partida es la estimación de las tasas de mortalidad por grupos de edad, siendo de particular interés la de menores de cinco años, pues esta a su vez se subdivide en los grupos de menores de un año y el de uno a cuatro años. Conocer el comportamiento de la mortalidad infantil es importante porque es en este grupo de edad en el que pueden existir cambios muy bruscos en la mortalidad y la fecundidad [@Rincon].
 
-Dado que la medición de la TMII se hace partiendo de un determinado mes y a partir de éste se consideran los 11 meses anteriores, el primer valor de la base de datos fue medido a partir de Enero de 2000, que corresponde al período interanual Febrero 1999 – Enero 2000. Todos los periodos siguientes se muestran en la figura \ref{fig:tmiiplotgeneral}.
+Dado que la medición de la TMII se hace partiendo de un determinado mes y a partir de éste se consideran los 11 meses anteriores, el primer valor de la base de datos fue medido a partir de Enero de 2000, que corresponde al período interanual Febrero 1999 – Enero 2000. Todos los periodos siguientes se muestran en la Figura \ref{fig:tmiiplotgeneral}.
 
 ```{r}
 base <- popstudy::read_from_dir("TMIIR.xlsx", "References/Results_section_references/01 - Tasa de mortalidad infantil interanual") %>% 
@@ -48,7 +48,7 @@ ggplot(TS)+
 
 La serie muestra picos y valles pronunciados a lo largo de todo el periodo. A modo de visualización, se ajustó un suavizamiento de Loess para buscar señales de tendencia y concavidad en los datos temporales. La línea roja punteada se ubica aproximadamente en el mes de Julio del año 2000, pues a partir de ese punto el suavizamiento de Loess muestra un ligero cambio en la concavidad, lo cual sugiere que a partir ese punto será más difícil que la TMII vuelva a alcanzar valores similares a los mostrados al inicio de la serie. Además, al presentarse dos caídas y subidas abruptas en la TMII, esta tiende a estabilizarse.
 
-Mediante un análisis visual, la figura \ref{fig:tmiiplotperiodos} parece respaldar el supuesto de que la mortalidad no posee efectos estacionales determinantes, pues para cada uno de los 12 períodos, en ninguno parecen existir mayores diferencias. El efecto que se mantiene en cada uno de los períodos es el de la tendencia, pues en cada uno ésta sigue descendiendo con el pasar de los años. Este hecho coincide con lo observado en la figura \ref{fig:tmiiplotgeneral}.
+Mediante un análisis visual, la Figura \ref{fig:tmiiplotperiodos} parece respaldar el supuesto de que la mortalidad no posee efectos estacionales determinantes, pues para cada uno de los 12 períodos, en ninguno parecen existir mayores diferencias. El efecto que se mantiene en cada uno de los períodos es el de la tendencia, pues en cada uno ésta sigue descendiendo con el pasar de los años. Este hecho coincide con lo observado en la Figura \ref{fig:tmiiplotgeneral}.
 
 ```{r tmiiplotperiodos, fig.cap="Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos"}
 base %>% 
@@ -81,7 +81,7 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-Para hacer la descomposición de la serie se hizo una transformación de Box-Cox con $\lambda=1$ para aplicarla de manera multiplicativa. Esto se debe a que en la figura \ref{fig:tmiiplotgeneral} pueden observarse cambios considerables en la variabilidad de la serie a lo largo del tiempo. la figura \ref{fig:tmiiplotdescomposicion} muestra, como se mencionó previamente, una tendencia decreciente y una estacionalidad que no es reiterada a lo largo del tiempo. Además, el componente aleatorio muestra como los errores no son constantes durante todo el período.
+Para hacer la descomposición de la serie se hizo una transformación de Box-Cox con $\lambda=1$ para aplicarla de manera multiplicativa. Esto se debe a que en la Figura \ref{fig:tmiiplotgeneral} pueden observarse cambios considerables en la variabilidad de la serie a lo largo del tiempo. la Figura \ref{fig:tmiiplotdescomposicion} muestra, como se mencionó previamente, una tendencia decreciente y una estacionalidad que no es reiterada a lo largo del tiempo. Además, el componente aleatorio muestra como los errores no son constantes durante todo el período.
 
 ```{r tmiiplotdescomposicion, fig.cap="Descomposición de la TMII en el periodo 2000 - 2017"}
 base %>% 
@@ -111,7 +111,7 @@ En Costa Rica para el año 2011, las muertes por causas externas ocuparon el ter
 
 [^10]: https://www.paho.org/salud-en-las-americas-2017/?lang=es]
 
-Dado que los registros de defunciones por causa externa se realizan diariamente, conviene analizar su comportamiento de manera mensual desde inicios del milenio de una manera más general, dicho comportamiento puede observarse en la figura \ref{fig:externaplotgeneral}.
+Dado que los registros de defunciones por causa externa se realizan diariamente, conviene analizar su comportamiento de manera mensual desde inicios del milenio de una manera más general, dicho comportamiento puede observarse en la Figura \ref{fig:externaplotgeneral}.
 
 ```{r}
 load(popstudy::read_from_dir("data.RData", "References/Results_section_references/03 - Mortalidad por causa externa"))
@@ -140,7 +140,7 @@ ggplot(TS)+
 
 Es importante recalcar que, entre Junio del año 2012 y Diciembre del año 2017, el aumento en la tasa de cambio de la cantidad de defunciones debido a causas externas coincide con el aumento de la flotilla de motocicletas, pues en un período de cinco años esta cifra creció en un 189% [@motos]. Conviene entonces verificar el comportamiento a lo interno de la serie en referencias a las categorías de las causas externas.
 
-De la figura \ref{fig:externasplotperiodos} puede notarse que cada mes tiene sus picos y valles durante cada mes a lo largo del periodo, siendo los meses de Enero, Abril y Diciembre los que presentaron valores ligeramente más altos entre los años 2000 y 2017. 
+De la Figura \ref{fig:externasplotperiodos} puede notarse que cada mes tiene sus picos y valles durante cada mes a lo largo del periodo, siendo los meses de Enero, Abril y Diciembre los que presentaron valores ligeramente más altos entre los años 2000 y 2017. 
 
 ```{r externasplotperiodos, fig.cap="Mortalidad por causa externa 2000 − 2017 según mes"}
 base %>% 
@@ -167,7 +167,7 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-La descomposición de la serie se hará de forma aditiva debido a que en el gráfico 1 no se observan grandes cambios en la variabilidad a lo largo del tiempo. La figura \ref{fig:externasplotdescomposicion} muestra que la tendencia se mantiene casi constante a lo largo del tiempo, mientras que parece haber estacionalidad en ciertos lapsos de la segunda mitad del año. Además, el componente aleatorio muestra como los errores no son constantes a lo largo de todo el período. 
+La descomposición de la serie se hará de forma aditiva debido a que en el gráfico 1 no se observan grandes cambios en la variabilidad a lo largo del tiempo. La Figura \ref{fig:externasplotdescomposicion} muestra que la tendencia se mantiene casi constante a lo largo del tiempo, mientras que parece haber estacionalidad en ciertos lapsos de la segunda mitad del año. Además, el componente aleatorio muestra como los errores no son constantes a lo largo de todo el período. 
 
 ```{r externasplotdescomposicion, fig.cap="Descomposición de las defunciones por causa externa en el periodo 2000-2017"}
 base %>% 
@@ -191,7 +191,7 @@ ggsdc(., aes(x = fecha, y = Total),
 
 Los incentivos salariales son retribuciones que de conformidad con la legislación vigente se asignan al servidor por sus características laborales que complementan las remuneraciones básicas. Los incentivos se reconocen tanto a profesionales como a no profesionales, facultados por disposiciones jurídicas que así lo autorizan. Algunos de estos incentivos son: anualidades, dedicación exclusiva, salario escolar, carrera profesional, carrera técnica, zonaje, desarraigo, regionalización, riesgo policial, riesgo penitenciario, riesgo de seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros. Esta serie cronológica representa los incentivos salariales en millones de colones del sector público de Costa Rica de enero 2007 a junio 2015.
 
-De manera análoga a las secciones anteriores, la figura \ref{fig:incentivosplotgeneral} muestra el comportamiento general de la serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio de concavidad a partir de Julio 2008, lo cual sugiere que a partir de este momento los incentivos salariales vuelvan a alcanzar valores similares a los mostrados al inicio de la serie. La figura \ref{fig:incentivosplotperiodos} muestra cómo hay un crecimiento sostenido de los incentivos en cada mes a lo largo de todo el periodo. Sin embargo, este crecimiento se da a una tasa mucho mayor en la época de fin y principio de año.
+De manera análoga a las secciones anteriores, la Figura \ref{fig:incentivosplotgeneral} muestra el comportamiento general de la serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio de concavidad a partir de Julio 2008, lo cual sugiere que a partir de este momento los incentivos salariales vuelvan a alcanzar valores similares a los mostrados al inicio de la serie. La Figura \ref{fig:incentivosplotperiodos} muestra cómo hay un crecimiento sostenido de los incentivos en cada mes a lo largo de todo el periodo. Sin embargo, este crecimiento se da a una tasa mucho mayor en la época de fin y principio de año.
 
 ```{r}
 base <- popstudy::read_from_dir("Datos examen1.xlsx", "References/Results_section_references/04 - Incentivos salariales del sector público") %>% 
@@ -244,7 +244,7 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-En la figura \ref{fig:incentivosplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo, los picos y las caídas en la parte estacional, esto hace referencia a los meses de Diciembre y Enero; cuando no se está en este periodo los incentivos poseen un comportamiento más estable. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo.
+En la Figura \ref{fig:incentivosplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo, los picos y las caídas en la parte estacional, esto hace referencia a los meses de Diciembre y Enero; cuando no se está en este periodo los incentivos poseen un comportamiento más estable. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo.
 
 ```{r incentivosplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 − 2018"}
 base %>% 
@@ -269,7 +269,7 @@ ggsdc(., aes(x = fecha, y = valor),
 
 Finalmente, se utiliza para este análisis la serie cronológica de los intereses y comisiones del sector público, que comprenden el pago de los intereses de la deuda del gobierno, esto es, las erogaciones de intereses y comisiones destinadas por las instituciones públicas para cubrir el pago a favor de terceras personas, físicas o jurídicas, del sector privado o del sector público, residentes en el territorio nacional o en el exterior, por la utilización en un determinado plazo de recursos financieros provenientes de los conceptos de emisión y colocación de títulos valores, contratación de préstamos directos, créditos de proveedores, depósitos a plazo y a la vista, intereses por deudas de avales asumidos, entre otros pasivos de la entidad tranzados en el país o en el exterior. Incluye el pago por concepto de otras obligaciones contraídas entre las partes, que no provienen de las actividades normales de financiamiento. Además, los intereses y comisiones por las operaciones normales de los bancos comerciales del sector público, así como las diferencias por tipo de cambio por operaciones financieras; y también el pago de intereses moratorios correspondientes a la deuda pública. 
 
-Para iniciar el análisis exploratorio de esta serie, la figura \ref{fig:interesesplotgeneral} muestra que hay un ligero cambio de concavidad a partir de Julio 2010, esto sugiere que a partir de este momento los intereses y comisiones inician una tendencia al alza, la cual se sostiene hasta Junio del 2018. Por su parte, la figura \ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento sostenido de los intereses y comisiones del sector público al final de cada trimestre durante todo el periodo, mientras que se mantiene casi constante durante los primeros dos meses de cada trimestre. La caída más pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento más rápida parece darse al final del primer trimestre. Además, en la figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Puede observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional, esto en cuanto a los cierres trimestrales previamente mencionados. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios.
+Para iniciar el análisis exploratorio de esta serie, la Figura \ref{fig:interesesplotgeneral} muestra que hay un ligero cambio de concavidad a partir de Julio 2010, esto sugiere que a partir de este momento los intereses y comisiones inician una tendencia al alza, la cual se sostiene hasta Junio del 2018. Por su parte, la Figura \ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento sostenido de los intereses y comisiones del sector público al final de cada trimestre durante todo el periodo, mientras que se mantiene casi constante durante los primeros dos meses de cada trimestre. La caída más pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento más rápida parece darse al final del primer trimestre. Además, en la Figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Puede observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional, esto en cuanto a los cierres trimestrales previamente mencionados. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios.
 
 ```{r}
 base <- popstudy::read_from_dir("Datos examen2.xlsx", "References/Results_section_references/05 - Intereses y comisiones del sector público") %>% 
@@ -323,7 +323,7 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-En la figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios.
+En la Figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios.
 
 ```{r interesesplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 − 2018"}
 base %>% 
@@ -351,15 +351,22 @@ La metodología propuesta será puesta a prueba en una primera etapa con series 
 
 Como parte de esta investigación, es necesario validar la estimación de modelos ARIMA mediante sobreparametrización no solo con datos reales, sino también mediante datos simulados. Para ello es necesario generar series cronológicas que son gobernadas por un proceso determinado y previamente conocido para poder compararlo con los modelos identificados tanto con la sobreparametrización, como con la función `auto.arima()` y el correspondiente modelo $ARIMA$ estándar. 
 
-Con este fin, se programó la función que se encuentra en el \ref{simula_series} que sigue los siguientes pasos:
+Con este fin, se programó una función que sigue los siguientes pasos:
 
-**1.** Se generan valores aleatorios de alguna distribución de probabilidad. Para esta investigación se escogen 100 valores de una distribución Normal con media 10 y varianza 1. Estos valores se resumen en la figura \ref{fig:datos_simulados}; donde las región azul oscuro representa la densidad de datos entre los percentiles 25 y 75, las líneas punteadas de color naranja marcan la cantidad de desviaciones estándar que los datos se alejan del promedio, y las líneas punteadas de color azul marcan los puntos de corte mínimo, percentiles 25, 50 y 75, y el máximo.
+**1.** Se generan valores aleatorios de alguna distribución de probabilidad. Para esta investigación se escogen 100 valores de una distribución Normal con media 10 y varianza 1. Estos valores se resumen en la Figura \ref{fig:datos_simulados}; donde las región azul oscuro representa la densidad de datos entre los percentiles 25 y 75, las líneas punteadas de color naranja marcan la cantidad de desviaciones estándar que los datos se alejan del promedio, y las líneas punteadas de color azul marcan los puntos de corte mínimo, percentiles 25, 50 y 75, y el máximo.
 
-**2.** Se seleccionan mediante un muestreo simple al azar la cantidad de coeficientes a utilizar en los términos del modelo $ARIMA(p,d,q)(P,D,Q)_S$ que gobiernan la serie. Para esta investigación fueron seleccionados los siguientes procesos: $ARIMA(1,0,0), ARIMA(1,0,1),$ $ARIMA(2,0,3), ARIMA(4,0,2),$ $ARIMA(0,0,1)(0,1,1)$ y $ARIMA(2,1,4)(3,0,3)$.
+**2.** Se seleccionan mediante un muestreo simple al azar la cantidad de coeficientes a utilizar en los términos del modelo $ARIMA(p,d,q)(P,D,Q)_S$ que gobierna la serie. Para esta investigación fueron seleccionados los siguientes procesos: $ARIMA(1,0,0), ARIMA(1,0,1),$ $ARIMA(2,0,3), ARIMA(4,0,2),$ $ARIMA(0,0,1)(0,1,1)_{12}$ y $ARIMA(2,1,4)(3,0,3)_{12}$.
 
-**3.** Para cada uno de los procesos seleccionados, se genera una secuencia de valores en el intervalo $[-1,1]$ con saltos de 0.1 para posteriormente seleccionar de manera aleatoria el valor que tomaran los coeficientes de cada uno de los procesos mencionados en el punto anterior.
+**3.** Para cada uno de los procesos seleccionados, se generan valores aleatorios de una distribución uniforme con un valor mínimo de 0 y un valor máximo de 0.99. La cantidad de valores simulados depende de la cantidad de parámetros escogidos en $p, q, P, Q$. Estos valores aleatorios son transformados de manera tal que los polinomios de la parte autorregresiva y de medias móviles no comparta raíces unitarias, este es un proceso iterativo que se completa hasta que los coeficientes obtenidos tanto para la parte autorregresiva como para la parte de medias móviles generen un proceso invertible y estacionario.
 
-**4.** Con los valores simulados, la cantidad de parámetros y sus respectivos valors definidos en los puntos anteriores, se ajusta cada uno de los modelos $ARIMA$ descritos en el inciso **2.**.
+```{r, eval=FALSE}
+# https://arxiv.org/pdf/1611.01387.pdf
+# https://github.com/cran/arfima/blob/master/R/InvertibleQ.R
+# https://github.com/cran/arfima/blob/master/R/ARToPacf.R
+```
+
+
+**4.** Con los valores simulados, la cantidad de parámetros y sus respectivos valores definidos en los puntos anteriores, se ajusta cada uno de los modelos $ARIMA$ descritos en el inciso **2.**.
 
 **5.** Con cada modelo ajustado, se utiliza la función `simulate.Arima()` para generar 200 observaciones basadas en dichos modelos.
 
@@ -380,7 +387,7 @@ for(i in 1:2){
 }
 ```
 
-Tras aplicar los pasos anteriores y obtener las correspondientes series cronológicas simuladas, el comportamiento y proceso gobernante de cada una se muestra en la figura \ref{fig:series_simuladas}.
+Tras aplicar los pasos anteriores y obtener las correspondientes series cronológicas simuladas, el comportamiento y proceso gobernante de cada una se muestra en la Figura \ref{fig:series_simuladas}.
 
 ```{r datos_simulados, fig.cap="Valores de referencia para la simulación de series cronológicas"}
 popstudy::descriptive_plot(data = data.frame(Xt=dat), labels = NULL, Xt)$Xt
@@ -532,11 +539,11 @@ ggarrange(arima100, arima101, arima203, arima402,
 
 \subsection{Métodos}
 
-En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos. Para cada serie de tiempo, se estima el mejor modelo utilizando la función `auto.arima()`, la sobreparametrización y un modelo ARIMA estándar, que pueed ser un $ARIMA(1,1,1)$ para las series no estacionales, o un $ARIMA(1,1,1)(1,1,1)$ en el caso de las series cronológicas estacionales. Una vez obtenidos estos modelos, se analizan los residuales obtenidos. En última instancia, se obtienen los pronósticos y sus medidas de bondad de ajuste y de rendimiento.
+En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos. Para cada serie de tiempo, se estima el mejor modelo utilizando la función `auto.arima()`, la sobreparametrización y un modelo ARIMA estándar, que puede ser un $ARIMA(1,1,1)$ para las series no estacionales, o un $ARIMA(1,1,1)(1,1,1)_S$ en el caso de las series cronológicas estacionales. Una vez obtenidos estos modelos, se analizan los residuales obtenidos. En última instancia, se obtienen los pronósticos y sus medidas de bondad de ajuste y de rendimiento.
 
 \subsubsection{Análisis exploratorio}
 
-Como fue mencionado en el Marco Teórico, debe corroborarse que la serie cronológica a trabajar posea un comportamiento estacionario y, de no serlo, someterla a procesos matemáticos para asegurar esta condición, estando entre los más comunes la diferenciación o la aplicación del logaritmo natural. Posteriormente, se realiza una identificación del posible proceso que gobierna la serie cronológica al graficar las funciones de autocorrelación y autocorrelación parcial, las cuales también sirven para verificar si la serie (transformada o no) es estacionaria.
+Como fue mencionado en el Marco Teórico, debe corroborarse que la serie cronológica a trabajar posea un comportamiento estacionario y, de no serlo, someterla a transformaciones para asegurar esta condición, estando entre los más comunes la diferenciación o la aplicación del logaritmo natural. Posteriormente, se realiza una identificación del posible proceso que gobierna la serie cronológica al graficar las funciones de autocorrelación y autocorrelación parcial, las cuales también sirven para verificar si la serie (transformada o no) es estacionaria.
 
 \subsubsection{Partición de los datos}
 
@@ -550,11 +557,11 @@ Con el correspondiente conjunto de datos de entrenamiento, se utiliza la funció
 
 A partir del mismo conjunto de datos de entrenamiento de la correspondiente serie cronológica, se utiliza la sobreparametrización para encontrar el mejor modelo a partir de distintas permutaciones de la cantidad de coeficientes de los términos $p,d,q, P,D,Q$, según sea el caso. 
 
-La estimación de los modelos y posterior selección de los mismos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R y su código se muestra en el \ref{funcion_op_arima}, la cuál fue construida haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación:
+La estimación de los modelos y posterior selección de los mismos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R, el cuál fue construido haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación:
 
-**1.** Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide en valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. 
+**1.** Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide el valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. 
 
-**2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero (porque precisamente, no se estiman coeficientes para la parte estacional). Se estiman todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
+**2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero (porque precisamente, no se estiman coeficientes para la parte estacional). Se estiman para esta investigación todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$, aunque el orden del modelo más grande puede permitir un mayor número de diferenciaciones o de parámetros. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
 
 ```{r, eval=FALSE, echo=FALSE}
 Las siguiente matriz se obtuvo de:
@@ -613,7 +620,7 @@ https://otexts.com/fpp2/classical-decomposition.html
 
 **6.** Cuando se han realizado las pruebas de significancia estadística a los modelos, son calculadas las medidas de bondad de ajuste y de rendimiento que se mencionarán más adelante. 
 
-**7.** Tras esto, se aplica un método de concenso para seleccionar el modelo más adecuado. Este criterio consiste en darle una mayor o menor ponderación a los resultados obtenidos con el conjunto de datos de entrenamiento y el de validación. De forma predeterminada se le da una ponderación de 0.8 a los resultados de validación y un 0.2 a los de entrenamiento, esto porque en la práctica, los datos de validación son considerados como datos más recientes y que, mientras más cercanos sean los pronósticos a estos datos, mejores resultados ofrece el modelo sleccionado. El método de concenso es utilizado para obtener un puntaje de cada modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
+**7.** Tras esto, se aplica un método de concenso para seleccionar el modelo más adecuado. Este criterio consiste en darle una mayor o menor ponderación a los resultados obtenidos con el conjunto de datos de entrenamiento y el de validación. De forma predeterminada se le da una ponderación de 0.8 a los resultados de validación y un 0.2 a los de entrenamiento, esto porque en la práctica, los datos de validación son considerados como datos más recientes y que, mientras más cercanos sean los pronósticos a estos datos, mejores resultados ofrece el modelo seleccionado. El método de concenso es utilizado para obtener un puntaje de cada modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
 
 \begin{equation}
 \label{eqn:concenso}
@@ -628,7 +635,7 @@ Para contrastar los dos métodos de selección de modelos anteriores (`auto.arim
 
 \subsubsection{Análisis de los errores}
 
-Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autorrelación y el supuesto de normalidad de normalidad de los residuales.
+Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autocorrelación y el supuesto de normalidad de los residuales.
 
 \subsubsection{Pronósticos}
 
@@ -704,5 +711,9 @@ Es la raíz del error cuadrático medio, como se define en la ecuación \ref{eqn
 \label{eqn:RMSE}
 \sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}
 \end{equation}
+
+\subsubsection{Tiempo de procesamiento}
+
+Para cada uno de los modelos estimados mediante sobreparametrización, se mostrará el tiempo de procesamiento requerido en cada serie cronológica, esto con el fin de evaluar la viabilidad del método propuesto para la obtención de resultados.
 
 De esta manera, cada una de las series cronológicas (simuladas y reales) serán sometidas a un análisis exploratorio y a una partición de los datos con un 80% para el conjunto de entrenamiento y el restante 20% para validación, esto con el fin de estimar modelos mediante la función `auto.arima()`, la sobreparametrización y un ARIMA estándar para evaluar sus correspondientes y la calidad de los pronósticos obtenidos.
