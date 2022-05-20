@@ -1,6 +1,100 @@
-\subsection{Función de sobreparametrización}
+```{r, echo=FALSE}
+load(popstudy::read_from_dir("Resultados_2022.RData", "Output/Results"))
+# Para comparar los tiempos
+comparar_tiempos <- function(obj){
+  obj$tiempos %>% 
+    sapply(function(x){
+      difftime(x[[2]], x[[1]], "mins")
+    })
+}
 
-```{r, ref="funcion_op_arima", codecap = "Función op.arima", echo=TRUE, eval=FALSE}
+tiempos_simulaciones <- lapply(list(
+  comparacion_no_estacional_bajo = comparacion_no_estacional_bajo,
+  comparacion_no_estacional_alto = comparacion_no_estacional_alto,
+  comparacion_estacional_bajo = comparacion_estacional_bajo,
+  comparacion_estacional_alto = comparacion_estacional_alto
+), function(x) {
+  sapply(x, comparar_tiempos)
+})
+tiempos_reales <- sapply(
+  list(
+    TMII = TMII,
+    EXTERNA = EXTERNA,
+    INCENTIVOS = INCENTIVOS,
+    INTERESES = INTERESES
+  ),
+  comparar_tiempos
+)
+
+especificaciones <- list()
+k <- 1
+for(i in 1:length(names(tiempos_simulaciones))){
+  for(j in 1:2){
+    especificaciones[[k]] <- paste0("summary(", names(tiempos_simulaciones)[i], "[[", j, "]]$modelos$original)")
+    k <- k+1
+  }
+}
+
+names(especificaciones) <- rep(names(tiempos_simulaciones), each=2)
+
+tiempos_simulaciones <- tiempos_simulaciones %>% 
+  do.call(cbind, .) %>% 
+  as.data.frame()
+names(tiempos_simulaciones) <- sapply(especificaciones, function(x){
+  x <- capture.output(eval(parse(text = x)))
+  substr(x[2],1, 100L)
+})
+
+tiempos_de_estimacion <- do.call(cbind, list(tiempos_simulaciones, as.data.frame(tiempos_reales)))
+rm(tiempos_simulaciones)
+rm(tiempos_reales)
+rm(especificaciones)
+
+tiempos_de_estimacion <- tiempos_de_estimacion %>% 
+    mutate(estimacion=row.names(tiempos_de_estimacion)) %>% 
+    select(estimacion, everything()) %>% 
+    data.frame(row.names = NULL) %>% 
+    mutate_if(is.numeric, round, 4)
+
+names(tiempos_de_estimacion) <- c("Estimación",'ARIMA(1,0,0)',"ARIMA(1,0,1)", "ARIMA(2,0,3)", "ARIMA(4,0,2)", "ARIMA(0,0,1)(0,1,1)[12]", "ARIMA(1,1,0)(1,1,0)[12]", "ARIMA(2,1,4)(4,1,4)[12]", "ARIMA(2,1,4)(3,0,3)[12]","TMII", "EXTERNA","INCENTIVOS","INTERESES")
+
+tiempos_de_estimacion %>%
+    gather(serie, minutos, -Estimación) %>% 
+    pivot_wider(names_from = Estimación, values_from = minutos) %>% 
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:tiempos_estimacion}Tiempos de estimación en minutos para cada modelo según su tipo de estimación.",
+        col.names = c(
+            "Serie",
+            "autoarima",
+            "Sobreparametrización",
+            "ARIMA estándar"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "hold_position"),
+        full_width = T,
+        font_size = 7
+    ) %>%
+    # column_spec(1, width = "2.5cm") %>%
+    # collapse_rows(columns = 1) %>%
+    # column_spec(2, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia"
+        ),
+        general_title = ""
+    )
+```
+
+
+
+```{r, ref="funcion_op_arima", codecap = "Función op.arima", echo=FALSE, eval=FALSE}
+#\subsection{Función de sobreparametrización}
 op.arima <- function(arima_process = c(p = 1, d = 1, q = 1,
                                        P = 1, D = 1, Q = 1),
                      seasonal_periodicity,
@@ -184,9 +278,10 @@ op.arima <- function(arima_process = c(p = 1, d = 1, q = 1,
 }
 ```
 
-\subsection{Función de simulación de series cronológicas}
 
-```{r, ref="simula_series", codecap = "Función ts.sim", echo=TRUE, eval=FALSE}
+
+```{r, ref="simula_series", codecap = "Función ts.sim", echo=FALSE, eval=FALSE}
+#\subsection{Función de simulación de series cronológicas}
 ts.sim <- function(data,
                    n,
                    temporalidad,

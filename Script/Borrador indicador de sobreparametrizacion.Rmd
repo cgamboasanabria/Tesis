@@ -1,0 +1,66 @@
+Buscar "computing" en https://rss.onlinelibrary.wiley.com/doi/epdf/10.2307/2344994
+
+
+
+```{r}
+mod1 <- forecast::Arima(AirPassengers, c(1,1,1))
+mod2 <- forecast::Arima(AirPassengers, c(2,1,2))
+mod3 <- forecast::Arima(AirPassengers, c(6,1,6))
+```
+```{r}
+library(readxl)
+library(dplyr)
+library(tidyr)
+pesos <- read_excel(popstudy::read_from_dir("tiempos de estimación.xlsx", "Products/Static_Documents/Examen de candidatura"),
+               skip = 2) %>% 
+    filter_if(is.character, function(x) x=="Sobreparametrización") %>% 
+    select_if(is.numeric) %>% 
+    na.omit() %>% 
+    gather(modelo, tiempo) %>% 
+    mutate(tipo=c(rep("no estacional", 4), rep("estacional", 6))) %>% 
+    group_by(tipo) %>% 
+    summarise(tiempo_mediano=median(tiempo)) %>% 
+    ungroup() %>% 
+    # mutate(suma=sum(mediana),
+    #        peso=round(mediana/suma, 4)) %>% 
+    # select(tipo, peso) %>% 
+    pivot_wider(names_from = tipo, values_from = tiempo_mediano) %>% 
+    janitor::clean_names()
+
+# pesos <- c(rep(pesos$no_estacional, 2), rep(pesos$estacional, 2))/sum(c(rep(pesos$no_estacional, 2), rep(pesos$estacional, 2)))
+pesos <- pesos[1,] %>% unlist() %>% rev() %>% rep(each=2)
+#pesos <- pesos/sum(pesos)
+
+weighted.mean(mod1$arma[1:4], w=pesos)
+weighted.mean(mod2$arma[1:4], w=pesos)
+weighted.mean(mod3$arma[1:4], w=pesos)
+
+library(viridis)
+indicadores <- expand.grid(ar=0:7, ma=0:7, sar=0:6, sma=0:6) %>% 
+    mutate(indicador=apply(., 1, weighted.mean, w=pesos),
+           no_estacional=ar+ma,
+           estacional=sar+sma) %>% 
+    select(no_estacional, estacional, indicador) %>% 
+    unique() 
+indicadores %>% 
+    arrange(indicador) %>% 
+    filter(indicador<50)
+
+library(ggplot2)
+indicadores %>% 
+ggplot(., aes(x=no_estacional, y=estacional, fill=indicador))+
+  geom_raster(interpolate = TRUE)+
+  scale_fill_viridis(option="B")+
+  labs(y="Estacional", x="No estacional", fill="Indicador")
+
+indicadores %>% 
+    gather(tipo, coeficientes, -indicador) %>% 
+    group_by(tipo, coeficientes) %>% 
+    summarise(indicador=median(indicador)) %>% 
+    ungroup() %>% 
+    ggplot(., aes(x=coeficientes, y=indicador, color=tipo))+
+    geom_line()+
+    scale_x_continuous(breaks=0:12)
+    kable(rescale(base$Income,to=c(1,10)))
+```
+

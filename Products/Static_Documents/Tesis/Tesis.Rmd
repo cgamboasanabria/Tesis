@@ -56,7 +56,7 @@ knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
 
 popstudy::required_packages(knitr, kableExtra, readxl, gridExtra, ggpubr, ggplot2, lubridate, 
                      ggseas, astsa, ggpmisc, forecast, 
-                     tidyr, popstudy, dplyr)
+                     tidyr, popstudy, DiagrammeR, dplyr)
 
 oldSource <- knit_hooks$get("source")
 knit_hooks$set(source = function(x, options) {
@@ -90,7 +90,7 @@ También pendiente
 \text{}
 
 \noindent\rule{7cm}{0.4pt}\\
-Ph.D. Álvaro Morales Ramírez\\
+Ph.D. Flor Isabel Jiménez Segura\\
 \textbf{Decano Sistema de Estudios de Posgrado}
 
 \text{}
@@ -114,7 +114,7 @@ Ph.D. ShuWei Chou.\\
 \text{}
 
 \noindent\rule{7cm}{0.4pt}\\
-MSc. Johnny Madrigal Pana\\
+Ph.D. Gilbert Brenes Camacho\\
 \textbf{Director Programa de Posgrado en Estadística}
 
 \text{}

@@ -102,7 +102,7 @@ arima214_303 <- resultados_estacional_alto[[2]]$datos
 
 \paragraph{ARIMA(1,0,0)}
 
-En la figura \ref{fig:arima100_comportamiento} puede verse como los datos simulados bajo este proceso se comportan de manera aproximadamente estacionaria a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. Además, la figura \ref{fig:arima100_acf} muestra como las autocorrelaciones caen rápidamente a cero y van disminuyendo, mientras que la figura \ref{fig:arima100_pacf} se corta al inicio, lo que sugiere que se está en presencia de un proceso $ARIMA(1,0,0)$, tal y como fue planteado al simular los datos.
+En la figura \ref{fig:arima100_comportamiento} puede verse como los datos simulados bajo este proceso se comportan de manera ligeramente oscilante a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. Además, la figura \ref{fig:arima100_acf} muestra como las autocorrelaciones caen moderadamente rápidamente a cero y van disminuyendo, mientras que la figura \ref{fig:arima100_pacf} se corta al inicio, lo que sugiere que se está en presencia de un proceso $ARIMA(1,0,0)$, tal y como fue planteado al simular los datos.
 
 ```{r arima100_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,0)"}
 exploratorio(arima100, mostrar = "comportamiento")
@@ -118,7 +118,7 @@ exploratorio(arima100, mostrar = "pacf")
 
 \paragraph{ARIMA(1,0,1)}
 
-En la figura \ref{fig:arima101_comportamiento} también puede verse como los datos simulados bajo este proceso se comportan de manera aproximadamente estacionaria a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. Además, la figura \ref{fig:arima101_acf} muestra como las autocorrelaciones van disminuyendo, misma situación que se aprecia en la figura \ref{fig:arima101_pacf}, pues también va disminuyendo, lo que sugiere que el posible proceso que gobierna los datos podría tratarse de un $ARIMA(1,0,1)$, tal y como fue planteado al simular los datos.
+En la figura \ref{fig:arima101_comportamiento} puede verse como los datos simulados bajo este proceso se comportan de manera más oscilante que el caso anterior a lo largo del tiempo. Además, la figura \ref{fig:arima101_acf} muestra como las autocorrelaciones van disminuyendo muy lentamente, mientras que se aprecia en la figura \ref{fig:arima101_pacf} que hay un comportamiento similar al caso anterior, pues también va disminuyendo, lo que sugiere que el posible proceso que gobierna los datos podría tratarse de un $ARIMA(1,0,1)$, tal y como fue planteado al simular los datos.
 
 ```{r arima101_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(1,0,1)"}
 exploratorio(arima101, mostrar = "comportamiento")
@@ -134,7 +134,7 @@ exploratorio(arima101, mostrar = "pacf")
 
 \paragraph{ARIMA(2,0,3)}
 
-En la figura \ref{fig:arima203_comportamiento} se observa como los datos simulados bajo este proceso no parecen tener ninguna tendencia, si bien podría aplicarse alguna transformación para volverla aún más estacionaria, esto no se considera necesario. La figura \ref{fig:arima203_acf} muestra como las autocorrelaciones van disminuyendo, misma situación que se aprecia en la figura \ref{fig:arima203_pacf}, pues también va disminuyendo, esta situación sugiere que se está en presencia de un proceso $ARMA(p,q)$, por lo que podrían ajustarse varios modelos $ARIMA(p,d,q)$ hasta encontrar el más adecuado.
+En la figura \ref{fig:arima203_comportamiento} se observa como los datos simulados bajo este proceso no parecen tener ninguna tendencia clara, una alternativa en este caso sería aplicar alguna transformación para volverla aún más estacionaria. La figura \ref{fig:arima203_acf} muestra como las autocorrelaciones van disminuyendo, situación no tan clara en la figura \ref{fig:arima203_pacf}, este escenario sugiere que se está en presencia de un proceso $ARMA(p,q)$, por lo que podrían ajustarse varios modelos $ARIMA(p,d,q)$ hasta encontrar el más adecuado.
 
 ```{r arima203_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(2,0,3)"}
 exploratorio(arima203, mostrar = "comportamiento")
@@ -150,7 +150,7 @@ exploratorio(arima203, mostrar = "pacf")
 
 \paragraph{ARIMA(4,0,2)}
 
-En la figura \ref{fig:arima402_comportamiento} se observa como los datos simulados bajo este proceso tampoco parecen tener ninguna tendencia, por lo que no se considera necesario aplicar ninguna transformación. Las figuras \ref{fig:arima402_acf} y \ref{fig:arima402_pacf} presentan una situación similar a la anterior, por lo que podrían ajustarse varios modelos $ARIMA(p,d,q)$ hasta encontrar el más adecuado.
+En la figura \ref{fig:arima402_comportamiento} se observa como los datos simulados bajo este proceso tampoco parecen tener una tendencia claramente definida, por lo que podría ser necesario aplicar alguna transformación. Las figuras \ref{fig:arima402_acf} y \ref{fig:arima402_pacf} presentan una situación similar a la anterior, por lo que podrían ajustarse varios modelos $ARIMA(p,d,q)$ hasta encontrar el más adecuado.
 
 ```{r arima402_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(4,0,2)"}
 exploratorio(arima402, mostrar = "comportamiento")
@@ -166,7 +166,7 @@ exploratorio(arima402, mostrar = "pacf")
 
 \paragraph{ARIMA(0,0,1)(0,1,1)}
 
-En la figura \ref{fig:arima001_011_comportamiento} los datos parecen ser aproximadamente estacionarios; una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional. Las figuras \ref{fig:arima001_011_acf} y \ref{fig:arima001_011_pacf}, sugieren estar en presencia de un proceso estacional cada 12 periodos, por lo que la estimación de modelos $ARIMA$ de bajo nivel podría ser suficiente..
+En la figura \ref{fig:arima001_011_comportamiento} los datos parecen ser aproximadamente estacionarios, pero esto no es del todo claro; una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional. Las figuras \ref{fig:arima001_011_acf} y \ref{fig:arima001_011_pacf}, sugieren estar en presencia de un proceso estacional cada 12 periodos, por lo que la estimación de modelos $ARIMA$ de bajo nivel podría ser suficiente..
 
 ```{r arima001_011_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(0,0,1)(0,1,1)"}
 exploratorio(arima001_011, mostrar = "comportamiento")
@@ -182,7 +182,7 @@ exploratorio(arima001_011, mostrar = "pacf", temporalidad = 12)
 
 \paragraph{ARIMA(2,1,4)(3,0,3)}
 
-En la figura \ref{fig:arima214_303_comportamiento} lucen estacionarios, pues su media se mantiene muy constante a lo largo del tiempo. Las figuras \ref{fig:arima214_303_acf} y \ref{fig:arima214_303_pacf} por su lado sugieren la presencia de procesos estacionales cada 12 periodos tal y como fueron simulados los datos, pero no es claro identificar el proceso que gobierna la serie, por lo que habría que probar distintos modelos $ARIMA$ hasta encontrar el más adecuado.
+En la figura \ref{fig:arima214_303_comportamiento} se manifiesta una clara tendencia bajista. Las figuras \ref{fig:arima214_303_acf} y \ref{fig:arima214_303_pacf} no permiten identificar claramente el proceso que gobierna la serie, por lo que habría que probar distintos modelos $ARIMA$ hasta encontrar el más adecuado.
 
 ```{r arima214_303_comportamiento, fig.cap="Tendencia de los datos simulados a partir de un proceso ARIMA(2,1,4)(3,0,3)"}
 exploratorio(arima214_303, mostrar = "comportamiento")
@@ -493,7 +493,7 @@ ggarrange(
 )
 ```
 
-\subsection{Estimación del mejor modelo según la función auto.arima()}
+\subsection{Identificación y estimación del mejor modelo según la función auto.arima()}
 
 Al ajustar modelos con la función `auto.arima()`, al igual que con cualquier otro método para estimar modelos $ARIMA$, se obtienen estimaciones de coeficientes. En el caso de los datos simulados, donde se conoce el verdadero proceso que gobierna la serie de tiempo, estos valores pueden compararse con los valores obtenidos.
 
@@ -562,7 +562,7 @@ coeficientes_originales <- list(
 coeficientes_auto.arima <- list(
     data.frame(
         tipo="auto.arima()",
-        proceso = "ARIMA(1,0,0)",
+        proceso = "ARIMA(2,1,1)",
         referencia="ARIMA(1,0,0)",
         coeficiente = names(comparacion_no_estacional_bajo[[1]]$modelos$autoarima$coef),
         estimacion = comparacion_no_estacional_bajo[[1]]$modelos$autoarima$coef,
@@ -571,7 +571,7 @@ coeficientes_auto.arima <- list(
     ),
     data.frame(
         tipo="auto.arima()",
-        proceso = "ARIMA(0,0,1)",
+        proceso = "ARIMA(0,1,1)",
         referencia="ARIMA(1,0,1)",
         coeficiente = names(comparacion_no_estacional_bajo[[2]]$modelos$autoarima$coef),
         estimacion = comparacion_no_estacional_bajo[[2]]$modelos$autoarima$coef,
@@ -580,7 +580,7 @@ coeficientes_auto.arima <- list(
     ),
     data.frame(
         tipo="auto.arima()",
-        proceso = "ARIMA(2,0,2)",
+        proceso = "ARIMA(1,0,3)",
         referencia="ARIMA(2,0,3)",
         coeficiente = names(comparacion_no_estacional_alto[[1]]$modelos$autoarima$coef),
         estimacion = comparacion_no_estacional_alto[[1]]$modelos$autoarima$coef,
@@ -589,7 +589,7 @@ coeficientes_auto.arima <- list(
     ),
     data.frame(
         tipo="auto.arima()",
-        proceso = "ARIMA(2,0,3)",
+        proceso = "ARIMA(1,1,3)",
         referencia="ARIMA(4,0,2)",
         coeficiente = names(comparacion_no_estacional_alto[[2]]$modelos$autoarima$coef),
         estimacion = comparacion_no_estacional_alto[[2]]$modelos$autoarima$coef,
@@ -607,7 +607,7 @@ coeficientes_auto.arima <- list(
     ),
     data.frame(
         tipo="auto.arima()",
-        proceso = "ARIMA(2,0,4)(0,0,2)",
+        proceso = "ARIMA(1,1,2)(2,1,1)",
         referencia="ARIMA(2,1,4)(3,0,3)",
         coeficiente = names(comparacion_estacional_alto[[2]]$modelos$autoarima$coef),
         estimacion = comparacion_estacional_alto[[2]]$modelos$autoarima$coef,
@@ -629,7 +629,7 @@ coeficientes_sobreparametrizacion <- list(
     ),
     data.frame(
         tipo="Sobreparametrización",
-        proceso = "ARIMA(0,0,1)",
+        proceso = "ARIMA(0,1,1)",
         referencia="ARIMA(1,0,1)",
         coeficiente = names(comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion$coef),
         estimacion = comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion$coef,
@@ -638,7 +638,7 @@ coeficientes_sobreparametrizacion <- list(
     ),
     data.frame(
         tipo="Sobreparametrización",
-        proceso = "ARIMA(5,1,1)",
+        proceso = "ARIMA(0,0,5)",
         referencia="ARIMA(2,0,3)",
         coeficiente = names(comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion$coef),
         estimacion = comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion$coef,
@@ -647,7 +647,7 @@ coeficientes_sobreparametrizacion <- list(
     ),
     data.frame(
         tipo="Sobreparametrización",
-        proceso = "ARIMA(4,0,2)",
+        proceso = "ARIMA(1,1,0)",
         referencia="ARIMA(4,0,2)",
         coeficiente = names(comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion$coef),
         estimacion = comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion$coef,
@@ -665,7 +665,7 @@ coeficientes_sobreparametrizacion <- list(
     ),
     data.frame(
         tipo="Sobreparametrización",
-        proceso = "ARIMA(2,1,3)(0,1,3)",
+        proceso = "ARIMA(1,1,2)(2,1,2)",
         referencia="ARIMA(2,1,4)(3,0,3)",
         coeficiente = names(comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion$coef),
         estimacion = comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion$coef,
@@ -818,10 +818,10 @@ do.call(
 En el caso de las series cronológicas reales, se toma en consideración el mejor modelo sugerido por la función `auto.arima()`. Los coeficientes obtenidos para las distintas series de tiempo costarricenses se muestran en el cuadro \ref{tab:coeficientes_reales_autoarima}.
 
 ```{r agregando_arima_estandar_a_series_reales, results='hide'}
-TMII$arima_estandar <- Arima(TMII$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
-EXTERNA$arima_estandar <- Arima(EXTERNA$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
-INCENTIVOS$arima_estandar <- Arima(INCENTIVOS$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
-INTERESES$arima_estandar <- Arima(INTERESES$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
+# TMII$arima_estandar <- Arima(TMII$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
+# EXTERNA$arima_estandar <- Arima(EXTERNA$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
+# INCENTIVOS$arima_estandar <- Arima(INCENTIVOS$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
+# INTERESES$arima_estandar <- Arima(INTERESES$haa$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)), method = "ML")
 ```
 
 
@@ -897,7 +897,7 @@ list(
     column_spec(1, bold = T, extra_css = 'center-align: top !important;')
 ```
 
-\subsection{Estimación del mejor modelo con sobreparametrización}
+\subsection{Identificación y estimación del mejor modelo con sobreparametrización}
 
 De manera análoga al procedimiento realizado con la función `auto.arima()`, se realiza el proceso descrito en la metodología para seleccionar el mejor modelo utilizando la sobreparametrización. Nuevamente, para los datos simulados, se conoce de previo el verdadero proceso que gobierna la serie de temporal, los cuales se comparan con los valores de los coeficientes de cada modelo obtenido mediante la sobreparametrización.
 
@@ -1270,7 +1270,7 @@ errores_simulados_autoarima5<- analisis_errores(comparacion_estacional_bajo[[1]]
 errores_simulados_autoarima6<- analisis_errores(comparacion_estacional_alto[[2]]$modelos$autoarima,"")
 ```
 
-```{r errores_simulados_autoarima1, fig.cap="Comportamiento de los errores del modelo ARIMA(1,0,0) estimado con auto.arima() para los datos generados con un ARIMA(1,0,0)"}
+```{r errores_simulados_autoarima1, fig.cap="Comportamiento de los errores del modelo ARIMA(0,1,1) estimado con auto.arima() para los datos generados con un ARIMA(1,0,0)"}
 errores_simulados_autoarima1
 ```
 
@@ -1278,11 +1278,11 @@ errores_simulados_autoarima1
 errores_simulados_autoarima2
 ```
 
-```{r errores_simulados_autoarima3, fig.cap="Comportamiento de los errores del modelo ARIMA(2,0,2) estimado con auto.arima() para los datos generados con un ARIMA(2,0,3)"}
+```{r errores_simulados_autoarima3, fig.cap="Comportamiento de los errores del modelo ARIMA(1,0,3) estimado con auto.arima() para los datos generados con un ARIMA(2,0,3)"}
 errores_simulados_autoarima3
 ```
 
-```{r errores_simulados_autoarima4, fig.cap="Comportamiento de los errores del modelo ARIMA(2,0,3) estimado con auto.arima() para los datos generados con un ARIMA(4,0,2)"}
+```{r errores_simulados_autoarima4, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,3) estimado con auto.arima() para los datos generados con un ARIMA(4,0,2)"}
 errores_simulados_autoarima4
 ```
 
@@ -1290,7 +1290,7 @@ errores_simulados_autoarima4
 errores_simulados_autoarima5
 ```
 
-```{r errores_simulados_autoarima6, fig.cap="Comportamiento de los errores del modelo ARIMA(2,0,4)(0,0,2) estimado con auto.arima() para los datos generados con un ARIMA(2,1,4)(3,0,3)"}
+```{r errores_simulados_autoarima6, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,2)(2,1,1) estimado con auto.arima() para los datos generados con un ARIMA(2,1,4)(3,0,3)"}
 errores_simulados_autoarima6
 ```
 
@@ -1311,15 +1311,15 @@ errores_simulados_sobreparametrizacion6<- analisis_errores(comparacion_estaciona
 errores_simulados_sobreparametrizacion1
 ```
 
-```{r errores_simulados_sobreparametrizacion2, fig.cap="Comportamiento de los errores del modelo ARIMA(0,0,1) estimado con sobreparametrización para los datos generados con un ARIMA(1,0,1)"}
+```{r errores_simulados_sobreparametrizacion2, fig.cap="Comportamiento de los errores del modelo ARIMA(0,1,1) estimado con sobreparametrización para los datos generados con un ARIMA(1,0,1)"}
 errores_simulados_sobreparametrizacion2
 ```
 
-```{r errores_simulados_sobreparametrizacion3, fig.cap="Comportamiento de los errores del modelo ARIMA(5,1,1) estimado con sobreparametrización para los datos generados con un ARIMA(2,0,3)"}
+```{r errores_simulados_sobreparametrizacion3, fig.cap="Comportamiento de los errores del modelo ARIMA(0,0,5) estimado con sobreparametrización para los datos generados con un ARIMA(2,0,3)"}
 errores_simulados_sobreparametrizacion3
 ```
 
-```{r errores_simulados_sobreparametrizacion4, fig.cap="Comportamiento de los errores del modelo ARIMA(4,0,2) estimado con sobreparametrización para los datos generados con un ARIMA(4,0,2)"}
+```{r errores_simulados_sobreparametrizacion4, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,0) estimado con sobreparametrización para los datos generados con un ARIMA(4,0,2)"}
 errores_simulados_sobreparametrizacion4
 ```
 
@@ -1327,7 +1327,7 @@ errores_simulados_sobreparametrizacion4
 errores_simulados_sobreparametrizacion5
 ```
 
-```{r errores_simulados_sobreparametrizacion6, fig.cap="Comportamiento de los errores del modelo ARIMA(2,1,3)(0,1,3) estimado con sobreparametrización para los datos generados con un ARIMA(2,1,4)(3,0,3)"}
+```{r errores_simulados_sobreparametrizacion6, fig.cap="Comportamiento de los errores del modelo ARIMA(1,1,2)(2,1,2) estimado con sobreparametrización para los datos generados con un ARIMA(2,1,4)(3,0,3)"}
 errores_simulados_sobreparametrizacion6
 ```
 
@@ -1454,8 +1454,7 @@ errores_reales_arima_estandar4
 
 \subsection{Pronósticos}
 
-Los pronósticos son parte fundamental del análisis de series cronológicas. En esta sección e realiza una inspección visual tanto para los datos simulados como para las series de tiempo de datos costarricenses. 
-
+Los pronósticos son parte fundamental del análisis de series cronológicas. En esta sección se realiza una inspección visual tanto para los datos simulados como para las series de tiempo de datos costarricenses. 
 
 ```{r funcion_resumen_resultados}
 resumen_resultados <- function(x) {
@@ -1662,9 +1661,17 @@ reordena_simulacion <- function(modelos, testing){
 }
 ```
 
+```{r}
+extrae_ee <- function(modelo, testing){
+    data.frame(ee=predict(modelo, n.ahead = length(testing), se.fit=T)$se)
+}
+```
+
 \subsubsection{Datos simulados}
 
-Las figuras \ref{fig:pronostico_arima100}, \ref{fig:pronostico_arima101}, \ref{fig:pronostico_arima203}, \ref{fig:pronostico_arima402}, \ref{fig:pronostico_arima001_011} y \ref{fig:pronostico_arima214_303} muestran el ajuste y el pronóstico de cada uno de los modelos estimados con la función `auto.arima()`, con sobreparametrización y con el modelo $ARIMA$ estándar. En todos los casos, la línea vertical punteada indica el inicio del periodo de pronóstico.
+Las figuras \ref{fig:pronostico_arima100}, \ref{fig:pronostico_arima101}, \ref{fig:pronostico_arima203}, \ref{fig:pronostico_arima402}, \ref{fig:pronostico_arima001_011} y \ref{fig:pronostico_arima214_303} muestran el ajuste y el pronóstico de cada uno de los modelos estimados con la función `auto.arima()`, con sobreparametrización y con el modelo $ARIMA$ estándar. En todos los casos, la línea vertical punteada indica el inicio del periodo de pronóstico. 
+
+Además, las figuras \ref{fig:ee_autoarima_arima100}, \ref{fig:ee_autoarima_arima101}, \ref{fig:ee_autoarima_arima203}, \ref{fig:ee_autoarima_arima402}, \ref{fig:ee_autoarima_arima001_011} y \ref{fig:ee_autoarima_arima214_303} representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el mejor modelo sugerido por la función `auto.arima()`, las figuras \ref{fig:ee_sobreparametrizacion_arima100}, \ref{fig:ee_sobreparametrizacion_arima101}, \ref{fig:ee_sobreparametrizacion_arima203}, \ref{fig:ee_sobreparametrizacion_arima402}, \ref{fig:ee_sobreparametrizacion_arima001_011} y \ref{fig:ee_sobreparametrizacion_arima214_303} representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el mejor modelo sugerido por la sobreparametrización, y por último, las figuras \ref{fig:ee_arima_estandar_arima100}, \ref{fig:ee_arima_estandar_arima101}, \ref{fig:ee_arima_estandar_arima203}, \ref{fig:ee_arima_estandar_arima402}, \ref{fig:ee_arima_estandar_arima001_011} y \ref{fig:ee_arima_estandar_arima214_303} representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el modelo $ARIMA$ estándar.
 
 ```{r pronostico_arima100, fig.cap="Pronóstico de los datos generados mediante un ARIMA(1,0,0) según el método de estimación"}
 datos <-
@@ -1685,7 +1692,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,0,0)\nSobreparametrización: ARIMA(1,0,0)\nARIMA estándar: ARIMA(1,1,1)",
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(2,1,1)\nSobreparametrización: ARIMA(1,0,0)\nARIMA estándar: ARIMA(1,1,1)",
          y = "Valor",
          x = "Periodo") +
     theme(
@@ -1699,6 +1706,24 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     #scale_x_date(expand = c(0,0))+
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_arima100, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,0) con la función auto.arima()"}
+mod <- comparacion_no_estacional_bajo[[1]]$modelos$autoarima
+validacion <- arima100
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima100, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,0) con sobreparametrización"}
+mod <- comparacion_no_estacional_bajo[[1]]$modelos$sobreparametrizacion
+validacion <- arima100
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima100, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,0) con el modelo ARIMA estándar"}
+mod <- comparacion_no_estacional_bajo[[1]]$modelos$arima_estandar
+validacion <- arima100
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
 ```
 
 ```{r pronostico_arima101, fig.cap="Pronóstico de los datos generados mediante un ARIMA(1,0,1) según el método de estimación"}
@@ -1720,7 +1745,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(0,0,1)\nSobreparametrización: ARIMA(0,0,1)\nARIMA estándar: ARIMA(1,1,1)",
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(0,1,1)\nSobreparametrización: ARIMA(0,1,1)\nARIMA estándar: ARIMA(1,1,1)",
          y = "Valor",
          x = "Periodo") +
     theme(
@@ -1734,6 +1759,24 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     #scale_x_date(expand = c(0,0))+
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_arima101, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,1) con la función auto.arima()"}
+mod <- comparacion_no_estacional_bajo[[2]]$modelos$autoarima
+validacion <- arima101
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima101, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,1) con sobreparametrización"}
+mod <- comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion
+validacion <- arima101
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima101, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,1) con el modelo ARIMA estándar"}
+mod <- comparacion_no_estacional_bajo[[2]]$modelos$arima_estandar
+validacion <- arima101
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
 ```
 
 ```{r pronostico_arima203, fig.cap="Pronóstico de los datos generados mediante un ARIMA(2,0,3) según el método de estimación"}
@@ -1755,7 +1798,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(2,0,2)\nSobreparametrización: ARIMA(5,1,1)\nARIMA estándar: ARIMA(1,1,1)",
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,0,3)\nSobreparametrización: ARIMA(0,0,5)\nARIMA estándar: ARIMA(1,1,1)",
          y = "Valor",
          x = "Periodo") +
     theme(
@@ -1769,6 +1812,24 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     #scale_x_date(expand = c(0,0))+
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_arima203, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,0,3) con la función auto.arima()"}
+mod <- comparacion_no_estacional_alto[[1]]$modelos$autoarima
+validacion <- arima203
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima203, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,0,3) con sobreparametrización"}
+mod <- comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion
+validacion <- arima203
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima203, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,0,3) con el modelo ARIMA estándar"}
+mod <- comparacion_no_estacional_alto[[1]]$modelos$arima_estandar
+validacion <- arima203
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
 ```
 
 ```{r pronostico_arima402, fig.cap="Pronóstico de los datos generados mediante un ARIMA(4,0,2) según el método de estimación"}
@@ -1790,7 +1851,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(2,0,3)\nSobreparametrización: ARIMA(4,0,2)\nARIMA estándar: ARIMA(1,1,1)",
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,1,3)\nSobreparametrización: ARIMA(1,1,0)\nARIMA estándar: ARIMA(1,1,1)",
          y = "Valor",
          x = "Periodo") +
     theme(
@@ -1806,13 +1867,30 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
+```{r ee_autoarima_arima402, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con la función auto.arima()"}
+mod <- comparacion_no_estacional_alto[[2]]$modelos$autoarima
+validacion <- arima402
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima402, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con sobreparametrización"}
+mod <- comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion
+validacion <- arima402
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima402, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con el modelo ARIMA estándar"}
+mod <- comparacion_no_estacional_alto[[2]]$modelos$arima_estandar
+validacion <- arima402
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
 ```{r pronostico_arima001_011, fig.cap="Pronóstico de los datos generados mediante un ARIMA(0,0,1)(0,1,1) según el método de estimación"}
 datos <-
     resumen_resultados(reordena_simulacion(comparacion_estacional_bajo[[1]]$modelos, arima001_011))
 
 datos <- datos$pronostico %>%
     mutate(fecha = as.numeric(data.table::rleid(fecha)))
-
 
 #datos <- resumen_resultados(TMII)$pronostico
 corte <- which(datos$tipo == "pronostico")[1]
@@ -1841,14 +1919,44 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
+```{r ee_autoarima_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con la función auto.arima()"}
+mod <- comparacion_estacional_bajo[[1]]$modelos$autoarima
+validacion <- arima001_011
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con sobreparametrización"}
+mod <- comparacion_estacional_bajo[[1]]$modelos$sobreparametrizacion
+validacion <- arima001_011
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con el modelo ARIMA estándar"}
+mod <- comparacion_estacional_bajo[[1]]$modelos$arima_estandar
+validacion <- arima001_011
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
 ```{r pronostico_arima214_303, fig.cap="Pronóstico de los datos generados mediante un ARIMA(2,1,4)(3,0,3) según el método de estimación"}
+reordena_simulacion2 <- function(modelos, testing){
+
+    l1 <- list(haa=modelos$autoarima,
+         op=list(best_model=modelos$sobreparametrizacion),
+         arima_estandar=modelos$arima_estandar)
+    final <- attributes(l1[[1]]$x)$tsp[2]
+    testing <- window(testing, start=final)
+    list(testing=testing,
+         haa=modelos$autoarima,
+         op=list(best_model=modelos$sobreparametrizacion),
+         arima_estandar=modelos$arima_estandar)
+}
 datos <-
-    resumen_resultados(reordena_simulacion(comparacion_estacional_alto[[2]]$modelos, arima214_303))
+    resumen_resultados(reordena_simulacion2(comparacion_estacional_alto[[2]]$modelos, arima214_303))
 
 datos <- datos$pronostico %>%
     mutate(fecha = as.numeric(data.table::rleid(fecha)))
 
-
+#datos$pronostico %>% group_by(Serie) %>% summarise(n())
 #datos <- resumen_resultados(TMII)$pronostico
 corte <- which(datos$tipo == "pronostico")[1]
 corte <- datos$fecha[corte]
@@ -1860,7 +1968,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(2,0,4)(0,0,2)\nSobreparametrización: ARIMA(2,1,3)(0,1,3)\nARIMA estándar: ARIMA(1,1,1)(1,1,1)",
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,1,2)(2,1,1)\nSobreparametrización: ARIMA(1,1,2)(2,1,2)\nARIMA estándar: ARIMA(1,1,1)(1,1,1)",
          y = "Valor",
          x = "Periodo") +
     theme(
@@ -1876,9 +1984,29 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
+```{r ee_autoarima_arima214_303, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,1,4)(3,0,3) con la función auto.arima()"}
+mod <- comparacion_estacional_alto[[2]]$modelos$autoarima
+validacion <- arima214_303
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima214_303, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,1,4)(3,0,3) con sobreparametrización"}
+mod <- comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion
+validacion <- arima214_303
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima214_303, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,1,4)(3,0,3) con el modelo ARIMA estándar"}
+mod <- comparacion_estacional_alto[[2]]$modelos$arima_estandar
+validacion <- arima214_303
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
 \subsubsection{Datos reales}
 
 De la misma manera en que se hizo con los datos simulados, las figuras \ref{fig:pronostico_TMII}, \ref{fig:pronostico_EXTERNA}, \ref{fig:pronostico_INCENTIVOS} y \ref{fig:pronostico_INTERESES}. La línea vertical punteada marca el inicio del pronóstico.
+
+Además, para las series de la tasa de mortalidad infantil interanul, la de mortalidad por causa externa, la series de incentivos y la de intereses y comisiones, se resumen visualmente los errores estándar obtenidos con la función `auto.arima()` en las figuras \ref{fig:ee_autoarima_TMII}, \ref{fig:ee_autoarima_EXTERNA}, \ref{fig:ee_autoarima_INCENTIVOS} y \ref{fig:ee_autoarima_INTERESES}, respectivamente. De manera similar, pero utilizando la sobreparametrización, los errores estándar de las series de la tasa de mortalidad infantil interanul, la de mortalidad por causa externa, la series de incentivos y la de intereses y comisiones, se resumen visualmente en las figuras \ref{fig:ee_sobreparametrizacion_TMII}, \ref{fig:ee_sobreparametrizacion_EXTERNA}, \ref{fig:ee_sobreparametrizacion_INCENTIVOS} y \ref{fig:ee_sobreparametrizacion_INTERESES}, respectivamente. Por último, para las mismas series cronológicas, los errores estándar obtenidos con el modelo $ARIMA$ estándar se resumen en las figuras \ref{fig:ee_arima_estandar_TMII}, \ref{fig:ee_arima_estandar_EXTERNA}, \ref{fig:ee_arima_estandar_INCENTIVOS} y \ref{fig:ee_arima_estandar_INTERESES}.
 
 ```{r pronostico_TMII, fig.cap="Pronóstico de la TMII según el método de estimación"}
 datos <- resumen_resultados(TMII)$pronostico
@@ -1904,6 +2032,24 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     ) +
     scale_x_date(expand = c(0,0), date_breaks = "3 years", date_labels = "%Y")+
     scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con la función auto.arima()"}
+mod <- TMII$haa
+validacion <- TMII$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con sobreparametrización"}
+mod <- TMII$op$best_model
+validacion <- TMII$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con el modelo ARIMA estándar"}
+mod <- TMII$arima_estandar
+validacion <- TMII$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
 ```
 
 ```{r pronostico_EXTERNA, fig.cap="Pronóstico de la Tasa de mortalidad por causa externa (TMCE) según el método de estimación"}
@@ -1932,6 +2078,24 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
+```{r ee_autoarima_EXTERNA, fig.cap="Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con la función auto.arima()"}
+mod <- EXTERNA$haa
+validacion <- EXTERNA$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_EXTERNA, fig.cap="Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con sobreparametrización"}
+mod <- EXTERNA$op$best_model
+validacion <- EXTERNA$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_EXTERNA, fig.cap="Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con el modelo ARIMA estándar"}
+mod <- EXTERNA$arima_estandar
+validacion <- EXTERNA$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
 ```{r pronostico_INCENTIVOS, fig.cap="Pronóstico de la serie de incentivos salariales del sector público según el método de estimación"}
 datos <- resumen_resultados(INCENTIVOS)$pronostico
 corte <- which(datos$tipo == "pronostico")[1]
@@ -1958,6 +2122,25 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
+```{r ee_autoarima_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con la función auto.arima()"}
+mod <- INCENTIVOS$haa
+validacion <- INCENTIVOS$testing
+fc <- forecast(mod, h = length(validacion))
+descriptive_plot(data.frame(ee=as.numeric((fc$upper[,2] - fc$lower[,2]) / (2 * qnorm(.5 + fc$level[2] / 200)))),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con sobreparametrización"}
+mod <- INCENTIVOS$op$best_model
+validacion <- INCENTIVOS$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con el modelo ARIMA estándar"}
+mod <- INCENTIVOS$arima_estandar
+validacion <- INCENTIVOS$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
 ```{r pronostico_INTERESES, fig.cap="Pronóstico de la serie de intereses y comisiones del sector público según el método de estimación"}
 datos <- resumen_resultados(INTERESES)$pronostico
 corte <- which(datos$tipo == "pronostico")[1]
@@ -1982,6 +2165,25 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     ) +
     scale_x_date(expand = c(0,0), date_breaks = "3 years", date_labels = "%Y")+
     scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_INTERESES, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con la función auto.arima()"}
+mod <- INTERESES$haa
+validacion <- INTERESES$testing
+fc <- forecast(mod, h = length(validacion))
+descriptive_plot(data.frame(ee=as.numeric((fc$upper[,2] - fc$lower[,2]) / (2 * qnorm(.5 + fc$level[2] / 200)))),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_INTERESES, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con sobreparametrización"}
+mod <- INTERESES$op$best_model
+validacion <- INTERESES$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_INTERESES, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con el modelo ARIMA estándar"}
+mod <- INTERESES$arima_estandar
+validacion <- INTERESES$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
 ```
 
 \subsection{Medidas de bondad de ajuste y de rendimiento}

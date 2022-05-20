@@ -351,7 +351,7 @@ La metodología propuesta será puesta a prueba en una primera etapa con series 
 
 Como parte de esta investigación, es necesario validar la estimación de modelos ARIMA mediante sobreparametrización no solo con datos reales, sino también mediante datos simulados. Para ello es necesario generar series cronológicas que son gobernadas por un proceso determinado y previamente conocido para poder compararlo con los modelos identificados tanto con la sobreparametrización, como con la función `auto.arima()` y el correspondiente modelo $ARIMA$ estándar. 
 
-Con este fin, se programó una función que sigue los siguientes pasos:
+Con este fin, se programó una función que sigue los siguientes pasos (también mostrados en la figura \ref{fig:diagrama_flujo_simulacion}:
 
 **1.** Se generan valores aleatorios de alguna distribución de probabilidad. Para esta investigación se escogen 100 valores de una distribución Normal con media 10 y varianza 1. Estos valores se resumen en la Figura \ref{fig:datos_simulados}; donde las región azul oscuro representa la densidad de datos entre los percentiles 25 y 75, las líneas punteadas de color naranja marcan la cantidad de desviaciones estándar que los datos se alejan del promedio, y las líneas punteadas de color azul marcan los puntos de corte mínimo, percentiles 25, 50 y 75, y el máximo.
 
@@ -365,32 +365,85 @@ Con este fin, se programó una función que sigue los siguientes pasos:
 # https://github.com/cran/arfima/blob/master/R/ARToPacf.R
 ```
 
-
 **4.** Con los valores simulados, la cantidad de parámetros y sus respectivos valores definidos en los puntos anteriores, se ajusta cada uno de los modelos $ARIMA$ descritos en el inciso **2.**.
 
 **5.** Con cada modelo ajustado, se utiliza la función `simulate.Arima()` para generar 200 observaciones basadas en dichos modelos.
 
+```{r diagrama_flujo_simulacion, fig.cap="Diagrama de flijo del proceso de simulación de las series cronológicas."}
+#https://graphviz.org/docs/attrs/splines/
+#https://stackoverflow.com/questions/7115870/creating-straight-edges-in-graphviz/12869546
+grViz(diagram = 'digraph start_up {
+
+    { 
+
+        node [shape=rect label="Descartar combinación\nde coeficientes"]; descartar; 
+    }
+
+    {   
+        node [width=0 shape=point label=""];
+         descartar;
+    }
+
+    node [style = rounded]; 
+    node [shape = rect label="Generar números\naleatorios"] generar;
+    node [style = ""];
+    
+    node [shape = rect label="Seleccionar cantidad\nde coeficientes"] coef;
+    node [style = ""];
+    
+    node [shape = rect label="Simular coeficientes"] coef_sim;
+    node [style = ""];
+    
+    node [shape = diamond label="¿El proceso es invertible y\nestacionario?"] invert;
+    node [style = ""];
+    
+    node [shape = rect label="Estimar ARIMA"] estimar_arima;
+    node [style = ""];
+    
+    node [style = rounded]; 
+    node [shape = rect label="Simular serie"] simular_serie;
+    node [style = ""];
+
+    generar -> coef;
+    
+    coef -> coef_sim;
+    
+    coef_sim->invert;
+    
+    {rank=same; descartar -> coef_sim;}
+    
+    invert -> descartar [label = "No" tailport=w headport=s];
+    
+    invert -> estimar_arima [label = "Sí"];
+    
+    estimar_arima -> simular_serie;
+
+}')
+```
+
+
 ```{r, echo=FALSE, results='hide', cache=TRUE}
-load(popstudy::read_from_dir("Resultados simulaciones.RData", "Output/Results"))
+# load(popstudy::read_from_dir("Resultados simulaciones.RData", "Output/Results"))
+load(popstudy::read_from_dir("Resultados_2022.RData", "Output/Results"))
 ```
 ```{r}
 #Aquí corrijo los modelos arima estandar de las simulaciones, porque cuando lo hice (ver línea207 de "Borrador de resultados.Rmd") puse data, cuando era train.
 
-for(i in 1:2){
-    comparacion_no_estacional_bajo[[i]]$modelos$arima_estandar <- Arima(comparacion_no_estacional_bajo[[i]]$modelos$autoarima$x, order = c(1,1,1),method="ML")
-    
-    comparacion_no_estacional_alto[[i]]$modelos$arima_estandar <- Arima(comparacion_no_estacional_alto[[i]]$modelos$autoarima$x, order = c(1,1,1),method="ML")
-    
-    comparacion_estacional_bajo[[i]]$modelos$arima_estandar <- Arima(comparacion_estacional_bajo[[i]]$modelos$autoarima$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)),method="ML")
-    
-    comparacion_estacional_alto[[i]]$modelos$arima_estandar <- Arima(comparacion_estacional_alto[[i]]$modelos$autoarima$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)),method="ML")
-}
+# for(i in 1:2){
+#     comparacion_no_estacional_bajo[[i]]$modelos$arima_estandar <- Arima(comparacion_no_estacional_bajo[[i]]$modelos$autoarima$x, order = c(1,1,1),method="ML")
+#     
+#     comparacion_no_estacional_alto[[i]]$modelos$arima_estandar <- Arima(comparacion_no_estacional_alto[[i]]$modelos$autoarima$x, order = c(1,1,1),method="ML")
+#     
+#     comparacion_estacional_bajo[[i]]$modelos$arima_estandar <- Arima(comparacion_estacional_bajo[[i]]$modelos$autoarima$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)),method="ML")
+#     
+#     comparacion_estacional_alto[[i]]$modelos$arima_estandar <- Arima(comparacion_estacional_alto[[i]]$modelos$autoarima$x, order = c(1,1,1), seasonal = list(order=c(1,1,1)),method="ML")
+# }
 ```
 
 Tras aplicar los pasos anteriores y obtener las correspondientes series cronológicas simuladas, el comportamiento y proceso gobernante de cada una se muestra en la Figura \ref{fig:series_simuladas}.
 
 ```{r datos_simulados, fig.cap="Valores de referencia para la simulación de series cronológicas"}
-popstudy::descriptive_plot(data = data.frame(Xt=dat), labels = NULL, Xt)$Xt
+popstudy::descriptive_plot(data = data.frame(Xt=dat), Xt, labels = "Datos simulados", ylab = "Densidad")[[1]]
 ```
 
 ```{r series_simuladas, fig.cap="Series cronológicas simuladas"}
@@ -536,7 +589,6 @@ ggarrange(arima100, arima101, arima203, arima402,
           ncol = 3, nrow = 2)
 ```
 
-
 \subsection{Métodos}
 
 En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos. Para cada serie de tiempo, se estima el mejor modelo utilizando la función `auto.arima()`, la sobreparametrización y un modelo ARIMA estándar, que puede ser un $ARIMA(1,1,1)$ para las series no estacionales, o un $ARIMA(1,1,1)(1,1,1)_S$ en el caso de las series cronológicas estacionales. Una vez obtenidos estos modelos, se analizan los residuales obtenidos. En última instancia, se obtienen los pronósticos y sus medidas de bondad de ajuste y de rendimiento.
@@ -549,11 +601,11 @@ Como fue mencionado en el Marco Teórico, debe corroborarse que la serie cronol�
 
 A partir de la serie cronológica que se someterá a análisis, se realiza una partición de los datos para tener dos conjuntos distintos: entrenamiento y validación. El primero servirá precisamente para entrenar y estimar los distintos modelos; mientras que el segundo servirá para validar los pronósticos obtenidos. De manera predeterminada, se utilizará una partición del 80% de los datos para el conjunto de entrenamiento y un 20% para los datos de validación, sin embargo, esto puede cambiar de acuerdo al interés propio del(la) investigador(a). 
 
-\subsubsection{Estimación del mejor modelo según la función auto.arima()}
+\subsubsection{Identificación y estimación del mejor modelo según la función auto.arima()}
 
 Con el correspondiente conjunto de datos de entrenamiento, se utiliza la función `auto.arima()` para encontrar el mejor modelo ARIMA sugerido con este método, que como fue mencionado en la introducción de esta tesis, usa como criterio la minimización del AICc.
 
-\subsubsection{Estimación del mejor modelo con sobreparametrización}
+\subsubsection{Identificación y estimación del mejor modelo con sobreparametrización}
 
 A partir del mismo conjunto de datos de entrenamiento de la correspondiente serie cronológica, se utiliza la sobreparametrización para encontrar el mejor modelo a partir de distintas permutaciones de la cantidad de coeficientes de los términos $p,d,q, P,D,Q$, según sea el caso. 
 
@@ -564,11 +616,11 @@ La estimación de los modelos y posterior selección de los mismos vía sobrepar
 **2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero (porque precisamente, no se estiman coeficientes para la parte estacional). Se estiman para esta investigación todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$, aunque el orden del modelo más grande puede permitir un mayor número de diferenciaciones o de parámetros. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \ref{eqn:matriz_arima_1}:
 
 ```{r, eval=FALSE, echo=FALSE}
-Las siguiente matriz se obtuvo de:
-https://tex.stackexchange.com/questions/40/how-do-i-label-different-rows-or-columns-of-a-matrix-using-braces
-
-
-https://otexts.com/fpp2/classical-decomposition.html
+# Las siguiente matriz se obtuvo de:
+# https://tex.stackexchange.com/questions/40/how-do-i-label-different-rows-or-columns-of-a-matrix-using-braces
+# 
+# 
+# https://otexts.com/fpp2/classical-decomposition.html
 ```
 
 
@@ -614,13 +666,30 @@ https://otexts.com/fpp2/classical-decomposition.html
 \end{tikzpicture}
 \end{equation}
 
-**4.** Con la matriz de valores paramétricos, como las mostradas en \ref{eqn:matriz_arima_1} y \ref{eqn:matriz_arima_2}, se inicia la estimación los modelos en orden ascendente, es decir, del modelo con menos parámetros al que tiene más parámetros. Al estimar un nuevo modelo, se evalúa mediante una prueba *t* [@astsa] para verificar que el nuevo término incorporado al modelo es significativamente distinto de cero, es decir, el nuevo parámetro está generando un impacto en el modelo.
+**4.** Debido a que los modelos a estimar cuentan con varias cantidades de parámetros en la parte no estacional y en la parte estacional, resulta pertinente generar una medida de referencia para conocer el nivel de sobreparametrización de los modelos en el espacio de valores paramétricos definido. 
 
-**5.** Al tratarse de un proceso iterativo, el cálculo puede volverse computacionalmente pesado, es por esta razón que la programación del proceso fue habilitada para realizar procesamiento paralelo y de esta manera reducir el consumo de tiempo en la obtención de resultados.
+A partir de las estimaciones vía sobreparametrización hechas para este estudio, se calcularon los tiempos de estimación para modelos nos estacionales y modelos estacionales. Estos tiempos se muestran en el cuadro \ref{tab:tiempos_estimacion}. 
 
-**6.** Cuando se han realizado las pruebas de significancia estadística a los modelos, son calculadas las medidas de bondad de ajuste y de rendimiento que se mencionarán más adelante. 
+Para calcular el indicador de sobreparametrización $(I_{sp})$ primero se calcula el tiempo mediano de estimación, tanto para los modelos no estacionales como para los modelos estacionales. Para este estudio se obtuvo que el tiempo mediano para los modelos no estacionales fue de aproximadamente $7.424944$ minutos, mientras que para los modelos estacionales el tiempo mediano de estimación fue de $36.0432$ minutos, aproximadamente.
 
-**7.** Tras esto, se aplica un método de concenso para seleccionar el modelo más adecuado. Este criterio consiste en darle una mayor o menor ponderación a los resultados obtenidos con el conjunto de datos de entrenamiento y el de validación. De forma predeterminada se le da una ponderación de 0.8 a los resultados de validación y un 0.2 a los de entrenamiento, esto porque en la práctica, los datos de validación son considerados como datos más recientes y que, mientras más cercanos sean los pronósticos a estos datos, mejores resultados ofrece el modelo seleccionado. El método de concenso es utilizado para obtener un puntaje de cada modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
+Luego, a cada fila de la matriz de valores paramétricos se le calcula un promedio ponderado a la cantidad de coeficientes en la parte no estacional y en la parte estacional, utilizando como ponderador los tiempos de estimación descritos previamente. Este procedimiento se expresa en la ecuación \ref{eqn:indicador_sp},
+
+\begin{equation}
+\label{eqn:indicador_sp}
+I_{sp} = \frac{(p+q) \cdot m_n + (P+Q) \cdot m_e}{2\cdot(m_n+m_e)}
+\end{equation}
+
+donde $p,q,P$ y $Q$ son los términos del modelo ARIMA, $m_n$ es el tiempo mediano expresado en minutos para modelos no estacionales, y $m_e$ es el tiempo mediano expresado también en minutos para modelos estacionales. De esta manera, el valor de $I_{sp}$ para un $ARIMA(3,1,1)(2,0,1)_S$ estaría dado por $\frac{(3+1) \cdot 7.424944 + (2+1) \cdot 36.0432}{2\cdot(7.424944+36.0432)} \approx 1.58540673$.
+
+Por último, el valor de $I_{sp}$ es reescalado de forma tal que sus valores estén en el intervalo $[0,100]$ para el espacio de valores paramétricos definido, donde el cero representa el modelo nulo y 100 el modelo más sobreparametrizado posible dentro del espacio de valores paramétricos definido. La razón de esto es poder limitar, si se desea, la cantidad de estimaciones que se deben realizar. Por ejemplo, si se define que la matriz de valores paramétricos llegue como máximo a un $ARIMA(6,1,6)(6,1,6)_S$, es posible incorporar una restricción para estimar solo aquellas permutaciones de modelos $ARIMA$ cuyo indicador de sobreparametrización sea menor o igual a 60. 
+
+**5.** Con la matriz de valores paramétricos, como las mostradas en \ref{eqn:matriz_arima_1} y \ref{eqn:matriz_arima_2} y el indicador de sobreparametrización, se inicia la estimación los modelos en orden ascendente, es decir, del modelo con menos parámetros al que tiene más parámetros. Al estimar un nuevo modelo, se evalúa mediante una prueba *t* [@astsa] para verificar que el nuevo término incorporado al modelo es significativamente distinto de cero, es decir, el nuevo parámetro está generando un impacto en el modelo.
+
+**6.** Al tratarse de un proceso iterativo, el cálculo puede volverse computacionalmente pesado, es por esta razón que la programación del proceso fue habilitada para realizar procesamiento paralelo y de esta manera reducir el consumo de tiempo en la obtención de resultados.
+
+**7.** Cuando se han realizado las pruebas de significancia estadística a los modelos, son calculadas las medidas de bondad de ajuste y de rendimiento que se mencionarán más adelante. 
+
+**8.** Tras esto, se aplica un método de concenso para seleccionar el modelo más adecuado. Este criterio consiste en darle una mayor o menor ponderación a los resultados obtenidos con el conjunto de datos de entrenamiento y el de validación. De forma predeterminada se le da una ponderación de 0.8 a los resultados de validación y un 0.2 a los de entrenamiento, esto porque en la práctica, los datos de validación son considerados como datos más recientes y que, mientras más cercanos sean los pronósticos a estos datos, mejores resultados ofrece el modelo seleccionado. El método de concenso es utilizado para obtener un puntaje de cada modelo ARIMA, su cálculo se obtiene de la ecuación \ref{eqn:concenso}:
 
 \begin{equation}
 \label{eqn:concenso}
