@@ -91,6 +91,876 @@ tiempos_de_estimacion %>%
     )
 ```
 
+```{r}
+do.call(
+    rbind,
+    list(
+        coeficientes_originales,
+        coeficientes_auto.arima,
+        coeficientes_sobreparametrizacion,
+        coeficientes_arima_estandar
+    )
+) %>%
+    data.frame(row.names = NULL) %>%
+    filter(coeficiente != "intercept") %>%
+    select(-proceso) %>%
+    mutate(
+        coeficiente = factor(
+            toupper(coeficiente),
+            levels = c(
+                "INTERCEPT",
+                paste0("AR", 1:6),
+                paste0("MA", 1:6),
+                paste0("SAR", 1:6),
+                paste0("SMA", 1:6)
+            ),
+            ordered = T
+        ),
+        referencia = factor(
+            referencia,
+            levels = c(
+                "ARIMA(1,0,0)",
+                "ARIMA(1,0,1)",
+                "ARIMA(2,0,3)",
+                "ARIMA(4,0,2)",
+                "ARIMA(0,0,1)(0,1,1)",
+                "ARIMA(2,1,4)(3,0,3)"
+            ),
+            ordered = T
+        )
+    ) %>%
+    pivot_wider(names_from = tipo,
+                values_from = c(estimacion, LI, LS)) %>%
+     arrange(referencia, coeficiente) %>%
+    select(referencia, coeficiente, estimacion_Original, contains("auto"), contains("estándar"), contains("Sobreparametrización")) %>% 
+    mutate_if(is.numeric, function(x){
+        case_when(
+            x==0 ~ x+.1,
+            TRUE ~ x
+        )
+    }) %>%
+     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", as.character(round(x, 2)))) %>% 
+    filter(referencia %nin% c("ARIMA(0,0,1)(0,1,1)", "ARIMA(2,1,4)(3,0,3)")) %>%  #Filtrando los mejores
+    kbl(.,
+        "latex",
+        booktabs = T,
+        escape = F, 
+        align = "ccrrrrrrrrrr",
+        caption = "\\label{tab:coeficientes_peores}Coeficientes del proceso original y de los métodos de estimación de series simuladas no estacionales",
+        col.names = c(
+            "Proceso original",
+            "Coeficiente",
+            "Valor real",
+            rep(c("Puntual",
+                  "L.I.",
+                  "L.S."), 3)
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "HOLD_position"),
+        full_width = T,
+        font_size = 6.5
+    ) %>%
+    collapse_rows(columns = 1, valign = "middle") %>%
+    column_spec(1, width = "2.5cm", 
+                #extra_css = 'center-align:middle !important;',
+                bold = T) %>%
+    column_spec(2, width = "1cm") %>% 
+    add_header_above(c(" " = 3, "auto.arima()" = 3, "ARIMA estándar" = 3, "Sobreparametrización" = 3), bold = T) %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a apartir de datos simulados."
+        ),
+        general_title = ""
+    )
+```
+
+
+```{r errores_simulados_arima100, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(1,0,0)"}
+ggarrange(
+    errores_simulados_autoarima1,
+    errores_simulados_arima_estandar1,
+    errores_simulados_sobreparametrizacion1,
+    ncol = 3,
+    nrow = 1
+)
+```
+
+```{r errores_simulados_arima101, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(1,0,1)"}
+ggarrange(
+    errores_simulados_autoarima2,
+    errores_simulados_arima_estandar2,
+    errores_simulados_sobreparametrizacion2,
+    ncol = 3,
+    nrow = 1
+)
+```
+
+```{r errores_simulados_arima203, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(2,0,3)"}
+ggarrange(
+    errores_simulados_autoarima3,
+    errores_simulados_arima_estandar3,
+    errores_simulados_sobreparametrizacion3,
+    ncol = 3,
+    nrow = 1
+)
+```
+
+```{r errores_simulados_arima402, fig.cap="Comportamiento de los errores de los modelos para los datos generados con un ARIMA(4,0,2)"}
+ggarrange(
+    errores_simulados_autoarima4,
+    errores_simulados_arima_estandar4,
+    errores_simulados_sobreparametrizacion4,
+    ncol = 3,
+    nrow = 1
+)
+```
+
+```{r}
+datos <- mapply(
+    function(mods, tests) {
+        resumen_resultados(reordena_simulacion(mods, tests))$medidas
+    },
+    mods = list(
+        comparacion_no_estacional_bajo[[1]]$modelos,
+        comparacion_no_estacional_bajo[[2]]$modelos,
+        comparacion_no_estacional_alto[[1]]$modelos,
+        comparacion_no_estacional_alto[[2]]$modelos,
+        comparacion_estacional_bajo[[1]]$modelos,
+        comparacion_estacional_alto[[2]]$modelos
+    ),
+    tests = list(arima100, 
+                 arima101,
+                 arima203,
+                 arima402,
+                 arima001_011,
+                 arima214_303), SIMPLIFY = FALSE
+) %>% 
+    do.call(rbind, .) %>%
+    data.frame(row.names = NULL) %>% 
+    mutate(proceso = rep(c("ARIMA(1,0,0)",
+                           "ARIMA(1,0,1)",
+                           "ARIMA(2,0,3)",
+                           "ARIMA(4,0,2)",
+                           "ARIMA(0,0,1)(0,1,1)",
+                           "ARIMA(2,1,4)(3,0,3)"),  each=6)) %>% 
+    select(proceso, tipo, Serie, everything()) %>% 
+    filter(proceso %nin% c("ARIMA(0,0,1)(0,1,1)", "ARIMA(2,1,4)(3,0,3)")) #Filtrar los peores
+
+datos %>%
+    mutate_if(is.numeric, function(x) {round(x, 2)+.01}) %>% 
+    group_by(proceso, tipo) %>% 
+    mutate_at(vars(AIC:MAPE), function(x){
+        cell_spec(x, color = ifelse(x==min(x), "red", "black"))
+    }) %>%
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "r",
+        caption = "\\label{tab:comparaciones_arima_peores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de dtos estacionales simulados",
+        col.names = c(
+            "Proceso original",
+            "Datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "HOLD_position"),
+        full_width = T,
+        font_size = 6.5
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    column_spec(2, width = "1.5cm") %>%
+    collapse_rows(columns = c(1, 2)) %>%
+    column_spec(3, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados"
+        ),
+        general_title = ""
+    ) 
+```
+
+
+
+
+
+
+
+```{r pronostico_arima100, fig.cap="Pronóstico de los datos generados mediante un ARIMA(1,0,0) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_bajo[[1]]$modelos, arima100))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(2,1,1)\nSobreparametrización: ARIMA(1,0,0)\nARIMA estándar: ARIMA(1,1,1)",
+         y = "Valor de la serie",
+         x = "Periodo t") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_arima100, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,0) con la función auto.arima()"}
+mod <- comparacion_no_estacional_bajo[[1]]$modelos$autoarima
+validacion <- arima100
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima100, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,0) con sobreparametrización"}
+mod <- comparacion_no_estacional_bajo[[1]]$modelos$sobreparametrizacion
+validacion <- arima100
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima100, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,0) con el modelo ARIMA estándar"}
+mod <- comparacion_no_estacional_bajo[[1]]$modelos$arima_estandar
+validacion <- arima100
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r pronostico_arima101, fig.cap="Pronóstico de los datos generados mediante un ARIMA(1,0,1) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_bajo[[2]]$modelos, arima101))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(0,1,1)\nSobreparametrización: ARIMA(0,1,1)\nARIMA estándar: ARIMA(1,1,1)",
+         y = "Valor de la serie",
+         x = "Periodo t") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_arima101, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,1) con la función auto.arima()"}
+mod <- comparacion_no_estacional_bajo[[2]]$modelos$autoarima
+validacion <- arima101
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima101, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,1) con sobreparametrización"}
+mod <- comparacion_no_estacional_bajo[[2]]$modelos$sobreparametrizacion
+validacion <- arima101
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima101, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(1,0,1) con el modelo ARIMA estándar"}
+mod <- comparacion_no_estacional_bajo[[2]]$modelos$arima_estandar
+validacion <- arima101
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r pronostico_arima203, fig.cap="Pronóstico de los datos generados mediante un ARIMA(2,0,3) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_alto[[1]]$modelos, arima203))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,0,3)\nSobreparametrización: ARIMA(0,0,5)\nARIMA estándar: ARIMA(1,1,1)",
+         y = "Valor de la serie",
+         x = "Periodo t") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_arima203, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,0,3) con la función auto.arima()"}
+mod <- comparacion_no_estacional_alto[[1]]$modelos$autoarima
+validacion <- arima203
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima203, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,0,3) con sobreparametrización"}
+mod <- comparacion_no_estacional_alto[[1]]$modelos$sobreparametrizacion
+validacion <- arima203
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima203, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,0,3) con el modelo ARIMA estándar"}
+mod <- comparacion_no_estacional_alto[[1]]$modelos$arima_estandar
+validacion <- arima203
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r pronostico_arima402, fig.cap="Pronóstico de los datos generados mediante un ARIMA(4,0,2) según el método de estimación"}
+datos <-
+    resumen_resultados(reordena_simulacion(comparacion_no_estacional_alto[[2]]$modelos, arima402))
+
+datos <- datos$pronostico %>%
+    mutate(fecha = as.numeric(data.table::rleid(fecha)))
+
+
+#datos <- resumen_resultados(TMII)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    #geom_ribbon(aes(x=fecha, ymin=LIred, ymax=LSred), fill="green", linetype=0, alpha=0.2)+
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,1,3)\nSobreparametrización: ARIMA(1,1,0)\nARIMA estándar: ARIMA(1,1,1)",
+         y = "Valor de la serie",
+         x = "Periodo t") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    #scale_x_date(expand = c(0,0))+
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_arima402, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con la función auto.arima()"}
+mod <- comparacion_no_estacional_alto[[2]]$modelos$autoarima
+validacion <- arima402
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_arima402, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con sobreparametrización"}
+mod <- comparacion_no_estacional_alto[[2]]$modelos$sobreparametrizacion
+validacion <- arima402
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_arima402, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con el modelo ARIMA estándar"}
+mod <- comparacion_no_estacional_alto[[2]]$modelos$arima_estandar
+validacion <- arima402
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r}
+load(popstudy::read_from_dir("data.RData", "References/Results_section_references/03 - Mortalidad por causa externa"))
+TS <- ts(base$Total, start = c(2000, 1), end = c(2017, 12), frequency = 12)
+```
+
+```{r externaplotgeneral, fig.cap="Mortalidad por causa externa 2000 − 2017"}
+#Se requiere el paquete ggpmisc
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  labs(caption="Fuente: UED-INEC",
+       y="Mortalidad por causa externa (por cada 1000 habitantes)",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))# +
+  #ylim(7,12) +
+  #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
+```
+
+```{r externasplotperiodos, fig.cap="Mortalidad por causa externa 2000 − 2017 según mes"}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(Total) %>% 
+  ggplot(., aes(x=año, y=Total)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = -0.5) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1) +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  labs(caption="Fuente: UED-INEC",
+       y="Mortalidad por causa externa (por cada 1000 habitantes)",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
+```
+
+```{r externasplotdescomposicion, fig.cap="Descomposición de las defunciones por causa externa en el periodo 2000-2017"}
+base %>% 
+  mutate(valor=BoxCox(Total, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = Total),
+         method = "stl", s.window = 7, frequency = 12, type="aditive",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 1.3) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  labs(caption="Fuente: UED-INEC") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))
+```
+
+
+```{r}
+########Intereses y comisiones del sector público
+```
+
+```{r}
+base <- popstudy::read_from_dir("Datos examen2.xlsx", "References/Results_section_references/05 - Intereses y comisiones del sector público") %>% 
+  read_excel() %>%
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\05 - Intereses y comisiones del sector público\\Datos examen2.xlsx") %>% 
+  mutate(valor=`Intereses y comisiones`,
+         fecha=ymd(Fecha)) %>% 
+  select(fecha, valor) %>% 
+  filter(year(fecha)>=2009)
+TS <- ts(base$valor, start = c(2009, 1), end = c(2018, 06), frequency = 12)
+```
+
+```{r interesesplotgeneral, fig.cap="Intereses y comisiones del sector público en el periodo 2007−2018"}
+ggplot(TS)+
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
+              method = "loess")+
+  theme_minimal() +
+  theme(text = element_text(size=9),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  labs(caption="Fuente: Contraloría General de la República de Costa Rica",
+       y="Intereses y comisiones del sector público",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))
+```
+
+```{r interesesplotperiodos, fig.cap="Intereses y comisiones del sector público en el periodo 2007−2018 según mes"}
+base %>% 
+  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  summarise(valor) %>% 
+  ggplot(., aes(x=año, y=valor)) +
+  facet_wrap(.~mes, ncol=3) +
+  geom_line(color = "#00AFBB", size = 1.3) +
+  stat_peaks(colour = "red") +
+  stat_peaks(geom = "text", colour = "red", 
+             vjust = -0.5) +
+  stat_valleys(colour = "blue") +
+  stat_valleys(geom = "text", colour = "blue", angle = 20,
+               vjust = 0.1, hjust = 1) +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  labs(caption="Fuente: Contraloría General de la República de Costa Rica",
+       y="Intereses y comisiones del sector público",
+       x="Año") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10))) +
+  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
+```
+
+```{r interesesplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 − 2018"}
+base %>% 
+  mutate(valor=BoxCox(valor, lambda=1)) %>% 
+ggsdc(., aes(x = fecha, y = valor),
+         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
+         facet.titles = c("Serie Original", "Tendencia", 
+                          "Estacionalidad", "Aleatoria")) +
+      geom_line(color = "#00AFBB", size = 1.3) +
+  labs(x = "", y = "") +
+  theme_minimal() +
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  labs(caption="Fuente: Contraloría General de la República de Costa Rica") +
+  theme(plot.title = element_text(hjust = 0.5, face="plain"),
+        plot.caption=element_text(hjust=0, vjust=0.5,
+                                  margin=margin(t=1,10,10,10)))
+```
+
+
+```{r}
+load(popstudy::read_from_dir("data.RData", "References/Results_section_references/03 - Mortalidad por causa externa"))
+TS <- ts(base$Total, start = c(2000, 1), end = c(2017, 12), frequency = 12)
+```
+
+```{r externa_acf, fig.cap="Autocorrelación de los datos diferenciados de la mortalidad por causa externa"}
+exploratorio(TS, mostrar = "acf", temporalidad = 12, diferenciar = T)
+```
+
+```{r externa_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la mortalidad por causa externa"}
+exploratorio(TS, mostrar = "pacf", temporalidad = 12, diferenciar = T)
+```
+
+```{r}
+base <- popstudy::read_from_dir("Datos examen2.xlsx", "References/Results_section_references/05 - Intereses y comisiones del sector público") %>% 
+  read_excel() %>%
+  #read_excel(".\\Material de referencia\\Para sección de resultados\\05 - Intereses y comisiones del sector público\\Datos examen2.xlsx") %>% 
+  mutate(valor=`Intereses y comisiones`,
+         fecha=ymd(Fecha)) %>% 
+  select(fecha, valor) %>% 
+  filter(year(fecha)>=2009)
+TS <- ts(base$valor, start = c(2009, 1), end = c(2018, 06), frequency = 12)
+```
+
+```{r intereses_acf, fig.cap="Autocorrelación de los datos diferenciados de la serie de intereses y comisiones del sector público"}
+exploratorio(TS, mostrar = "acf", temporalidad = 12, diferenciar = T)
+```
+
+```{r intereses_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la serie de intereses y comisiones del sector público"}
+exploratorio(TS, mostrar = "pacf", temporalidad = 12, diferenciar = T)
+```
+
+
+```{r}
+do.call(
+    rbind,
+    list(
+        coeficientes_auto.arima_reales,
+        coeficientes_sobreparametrizacion_reales,
+        coeficientes_arima_estandar_reales
+    )
+) %>%
+    data.frame(row.names = NULL) %>%
+    filter(coeficiente %nin% c("intercept", "drift")) %>%
+    select(-proceso) %>%
+    mutate(
+        coeficiente = factor(
+            toupper(coeficiente),
+            levels = c(
+                "INTERCEPT",
+                paste0("AR", 1:6),
+                paste0("MA", 1:6),
+                paste0("SAR", 1:6),
+                paste0("SMA", 1:6)
+            ),
+            ordered = T
+        ),
+        referencia = factor(
+            referencia,
+            levels = c(
+                "TMII",
+                "Mortalidad por causa externa",
+                "Incentivos Salariales",
+                "Intereses y comisiones"
+            ),
+            ordered = T
+        )
+    ) %>%
+    pivot_wider(names_from = tipo,
+                values_from = c(estimacion, LI, LS)) %>%
+     arrange(referencia, coeficiente) %>%
+    select(referencia, coeficiente, contains("auto"), contains("estándar"), contains("Sobreparametrización")) %>% 
+    mutate_if(is.numeric, function(x){
+        case_when(
+            x==0 ~ x+.1,
+            TRUE ~ x
+        )
+    }) %>%
+     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", as.character(round(x, 2)))) %>% 
+    filter(referencia %nin% c("TMII", "Incentivos Salariales")) %>%  #Filtrando los peores
+    kbl(.,
+        "latex",
+        booktabs = T,
+        escape = F, 
+        align = "ccrrrrrrrrr",
+        caption = "\\label{tab:coeficientes_peores_reales}Coeficientes de las ecuaciones de estimación según método de ajuste",
+        col.names = c(
+            "Serie real",
+            "Coeficiente",
+            rep(c("Puntual",
+                  "L.I.",
+                  "L.S."), 3)
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "HOLD_position"),
+        full_width = T,
+        font_size = 6.5
+    ) %>%
+    collapse_rows(columns = 1, valign = "middle") %>%
+    column_spec(1, width = "2.5cm", 
+                #extra_css = 'center-align:middle !important;',
+                bold = T) %>%
+    column_spec(2, width = "1cm") %>% 
+    add_header_above(c(" " = 2, "auto.arima()" = 3, "ARIMA estándar" = 3, "Sobreparametrización" = 3), bold = T) %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados."
+        ),
+        general_title = ""
+    )
+```
+
+```{r errores_reales_externa, fig.cap="Comportamiento de los errores asociados a los modelos estimados con la serie de mortalidad por causa externa"}
+ggarrange(
+    errores_reales_autoarima2,
+    errores_reales_arima_estandar2,
+    errores_reales_sobreparametrizacion2,
+    ncol = 3,
+    nrow = 1
+)
+```
+
+```{r errores_reales_intereses, fig.cap="Comportamiento de los errores asociados a los modelos estimados con la serie de intereses y comisiones del sector público"}
+ggarrange(
+    errores_reales_autoarima4,
+    errores_reales_arima_estandar4,
+    errores_reales_sobreparametrizacion4,
+    ncol = 3,
+    nrow = 1
+)
+```
+
+
+```{r}
+datos <- mapply(
+    function(mods) {
+        resumen_resultados(mods)$medidas
+    },
+    mods = list(
+        TMII,
+        EXTERNA,
+        INCENTIVOS,
+        INTERESES
+    ), SIMPLIFY = FALSE
+) %>% 
+    do.call(rbind, .) %>%
+    data.frame(row.names = NULL) %>% 
+    mutate(proceso = rep(c("TMII",
+                           "Mortalidad por causa externa",
+                           "Incentivos Salariales",
+                           "Intereses y comisiones"),  each=6)) %>% 
+    select(proceso, tipo, Serie, everything()) %>% 
+    filter(proceso %nin% c("TMII", "Incentivos Salariales")) #Filtrar los mejores
+
+datos %>%
+    mutate_if(is.numeric, function(x) {round(x, 2)+.01}) %>% 
+    group_by(proceso, tipo) %>% 
+    mutate_at(vars(AIC:MAPE), function(x){
+        cell_spec(x, color = ifelse(x==min(x), "red", "black"))
+    }) %>% 
+    kbl(
+        .,
+        "latex",
+        booktabs = T,
+        escape = F,
+        align = "cclrrrrrr",
+        caption = "\\label{tab:comparaciones_arima_peores_reales}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación a partir de las series cronológicas reales",
+        col.names = c(
+            "Proceso original",
+            "Datos",
+            "Estimación",
+            "AIC",
+            "AICc",
+            "BIC",
+            "RMSE",
+            "MAE",
+            "MAPE"
+        )
+    ) %>%
+    kable_styling(
+        latex_options = c("scale_down", "repeat_header", "HOLD_position"),
+        full_width = T,
+        font_size = 6.5
+    ) %>%
+    column_spec(1, width = "2.5cm") %>%
+    column_spec(2, width = "1.5cm") %>%
+    collapse_rows(columns = c(1, 2)) %>%
+    column_spec(3, width = "2.5cm") %>%
+    footnote(
+        general = c(
+            "Fuente: Elaboración propia a partir de datos simulados"
+        ),
+        general_title = ""
+    ) 
+```
+
+
+```{r pronostico_EXTERNA, fig.cap="Pronóstico de la Tasa de mortalidad por causa externa (TMCE) según el método de estimación"}
+datos <- resumen_resultados(EXTERNA)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia.\nauto.arima(): ARIMA(1,1,1).\nSobreparametrización: ARIMA(2,0,1)(0,1,1).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
+         y = "TMCE",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    scale_x_date(expand = c(0,0), date_breaks = "3 years", date_labels = "%Y")+
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_EXTERNA, fig.cap="Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con la función auto.arima()"}
+mod <- EXTERNA$haa
+validacion <- EXTERNA$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_EXTERNA, fig.cap="Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con sobreparametrización"}
+mod <- EXTERNA$op$best_model
+validacion <- EXTERNA$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_EXTERNA, fig.cap="Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con el modelo ARIMA estándar"}
+mod <- EXTERNA$arima_estandar
+validacion <- EXTERNA$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+
+
+
+
+
+
+
+
+
+
+```{r pronostico_INTERESES, fig.cap="Pronóstico de la serie de intereses y comisiones del sector público según el método de estimación"}
+datos <- resumen_resultados(INTERESES)$pronostico
+corte <- which(datos$tipo == "pronostico")[1]
+corte <- datos$fecha[corte]
+ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
+    geom_line(size = 0.8) +
+    scale_color_manual(values = c("limegreen", "orangered1", "blue", "salmon4")) +
+    geom_vline(xintercept = corte, linetype = "dotdash") +
+    theme_minimal() +
+    theme(text = element_text(size = 9),
+          axis.text.x = element_text(angle = 0, hjust = 1)) +
+    labs(caption = "Fuente: Elaboración propia.\nauto.arima(): ARIMA(0,0,1)(0,1,0).\nSobreparametrización: ARIMA(0,1,2)(0,1,0).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
+         y = "Intereses y comisiones",
+         x = "Periodo") +
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "plain"),
+        plot.caption = element_text(
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(t = 1, 10, 10, 10)
+        )
+    ) +
+    scale_x_date(expand = c(0,0), date_breaks = "3 years", date_labels = "%Y")+
+    scale_y_continuous(expand = c(0, 0))
+```
+
+```{r ee_autoarima_INTERESES, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con la función auto.arima()"}
+mod <- INTERESES$haa
+validacion <- INTERESES$testing
+fc <- forecast(mod, h = length(validacion))
+descriptive_plot(data.frame(ee=as.numeric((fc$upper[,2] - fc$lower[,2]) / (2 * qnorm(.5 + fc$level[2] / 200)))),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_sobreparametrizacion_INTERESES, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con sobreparametrización"}
+mod <- INTERESES$op$best_model
+validacion <- INTERESES$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+```{r ee_arima_estandar_INTERESES, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con el modelo ARIMA estándar"}
+mod <- INTERESES$arima_estandar
+validacion <- INTERESES$testing
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```{r, ref="funcion_op_arima", codecap = "Función op.arima", echo=FALSE, eval=FALSE}

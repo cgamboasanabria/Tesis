@@ -1,90 +1,77 @@
 \babel@toc {spanish}{}\relax 
 \contentsline {section}{DEDICATORIA}{\es@scroman {i}}{Doc-Start}%
 \contentsline {section}{AGRADECIMIENTOS}{\es@scroman {ii}}{Doc-Start}%
-\contentsline {section}{RESUMEN}{1}{Doc-Start}%
-\contentsline {section}{ABSTRACT}{2}{Doc-Start}%
-\contentsline {section}{\numberline {1}INTRODUCCIÓN}{3}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Antecedentes}{3}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}El problema}{4}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Objetivos del estudio}{4}{subsection.1.3}%
-\contentsline {subsection}{\numberline {1.4}Justificación del estudio}{5}{subsection.1.4}%
-\contentsline {subsection}{\numberline {1.5}Organización del estudio}{6}{subsection.1.5}%
-\contentsline {section}{\numberline {2}MARCO TEÓRICO}{7}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Componentes de una serie cronológica}{8}{subsection.2.1}%
-\contentsline {subsubsection}{\numberline {2.1.1}La tendencia-ciclo}{10}{subsubsection.2.1.1}%
-\contentsline {subsubsection}{\numberline {2.1.2}Componentes estacionales}{12}{subsubsection.2.1.2}%
-\contentsline {subsubsection}{\numberline {2.1.3}Componente irregular}{13}{subsubsection.2.1.3}%
-\contentsline {subsection}{\numberline {2.2}Supuestos en el análisis de series cronológicas}{14}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Identificación del modelo}{16}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Modelos Autorregresivos Integrados de Medias Móviles}{18}{subsection.2.4}%
-\contentsline {subsubsection}{\numberline {2.4.1}Ecuación de Wold}{19}{subsubsection.2.4.1}%
-\contentsline {subsubsection}{\numberline {2.4.2}Metodología Box-Jenkins}{20}{subsubsection.2.4.2}%
-\contentsline {subsubsection}{\numberline {2.4.3}Modelos Autorregresivos}{20}{subsubsection.2.4.3}%
-\contentsline {subsubsection}{\numberline {2.4.4}Modelos de Medias Móviles}{21}{subsubsection.2.4.4}%
-\contentsline {subsubsection}{\numberline {2.4.5}Modelos ARIMA}{21}{subsubsection.2.4.5}%
-\contentsline {subsection}{\numberline {2.5}Los autocorrelogramas}{22}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}La sobreparametrización y el análisis combinatorio}{27}{subsection.2.6}%
-\contentsline {section}{\numberline {3}METODOLOGÍA}{29}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Materiales}{29}{subsection.3.1}%
-\contentsline {subsubsection}{\numberline {3.1.1}Tasa de mortalidad infantil interanual}{29}{subsubsection.3.1.1}%
-\contentsline {subsubsection}{\numberline {3.1.2}Mortalidad por causa externa}{33}{subsubsection.3.1.2}%
-\contentsline {subsubsection}{\numberline {3.1.3}Incentivos salariales del sector público}{36}{subsubsection.3.1.3}%
-\contentsline {subsubsection}{\numberline {3.1.4}Intereses y comisiones del sector público}{38}{subsubsection.3.1.4}%
-\contentsline {subsubsection}{\numberline {3.1.5}Herramientas analíticas y procedimiento de simulación}{41}{subsubsection.3.1.5}%
-\contentsline {subsection}{\numberline {3.2}Métodos}{44}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Análisis exploratorio}{44}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}Partición de los datos}{45}{subsubsection.3.2.2}%
-\contentsline {subsubsection}{\numberline {3.2.3}Identificación y estimación del mejor modelo según la función auto.arima()}{45}{subsubsection.3.2.3}%
-\contentsline {subsubsection}{\numberline {3.2.4}Identificación y estimación del mejor modelo con sobreparametrización}{45}{subsubsection.3.2.4}%
-\contentsline {subsubsection}{\numberline {3.2.5}Estimación de un modelo ARIMA estándar}{48}{subsubsection.3.2.5}%
-\contentsline {subsubsection}{\numberline {3.2.6}Análisis de los errores}{48}{subsubsection.3.2.6}%
-\contentsline {subsubsection}{\numberline {3.2.7}Pronósticos}{48}{subsubsection.3.2.7}%
-\contentsline {subsubsection}{\numberline {3.2.8}Medidas de bondad de ajuste y de rendimiento}{48}{subsubsection.3.2.8}%
-\contentsline {paragraph}{\numberline {3.2.8.1}AIC}{48}{paragraph.3.2.8.1}%
-\contentsline {paragraph}{\numberline {3.2.8.2}AICc}{49}{paragraph.3.2.8.2}%
-\contentsline {paragraph}{\numberline {3.2.8.3}BIC}{49}{paragraph.3.2.8.3}%
-\contentsline {paragraph}{\numberline {3.2.8.4}MAE}{49}{paragraph.3.2.8.4}%
-\contentsline {paragraph}{\numberline {3.2.8.5}MASE}{49}{paragraph.3.2.8.5}%
-\contentsline {paragraph}{\numberline {3.2.8.6}RMSE}{49}{paragraph.3.2.8.6}%
-\contentsline {subsubsection}{\numberline {3.2.9}Tiempo de procesamiento}{50}{subsubsection.3.2.9}%
-\contentsline {section}{\numberline {4}RESULTADOS}{51}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Análisis exploratorio}{51}{subsection.4.1}%
-\contentsline {subsubsection}{\numberline {4.1.1}Datos simulados}{51}{subsubsection.4.1.1}%
-\contentsline {paragraph}{\numberline {4.1.1.1}ARIMA(1,0,0)}{51}{paragraph.4.1.1.1}%
-\contentsline {paragraph}{\numberline {4.1.1.2}ARIMA(1,0,1)}{53}{paragraph.4.1.1.2}%
-\contentsline {paragraph}{\numberline {4.1.1.3}ARIMA(2,0,3)}{55}{paragraph.4.1.1.3}%
-\contentsline {paragraph}{\numberline {4.1.1.4}ARIMA(4,0,2)}{57}{paragraph.4.1.1.4}%
-\contentsline {paragraph}{\numberline {4.1.1.5}ARIMA(0,0,1)(0,1,1)}{59}{paragraph.4.1.1.5}%
-\contentsline {paragraph}{\numberline {4.1.1.6}ARIMA(2,1,4)(3,0,3)}{61}{paragraph.4.1.1.6}%
-\contentsline {subsubsection}{\numberline {4.1.2}Tasa de mortalidad infantil interanual}{63}{subsubsection.4.1.2}%
-\contentsline {subsubsection}{\numberline {4.1.3}Mortalidad por causa externa}{65}{subsubsection.4.1.3}%
-\contentsline {subsubsection}{\numberline {4.1.4}Incentivos salariales}{67}{subsubsection.4.1.4}%
-\contentsline {subsubsection}{\numberline {4.1.5}Intereses y comisiones del sector público}{69}{subsubsection.4.1.5}%
-\contentsline {subsection}{\numberline {4.2}Partición de los datos}{71}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Identificación y estimación del mejor modelo según la función auto.arima()}{73}{subsection.4.3}%
-\contentsline {subsubsection}{\numberline {4.3.1}Datos simulados}{73}{subsubsection.4.3.1}%
-\contentsline {subsubsection}{\numberline {4.3.2}Datos reales}{73}{subsubsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.4}Identificación y estimación del mejor modelo con sobreparametrización}{73}{subsection.4.4}%
-\contentsline {subsubsection}{\numberline {4.4.1}Datos simulados}{74}{subsubsection.4.4.1}%
-\contentsline {subsubsection}{\numberline {4.4.2}Datos reales}{75}{subsubsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.5}Estimación de un modelo ARIMA estándar}{75}{subsection.4.5}%
-\contentsline {subsubsection}{\numberline {4.5.1}Datos simulados}{75}{subsubsection.4.5.1}%
-\contentsline {subsubsection}{\numberline {4.5.2}Datos reales}{76}{subsubsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.6}Análisis de los errores}{76}{subsection.4.6}%
-\contentsline {subsubsection}{\numberline {4.6.1}Datos simulados}{76}{subsubsection.4.6.1}%
-\contentsline {paragraph}{\numberline {4.6.1.1}Errores de los modelos estimados con auto.arima()}{77}{paragraph.4.6.1.1}%
-\contentsline {paragraph}{\numberline {4.6.1.2}Errores de los modelos estimados con sobreparametrización}{81}{paragraph.4.6.1.2}%
-\contentsline {paragraph}{\numberline {4.6.1.3}Errores de los modelos estimados con un modelo ARIMA estándar}{84}{paragraph.4.6.1.3}%
-\contentsline {subsubsection}{\numberline {4.6.2}Datos reales}{88}{subsubsection.4.6.2}%
-\contentsline {paragraph}{\numberline {4.6.2.1}Errores de los modelos estimados con auto.arima()}{88}{paragraph.4.6.2.1}%
-\contentsline {paragraph}{\numberline {4.6.2.2}Errores de los modelos estimados con sobreparametrización}{90}{paragraph.4.6.2.2}%
-\contentsline {paragraph}{\numberline {4.6.2.3}Errores de los modelos estimados con un modelo ARIMA estándar}{93}{paragraph.4.6.2.3}%
-\contentsline {subsection}{\numberline {4.7}Pronósticos}{95}{subsection.4.7}%
-\contentsline {subsubsection}{\numberline {4.7.1}Datos simulados}{95}{subsubsection.4.7.1}%
-\contentsline {subsubsection}{\numberline {4.7.2}Datos reales}{108}{subsubsection.4.7.2}%
-\contentsline {subsection}{\numberline {4.8}Medidas de bondad de ajuste y de rendimiento}{116}{subsection.4.8}%
-\contentsline {subsubsection}{\numberline {4.8.1}Datos simulados}{116}{subsubsection.4.8.1}%
-\contentsline {subsubsection}{\numberline {4.8.2}Datos reales}{117}{subsubsection.4.8.2}%
-\contentsline {section}{\numberline {5}CONCLUSIONES}{118}{section.5}%
-\contentsline {section}{\numberline {6}ANEXOS}{123}{section.6}%
-\contentsline {section}{\numberline {7}REFERENCIAS}{124}{section.7}%
+\contentsline {section}{RESUMEN}{\es@scroman {vii}}{Doc-Start}%
+\contentsline {section}{ABSTRACT}{\es@scroman {viii}}{Doc-Start}%
+\contentsline {section}{\numberline {1}INTRODUCCIÓN}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Antecedentes}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}El problema}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Objetivos del estudio}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Justificación del estudio}{3}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Organización del estudio}{4}{subsection.1.5}%
+\contentsline {section}{\numberline {2}MARCO TEÓRICO}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Definición de una serie de tiempo}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Componentes de una serie cronológica}{6}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}La tendencia-ciclo}{8}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Componentes estacionales}{10}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Componente irregular}{11}{subsubsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.3}Supuestos en el análisis de series cronológicas}{12}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Identificación del modelo}{14}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Modelos Autorregresivos Integrados de Medias Móviles (ARIMA)}{16}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Ecuación de Wold}{16}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}Metodología Box-Jenkins}{18}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}Modelos Autorregresivos}{18}{subsubsection.2.5.3}%
+\contentsline {subsubsection}{\numberline {2.5.4}Modelos de Medias Móviles}{19}{subsubsection.2.5.4}%
+\contentsline {subsubsection}{\numberline {2.5.5}Modelos ARIMA}{19}{subsubsection.2.5.5}%
+\contentsline {subsection}{\numberline {2.6}Los autocorrelogramas}{20}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}La sobreparametrización y el análisis combinatorio}{25}{subsection.2.7}%
+\contentsline {section}{\numberline {3}METODOLOGÍA}{27}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Materiales}{27}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Tasa de mortalidad infantil interanual}{27}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Mortalidad por causa externa}{28}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Incentivos salariales del sector público}{29}{subsubsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}Intereses y comisiones del sector público}{29}{subsubsection.3.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.5}Herramientas analíticas}{30}{subsubsection.3.1.5}%
+\contentsline {subsubsection}{\numberline {3.1.6}Procedimiento de simulación}{30}{subsubsection.3.1.6}%
+\contentsline {subsection}{\numberline {3.2}Métodos}{32}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Análisis exploratorio}{32}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Partición de los datos}{32}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Identificación y estimación del mejor modelo según la función auto.arima()}{32}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}Identificación y estimación del mejor modelo con sobreparametrización}{32}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5}Estimación de un modelo ARIMA estándar}{35}{subsubsection.3.2.5}%
+\contentsline {subsubsection}{\numberline {3.2.6}Análisis visual de los errores}{36}{subsubsection.3.2.6}%
+\contentsline {subsubsection}{\numberline {3.2.7}Medidas de bondad de ajuste y de rendimiento}{36}{subsubsection.3.2.7}%
+\contentsline {paragraph}{\numberline {3.2.7.1}AIC}{36}{paragraph.3.2.7.1}%
+\contentsline {paragraph}{\numberline {3.2.7.2}AICc}{36}{paragraph.3.2.7.2}%
+\contentsline {paragraph}{\numberline {3.2.7.3}BIC}{36}{paragraph.3.2.7.3}%
+\contentsline {paragraph}{\numberline {3.2.7.4}MAE}{36}{paragraph.3.2.7.4}%
+\contentsline {paragraph}{\numberline {3.2.7.5}MASE}{37}{paragraph.3.2.7.5}%
+\contentsline {paragraph}{\numberline {3.2.7.6}RMSE}{37}{paragraph.3.2.7.6}%
+\contentsline {subsubsection}{\numberline {3.2.8}Pronósticos}{37}{subsubsection.3.2.8}%
+\contentsline {subsubsection}{\numberline {3.2.9}Tiempo de procesamiento}{37}{subsubsection.3.2.9}%
+\contentsline {subsubsection}{\numberline {3.2.10}Resumen de la forma de análisis}{38}{subsubsection.3.2.10}%
+\contentsline {section}{\numberline {4}RESULTADOS}{39}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Contraste de métodos de estimación de los ARIMA para las series simuladas}{39}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Análisis exploratorio}{39}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Partición de los datos}{40}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.3}Identificación y estimación}{41}{subsubsection.4.1.3}%
+\contentsline {subsubsection}{\numberline {4.1.4}Análisis de los errores}{42}{subsubsection.4.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.5}Medidas de bondad de ajuste y de rendimiento}{44}{subsubsection.4.1.5}%
+\contentsline {subsubsection}{\numberline {4.1.6}Estimación en el periodo de validación}{45}{subsubsection.4.1.6}%
+\contentsline {subsection}{\numberline {4.2}Contraste de métodos de estimación de los ARIMA para las series empíricas}{50}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Análisis exploratorio}{50}{subsubsection.4.2.1}%
+\contentsline {paragraph}{\numberline {4.2.1.1}Tasa de mortalidad infantil interanual}{50}{paragraph.4.2.1.1}%
+\contentsline {paragraph}{\numberline {4.2.1.2}Incentivos salariales del sector público}{53}{paragraph.4.2.1.2}%
+\contentsline {paragraph}{\numberline {4.2.1.3}Mortalidad por causa externa}{57}{paragraph.4.2.1.3}%
+\contentsline {paragraph}{\numberline {4.2.1.4}Intereses y comisiones del sector público}{57}{paragraph.4.2.1.4}%
+\contentsline {subsubsection}{\numberline {4.2.2}Partición de los datos}{58}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Identificación y estimación}{58}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Análisis de los errores}{59}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}Medidas de bondad de ajuste y de precisión}{61}{subsubsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.6}Estimación en el periodo de validación}{62}{subsubsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.3}Resumen de resultados}{67}{subsection.4.3}%
+\contentsline {section}{\numberline {5}CONCLUSIÓN Y DISCUSIONES}{68}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Conclusiones}{68}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}discusiones}{71}{subsection.5.2}%
+\contentsline {section}{\numberline {6}ANEXOS}{73}{section.6}%
+\contentsline {section}{\numberline {7}REFERENCIAS}{96}{section.7}%

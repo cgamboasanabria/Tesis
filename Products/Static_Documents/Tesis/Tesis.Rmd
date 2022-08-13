@@ -56,7 +56,7 @@ knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
 
 popstudy::required_packages(knitr, kableExtra, readxl, gridExtra, ggpubr, ggplot2, lubridate, 
                      ggseas, astsa, ggpmisc, forecast, 
-                     tidyr, popstudy, DiagrammeR, dplyr)
+                     tidyr, popstudy, DiagrammeR, Hmisc, dplyr)
 
 oldSource <- knit_hooks$get("source")
 knit_hooks$set(source = function(x, options) {
@@ -71,7 +71,13 @@ knit_hooks$set(source = function(x, options) {
 
 \pagenumbering{roman}
 
-Pendiente
+A mi abuela, un pilar fundamental en mi vida sin cuyo apoyo no hubiese alcanzado muchas de mis metas y de quien aprendí que no desaparece lo que se muere, solo lo que se olvida. A mi madre, que junto con mi abuela me enseñaron en su más amplio sentido que quien no estudia, muere en el charco de la ignorancia.
+
+A mi esposa, quien con su forma de ver la vida me sigue haciendo crecer tanto personal como académica y profesionalmente.
+
+A mi tía, a mi hermana y su esposo, quienes con su comprensión en los momentos más difíciles supieron darme el aliento necesario y la motivación para seguir adelante.
+
+A mis tíos, por velar en distintas etapas de mi vida que tuviera las heramientas necesarias para ser cada día una mejor persona.
 
 \cleardoublepage
 
@@ -79,7 +85,7 @@ Pendiente
 \addcontentsline{toc}{section}{AGRADECIMIENTOS}
 \section*{AGRADECIMIENTOS}
 
-También pendiente
+Agradezco profundamente a Óscar Centeno Mora, quien con sus buenos consejos y dedicación ayudó a hacer posible este proyecto, a Gilbert Brenes Camacho y a Shu Wei Chou por sus valiosos aportes técnicos y sustantivos en el contexto de esta tesis, y a Cindy Cárdenas, por su invaluable apoyo administrativo en los momentos justos.
 
 \cleardoublepage
 
@@ -96,7 +102,7 @@ Ph.D. Flor Isabel Jiménez Segura\\
 \text{}
 
 \noindent\rule{7cm}{0.4pt}\\
-MSc. Óscar Centeno Mora\\
+M.Sc. Óscar Centeno Mora\\
 \textbf{Director de Tesis}
 
 \text{}
@@ -129,43 +135,51 @@ César Andrés Gamboa Sanabria\\
 
 
 \tableofcontents
-\listoftables
-\listoffigures
 
 \cleardoublepage
-\pagenumbering{arabic}
-
-\newpage
 
 \addcontentsline{toc}{section}{RESUMEN}
 \section*{RESUMEN}
 
-Estimar modelos de series cronológicas es una labor ampliamente extendida en múltiples campos d ela investigación y su objetivo último es generar pronósticos de la forma más precisa posible dentro de un horizonte determinado. Existe una amplia gama de modelos que puede utilizarse con este fin, entre ellos están los modelos Autorregresivos Integrados de Medias Móviles ($ARIMA$), e incluso existen diversos métodos de estimación automática o semi-automática para esta rama de la estadística. 
+Estimar modelos de series cronológicas es una labor ampliamente extendida en múltiples campos de la investigación y su objetivo último es generar pronósticos de la forma más precisa posible dentro de un horizonte determinado. Existe una amplia gama de modelos que puede utilizarse con este fin, entre ellos están los modelos Autorregresivos Integrados de Medias Móviles ($ARIMA$), e incluso existen diversos métodos de estimación automática o semi-automática para esta rama de la estadística. 
 
-A pesar de esto, encontrar un modelo que posea un buen ajuste a los datos no es tarea fácil, pues deben considerarse diversos aspectos teóricos, prácticos, y de la temática de estudio para así obtener un modelo adecuado que genere pronósticos realistas y pertinentes para la toma de decisiones dentro de lo posible.
+A pesar de esto, encontrar un modelo que posea un buen ajuste a los datos no es fácil, pues se deben considerar tanto aspectos teóricos como prácticos, y de la temática de estudio para así obtener un modelo adecuado que genere pronósticos realistas y pertinentes para la toma de decisiones dentro de lo posible.
 
-EN esta investigación se propone hacer uso de la sobreparametrización en conjunto con el método de permutaciones del análisis combinatorio para someter a prueba una espectro más amplio de posibles modelos $ARIMA$. En las selección de modelos ARIMA los métodos más tradicionales como los correlogramas u otros, no suelen cubrir muchas alternativas para definir la cantidad de coeficientes a estimar en el modelo, lo cual representa un método de estimación que no es el mejor, por esto, la presente tesis propone una metodología para obtener pronósticos más precisos en comparación a los métodos tradicionales.
+La investigación propone hacer uso de método denominado sobreparametrización en conjunto con el método de permutaciones del análisis combinatorio para someter a prueba una espectro más amplio de posibles modelos $ARIMA$. En la selección de modelos ARIMA los métodos más tradicionales como los correlogramas u otros, no suelen cubrir muchas alternativas para definir la cantidad de coeficientes a estimar en el modelo, lo cual representa un método de estimación que no es óptimo. El presente tesis propone una metodología para obtener pronósticos más precisos en comparación a los métodos tradicionales.
 
-Se realiza un ejercicio de simulación de series cronológicas para ajustar modelos $ARIMA$ con la función `auto.arima()`, la sobreparametrización y un modelo $ARIMA$ de orden bajo a partir los datos generados y cuatro series de tiempo reales utilizando una partición del 80% para entrenar los modelos y el restante 20% para validación de los pronósticos. La calidad de los resultados de cada modelo se mide mediante medidas de bondad de ajuste y de rendimiento.
+Los resultados se contrastan con datos simulados de series cronológicas y cuatro series reales para ajustar modelos $ARIMA$ con la función `auto.arima()`, la sobreparametrización y un modelo $ARIMA$ de orden bajo. Para cada una de estas series se realiza una partición del 80% para entrenar los modelos y el restante 20% para validación de los pronósticos. En cada una de estas series se realizó un análisis visual del comportamiento de los errores y posteriormente se evalúa la calidad de los resultados de cada modelo obtenido con las tres técnicas descritas mediante medidas de bondad de ajuste (AIC, AICc y BIC) y de precisión (RMSE, MAE y MAPE).
 
-Entre los principales resultados se concluye que al tener datos que vienen de un proceso con bajo número de parámetros, el uso de la sobreparametrización logra captar de buena manera el comportamiento de la serie en comparación a las otras alternativas más utilizadas y, además, cuando el proceso que gobierna la serie es de un mayor grado, la metodología propuesta, al considerar un mayor espectro paramétrico, es capaz de capturar de mejor forma el comportamiento de la serie y conseguir pronósticos con una precisión mayor al de los métodos más tradicionales.
+Al tener datos que vienen de un proceso con bajo número de parámetros, la sobreparametrización logra captar de buena manera el comportamiento de la serie en comparación a las otras alternativas, y cuando el proceso que gobierna la serie es de un mayor grado, la metodología propuesta es capaz de capturar de mejor forma el comportamiento de la serie y conseguir pronósticos con una precisión mayor al de los métodos más tradicionales, pues en los resultados de entrenamiento, la sobreparametrización obtuvo el mejor ajuste un 58.33% de las veces y la mejor precisión el 45.45% de las veces, mientras que al evaluar los resultados sobre los conjuntos de datos de validación, la sobreparametrización obtuvo el mejor ajuste el 50% de las veces, mientras que las mejores medidas de precisión se alcanzaron un 67% del tiempo.
 
 \cleardoublepage
 
 \addcontentsline{toc}{section}{ABSTRACT}
 \section*{ABSTRACT}
 
-Estimating time series models is a widely extended task in multiple fields of research, and its final goal is to forecast as accurately as possible within a given horizon. A wide range of models can be used for this purpose, including the Autoregressive Integrated Moving Average models ($ARIMA$), and there are even various automatic or half-automatic estimation methods for this topic. 
+Time series analysis is widely extended in several research fields, and its goal is to generate forecasts as accurately as possible within a given horizon. Several models can be used for this purpose, among them are the Autoregressive Integrated Moving Average models (ARIMA). There are even some automatic or semi-automatic estimation methods for their calculation. 
 
-Despite this, finding a model that has an excellent fit to the data is not an easy task since it must have theoretical, practical, and thematic aspects to obtain an adequate model that generates realistic and relevant forecasts for decision-making. 
+Despite this, finding a well-fitted model is not easy, since both theoretical and practical aspects must be considered, as well as particular context to obtain an adequate model that generates realistic and relevant forecasts for decision making as much as possible. 
 
-In this research, the use of overparameterization is proposed with combinatorial analysis to test a broader spectrum of possible $ARIMA$ models. In the selection of ARIMA models, the most traditional methods such as correlograms or others, do not usually cover many alternatives to define the number of coefficients to be estimated in the model, which represents an estimation method that is not the best, for this reason, the present thesis proposes a methodology to obtain more accurate forecasts compared to traditional methods. 
+This research proposes the use of overparameterization combinatorial analysis to test a broader spectrum of possible $ARIMA$ models. In ARIMA model selection, the most traditional methods, such as correlograms, do not usually cover many alternatives to define the number of the coefficients to be estimated in the model, which represents a non-optimal estimation method. This thesis proposes a methodology to obtain more accurate forecasts compared to traditional methods. 
 
-A time-series simulation exercise is performed to fit $ARIMA$ models with the `auto.arima()` function, overparameterization, and a low order $ARIMA$ model from the generated data and four local time series using a partition of 80% to train the models and the remaining 20% for forecast validation. The quality of the results of each model is checked with the goodness of fit and accuracy measures.
+The results are contrasted with simulated time-series data and four real series to fit $ARIMA$ models with the `auto.arima()` function, overparameterization, and a low-order $ARIMA$ model. For each of these series, an 80% partition is made to train the models and the remaining 20% to validate the forecasts. 
 
-Among the main results, it is concluded that data that comes from a lower process, the overparameterization, has a good fit compared to traditional methods. In addition, when the data has a higher process, the proposed methodology, by considering a larger parametric spectrum, can fit the time series and reach forecasts with greater precision than more traditional methods. 
+In each of these series, a visual analysis of the behavior of the errors was carried out, and subsequently, the quality of the results of each model obtained with these three techniques was evaluated through measures of goodness of fit (AIC, AICc, and BIC) and precision (RMSE, MAE, and MAPE). 
+
+By having data that comes from a process with a low number of parameters, the overparameterization manages to capture in a good way the behavior of the series compared to the other methods. When the process that rules the time series implies a higher degree, the proposed methodology leads to a well-capture-behavior of the series and achieving forecasts with greater precision than the more traditional methods.
+
+In the training results, the overparameterization obtained the best fit 58.33% of the time and the best precision the 45.45% of the time. In comparison, when evaluating the results on the validation data sets, overparameterization obtained the best fit 50% of the time, while the best precision measures were achieved 67% of the time.
 
 \cleardoublepage
+
+\listoftables
+
+\listoffigures
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+\newpage
 
 \section{INTRODUCCIÓN}  
 
@@ -197,7 +211,7 @@ Among the main results, it is concluded that data that comes from a lower proces
 \newpage
 \newpage
 
-\section{CONCLUSIONES}
+\section{CONCLUSIÓN Y DISCUSIONES}
 
 ```{r, child="05-Conclusiones.Rmd"}
 ```

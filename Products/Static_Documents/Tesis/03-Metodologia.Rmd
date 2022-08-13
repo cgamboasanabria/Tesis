@@ -1,6 +1,12 @@
-La aplicación de las series cronológicas tiene tres objetivos: 1) el análisis exploratorio de la serie en cuestión, 2) estimar modelos de proyección, y 3) generar pronósticos para los posibles valores futuros que tomará la serie cronológica.
+La aplicación de las series cronológicas tiene por objetivos: 1) el análisis exploratorio de la serie en cuestión, 2) estimar modelos de proyección, y 3) generar pronósticos para los posibles valores futuros que tomará la serie cronológica.
 
-Esta sección aborda la metodología propuesta como método de estimación y pronóstico de series cronológicas. En la búsqueda de un modelo adecuado de entre varios candidatos, se cubren en un primer apartado los materiales a utilizar, así como los métodos, incluyendo el proceso de estimación, el procedimiento de simulación empleado para la verificación del método propuesto, y las medidas de bondad de ajuste y de precisión a utilizar. Se describe en detalle el uso de la sobreparametrización como herramienta para la generación de pronósticos de series cronológicas con temporalidades mensuales, bimensuales, trimestrales, cuatrimestrales o anuales mediante un proceso de selección fundamentada en las permutaciones de todos los parámetros de un modelo ARIMA hasta un rango determinado. Las medidas de precisión y de bondad de ajuste sirven de insumo para utilizar un método de consenso entre ellas y seleccionar el modelo más adecuado mediante la sobreparametrización: se comparan todos los posibles modelos en un intervalo específico de términos definiendo una diferenciación adecuada para la serie y permutando hasta un máximo definido para los términos autorregresivos y de medias móviles especificados para así seleccionar la especificación que ofrezca mejores resultados al momento de pronosticar valores futuros de la serie cronológica.
+Esta sección aborda la metodología propuesta como método de estimación y pronóstico de series cronológicas. En la búsqueda de una ecuación de estimación adecuada de entre varias candidatas, se cubren en un primer apartado los materiales a utilizar, así como los métodos, incluyendo el proceso de estimación, el procedimiento de simulación empleado para la verificación del método propuesto, y las medidas de bondad de ajuste y de precisión a utilizar. 
+
+```{r}
+# Se describe en detalle a lo largo de este apartado el uso de la sobreparametrización como herramienta para la generación de pronósticos de series cronológicas con temporalidades mensuales, bimensuales, trimestrales, cuatrimestrales o anuales mediante un proceso de selección fundamentada en las permutaciones de todos los parámetros de un modelo ARIMA hasta un rango determinado.
+# 
+# Finalmente, las medidas de precisión y de bondad de ajuste sirven de insumo para utilizar un método de consenso entre ellas y seleccionar el modelo más adecuado mediante la sobreparametrización: se comparan todos los posibles modelos en un intervalo específico de términos definiendo una diferenciación adecuada para la serie y permutando hasta un máximo definido para los términos autorregresivos y de medias móviles especificados para así seleccionar la especificación que ofrezca mejores resultados al momento de pronosticar valores futuros de la serie cronológica.
+```
 
 \subsection{Materiales}
 
@@ -18,88 +24,7 @@ En el INEC, cada mes se publica el boletín de la TMI interanual (TMII), que ana
 
 La importancia de este proceso, aparte de servir de parámetro para evaluar el sistema de salud, está en su estrecha relación con las proyecciones de población, pues como se mencionó previamente, la TMII analiza la mortalidad en el grupo de edad de menores de un año, que es el primer grupo al generar tablas de mortalidad, ya sea de la forma clásica o mediante la mortalidad óptima [@mortalidad_optima]. Uno de los métodos más conocidos para realizar estas estimaciones es el método de los componentes de cambio demográfico, que son la fecundidad, la mortalidad y la migración. En el caso de la mortalidad, uno de los puntos de partida es la estimación de las tasas de mortalidad por grupos de edad, siendo de particular interés la de menores de cinco años, pues esta a su vez se subdivide en los grupos de menores de un año y el de uno a cuatro años. Conocer el comportamiento de la mortalidad infantil es importante porque es en este grupo de edad en el que pueden existir cambios muy bruscos en la mortalidad y la fecundidad [@Rincon].
 
-Dado que la medición de la TMII se hace partiendo de un determinado mes y a partir de éste se consideran los 11 meses anteriores, el primer valor de la base de datos fue medido a partir de Enero de 2000, que corresponde al período interanual Febrero 1999 – Enero 2000. Todos los periodos siguientes se muestran en la Figura \ref{fig:tmiiplotgeneral}.
 
-```{r}
-base <- popstudy::read_from_dir("TMIIR.xlsx", "References/Results_section_references/01 - Tasa de mortalidad infantil interanual") %>% 
-  read_excel()
-#base <- read_excel("./Material de referencia/Para sección de resultados/01 - Tasa de mortalidad infantil interanual/TMIIR.xlsx")
-TS <- ts(base$tmii, start = c(1989, 1), end = c(2017, 12), frequency = 12)
-```
-
-```{r tmiiplotgeneral, fig.cap="Tasa de Mortalidad Infantil Interanual 1989 - 2017"}
-#Se requiere el paquete ggpmisc
-ggplot(TS)+
-  geom_line(color = "#00AFBB", size = 1.3) +
-  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-              method = "loess")+
-  geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC",
-       y="TMII (por cada 1000 nacimientos)",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
-```
-
-La serie muestra picos y valles pronunciados a lo largo de todo el periodo. A modo de visualización, se ajustó un suavizamiento de Loess para buscar señales de tendencia y concavidad en los datos temporales. La línea roja punteada se ubica aproximadamente en el mes de Julio del año 2000, pues a partir de ese punto el suavizamiento de Loess muestra un ligero cambio en la concavidad, lo cual sugiere que a partir ese punto será más difícil que la TMII vuelva a alcanzar valores similares a los mostrados al inicio de la serie. Además, al presentarse dos caídas y subidas abruptas en la TMII, esta tiende a estabilizarse.
-
-Mediante un análisis visual, la Figura \ref{fig:tmiiplotperiodos} parece respaldar el supuesto de que la mortalidad no posee efectos estacionales determinantes, pues para cada uno de los 12 períodos, en ninguno parecen existir mayores diferencias. El efecto que se mantiene en cada uno de los períodos es el de la tendencia, pues en cada uno ésta sigue descendiendo con el pasar de los años. Este hecho coincide con lo observado en la Figura \ref{fig:tmiiplotgeneral}.
-
-```{r tmiiplotperiodos, fig.cap="Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos"}
-base %>% 
-  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
-  summarise(tmii) %>% 
-  mutate(mes=factor(mes, labels=c("Febrero - Enero", "Marzo - Febrero",
-                                  "Abril - Marzo", "Mayo - Abril", 
-                                  "Junio - Mayo", "Julio - Junio",
-                                  "Agosto - Julio", "Setiembre - Agosto",
-                                  "Octubre - Setiembre", "Noviembre - Octubre",
-                                  "Diciembre - Noviembre", "Enero - Diciembre"))) %>% 
-  ggplot(., aes(x=año, y=tmii)) +
-  facet_wrap(.~mes, ncol=3) +
-  geom_line(color = "#00AFBB", size = 1.3) +
-  stat_peaks(colour = "red") +
-  stat_peaks(geom = "text", colour = "red", 
-             vjust = -0.5) +
-  stat_valleys(colour = "blue") +
-  stat_valleys(geom = "text", colour = "blue", angle = 20,
-               vjust = 0.1, hjust = 1) +
-  theme_minimal() +
-  theme(text = element_text(size=13),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC",
-       y="TMII (por cada 1000 nacimientos)",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
-```
-
-Para hacer la descomposición de la serie se hizo una transformación de Box-Cox con $\lambda=1$ para aplicarla de manera multiplicativa. Esto se debe a que en la Figura \ref{fig:tmiiplotgeneral} pueden observarse cambios considerables en la variabilidad de la serie a lo largo del tiempo. la Figura \ref{fig:tmiiplotdescomposicion} muestra, como se mencionó previamente, una tendencia decreciente y una estacionalidad que no es reiterada a lo largo del tiempo. Además, el componente aleatorio muestra como los errores no son constantes durante todo el período.
-
-```{r tmiiplotdescomposicion, fig.cap="Descomposición de la TMII en el periodo 2000 - 2017"}
-base %>% 
-  mutate(tmii=BoxCox(tmii, lambda=1)) %>% 
-ggsdc(., aes(x = fecha, y = tmii),
-         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
-         facet.titles = c("Serie Original", "Tendencia", 
-                          "Estacionalidad", "Aleatoria")) +
-      geom_line(color = "#00AFBB", size = 1.3) +
-  labs(x = "", y = "") +
-  theme_minimal() +
-  theme(text = element_text(size=13),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-```
 
 \subsubsection{Mortalidad por causa externa}
 
@@ -111,243 +36,19 @@ En Costa Rica para el año 2011, las muertes por causas externas ocuparon el ter
 
 [^10]: https://www.paho.org/salud-en-las-americas-2017/?lang=es]
 
-Dado que los registros de defunciones por causa externa se realizan diariamente, conviene analizar su comportamiento de manera mensual desde inicios del milenio de una manera más general, dicho comportamiento puede observarse en la Figura \ref{fig:externaplotgeneral}.
-
-```{r}
-load(popstudy::read_from_dir("data.RData", "References/Results_section_references/03 - Mortalidad por causa externa"))
-TS <- ts(base$Total, start = c(2000, 1), end = c(2017, 12), frequency = 12)
-```
-
-```{r externaplotgeneral, fig.cap="Mortalidad por causa externa 2000 − 2017"}
-#Se requiere el paquete ggpmisc
-ggplot(TS)+
-  geom_line(color = "#00AFBB", size = 1.3) +
-  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-              method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC",
-       y="Mortalidad por causa externa (por cada 1000 habitantes)",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))# +
-  #ylim(7,12) +
-  #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
-```
-
-Es importante recalcar que, entre Junio del año 2012 y Diciembre del año 2017, el aumento en la tasa de cambio de la cantidad de defunciones debido a causas externas coincide con el aumento de la flotilla de motocicletas, pues en un período de cinco años esta cifra creció en un 189% [@motos]. Conviene entonces verificar el comportamiento a lo interno de la serie en referencias a las categorías de las causas externas.
-
-De la Figura \ref{fig:externasplotperiodos} puede notarse que cada mes tiene sus picos y valles durante cada mes a lo largo del periodo, siendo los meses de Enero, Abril y Diciembre los que presentaron valores ligeramente más altos entre los años 2000 y 2017. 
-
-```{r externasplotperiodos, fig.cap="Mortalidad por causa externa 2000 − 2017 según mes"}
-base %>% 
-  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
-  summarise(Total) %>% 
-  ggplot(., aes(x=año, y=Total)) +
-  facet_wrap(.~mes, ncol=3) +
-  geom_line(color = "#00AFBB", size = 1.3) +
-  stat_peaks(colour = "red") +
-  stat_peaks(geom = "text", colour = "red", 
-             vjust = -0.5) +
-  stat_valleys(colour = "blue") +
-  stat_valleys(geom = "text", colour = "blue", angle = 20,
-               vjust = 0.1, hjust = 1) +
-  theme_minimal() +
-  theme(text = element_text(size=13),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC",
-       y="Mortalidad por causa externa (por cada 1000 habitantes)",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
-```
-
-La descomposición de la serie se hará de forma aditiva debido a que en el gráfico 1 no se observan grandes cambios en la variabilidad a lo largo del tiempo. La Figura \ref{fig:externasplotdescomposicion} muestra que la tendencia se mantiene casi constante a lo largo del tiempo, mientras que parece haber estacionalidad en ciertos lapsos de la segunda mitad del año. Además, el componente aleatorio muestra como los errores no son constantes a lo largo de todo el período. 
-
-```{r externasplotdescomposicion, fig.cap="Descomposición de las defunciones por causa externa en el periodo 2000-2017"}
-base %>% 
-  mutate(valor=BoxCox(Total, lambda=1)) %>% 
-ggsdc(., aes(x = fecha, y = Total),
-         method = "stl", s.window = 7, frequency = 12, type="aditive",
-         facet.titles = c("Serie Original", "Tendencia", 
-                          "Estacionalidad", "Aleatoria")) +
-      geom_line(color = "#00AFBB", size = 1.3) +
-  labs(x = "", y = "") +
-  theme_minimal() +
-  theme(text = element_text(size=13),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-```
-
 \subsubsection{Incentivos salariales del sector público}
 
-Los incentivos salariales son retribuciones que de conformidad con la legislación vigente se asignan al servidor por sus características laborales que complementan las remuneraciones básicas. Los incentivos se reconocen tanto a profesionales como a no profesionales, facultados por disposiciones jurídicas que así lo autorizan. Algunos de estos incentivos son: anualidades, dedicación exclusiva, salario escolar, carrera profesional, carrera técnica, zonaje, desarraigo, regionalización, riesgo policial, riesgo penitenciario, riesgo de seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros. Esta serie cronológica representa los incentivos salariales en millones de colones del sector público de Costa Rica de enero 2007 a junio 2015.
-
-De manera análoga a las secciones anteriores, la Figura \ref{fig:incentivosplotgeneral} muestra el comportamiento general de la serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio de concavidad a partir de Julio 2008, lo cual sugiere que a partir de este momento los incentivos salariales vuelvan a alcanzar valores similares a los mostrados al inicio de la serie. La Figura \ref{fig:incentivosplotperiodos} muestra cómo hay un crecimiento sostenido de los incentivos en cada mes a lo largo de todo el periodo. Sin embargo, este crecimiento se da a una tasa mucho mayor en la época de fin y principio de año.
-
-```{r}
-base <- popstudy::read_from_dir("Datos examen1.xlsx", "References/Results_section_references/04 - Incentivos salariales del sector público") %>% 
-  read_excel() %>% 
-  #read_excel(".\\Material de referencia\\Para sección de resultados\\04 - Incentivos salariales del sector público\\Datos examen1.xlsx") %>% 
-  mutate(valor=`Incentivos salariales`,
-         fecha=ymd(Fecha)) %>% 
-  select(fecha, valor)
-TS <- ts(base$valor, start = c(2007, 1), end = c(2015, 06), frequency = 12)
-```
-
-```{r incentivosplotgeneral, fig.cap="Incentivos salariales en el sector público 2007 − 2018"}
-ggplot(TS)+
-  geom_line(color = "#00AFBB", size = 1.3) +
-  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-              method = "loess")+
-  theme_minimal() +
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Contraloría General de la República de Costa Rica",
-       y="Incentivos salariales",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-```
-
-```{r incentivosplotperiodos, fig.cap="Incentivos salariales en el sector público 2007 − 2018 según mes"}
-base %>% 
-  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
-  summarise(valor) %>% 
-  ggplot(., aes(x=año, y=valor)) +
-  facet_wrap(.~mes, ncol=3) +
-  geom_line(color = "#00AFBB", size = 1.3) +
-  stat_peaks(colour = "red") +
-  stat_peaks(geom = "text", colour = "red", 
-             vjust = -0.5) +
-  stat_valleys(colour = "blue") +
-  stat_valleys(geom = "text", colour = "blue", angle = 20,
-               vjust = 0.1, hjust = 1) +
-  theme_minimal() +
-  theme(text = element_text(size=13),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC",
-       y="Incentivos salariales",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
-```
-
-En la Figura \ref{fig:incentivosplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo, los picos y las caídas en la parte estacional, esto hace referencia a los meses de Diciembre y Enero; cuando no se está en este periodo los incentivos poseen un comportamiento más estable. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo.
-
-```{r incentivosplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 − 2018"}
-base %>% 
-  mutate(valor=BoxCox(valor, lambda=1)) %>% 
-ggsdc(., aes(x = fecha, y = valor),
-         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
-         facet.titles = c("Serie Original", "Tendencia", 
-                          "Estacionalidad", "Aleatoria")) +
-      geom_line(color = "#00AFBB", size = 1.3) +
-  labs(x = "", y = "") +
-  theme_minimal() +
-  theme(text = element_text(size=13),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: UED-INEC") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))# +
-  #scale_x_discrete(expand = c(0,0))
-```
+Los incentivos salariales son retribuciones que de conformidad con la legislación vigente se asignan al servidor por sus características laborales que complementan las remuneraciones básicas. Los incentivos se reconocen tanto a profesionales como a no profesionales, facultados por disposiciones jurídicas que así lo autorizan. Algunos de estos incentivos son: anualidades, dedicación exclusiva, salario escolar, carrera profesional, carrera técnica, zonaje, desarraigo, regionalización, riesgo policial, riesgo penitenciario, riesgo de seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros. Esta serie cronológica representa los incentivos salariales en millones de colones del sector público de Costa Rica de enero 2007 a junio 2015; este es un periodo suficientemente extenso para los objetivos de este estudio, por lo que obtener datos más recientes no generaría un aporte sustantivo a esta investigación.
 
 \subsubsection{Intereses y comisiones del sector público}
 
 Finalmente, se utiliza para este análisis la serie cronológica de los intereses y comisiones del sector público, que comprenden el pago de los intereses de la deuda del gobierno, esto es, las erogaciones de intereses y comisiones destinadas por las instituciones públicas para cubrir el pago a favor de terceras personas, físicas o jurídicas, del sector privado o del sector público, residentes en el territorio nacional o en el exterior, por la utilización en un determinado plazo de recursos financieros provenientes de los conceptos de emisión y colocación de títulos valores, contratación de préstamos directos, créditos de proveedores, depósitos a plazo y a la vista, intereses por deudas de avales asumidos, entre otros pasivos de la entidad tranzados en el país o en el exterior. Incluye el pago por concepto de otras obligaciones contraídas entre las partes, que no provienen de las actividades normales de financiamiento. Además, los intereses y comisiones por las operaciones normales de los bancos comerciales del sector público, así como las diferencias por tipo de cambio por operaciones financieras; y también el pago de intereses moratorios correspondientes a la deuda pública. 
 
-Para iniciar el análisis exploratorio de esta serie, la Figura \ref{fig:interesesplotgeneral} muestra que hay un ligero cambio de concavidad a partir de Julio 2010, esto sugiere que a partir de este momento los intereses y comisiones inician una tendencia al alza, la cual se sostiene hasta Junio del 2018. Por su parte, la Figura \ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento sostenido de los intereses y comisiones del sector público al final de cada trimestre durante todo el periodo, mientras que se mantiene casi constante durante los primeros dos meses de cada trimestre. La caída más pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento más rápida parece darse al final del primer trimestre. Además, en la Figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Puede observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional, esto en cuanto a los cierres trimestrales previamente mencionados. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios.
-
-```{r}
-base <- popstudy::read_from_dir("Datos examen2.xlsx", "References/Results_section_references/05 - Intereses y comisiones del sector público") %>% 
-  read_excel() %>%
-  #read_excel(".\\Material de referencia\\Para sección de resultados\\05 - Intereses y comisiones del sector público\\Datos examen2.xlsx") %>% 
-  mutate(valor=`Intereses y comisiones`,
-         fecha=ymd(Fecha)) %>% 
-  select(fecha, valor) %>% 
-  filter(year(fecha)>=2009)
-TS <- ts(base$valor, start = c(2009, 1), end = c(2018, 06), frequency = 12)
-```
-
-```{r interesesplotgeneral, fig.cap="Intereses y comisiones del sector público en el periodo 2007−2018"}
-ggplot(TS)+
-  geom_line(color = "#00AFBB", size = 1.3) +
-  stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-              method = "loess")+
-  theme_minimal() +
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Contraloría General de la República de Costa Rica",
-       y="Intereses y comisiones del sector público",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-```
-
-```{r interesesplotperiodos, fig.cap="Intereses y comisiones del sector público en el periodo 2007−2018 según mes"}
-base %>% 
-  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
-  summarise(valor) %>% 
-  ggplot(., aes(x=año, y=valor)) +
-  facet_wrap(.~mes, ncol=3) +
-  geom_line(color = "#00AFBB", size = 1.3) +
-  stat_peaks(colour = "red") +
-  stat_peaks(geom = "text", colour = "red", 
-             vjust = -0.5) +
-  stat_valleys(colour = "blue") +
-  stat_valleys(geom = "text", colour = "blue", angle = 20,
-               vjust = 0.1, hjust = 1) +
-  theme_minimal() +
-  theme(text = element_text(size=13),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Contraloría General de la República de Costa Rica",
-       y="Intereses y comisiones del sector público",
-       x="Año") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10))) +
-  scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
-```
-
-En la Figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios.
-
-```{r interesesplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 − 2018"}
-base %>% 
-  mutate(valor=BoxCox(valor, lambda=1)) %>% 
-ggsdc(., aes(x = fecha, y = valor),
-         method = "stl", s.window = 7, frequency = 12, type="multiplicative",
-         facet.titles = c("Serie Original", "Tendencia", 
-                          "Estacionalidad", "Aleatoria")) +
-      geom_line(color = "#00AFBB", size = 1.3) +
-  labs(x = "", y = "") +
-  theme_minimal() +
-  theme(text = element_text(size=13),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Contraloría General de la República de Costa Rica") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-```
-
-\subsubsection{Herramientas analíticas y procedimiento de simulación}
+\subsubsection{Herramientas analíticas}
 
 Como se ha mencionado en este documento, el lenguaje de programación R ha sido utilizado para los análisis. Específicamente, los paquetes utilizados para la obtención de estos resultados, aparte de los ya mencionados, son `knitr` [@knitr], `kableExtra` [@kableExtra], `readxl` [@readxl], `gridExtra` [@gridExtra], `ggpubr` [@ggpubr], `ggplot2` [@ggplot2], `lubridate` [@lubridate], `ggseas` [@ggseas], `ggpmisc` [@ggpmisc] y `forecast` [@forecast].
 
-La metodología propuesta será puesta a prueba en una primera etapa con series cronológicas simuladas a partir de distintos modelos. Los resultados obtenidos al utilizar la sobreparametrización serán contrastados con otros dos métodos: La función `auto.arima()` de R y un modelo ARIMA estándar, que se trata de un $ARIMA(1,1,1)$ en el caso de series no estacionales, y un $ARIMA(1,1,1)(1,1,1)_{12}$ sobre los datos simulados de series mensuales. De forma similar, se comparan los resultados obtenidos mediante la sobreparametrización con los obtenidos utilizando la función `auto.arima()` de R, aplicado a las distintas series cronológicas.
+\subsubsection{Procedimiento de simulación}
 
 Como parte de esta investigación, es necesario validar la estimación de modelos ARIMA mediante sobreparametrización no solo con datos reales, sino también mediante datos simulados. Para ello es necesario generar series cronológicas que son gobernadas por un proceso determinado y previamente conocido para poder compararlo con los modelos identificados tanto con la sobreparametrización, como con la función `auto.arima()` y el correspondiente modelo $ARIMA$ estándar. 
 
@@ -440,158 +141,13 @@ load(popstudy::read_from_dir("Resultados_2022.RData", "Output/Results"))
 # }
 ```
 
-Tras aplicar los pasos anteriores y obtener las correspondientes series cronológicas simuladas, el comportamiento y proceso gobernante de cada una se muestra en la Figura \ref{fig:series_simuladas}.
-
 ```{r datos_simulados, fig.cap="Valores de referencia para la simulación de series cronológicas"}
 popstudy::descriptive_plot(data = data.frame(Xt=dat), Xt, labels = "Datos simulados", ylab = "Densidad")[[1]]
 ```
 
-```{r series_simuladas, fig.cap="Series cronológicas simuladas"}
-arima100 <- resultados_no_estacional_bajo[[1]]$datos %>% 
-    ggplot(.)+
-  geom_line(color = "#00AFBB", size = .5) +
-  # stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-  #             method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-    ggtitle("ARIMA(1,0,0)")+
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
-       y="Y",
-       x="t") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-
-arima101 <- resultados_no_estacional_bajo[[2]]$datos %>% 
-    ggplot(.)+
-  geom_line(color = "#00AFBB", size = .5) +
-  # stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-  #             method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-    ggtitle("ARIMA(1,0,1)")+
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
-       y="Y",
-       x="t") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-
-arima203 <- resultados_no_estacional_alto[[1]]$datos %>% 
-    ggplot(.)+
-  geom_line(color = "#00AFBB", size = .5) +
-  # stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-  #             method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-    ggtitle("ARIMA(2,0,3)")+
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
-       y="Y",
-       x="t") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-
-arima402 <- resultados_no_estacional_alto[[2]]$datos %>% 
-    ggplot(.)+
-  geom_line(color = "#00AFBB", size = .5) +
-  # stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-  #             method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-    ggtitle("ARIMA(4,0,2)")+
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
-       y="Y",
-       x="t") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-
-arima001_011 <- resultados_estacional_bajo[[1]]$datos %>% 
-    ggplot(.)+
-  geom_line(color = "#00AFBB", size = .5) +
-  # stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-  #             method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-    ggtitle("ARIMA(0,0,1)(0,1,1)")+
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
-       y="Y",
-       x="t") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-
-arima110_110 <- resultados_estacional_bajo[[2]]$datos %>% 
-    ggplot(.)+
-  geom_line(color = "#00AFBB", size = .5) +
-  # stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-  #             method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-    ggtitle("ARIMA(1,1,0)(1,1,0)")+
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
-       y="Y",
-       x="t") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-
-arima214_414 <- resultados_estacional_alto[[1]]$datos %>% 
-    ggplot(.)+
-  geom_line(color = "#00AFBB", size = .5) +
-  # stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-  #             method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-    ggtitle("ARIMA(2,1,4)(4,1,4)")+
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
-       y="Y",
-       x="t") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))
-
-arima214_303 <- resultados_estacional_alto[[2]]$datos %>% 
-    ggplot(.)+
-  geom_line(color = "#00AFBB", size = .5) +
-  # stat_smooth(color = "#FC4E07", fill = "#FC4E07",
-  #             method = "loess")+
-  #geom_vline(xintercept = 2000.6, linetype="dashed", color = "red")+
-  theme_minimal() +
-    ggtitle("ARIMA(2,1,4)(3,0,3)")+
-  theme(text = element_text(size=9),
-        axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
-       y="Y",
-       x="t") +
-  theme(plot.title = element_text(hjust = 0.5, face="plain"),
-        plot.caption=element_text(hjust=0, vjust=0.5,
-                                  margin=margin(t=1,10,10,10)))+
-    scale_x_discrete()
-ggarrange(arima100, arima101, arima203, arima402,
-          arima001_011, #arima110_110, 
-          arima214_303, #arima214_414,
-          ncol = 3, nrow = 2)
-```
-
 \subsection{Métodos}
 
-En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos. Para cada serie de tiempo, se estima el mejor modelo utilizando la función `auto.arima()`, la sobreparametrización y un modelo ARIMA estándar, que puede ser un $ARIMA(1,1,1)$ para las series no estacionales, o un $ARIMA(1,1,1)(1,1,1)_S$ en el caso de las series cronológicas estacionales. Una vez obtenidos estos modelos, se analizan los residuales obtenidos. En última instancia, se obtienen los pronósticos y sus medidas de bondad de ajuste y de rendimiento.
+En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos.
 
 \subsubsection{Análisis exploratorio}
 
@@ -599,17 +155,17 @@ Como fue mencionado en el Marco Teórico, debe corroborarse que la serie cronol�
 
 \subsubsection{Partición de los datos}
 
-A partir de la serie cronológica que se someterá a análisis, se realiza una partición de los datos para tener dos conjuntos distintos: entrenamiento y validación. El primero servirá precisamente para entrenar y estimar los distintos modelos; mientras que el segundo servirá para validar los pronósticos obtenidos. De manera predeterminada, se utilizará una partición del 80% de los datos para el conjunto de entrenamiento y un 20% para los datos de validación, sin embargo, esto puede cambiar de acuerdo al interés propio del(la) investigador(a). 
+A partir de la serie cronológica que se someterá a análisis, se realiza una partición de los datos para tener dos conjuntos distintos: entrenamiento y validación. El primero servirá precisamente para entrenar y estimar los distintos modelos; mientras que el segundo servirá para validar los pronósticos obtenidos. De manera predeterminada, se utilizará una partición del 80% de los datos para el conjunto de entrenamiento y un 20% para los datos de validación, pues es la proporción más tradicional, sin embargo, esto puede cambiar de acuerdo al interés propio del(la) investigador(a), seleccionando una proporción distinta para las particiones. 
 
 \subsubsection{Identificación y estimación del mejor modelo según la función auto.arima()}
 
-Con el correspondiente conjunto de datos de entrenamiento, se utiliza la función `auto.arima()` para encontrar el mejor modelo ARIMA sugerido con este método, que como fue mencionado en la introducción de esta tesis, usa como criterio la minimización del AICc.
+Con el correspondiente conjunto de datos de entrenamiento, se utiliza la función `auto.arima()` para encontrar el mejor modelo ARIMA sugerido con este método, que como fue mencionado en la introducción de esta tesis, usa como criterio la minimización del AICc y realiza la estimación mediante máxima verosimilitud.
 
 \subsubsection{Identificación y estimación del mejor modelo con sobreparametrización}
 
-A partir del mismo conjunto de datos de entrenamiento de la correspondiente serie cronológica, se utiliza la sobreparametrización para encontrar el mejor modelo a partir de distintas permutaciones de la cantidad de coeficientes de los términos $p,d,q, P,D,Q$, según sea el caso. 
+A partir del mismo conjunto de datos de entrenamiento de la correspondiente serie cronológica, se utiliza la sobreparametrización para encontrar el mejor modelo a partir de distintas permutaciones de la cantidad de coeficientes de los términos $p, d, q, P, D, Q$, según sea el caso. 
 
-La estimación de los modelos y posterior selección de los mismos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R, el cuál fue construido haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación:
+La estimación mediante máxima verosimilitud de los modelos y posterior selección de los mismos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R, el cuál fue construido haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación:
 
 **1.** Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide el valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. 
 
@@ -702,18 +258,13 @@ Donde $m_i$ representa cada una de las medidas de rendimiento y $w_j$ es el valo
 
 Para contrastar los dos métodos de selección de modelos anteriores (`auto.arima()` y sobreparametrización), se ajusta también un modelo ARIMA más tradicional o estándar. En el caso de las series cronológicas no estacionales se ajusta un modelo $ARIMA(1,1,1)$ y en el caso de las series estacionales se ajusta un modelo $ARIMA(1,1,1),(1,1,1)_S$.
 
-\subsubsection{Análisis de los errores}
+\subsubsection{Análisis visual de los errores}
 
-Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis de los residuos estandarizados, la autocorrelación y el supuesto de normalidad de los residuales.
-
-\subsubsection{Pronósticos}
-
-Para cada modelo estimado, se realiza un pronóstico de $h$ periodos hacia el futuro (donde el valor de $h$ es el tamaño de los conjuntos de validación creados para cada serie) para realizar una inspección visual de los resultados previo a hacer una comparación numérica mediante dos formas distintas pero complementarias: las medidas de bondad de ajuste y de rendimiento.
+Una vez que se selecciona un modelo de cada tipo (`auto.arima()`, sobreparametrización y ARIMA estándar), se realiza un análisis visual de los residuos estandarizados, la autocorrelación y el supuesto de normalidad de los residuales un histograma de los residuos.
 
 \subsubsection{Medidas de bondad de ajuste y de rendimiento}
 
-El objetivo último al estimar un modelo ARIMA es obtener los pronósticos de dicho modelo. Sin embargo, estos pronósticos no pueden asumirse como correctos, sino que se debe evaluar su calidad con las llamadas medidas de bondad de ajuste y de rendimiento, aplicadas a los conjuntos de entrenamiento y validación. Existen múltiples medidas, @medidas menciona, entre otras, las siguientes: 
-
+El objetivo último al estimar un modelo ARIMA es obtener los pronósticos de dicho modelo. Sin embargo, estos pronósticos no pueden asumirse como correctos, sino que se debe evaluar su calidad con las llamadas medidas de bondad de ajuste y de precisión, aplicadas a los conjuntos de entrenamiento y validación. Existen múltiples medidas, @medidas menciona, entre otras, las siguientes: 
 
 \paragraph{AIC}
 
@@ -781,8 +332,16 @@ Es la raíz del error cuadrático medio, como se define en la ecuación \ref{eqn
 \sqrt{\frac{1}{n}\sum_{t=1}^n |e_t^2|}
 \end{equation}
 
+\subsubsection{Pronósticos}
+
+Para cada modelo estimado, se realiza un pronóstico de $h$ periodos hacia el futuro (donde el valor de $h$ es el tamaño de los conjuntos de validación creados para cada serie) para realizar una inspección visual de los resultados previo a hacer una comparación numérica mediante dos formas distintas pero complementarias: las medidas de bondad de ajuste y de precisión.
+
 \subsubsection{Tiempo de procesamiento}
 
-Para cada uno de los modelos estimados mediante sobreparametrización, se mostrará el tiempo de procesamiento requerido en cada serie cronológica, esto con el fin de evaluar la viabilidad del método propuesto para la obtención de resultados.
+Para cada uno de los modelos estimados mediante sobreparametrización, se mostrará el tiempo de procesamiento requerido en cada serie cronológica, esto con el fin de evaluar la viabilidad del método propuesto para la obtención de resultados. Esta etapa de importante pues independientemente de los resultados obtenidos con la sobreparametrización, el tiempo de procesamiento debe mantenerse dentro de un margen razonable para quienes apliquen la técnica, ya que si se tardaran varios días en obtener los cálculos, sería un procedimiento poco práctico.
 
-De esta manera, cada una de las series cronológicas (simuladas y reales) serán sometidas a un análisis exploratorio y a una partición de los datos con un 80% para el conjunto de entrenamiento y el restante 20% para validación, esto con el fin de estimar modelos mediante la función `auto.arima()`, la sobreparametrización y un ARIMA estándar para evaluar sus correspondientes y la calidad de los pronósticos obtenidos.
+\subsubsection{Resumen de la forma de análisis}
+
+De esta manera, cada una de las series cronológicas (simuladas y reales) serán sometidas a un análisis exploratorio en donde se analizará más en detalle el comportamiento de cada una. Posteriormente, a partir de la serie completa que sea sujeta a análisis, se ejecuta una partición de los datos con un 80% para el conjunto de entrenamiento y el restante 20% para validación, esto con el fin de obtener la mejor ecuación de estimación sugerida por cada una de las tres técnicas.
+
+Una vez que se complete esta etapa, se completará una inspección visual del comportamiento de los errores con el fin de verificar que se cumplan las condiciones descritas en el Marco Teórico de esta investigación para posteriormente calcular las medidas de bondad de ajuste y de precisión para tanto para el periodo de entrenamiento como el de validación.Finalmente, se cierra el análisis de las series cronológicas simuladas y reales con una comparación de los valores predichos con respecto al conjunto de validación, esto con el fin de contrastar la calidad de los resultados.

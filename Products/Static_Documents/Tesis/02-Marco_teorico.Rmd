@@ -1,6 +1,6 @@
-Las series cronológicas han sido un importante tema de investigación durante décadas [@tsa_decades]. Su objetivo principal consiste en obtener simplificaciones de la realidad mediante el ajuste de diversos modelos, los cuales se ajustan a datos recolectados a lo largo del tiempo de forma periódica.  
+Las series cronológicas han sido un importante tema de investigación durante décadas [@tsa_decades]. Su objetivo principal consiste en obtener simplificaciones de la realidad mediante el ajuste de diversos modelos, los cuales se ajustan a datos recolectados a lo largo del tiempo de forma periódica. Sin embargo, encontrar una ecuación de estimación que presente un buen comportamiento con respecto a los datos no es sencillo, pues deben considerarse diversos aspectos teóricos, prácticos, y de la temática de estudio para así obtener un modelo adecuado que logre generar pronósticos realistas y pertinentes para la toma de decisiones [@tsa_decision_making].
 
-Sin embargo, encontrar un modelo que presente un buen comportamiento con respecto a los datos no es sencillo, pues deben considerarse diversos aspectos teóricos, prácticos, y de la temática de estudio para así obtener un modelo adecuado que logre generar pronósticos realistas y pertinentes para la toma de decisiones [@tsa_decision_making].
+\subsection{Definición de una serie de tiempo}
 
 Una serie temporal se define como una secuencia de datos observados, cuyas mediciones ocurren de manera sucesiva durante un periodo de tiempo. Los registros de estos datos pueden referirse a una única variable en cuyo caso de dice que es una serie univariada. Según @Hipel, cada observación puede ser continua o discreta, como la temperatura de una ciudad durante el día o las variaciones diarias del precio de un activo financiero, respectivamente; las observaciones continuas, además, pueden ser convertidas a su vez en observaciones discretas. De esta manera, una serie de tiempo puede considerarse una muestra aleatoria, pues para un determinado tiempo $t$, que se considera el momento actual, la serie tiene tres momentos: el pasado, que son los rezagos denotados como $Y_{t-1}, Y_{t-2}, \cdots, Y_{t-k}$ donde $k$ es el primer momento de referencia, el momento presente, denotado como $Y_t$, y los pronósticos, denotados como $Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}$; así, una serie temporal univariada, con lapsos equidistantes entre los tiempos, puede representarse como $Y_{t-k}, \cdots, Y_{t-2}, Y_{t-1}, Y_t, Y_{t+1}, Y_{t+2}, \cdots, Y_{t+h}$. 
 
@@ -306,9 +306,7 @@ Como resultado del sistema de ecuaciones mostrado en \ref{eqn:sistema_yule_walke
 \label{eqn:sistema_yule_walker_matricial}
 \left[ \begin{array}{c} \rho_1 \\ \rho_2 \\ \vdots \\ \rho_k \end{array} \right] = \begin{bmatrix} 1 & \rho_1 & \rho_2 & \cdots & \rho_{k-1} \\ \rho_1 & 1 & \rho_1 & \cdots & \rho_{k-2} \\ \vdots & \vdots & \vdots & \cdots & \vdots \\ \rho_{k-1} & \rho_{k-2} & \rho_{k-3} & \cdots & 1 &\end{bmatrix} \left[ \begin{array}{c} \phi_{k1} \\ \phi_{k2}  \\ \vdots \\ \phi_{kk} \end{array} \right]\end{equation}
 
-Cuando se tiene el modelo ARIMA debidamente identificado, es importante realizar los pronósticos. Sin embargo, estos pronósticos no son imperativos, sino que se debe evaluar su calidad con las llamadas medidas de rendimiento. Estas mediciones son hechas comparando el pronóstico y su diferencia con el valor real. Existen múltiples medidas de rendimiento, @medidas menciona entre ellas el *MAE*, *MAPE*, *RMSE*, *MASE*, *AIC*, *AICc* y el *BIC*.
-
-\subsection{Modelos Autorregresivos Integrados de Medias Móviles}
+\subsection{Modelos Autorregresivos Integrados de Medias Móviles (ARIMA)}
 
 Hay dos grandes grupos de modelos lineales de series cronológicas: Los modelos Autorregresivos (AR) [@Lee] y los modelos de Medias Móviles (MA) [@box-jenkins]. La combinación de estos dos grandes grupos forman los Modelos Autorregresivos de Medias Móviles (ARMA) [@Hipel] y los modelos Autorregresivos Integrados de Medias Móviles (ARIMA), siendo este último de particular interés en esta investigación.
 
@@ -355,7 +353,7 @@ De la ecuación \ref{eqn:prevision} se desprende que el error de previsión asoc
 x_{T+h}- \hat x_{T+h}=\sum_{j=1}^{\infty} \psi_j \varepsilon_{T-h+1}
 \end{equation}
 
-De esta manera, la ecuación de Wold se convierte en una representación base para representar a una serie cronológica que está gobernada por un determinado proceso, y que al no ser conocido, resulta necesario contar con una herramienta para su aproximación.
+De esta manera, la ecuación de Wold se convierte en una representación base para representar a una serie cronológica que está gobernada por un determinado proceso, y que al no ser conocido, resulta necesario contar con una herramienta para su aproximación, y es justamente la ecuación de Wold la que deberá ser evaluada por la metodología Box-Jenkins.
 
 \subsubsection{Metodología Box-Jenkins}
 
