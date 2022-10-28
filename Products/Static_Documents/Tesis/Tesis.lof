@@ -30,9 +30,9 @@
 \contentsline {figure}{\numberline {29}{\ignorespaces Descomposición de la TMII en el periodo 2000 - 2017\relax }}{52}{figure.caption.31}%
 \contentsline {figure}{\numberline {30}{\ignorespaces Autocorrelación de los datos diferenciados de la TMII\relax }}{52}{figure.caption.32}%
 \contentsline {figure}{\numberline {31}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la TMII\relax }}{53}{figure.caption.33}%
-\contentsline {figure}{\numberline {32}{\ignorespaces Incentivos salariales en el sector público 2007 - 2018\relax }}{54}{figure.caption.34}%
-\contentsline {figure}{\numberline {33}{\ignorespaces Incentivos salariales en el sector público 2007 - 2018 según mes\relax }}{54}{figure.caption.35}%
-\contentsline {figure}{\numberline {34}{\ignorespaces Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018\relax }}{55}{figure.caption.36}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Incentivos salariales en el sector público entre los años 2007 y 2018\relax }}{54}{figure.caption.34}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Incentivos salariales en el sector público entre los años 2007 y 2018 según mes\relax }}{54}{figure.caption.35}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Descomposición de la serie de Incentivos salariales en el periodo 2007 al 2018\relax }}{55}{figure.caption.36}%
 \contentsline {figure}{\numberline {35}{\ignorespaces Autocorrelación de los datos diferenciados de la serie de incentivos salariales\relax }}{56}{figure.caption.37}%
 \contentsline {figure}{\numberline {36}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la serie de incentivos salariales\relax }}{56}{figure.caption.38}%
 \contentsline {figure}{\numberline {37}{\ignorespaces Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo reales\relax }}{58}{figure.caption.39}%
@@ -66,23 +66,21 @@
 \contentsline {figure}{\numberline {65}{\ignorespaces Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con la función auto.arima()\relax }}{83}{figure.caption.73}%
 \contentsline {figure}{\numberline {66}{\ignorespaces Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con sobreparametrización\relax }}{84}{figure.caption.74}%
 \contentsline {figure}{\numberline {67}{\ignorespaces Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(4,0,2) con el modelo ARIMA estándar\relax }}{84}{figure.caption.75}%
-\contentsline {figure}{\numberline {68}{\ignorespaces Mortalidad por causa externa 2000 - 2017\relax }}{85}{figure.caption.76}%
-\contentsline {figure}{\numberline {69}{\ignorespaces Mortalidad por causa externa 2000 - 2017 según mes\relax }}{85}{figure.caption.77}%
-\contentsline {figure}{\numberline {70}{\ignorespaces Descomposición de las defunciones por causa externa en el periodo 2000-2017\relax }}{86}{figure.caption.78}%
-\contentsline {figure}{\numberline {71}{\ignorespaces Intereses y comisiones del sector público en el periodo 2007-2018\relax }}{86}{figure.caption.79}%
-\contentsline {figure}{\numberline {72}{\ignorespaces Intereses y comisiones del sector público en el periodo 2007-2018 según mes\relax }}{87}{figure.caption.80}%
-\contentsline {figure}{\numberline {73}{\ignorespaces Descomposición de la serie de Incentivos salariales en el periodo 2007 - 2018\relax }}{87}{figure.caption.81}%
-\contentsline {figure}{\numberline {74}{\ignorespaces Autocorrelación de los datos diferenciados de la mortalidad por causa externa\relax }}{88}{figure.caption.82}%
-\contentsline {figure}{\numberline {75}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la mortalidad por causa externa\relax }}{88}{figure.caption.83}%
-\contentsline {figure}{\numberline {76}{\ignorespaces Autocorrelación de los datos diferenciados de la serie de intereses y comisiones del sector público\relax }}{89}{figure.caption.84}%
-\contentsline {figure}{\numberline {77}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la serie de intereses y comisiones del sector público\relax }}{89}{figure.caption.85}%
-\contentsline {figure}{\numberline {78}{\ignorespaces Comportamiento de los errores asociados a los modelos estimados con la serie de mortalidad por causa externa\relax }}{90}{figure.caption.87}%
-\contentsline {figure}{\numberline {79}{\ignorespaces Comportamiento de los errores asociados a los modelos estimados con la serie de intereses y comisiones del sector público\relax }}{91}{figure.caption.88}%
-\contentsline {figure}{\numberline {80}{\ignorespaces Pronóstico de la Tasa de mortalidad por causa externa (TMCE) según el método de estimación\relax }}{92}{figure.caption.90}%
-\contentsline {figure}{\numberline {81}{\ignorespaces Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con la función auto.arima()\relax }}{92}{figure.caption.91}%
-\contentsline {figure}{\numberline {82}{\ignorespaces Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con sobreparametrización\relax }}{93}{figure.caption.92}%
-\contentsline {figure}{\numberline {83}{\ignorespaces Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con el modelo ARIMA estándar\relax }}{93}{figure.caption.93}%
-\contentsline {figure}{\numberline {84}{\ignorespaces Pronóstico de la serie de intereses y comisiones del sector público según el método de estimación\relax }}{94}{figure.caption.94}%
-\contentsline {figure}{\numberline {85}{\ignorespaces Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con la función auto.arima()\relax }}{94}{figure.caption.95}%
-\contentsline {figure}{\numberline {86}{\ignorespaces Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con sobreparametrización\relax }}{95}{figure.caption.96}%
-\contentsline {figure}{\numberline {87}{\ignorespaces Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con el modelo ARIMA estándar\relax }}{95}{figure.caption.97}%
+\contentsline {figure}{\numberline {68}{\ignorespaces Mortalidad por causa externa entre los años 2000 y 2017\relax }}{85}{figure.caption.76}%
+\contentsline {figure}{\numberline {69}{\ignorespaces Intereses y comisiones del sector público en el periodo 2007 al 2018\relax }}{85}{figure.caption.77}%
+\contentsline {figure}{\numberline {70}{\ignorespaces Intereses y comisiones del sector público en el periodo 2007 al 2018 según mes\relax }}{86}{figure.caption.78}%
+\contentsline {figure}{\numberline {71}{\ignorespaces Descomposición de la serie de Incentivos salariales en el periodo 2007 al 2018\relax }}{86}{figure.caption.79}%
+\contentsline {figure}{\numberline {72}{\ignorespaces Autocorrelación de los datos diferenciados de la mortalidad por causa externa\relax }}{87}{figure.caption.80}%
+\contentsline {figure}{\numberline {73}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la mortalidad por causa externa\relax }}{87}{figure.caption.81}%
+\contentsline {figure}{\numberline {74}{\ignorespaces Autocorrelación de los datos diferenciados de la serie de intereses y comisiones del sector público\relax }}{88}{figure.caption.82}%
+\contentsline {figure}{\numberline {75}{\ignorespaces Autocorrelación parcial de los datos diferenciados de la serie de intereses y comisiones del sector público\relax }}{88}{figure.caption.83}%
+\contentsline {figure}{\numberline {76}{\ignorespaces Comportamiento de los errores asociados a los modelos estimados con la serie de mortalidad por causa externa\relax }}{89}{figure.caption.85}%
+\contentsline {figure}{\numberline {77}{\ignorespaces Comportamiento de los errores asociados a los modelos estimados con la serie de intereses y comisiones del sector público\relax }}{90}{figure.caption.86}%
+\contentsline {figure}{\numberline {78}{\ignorespaces Pronóstico de la Tasa de mortalidad por causa externa (TMCE) según el método de estimación\relax }}{91}{figure.caption.88}%
+\contentsline {figure}{\numberline {79}{\ignorespaces Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con la función auto.arima()\relax }}{91}{figure.caption.89}%
+\contentsline {figure}{\numberline {80}{\ignorespaces Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con sobreparametrización\relax }}{92}{figure.caption.90}%
+\contentsline {figure}{\numberline {81}{\ignorespaces Errores estándar de los pronósticos obtenidos para la Tasa de mortalidad por causa externa (TMCE) con el modelo ARIMA estándar\relax }}{92}{figure.caption.91}%
+\contentsline {figure}{\numberline {82}{\ignorespaces Pronóstico de la serie de intereses y comisiones del sector público según el método de estimación\relax }}{93}{figure.caption.92}%
+\contentsline {figure}{\numberline {83}{\ignorespaces Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con la función auto.arima()\relax }}{93}{figure.caption.93}%
+\contentsline {figure}{\numberline {84}{\ignorespaces Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con sobreparametrización\relax }}{94}{figure.caption.94}%
+\contentsline {figure}{\numberline {85}{\ignorespaces Errores estándar de los pronósticos obtenidos para la serie de intereses y comisiones del sector público con el modelo ARIMA estándar\relax }}{94}{figure.caption.95}%

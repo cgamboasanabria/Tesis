@@ -1,3 +1,4 @@
+\label{chap:anexos}
 ```{r, echo=FALSE}
 load(popstudy::read_from_dir("Resultados_2022.RData", "Output/Results"))
 # Para comparar los tiempos
@@ -61,6 +62,11 @@ names(tiempos_de_estimacion) <- c("Estimación",'ARIMA(1,0,0)',"ARIMA(1,0,1)", "
 tiempos_de_estimacion %>%
     gather(serie, minutos, -Estimación) %>% 
     pivot_wider(names_from = Estimación, values_from = minutos) %>% 
+    mutate_if(is.numeric, function(x) {
+        
+        gsub("[.]",",",as.character(x))
+        
+        }) %>% 
     kbl(
         .,
         "latex",
@@ -139,7 +145,7 @@ do.call(
             TRUE ~ x
         )
     }) %>%
-     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", as.character(round(x, 2)))) %>% 
+     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", gsub("[.]",",",as.character(round(x, 2))))) %>% 
     filter(referencia %nin% c("ARIMA(0,0,1)(0,1,1)", "ARIMA(2,1,4)(3,0,3)")) %>%  #Filtrando los mejores
     kbl(.,
         "latex",
@@ -248,7 +254,11 @@ datos <- mapply(
     filter(proceso %nin% c("ARIMA(0,0,1)(0,1,1)", "ARIMA(2,1,4)(3,0,3)")) #Filtrar los peores
 
 datos %>%
-    mutate_if(is.numeric, function(x) {round(x, 2)+.01}) %>% 
+    mutate_if(is.numeric, function(x){
+        
+        gsub("[.]",",",as.character(round(x, 2)+.01))
+        
+    }) %>% 
     group_by(proceso, tipo) %>% 
     mutate_at(vars(AIC:MAPE), function(x){
         cell_spec(x, color = ifelse(x==min(x), "red", "black"))
@@ -508,11 +518,12 @@ descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="
 ```
 
 ```{r}
+rm(base)
 load(popstudy::read_from_dir("data.RData", "References/Results_section_references/03 - Mortalidad por causa externa"))
 TS <- ts(base$Total, start = c(2000, 1), end = c(2017, 12), frequency = 12)
 ```
 
-```{r externaplotgeneral, fig.cap="Mortalidad por causa externa 2000 − 2017"}
+```{r externaplotgeneral, fig.cap="Mortalidad por causa externa entre los años 2000 y 2017"}
 #Se requiere el paquete ggpmisc
 ggplot(TS)+
   geom_line(color = "#00AFBB", size = 1.3) +
@@ -532,10 +543,12 @@ ggplot(TS)+
   #scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
 ```
 
-```{r externasplotperiodos, fig.cap="Mortalidad por causa externa 2000 − 2017 según mes"}
+
+```{r externasplotperiodos, fig.cap="Mortalidad por causa externa entre los años 2000 y 2017 según mes", eval=FALSE}
 base %>% 
-  group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
-  summarise(Total) %>% 
+    mutate(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  #group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
+  #summarise(Total) %>% 
   ggplot(., aes(x=año, y=Total)) +
   facet_wrap(.~mes, ncol=3) +
   geom_line(color = "#00AFBB", size = 1.3) +
@@ -557,7 +570,7 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-```{r externasplotdescomposicion, fig.cap="Descomposición de las defunciones por causa externa en el periodo 2000-2017"}
+```{r externasplotdescomposicion, fig.cap="Descomposición de las defunciones por causa externa en el periodo 2000 al 2017", eval=FALSE}
 base %>% 
   mutate(valor=BoxCox(Total, lambda=1)) %>% 
 ggsdc(., aes(x = fecha, y = Total),
@@ -591,7 +604,7 @@ base <- popstudy::read_from_dir("Datos examen2.xlsx", "References/Results_sectio
 TS <- ts(base$valor, start = c(2009, 1), end = c(2018, 06), frequency = 12)
 ```
 
-```{r interesesplotgeneral, fig.cap="Intereses y comisiones del sector público en el periodo 2007−2018"}
+```{r interesesplotgeneral, fig.cap="Intereses y comisiones del sector público en el periodo 2007 al 2018"}
 ggplot(TS)+
   geom_line(color = "#00AFBB", size = 1.3) +
   stat_smooth(color = "#FC4E07", fill = "#FC4E07",
@@ -607,7 +620,7 @@ ggplot(TS)+
                                   margin=margin(t=1,10,10,10)))
 ```
 
-```{r interesesplotperiodos, fig.cap="Intereses y comisiones del sector público en el periodo 2007−2018 según mes"}
+```{r interesesplotperiodos, fig.cap="Intereses y comisiones del sector público en el periodo 2007 al 2018 según mes"}
 base %>% 
   group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
   summarise(valor) %>% 
@@ -632,7 +645,7 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-```{r interesesplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 − 2018"}
+```{r interesesplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 al 2018"}
 base %>% 
   mutate(valor=BoxCox(valor, lambda=1)) %>% 
 ggsdc(., aes(x = fecha, y = valor),
@@ -729,7 +742,7 @@ do.call(
             TRUE ~ x
         )
     }) %>%
-     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", as.character(round(x, 2)))) %>% 
+     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", gsub("[.]",",",as.character(round(x, 2))))) %>% 
     filter(referencia %nin% c("TMII", "Incentivos Salariales")) %>%  #Filtrando los peores
     kbl(.,
         "latex",
@@ -807,7 +820,11 @@ datos <- mapply(
     filter(proceso %nin% c("TMII", "Incentivos Salariales")) #Filtrar los mejores
 
 datos %>%
-    mutate_if(is.numeric, function(x) {round(x, 2)+.01}) %>% 
+    mutate_if(is.numeric, function(x){
+        
+        gsub("[.]",",",as.character(round(x, 2)+.01))
+        
+    }) %>% 
     group_by(proceso, tipo) %>% 
     mutate_at(vars(AIC:MAPE), function(x){
         cell_spec(x, color = ifelse(x==min(x), "red", "black"))

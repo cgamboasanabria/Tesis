@@ -1,3 +1,5 @@
+\label{chap:resultados}
+
 En este capítulo se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas en el apartado metodológico, tanto para las series simuladas como para las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis cumplen con las condiciones descritas en el Marco Teórico. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos y, a partir del procedimiento descrito en la metodología, se divide en dos etapas: Contraste de los ARIMA a partir de las series simuladas y contraste de los ARIMA para las series empíricas.
 
 \subsection{Contraste de métodos de estimación de los ARIMA para las series simuladas}
@@ -164,11 +166,13 @@ arima214_303 <- resultados_estacional_alto[[2]]$datos
 
 \subsubsection{Análisis exploratorio}
 
-Inicialmente, se analizan las series cronológicas para verificar su comportamiento al ajustar un suavizamiento de Loess para buscar señales de tendencia y concavidad en los datos temporales, y buscar indicios de los procesos que gobiernan dichas series, además de verificar que se trate de series cronológicas estacionarias. En la figura \ref{fig:series_simuladas} se muestra el comportamiento general de cada una de las series cronológicas simuladas.
+Inicialmente, se analizan las series cronológicas para verificar su comportamiento al ajustar un suavizamiento de Loess[^12] para buscar señales de tendencia y concavidad en los datos temporales, y buscar indicios de los procesos que gobiernan dichas series, además de verificar que se trate de series cronológicas estacionarias. En la figura \ref{fig:series_simuladas} se muestra el comportamiento general de cada una de las series cronológicas simuladas.
+
+[^12]: Técnica de suavizamiento mediante regresión local ponderada.
 
 Para el $ARIMA(1,0,0)$ puede verse como los datos simulados bajo este proceso se comportan de manera ligeramente oscilante a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. En el caso de los datos generados bajo un proceso $ARIMA(1,0,1)$ se observa cómo se comportan de manera más oscilante que el caso anterior a lo largo del tiempo. Para los datos generados mediante un $ARIMA(2,0,3)$ se observa como los datos simulados no parecen tener ninguna tendencia clara, una alternativa en este caso sería aplicar alguna transformación para volverla aún más estacionaria. En la figura también se observa como los datos generados mediante un proceso $ARIMA(4,0,2)$ parecen tener un cierto grado de tendencia, por lo que podría ser necesario aplicar alguna transformación. 
 
-Con respecto a los procesos estacionales simulados, los datos del $ARIMA(0,0,1)(0,1,1)_{12}$ parecen ser aproximadamente estacionarios, pero esto no es del todo claro, una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional; mientras que en los datos generados mediante un proceso $ARIMA(2,1,4)(3,0,3)$ se manifiesta una clara tendencia bajista.
+Con respecto a los procesos estacionales simulados, los datos del $ARIMA(0,0,1)(0,1,1)_{12}$ parecen ser aproximadamente estacionarios, pero esto no es del todo claro, una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional; mientras que en los datos generados mediante un proceso $ARIMA(2,1,4)(3,0,3)$ se manifiesta una clara tendencia decreciente.
 
 ```{r funcion_exploratorio}
 exploratorio <-
@@ -367,7 +371,7 @@ particiones <-
              ejex = "Periodo t",
              ejey = "Valores de la serie",
              fuente = "Fuente: Datos Simulados",
-             simulada=TRUE) {
+             simulada=TRUE,...) {
         
         if(simulada){
             serie <- ts(serie, start=1, end=length(serie))
@@ -384,7 +388,7 @@ particiones <-
         minimo_testing <- attributes(test)$tsp[1]
         maximo_testing <- attributes(test)$tsp[2]
         
-        exploratorio(serie, grosor = .3) +
+        exploratorio(serie, grosor = .3,...) +
             annotate(
                 "rect",
                 xmin = minimo_training,
@@ -415,27 +419,27 @@ particiones <-
 
 particion_arima100 <-
     particiones(arima100,
-                titulo = "ARIMA(1,0,0)")
+                titulo = "ARIMA(1,0,0)", mostrar="comportamiento")
 
 particion_arima101 <-
     particiones(arima101,
-                titulo = "ARIMA(1,0,1)")
+                titulo = "ARIMA(1,0,1)", mostrar="comportamiento")
 
 particion_arima203 <-
     particiones(arima203,
-                titulo = "ARIMA(2,0,3)")
+                titulo = "ARIMA(2,0,3)", mostrar="comportamiento")
 
 particion_arima402 <-
     particiones(arima402,
-                titulo = "ARIMA(4,0,2)")
+                titulo = "ARIMA(4,0,2)", mostrar="comportamiento")
 
 particion_arima001_011 <-
     particiones(arima001_011,
-                titulo = "ARIMA(0,0,1)(0,1,1)")
+                titulo = "ARIMA(0,0,1)(0,1,1)", mostrar="comportamiento")
 
 particion_arima214_303 <-
     particiones(arima214_303,
-                titulo = "ARIMA(2,1,4)(3,0,3)")
+                titulo = "ARIMA(2,1,4)(3,0,3)", mostrar="comportamiento")
 
 ggarrange(
     particion_arima100,
@@ -741,9 +745,9 @@ do.call(
             TRUE ~ x
         )
     }) %>%
-     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", as.character(round(x, 2)))) %>% 
+     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", gsub("[.]",",",as.character(round(x, 2))))) %>% 
     filter(referencia %in% c("ARIMA(0,0,1)(0,1,1)", "ARIMA(2,1,4)(3,0,3)")) %>%  #Filtrando los mejores
-    kbl(.,
+    kbl(., format.args = list(decimal.mark = ',', big.mark = "'"),
         "latex",
         booktabs = T,
         escape = F, 
@@ -1126,7 +1130,11 @@ datos <- mapply(
     filter(proceso %in% c("ARIMA(0,0,1)(0,1,1)", "ARIMA(2,1,4)(3,0,3)")) #Filtrar los mejores
 
 datos %>%
-    mutate_if(is.numeric, function(x) {round(x, 2)+.01}) %>% 
+    mutate_if(is.numeric, function(x) {
+        
+        gsub("[.]",",",as.character(round(x, 2)+.01))
+        
+        }) %>% 
     group_by(proceso, tipo) %>% 
     mutate_at(vars(AIC:MAPE), function(x){
         cell_spec(x, color = ifelse(x==min(x), "red", "black"))
@@ -1362,11 +1370,12 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-Para hacer la descomposición de la serie se hizo una transformación de Box-Cox con $\lambda=1$ para aplicarla de manera multiplicativa. Esto se debe a que en la Figura \ref{fig:tmiiplotgeneral} pueden observarse cambios considerables en la variabilidad de la serie a lo largo del tiempo. la Figura \ref{fig:tmiiplotdescomposicion} muestra, como se mencionó previamente, una tendencia decreciente y una estacionalidad que no es reiterada a lo largo del tiempo. Además, el componente aleatorio muestra como los errores no son constantes durante todo el período.
+La Figura \ref{fig:tmiiplotdescomposicion} muestra, como se mencionó previamente, una tendencia decreciente y una estacionalidad que no es reiterada a lo largo del tiempo. Además, el componente aleatorio muestra como los errores no son constantes durante todo el período.
 
 ```{r tmiiplotdescomposicion, fig.cap="Descomposición de la TMII en el periodo 2000 - 2017"}
 base %>% 
-  mutate(tmii=BoxCox(tmii, lambda=1)) %>% 
+  mutate(tmii=BoxCox(tmii, lambda=1),
+         fecha=as.Date(fecha)) %>% 
 ggsdc(., aes(x = fecha, y = tmii),
          method = "stl", s.window = 7, frequency = 12, type="multiplicative",
          facet.titles = c("Serie Original", "Tendencia", 
@@ -1416,7 +1425,7 @@ base <- popstudy::read_from_dir("Datos examen1.xlsx", "References/Results_sectio
 TS <- ts(base$valor, start = c(2007, 1), end = c(2015, 06), frequency = 12)
 ```
 
-```{r incentivosplotgeneral, fig.cap="Incentivos salariales en el sector público 2007 − 2018"}
+```{r incentivosplotgeneral, fig.cap="Incentivos salariales en el sector público entre los años 2007 y 2018"}
 ggplot(TS)+
   geom_line(color = "#00AFBB", size = 1.3) +
   stat_smooth(color = "#FC4E07", fill = "#FC4E07",
@@ -1432,7 +1441,7 @@ ggplot(TS)+
                                   margin=margin(t=1,10,10,10)))
 ```
 
-```{r incentivosplotperiodos, fig.cap="Incentivos salariales en el sector público 2007 − 2018 según mes"}
+```{r incentivosplotperiodos, fig.cap="Incentivos salariales en el sector público entre los años 2007 y 2018 según mes"}
 base %>% 
   group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
   summarise(valor) %>% 
@@ -1457,9 +1466,9 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-En la Figura \ref{fig:incentivosplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo, los picos y las caídas en la parte estacional, esto hace referencia a los meses de Diciembre y Enero; cuando no se está en este periodo los incentivos poseen un comportamiento más estable. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo.
+En la Figura \ref{fig:incentivosplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo, los picos y las caídas en la parte estacional, lo cual hace referencia a los meses de Diciembre y Enero; cuando no se está en este periodo los incentivos poseen un comportamiento más estable. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo.
 
-```{r incentivosplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 − 2018"}
+```{r incentivosplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 al 2018"}
 base %>% 
   mutate(valor=BoxCox(valor, lambda=1)) %>% 
 ggsdc(., aes(x = fecha, y = valor),
@@ -1504,9 +1513,9 @@ Dado que los registros de defunciones por causa externa se realizan diariamente,
 
 Es importante recalcar que, entre Junio del año 2012 y Diciembre del año 2017, el aumento en la tasa de cambio de la cantidad de defunciones debido a causas externas coincide con el aumento de la flotilla de motocicletas, pues en un período de cinco años esta cifra creció en un 189% [@motos]. Conviene entonces verificar el comportamiento a lo interno de la serie en referencias a las categorías de las causas externas.
 
-De la Figura \ref{fig:externasplotperiodos} puede notarse que cada mes tiene sus picos y valles durante cada mes a lo largo del periodo, siendo los meses de Enero, Abril y Diciembre los que presentaron valores ligeramente más altos entre los años 2000 y 2017. 
+Cada mes tiene sus picos y valles durante cada mes a lo largo del periodo, siendo los meses de Enero, Abril y Diciembre los que presentaron valores ligeramente más altos entre los años 2000 y 2017. 
 
-La descomposición de la serie se hará de forma aditiva debido a que no se observan grandes cambios en la variabilidad a lo largo del tiempo. La Figura \ref{fig:externasplotdescomposicion} muestra que la tendencia se mantiene casi constante a lo largo del tiempo, mientras que parece haber estacionalidad en ciertos lapsos de la segunda mitad del año. Además, el componente aleatorio muestra como los errores no son constantes a lo largo de todo el período. 
+La descomposición de la serie se hará de forma aditiva debido a que no se observan grandes cambios en la variabilidad a lo largo del tiempo. La tendencia se mantiene casi constante a lo largo del tiempo, mientras que parece haber estacionalidad en ciertos lapsos de la segunda mitad del año. Además, el componente aleatorio muestra como los errores no son constantes a lo largo de todo el período. 
 
 ```{r}
 # En la figura \ref{fig:externaplotgeneral} se observó como la tasa de mortalidad por causa externa posee una tendencia ligeramente creciente e inestable a lo largo del tiempo, por lo que no se trata de una serie cronológica estacionaria. Tras aplicarle una diferenciación la serie se comporta como lo mostrado en la figura \ref{fig:externa_comportamiento}.
@@ -1557,7 +1566,8 @@ particion_tmii <-
     particiones(TS_tmii,
                 titulo = "TMII",
                 ejex = "Año",
-                ejey = "Tasa", simulada = FALSE)
+                fuente = "Fuente: INEC",
+                ejey = "Tasa", simulada = FALSE, mostrar="comportamiento")
 
 #######################
 load(
@@ -1577,7 +1587,8 @@ particion_externa <-
     particiones(TS_externa,
                 titulo = "Mortalidad por causa externa",
                 ejex = "Año",
-                ejey = "Tasa")
+                fuente = "Fuente: INEC",
+                ejey = "Tasa", mostrar="comportamiento")
 
 #########################
 
@@ -1602,7 +1613,8 @@ particion_incentivos <-
     particiones(TS_incentivos,
                 titulo = "Incentivos salariales",
                 ejex = "Año",
-                ejey = "Incentivos")
+                fuente = "Fuente: CGR",
+                ejey = "Incentivos", mostrar="comportamiento")
 
 ########################
 base <-
@@ -1626,7 +1638,8 @@ particion_intereses <-
     particiones(TS_intereses,
                 titulo = "Intereses y comisiones",
                 ejex = "Año",
-                ejey = "Intereses y comisiones")
+                fuente = "Fuente: CGR",
+                ejey = "Intereses y comisiones", mostrar="comportamiento")
 
 ggarrange(
     particion_tmii,
@@ -1809,7 +1822,7 @@ do.call(
             TRUE ~ x
         )
     }) %>%
-     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", as.character(round(x, 2)))) %>% 
+     mutate_if(is.numeric, function(x) ifelse(is.na(x), "-", gsub("[.]",",",as.character(round(x, 2))))) %>% 
     filter(referencia %in% c("TMII", "Incentivos Salariales")) %>%  #Filtrando los mejores
     kbl(.,
         "latex",
@@ -1917,7 +1930,11 @@ datos <- mapply(
     filter(proceso %in% c("TMII", "Incentivos Salariales")) #Filtrar los mejores
 
 datos %>%
-    mutate_if(is.numeric, function(x) {round(x, 2)+.01}) %>% 
+    mutate_if(is.numeric, function(x) {
+        
+        gsub("[.]",",",as.character(round(x, 2)+.01))
+        
+        }) %>% 
     group_by(proceso, tipo) %>% 
     mutate_at(vars(AIC:MAPE), function(x){
         cell_spec(x, color = ifelse(x==min(x), "red", "black"))
@@ -2082,7 +2099,11 @@ tabla %>%
            s=s/total*100,
            p=p/total*100) %>% 
     select(-total) %>% 
-    mutate_if(is.numeric, round, 2) %>% 
+    mutate_if(is.numeric, function(x){
+        
+        gsub("[.]",",",as.character(round(x, 2)+.01))
+        
+    }) %>% 
     kbl(
         .,
         "latex",

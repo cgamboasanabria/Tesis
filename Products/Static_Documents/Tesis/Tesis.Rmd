@@ -52,11 +52,18 @@ csl: apa.csl
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
                       dev="jpeg", out.width = '100%', out.height='100%', fig.pos="H",
-                      echo=FALSE)
+                      echo=FALSE, OutDec= ",")
+# remotes::install_github("eddelbuettel/digest")
+# remotes::install_github("r-lib/vctrs")
+# remotes::install_github("joshuaulrich/xts")
+# remotes::install_github("vubiostat/r-yaml")
+# remotes::install_github("jeroen/sys")
+# remotes::install_github("Rdatatable/data.table")
 
 popstudy::required_packages(knitr, kableExtra, readxl, gridExtra, ggpubr, ggplot2, lubridate, 
                      ggseas, astsa, ggpmisc, forecast, 
-                     tidyr, popstudy, DiagrammeR, Hmisc, dplyr)
+                     tidyr, popstudy, DiagrammeR, Hmisc, dplyr, timetk)
+
 
 oldSource <- knit_hooks$get("source")
 knit_hooks$set(source = function(x, options) {
@@ -141,7 +148,7 @@ César Andrés Gamboa Sanabria\\
 \addcontentsline{toc}{section}{RESUMEN}
 \section*{RESUMEN}
 
-Estimar modelos de series cronológicas es una labor ampliamente extendida en múltiples campos de la investigación y su objetivo último es generar pronósticos de la forma más precisa posible dentro de un horizonte determinado. Existe una amplia gama de modelos que puede utilizarse con este fin, entre ellos están los modelos Autorregresivos Integrados de Medias Móviles ($ARIMA$), e incluso existen diversos métodos de estimación automática o semi-automática para esta rama de la estadística. 
+Estimar modelos de series cronológicas es una labor ampliamente extendida en múltiples campos de la investigación y uno de los objetivos es generar pronósticos de la forma más precisa posible dentro de un horizonte determinado. Existe una amplia gama de modelos que puede utilizarse con este fin, entre ellos están los modelos Autorregresivos Integrados de Medias Móviles ($ARIMA$), e incluso existen diversos métodos de estimación automática o semi-automática para esta rama de la estadística. 
 
 A pesar de esto, encontrar un modelo que posea un buen ajuste a los datos no es fácil, pues se deben considerar tanto aspectos teóricos como prácticos, y de la temática de estudio para así obtener un modelo adecuado que genere pronósticos realistas y pertinentes para la toma de decisiones dentro de lo posible.
 
@@ -149,14 +156,14 @@ La investigación propone hacer uso de método denominado sobreparametrización 
 
 Los resultados se contrastan con datos simulados de series cronológicas y cuatro series reales para ajustar modelos $ARIMA$ con la función `auto.arima()`, la sobreparametrización y un modelo $ARIMA$ de orden bajo. Para cada una de estas series se realiza una partición del 80% para entrenar los modelos y el restante 20% para validación de los pronósticos. En cada una de estas series se realizó un análisis visual del comportamiento de los errores y posteriormente se evalúa la calidad de los resultados de cada modelo obtenido con las tres técnicas descritas mediante medidas de bondad de ajuste (AIC, AICc y BIC) y de precisión (RMSE, MAE y MAPE).
 
-Al tener datos que vienen de un proceso con bajo número de parámetros, la sobreparametrización logra captar de buena manera el comportamiento de la serie en comparación a las otras alternativas, y cuando el proceso que gobierna la serie es de un mayor grado, la metodología propuesta es capaz de capturar de mejor forma el comportamiento de la serie y conseguir pronósticos con una precisión mayor al de los métodos más tradicionales, pues en los resultados de entrenamiento, la sobreparametrización obtuvo el mejor ajuste un 58.33% de las veces y la mejor precisión el 45.45% de las veces, mientras que al evaluar los resultados sobre los conjuntos de datos de validación, la sobreparametrización obtuvo el mejor ajuste el 50% de las veces, mientras que las mejores medidas de precisión se alcanzaron un 67% del tiempo.
+Al tener datos que vienen de un proceso con bajo número de parámetros, la sobreparametrización logra captar de buena manera el comportamiento de la serie en comparación a las otras alternativas, y cuando el proceso que gobierna la serie es de un mayor grado, la metodología propuesta es capaz de capturar de mejor forma el comportamiento de la serie y conseguir pronósticos con una precisión mayor al de los métodos más tradicionales, pues en los resultados de entrenamiento, la sobreparametrización obtuvo el mejor ajuste un 58,33% de las veces y la mejor precisión el 45,45% de las veces, mientras que al evaluar los resultados sobre los conjuntos de datos de validación, la sobreparametrización obtuvo el mejor ajuste el 50% de las veces, mientras que las mejores medidas de precisión se alcanzaron un 67% del tiempo.
 
 \cleardoublepage
 
 \addcontentsline{toc}{section}{ABSTRACT}
 \section*{ABSTRACT}
 
-Time series analysis is widely extended in several research fields, and its goal is to generate forecasts as accurately as possible within a given horizon. Several models can be used for this purpose, among them are the Autoregressive Integrated Moving Average models (ARIMA). There are even some automatic or semi-automatic estimation methods for their calculation. 
+Time series analysis is widely extended in several research fields, and one goal is to generate forecasts as accurately as possible within a given horizon. Several models can be used for this purpose, among them are the Autoregressive Integrated Moving Average models (ARIMA). There are even some automatic or semi-automatic estimation methods for their calculation. 
 
 Despite this, finding a well-fitted model is not easy, since both theoretical and practical aspects must be considered, as well as particular context to obtain an adequate model that generates realistic and relevant forecasts for decision making as much as possible. 
 
@@ -168,7 +175,7 @@ In each of these series, a visual analysis of the behavior of the errors was car
 
 By having data that comes from a process with a low number of parameters, the overparameterization manages to capture in a good way the behavior of the series compared to the other methods. When the process that rules the time series implies a higher degree, the proposed methodology leads to a well-capture-behavior of the series and achieving forecasts with greater precision than the more traditional methods.
 
-In the training results, the overparameterization obtained the best fit 58.33% of the time and the best precision the 45.45% of the time. In comparison, when evaluating the results on the validation data sets, overparameterization obtained the best fit 50% of the time, while the best precision measures were achieved 67% of the time.
+In the training results, the overparameterization obtained the best fit 58,33% of the time and the best precision the 45,45% of the time. In comparison, when evaluating the results on the validation data sets, overparameterization obtained the best fit 50% of the time, while the best precision measures were achieved 67% of the time.
 
 \cleardoublepage
 

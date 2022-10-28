@@ -21,7 +21,7 @@
 \contentsline {subsubsection}{\numberline {2.5.1}Ecuación de Wold}{16}{subsubsection.2.5.1}%
 \contentsline {subsubsection}{\numberline {2.5.2}Metodología Box-Jenkins}{18}{subsubsection.2.5.2}%
 \contentsline {subsubsection}{\numberline {2.5.3}Modelos Autorregresivos}{18}{subsubsection.2.5.3}%
-\contentsline {subsubsection}{\numberline {2.5.4}Modelos de Medias Móviles}{19}{subsubsection.2.5.4}%
+\contentsline {subsubsection}{\numberline {2.5.4}Modelos de Medias Móviles}{18}{subsubsection.2.5.4}%
 \contentsline {subsubsection}{\numberline {2.5.5}Modelos ARIMA}{19}{subsubsection.2.5.5}%
 \contentsline {subsection}{\numberline {2.6}Los autocorrelogramas}{20}{subsection.2.6}%
 \contentsline {subsection}{\numberline {2.7}La sobreparametrización y el análisis combinatorio}{25}{subsection.2.7}%
@@ -74,4 +74,4 @@
 \contentsline {subsection}{\numberline {5.1}Conclusiones}{68}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}discusiones}{71}{subsection.5.2}%
 \contentsline {section}{\numberline {6}ANEXOS}{73}{section.6}%
-\contentsline {section}{\numberline {7}REFERENCIAS}{96}{section.7}%
+\contentsline {section}{\numberline {7}REFERENCIAS}{95}{section.7}%
