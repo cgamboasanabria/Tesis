@@ -259,7 +259,7 @@ datos %>%
         booktabs = T,
         escape = F,
         align = "r",
-        caption = "\\label{tab:comparaciones_arima_peores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de dtos estacionales simulados",
+        caption = "\\label{tab:comparaciones_arima_peores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de datos estacionales simulados",
         col.names = c(
             "Proceso original",
             "Datos",

@@ -12,6 +12,8 @@ Existen múltiples formas de proceder mediante la etapa de estimación, como lo 
 
 En el análisis de series cronológicas existen dos grandes corrientes de estudio: Los componentes inherentes a la serie cronológica y el estudio de las autocorrelaciones. Según el primer enfoque, de acuerdo con @oscarh-1, las series cronológicas poseen tres componentes principales: Tendencia-ciclos, Estacionalidad e Irregularidad. Considerando estos tres elementos, las series cronológicas pueden ser *aditivas*, como se muestra en la ecuación \ref{eqn:serie_aditiva}, en cuyo caso se asume que los tres componentes son independientes entre sí; o *multiplicativa*, donde, por el contrario, los tres componentes no son independientes, como muestra la ecuación \ref{eqn:serie_multiplicativa}.
 
+\newpage
+
 \begin{equation}
 \label{eqn:serie_aditiva}
 Y(t)=T(t)+S(t)+I(t)
