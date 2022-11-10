@@ -33,45 +33,45 @@
 \contentsline {subsubsection}{\numberline {3.1.4}Intereses y comisiones del sector público}{29}{subsubsection.3.1.4}%
 \contentsline {subsubsection}{\numberline {3.1.5}Herramientas analíticas}{30}{subsubsection.3.1.5}%
 \contentsline {subsubsection}{\numberline {3.1.6}Procedimiento de simulación}{30}{subsubsection.3.1.6}%
-\contentsline {subsection}{\numberline {3.2}Métodos}{32}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Análisis exploratorio}{32}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}Partición de los datos}{32}{subsubsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2}Métodos}{31}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Análisis exploratorio}{31}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Partición de los datos}{31}{subsubsection.3.2.2}%
 \contentsline {subsubsection}{\numberline {3.2.3}Identificación y estimación del mejor modelo según la función auto.arima()}{32}{subsubsection.3.2.3}%
 \contentsline {subsubsection}{\numberline {3.2.4}Identificación y estimación del mejor modelo con sobreparametrización}{32}{subsubsection.3.2.4}%
 \contentsline {subsubsection}{\numberline {3.2.5}Estimación de un modelo ARIMA estándar}{35}{subsubsection.3.2.5}%
-\contentsline {subsubsection}{\numberline {3.2.6}Análisis visual de los errores}{36}{subsubsection.3.2.6}%
-\contentsline {subsubsection}{\numberline {3.2.7}Medidas de bondad de ajuste y de rendimiento}{36}{subsubsection.3.2.7}%
-\contentsline {paragraph}{\numberline {3.2.7.1}AIC}{36}{paragraph.3.2.7.1}%
-\contentsline {paragraph}{\numberline {3.2.7.2}AICc}{36}{paragraph.3.2.7.2}%
+\contentsline {subsubsection}{\numberline {3.2.6}Análisis visual de los errores}{35}{subsubsection.3.2.6}%
+\contentsline {subsubsection}{\numberline {3.2.7}Medidas de bondad de ajuste y de rendimiento}{35}{subsubsection.3.2.7}%
+\contentsline {paragraph}{\numberline {3.2.7.1}AIC}{35}{paragraph.3.2.7.1}%
+\contentsline {paragraph}{\numberline {3.2.7.2}AICc}{35}{paragraph.3.2.7.2}%
 \contentsline {paragraph}{\numberline {3.2.7.3}BIC}{36}{paragraph.3.2.7.3}%
 \contentsline {paragraph}{\numberline {3.2.7.4}MAE}{36}{paragraph.3.2.7.4}%
-\contentsline {paragraph}{\numberline {3.2.7.5}MASE}{37}{paragraph.3.2.7.5}%
-\contentsline {paragraph}{\numberline {3.2.7.6}RMSE}{37}{paragraph.3.2.7.6}%
-\contentsline {subsubsection}{\numberline {3.2.8}Pronósticos}{37}{subsubsection.3.2.8}%
+\contentsline {paragraph}{\numberline {3.2.7.5}MASE}{36}{paragraph.3.2.7.5}%
+\contentsline {paragraph}{\numberline {3.2.7.6}RMSE}{36}{paragraph.3.2.7.6}%
+\contentsline {subsubsection}{\numberline {3.2.8}Pronósticos}{36}{subsubsection.3.2.8}%
 \contentsline {subsubsection}{\numberline {3.2.9}Tiempo de procesamiento}{37}{subsubsection.3.2.9}%
-\contentsline {subsubsection}{\numberline {3.2.10}Resumen de la forma de análisis}{38}{subsubsection.3.2.10}%
-\contentsline {section}{\numberline {4}RESULTADOS}{39}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Contraste de métodos de estimación de los ARIMA para las series simuladas}{39}{subsection.4.1}%
-\contentsline {subsubsection}{\numberline {4.1.1}Análisis exploratorio}{39}{subsubsection.4.1.1}%
-\contentsline {subsubsection}{\numberline {4.1.2}Partición de los datos}{40}{subsubsection.4.1.2}%
-\contentsline {subsubsection}{\numberline {4.1.3}Identificación y estimación}{41}{subsubsection.4.1.3}%
-\contentsline {subsubsection}{\numberline {4.1.4}Análisis de los errores}{42}{subsubsection.4.1.4}%
-\contentsline {subsubsection}{\numberline {4.1.5}Medidas de bondad de ajuste y de rendimiento}{44}{subsubsection.4.1.5}%
-\contentsline {subsubsection}{\numberline {4.1.6}Estimación en el periodo de validación}{45}{subsubsection.4.1.6}%
-\contentsline {subsection}{\numberline {4.2}Contraste de métodos de estimación de los ARIMA para las series empíricas}{50}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Análisis exploratorio}{50}{subsubsection.4.2.1}%
-\contentsline {paragraph}{\numberline {4.2.1.1}Tasa de mortalidad infantil interanual}{50}{paragraph.4.2.1.1}%
-\contentsline {paragraph}{\numberline {4.2.1.2}Incentivos salariales del sector público}{53}{paragraph.4.2.1.2}%
-\contentsline {paragraph}{\numberline {4.2.1.3}Mortalidad por causa externa}{57}{paragraph.4.2.1.3}%
-\contentsline {paragraph}{\numberline {4.2.1.4}Intereses y comisiones del sector público}{57}{paragraph.4.2.1.4}%
-\contentsline {subsubsection}{\numberline {4.2.2}Partición de los datos}{58}{subsubsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.3}Identificación y estimación}{58}{subsubsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.4}Análisis de los errores}{59}{subsubsection.4.2.4}%
-\contentsline {subsubsection}{\numberline {4.2.5}Medidas de bondad de ajuste y de precisión}{61}{subsubsection.4.2.5}%
-\contentsline {subsubsection}{\numberline {4.2.6}Estimación en el periodo de validación}{62}{subsubsection.4.2.6}%
-\contentsline {subsection}{\numberline {4.3}Resumen de resultados}{67}{subsection.4.3}%
-\contentsline {section}{\numberline {5}CONCLUSIÓN Y DISCUSIONES}{68}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Conclusiones}{68}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}discusiones}{71}{subsection.5.2}%
-\contentsline {section}{\numberline {6}ANEXOS}{73}{section.6}%
-\contentsline {section}{\numberline {7}REFERENCIAS}{95}{section.7}%
+\contentsline {subsubsection}{\numberline {3.2.10}Resumen de la forma de análisis}{37}{subsubsection.3.2.10}%
+\contentsline {section}{\numberline {4}RESULTADOS}{38}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Contraste de métodos de estimación de los ARIMA para las series simuladas}{38}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Análisis exploratorio}{38}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Partición de los datos}{39}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.3}Identificación y estimación}{40}{subsubsection.4.1.3}%
+\contentsline {subsubsection}{\numberline {4.1.4}Análisis de los errores}{41}{subsubsection.4.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.5}Medidas de bondad de ajuste y de rendimiento}{43}{subsubsection.4.1.5}%
+\contentsline {subsubsection}{\numberline {4.1.6}Estimación en el periodo de validación}{44}{subsubsection.4.1.6}%
+\contentsline {subsection}{\numberline {4.2}Contraste de métodos de estimación de los ARIMA para las series empíricas}{49}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Análisis exploratorio}{49}{subsubsection.4.2.1}%
+\contentsline {paragraph}{\numberline {4.2.1.1}Tasa de mortalidad infantil interanual}{49}{paragraph.4.2.1.1}%
+\contentsline {paragraph}{\numberline {4.2.1.2}Incentivos salariales del sector público}{52}{paragraph.4.2.1.2}%
+\contentsline {paragraph}{\numberline {4.2.1.3}Mortalidad por causa externa}{56}{paragraph.4.2.1.3}%
+\contentsline {paragraph}{\numberline {4.2.1.4}Intereses y comisiones del sector público}{56}{paragraph.4.2.1.4}%
+\contentsline {subsubsection}{\numberline {4.2.2}Partición de los datos}{57}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Identificación y estimación}{57}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Análisis de los errores}{58}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}Medidas de bondad de ajuste y de precisión}{60}{subsubsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.6}Estimación en el periodo de validación}{61}{subsubsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.3}Resumen de resultados}{66}{subsection.4.3}%
+\contentsline {section}{\numberline {5}CONCLUSIÓN Y DISCUSIONES}{67}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Conclusiones}{67}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Discusiones}{70}{subsection.5.2}%
+\contentsline {section}{\numberline {6}ANEXOS}{72}{section.6}%
+\contentsline {section}{\numberline {7}REFERENCIAS}{94}{section.7}%

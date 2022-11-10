@@ -1741,15 +1741,16 @@ evolución de esta en conjunto con el crecimiento de su relación con las
 defunciones registradas en una población la vuelven un problema de salud
 pública. En base a la clasificación Internacional de Enfermedades
 (\protect\hyperlink{ref-CIE10}{OPS, 2016}) de la de la Organización
-Mundial de la Salud\footnote{\url{https://www.paho.org/salud-en-las-americas-2017/?lang=es}{]}},
-las defunciones pueden clasificarse en cuatro grandes grupos, siendo el
-más importante el de las causas naturales, el cual incluye enfermedades
-congénitas, cardiopatías u otras relacionadas con la vejez. En menor
-cuantía se encuentran las causas de muerte ignoradas, las cuales se dan
-cuando la causa de muerte es desconocida y de intención indeterminada; y
-de forma similar se encuentran las causas de muerte que se mantienen en
-estudio, bien sea por parte de la morgue o de algún otro organismo, esta
-última tiene pocos registros conforme más se retrocede en el tiempo.
+Mundial de la Salud\footnote{Técnica de suavizamiento mediante regresión
+  local ponderada.}, las defunciones pueden clasificarse en cuatro
+grandes grupos, siendo el más importante el de las causas naturales, el
+cual incluye enfermedades congénitas, cardiopatías u otras relacionadas
+con la vejez. En menor cuantía se encuentran las causas de muerte
+ignoradas, las cuales se dan cuando la causa de muerte es desconocida y
+de intención indeterminada; y de forma similar se encuentran las causas
+de muerte que se mantienen en estudio, bien sea por parte de la morgue o
+de algún otro organismo, esta última tiene pocos registros conforme más
+se retrocede en el tiempo.
 
 El otro gran grupo, aunque considerablemente menor que las causas
 naturales, son las causas externas, las cuales son objeto de análisis en
@@ -1847,24 +1848,14 @@ estándar.
 Con este fin, se programó una función que sigue los siguientes pasos
 (también mostrados en la Figura \ref{fig:diagrama_flujo_simulacion}:
 
-\textbf{1.} Se generan valores aleatorios de alguna distribución de
-probabilidad. Para esta investigación se escogen 100 valores de una
-distribución Normal con media 10 y varianza 1. Estos valores se resumen
-en la Figura \ref{fig:datos_simulados}; donde las región azul oscuro
-representa la densidad de datos entre los percentiles 25 y 75, las
-líneas punteadas de color naranja marcan la cantidad de desviaciones
-estándar que los datos se alejan del promedio, y las líneas punteadas de
-color azul marcan los puntos de corte mínimo, percentiles 25, 50 y 75, y
-el máximo.
-
-\textbf{2.} Se seleccionan mediante un muestreo simple al azar la
+\textbf{1.} Se seleccionan mediante un muestreo simple al azar la
 cantidad de coeficientes a utilizar en los términos del modelo
 \(ARIMA(p,d,q)(P,D,Q)_S\) que gobierna la serie. Para esta investigación
 fueron seleccionados los siguientes procesos:
 \(ARIMA(1,0,0), ARIMA(1,0,1),\) \(ARIMA(2,0,3), ARIMA(4,0,2),\)
 \(ARIMA(0,0,1)(0,1,1)_{12}\) y \(ARIMA(2,1,4)(3,0,3)_{12}\).
 
-\textbf{3.} Para cada uno de los procesos seleccionados, se generan
+\textbf{2.} Para cada uno de los procesos seleccionados, se generan
 valores aleatorios de una distribución uniforme con un valor mínimo de 0
 y un valor máximo de 0.99. La cantidad de valores simulados depende de
 la cantidad de parámetros escogidos en \(p, q, P, Q\). Estos valores
@@ -1874,20 +1865,16 @@ este es un proceso iterativo que se completa hasta que los coeficientes
 obtenidos tanto para la parte autorregresiva como para la parte de
 medias móviles generen un proceso invertible y estacionario.
 
-\textbf{4.} Con los valores simulados, la cantidad de parámetros y sus
-respectivos valores definidos en los puntos anteriores, se ajusta cada
-uno de los modelos \(ARIMA\) descritos en el inciso \textbf{2.}.
+\textbf{3.} Con la cantidad de parámetros y sus respectivos valores
+definidos en los puntos anteriores, se ajusta cada uno de los modelos
+\(ARIMA\) descritos en el inciso \textbf{1.}.
 
-\textbf{5.} Con cada modelo ajustado, se utiliza la función
+\textbf{4.} Con cada modelo ajustado, se utiliza la función
 \texttt{simulate.Arima()} para generar 200 observaciones basadas en
 dichos modelos.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/diagrama_flujo_simulacion-1} \caption{Diagrama de flijo del proceso de simulación de las series cronológicas.}\label{fig:diagrama_flujo_simulacion}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/datos_simulados-1} \caption{Valores de referencia para la simulación de series cronológicas}\label{fig:datos_simulados}
 \end{figure}
 
 \subsection{Métodos}
@@ -2261,7 +2248,12 @@ además el proceso de partición de los datos tanto para ajustar los
 modelos como para validar los pronósticos y, a partir del procedimiento
 descrito en la metodología, se divide en dos etapas: Contraste de los
 ARIMA a partir de las series simuladas y contraste de los ARIMA para las
-series empíricas.
+series empíricas. Cabe destacar que para las series simuladas se realizó
+una realización de cada una, pues parte del interés de esta
+investigación está en poder analizar que tanto se acercan las
+estimaciones con cada método (ARIMA estándar, auto.arima() y
+sobreparametrización) a la especificación y coeficientes reales de cada
+proceso, y no en generalizar para cada proceso ARIMA en específico.
 
 \subsection{Contraste de métodos de estimación de los ARIMA para las series simuladas}
 
@@ -2276,7 +2268,7 @@ comportamiento al ajustar un suavizamiento de Loess\footnote{Técnica de
   suavizamiento mediante regresión local ponderada.} para buscar señales
 de tendencia y concavidad en los datos temporales, y buscar indicios de
 los procesos que gobiernan dichas series, además de verificar que se
-trate de series cronológicas estacionarias. En la figura
+trate de series cronológicas estacionarias. En la Figura
 \ref{fig:series_simuladas} se muestra el comportamiento general de cada
 una de las series cronológicas simuladas.
 
@@ -2288,7 +2280,7 @@ observa cómo se comportan de manera más oscilante que el caso anterior a
 lo largo del tiempo. Para los datos generados mediante un
 \(ARIMA(2,0,3)\) se observa como los datos simulados no parecen tener
 ninguna tendencia clara, una alternativa en este caso sería aplicar
-alguna transformación para volverla aún más estacionaria. En la figura
+alguna transformación para volverla aún más estacionaria. En la Figura
 también se observa como los datos generados mediante un proceso
 \(ARIMA(4,0,2)\) parecen tener un cierto grado de tendencia, por lo que
 podría ser necesario aplicar alguna transformación.
@@ -2298,7 +2290,8 @@ Con respecto a los procesos estacionales simulados, los datos del
 pero esto no es del todo claro, una transformación no es estrictamente
 necesaria, pero puede aplicarse para corregir ligeramente la parte
 estacional; mientras que en los datos generados mediante un proceso
-\(ARIMA(2,1,4)(3,0,3)\) se manifiesta una clara tendencia decreciente.
+\(ARIMA(2,1,4)(3,0,3)_{12}\) se manifiesta una clara tendencia
+decreciente.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth,height=1\textheight]{Tesis_files/figure-latex/series_simuladas-1} \caption{Comportamiento y tendencia de las series simuladas}\label{fig:series_simuladas}
@@ -2332,7 +2325,7 @@ Al ajustar modelos con la función \texttt{auto.arima()}, mediante un
 ARIMA estándar y mediante sobreparametrización, al igual que con
 cualquier otro método para estimar modelos \(ARIMA\), se obtienen
 estimaciones de los coeficientes. En el caso de los datos simulados,
-donde se conoce d previo el verdadero proceso que gobierna la serie de
+donde se conoce de previo el verdadero proceso que gobierna la serie de
 tiempo, estos valores pueden compararse con los valores obtenidos.
 
 El cuadro \ref{tab:coeficientes_mejores} resume los resultados obtenidos
@@ -2349,9 +2342,9 @@ métodos (\texttt{auto.arima()}, ARIMA estándar y Sobreparametrización),
 mientras que las columnas \emph{L.I.} (Límite Inferior) y \emph{L.S.}
 (Límite Superior) representan del intervalo de confianza el 95\% para
 los coeficientes estimados. Como se ha mencionado, la notación más
-utilizada para los modelos \(ARIMA\) es \(ARIMA(p,d,q)(P,D,Q)\), que en
-cada columna \emph{Puntual} equivale a
-\(ARIMA(ARX, d, MAX)(SARX, D, SMAX)\), con \(X=\{1,2,3,4\}\), según
+utilizada para los modelos \(ARIMA\) es \(ARIMA(p,d,q)(P,D,Q)_s\), que
+en cada columna \emph{Puntual} equivale a
+\(ARIMA(ARX, d, MAX)(SARX, D, SMAX)_s\), con \(X=\{1,2,3,4\}\), según
 corresponda.
 
 De esta manera, a modo de ejemplo, para los datos simulados a partir de
@@ -2366,7 +2359,7 @@ no estacional, es decir, \(AR1=0\).
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-19}\label{tab:coeficientes_mejores}Coeficientes del proceso original y de los métodos de estimación de las series simuladas estacionales}
+\caption{\label{tab:unnamed-chunk-20}\label{tab:coeficientes_mejores}Coeficientes del proceso original y de los métodos de estimación de las series simuladas estacionales}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont
@@ -2416,10 +2409,10 @@ Proceso original & Coeficiente & Valor real & Puntual & L.I. & L.S. & Puntual & 
 
 Como se discutió en la Metodología, al ver la forma de los errores
 buscamos que estos se comporten como ruido blanco, es decir, que no
-tengan ningún patrón en particular. El autocorrelograma de los residuos
-también puede usarse para este fin, pues el 95\% de los valores debería
-estar entre las dos líneas azules. Además, un histograma de los residuos
-es útil para saber si los residuos siguen una distribución
+tengan ningún patrón temporal en particular. El autocorrelograma de los
+residuos también puede usarse para este fin, pues el 95\% de los valores
+debería estar entre las dos líneas azules. Además, un histograma de los
+residuos es útil para saber si los residuos siguen una distribución
 aproximadamente Normal; si no existen grandes desviaciones en este
 gráfico, entonces puede decirse que el cumplimiento de este supuesto es
 razonable.
@@ -2430,7 +2423,7 @@ los modelos estimados a partir de los datos simulados mediante los
 procesos \(ARIMA(0,0,1)(0,1,1)\) y \(ARIMA(2,1,4)(3,0,3)\),
 respectivamente,para los trs métodos de estimación: la función
 \texttt{auto.arima()}, ARIMA estándar y sobreparametrización, mientras
-que las figuras \ref{fig:errores_simulados_arima100},
+que las Figuras \ref{fig:errores_simulados_arima100},
 \ref{fig:errores_simulados_arima101},
 \ref{fig:errores_simulados_arima203} y
 \ref{fig:errores_simulados_arima402} muestran lo mismo pero para las
@@ -2468,7 +2461,7 @@ respecto a las medidas de precisión.
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-24}\label{tab:comparaciones_arima_mejores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de dtos estacionales simulados}
+\caption{\label{tab:unnamed-chunk-25}\label{tab:comparaciones_arima_mejores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de dtos estacionales simulados}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont
@@ -2506,7 +2499,7 @@ Proceso original & Datos & Estimación & AIC & AICc & BIC & RMSE & MAE & MAPE\\
 
 \subsubsection{Estimación en el periodo de validación}
 
-Las figuras \ref{fig:pronostico_arima001_011},
+Las Figuras \ref{fig:pronostico_arima001_011},
 \ref{fig:pronostico_arima214_303}, \ref{fig:pronostico_arima100},
 \ref{fig:pronostico_arima101} y \ref{fig:pronostico_arima203},
 \ref{fig:pronostico_arima402}, muestran el ajuste y el pronóstico de
@@ -2515,12 +2508,12 @@ con sobreparametrización y con el modelo \(ARIMA\) estándar. En todos
 los casos, la línea vertical punteada indica el inicio del periodo de
 pronóstico.
 
-Además, las figuras \ref{fig:ee_autoarima_arima001_011},
+Además, las Figuras \ref{fig:ee_autoarima_arima001_011},
 \ref{fig:ee_autoarima_arima214_303}, \ref{fig:ee_autoarima_arima100},
 \ref{fig:ee_autoarima_arima101}, \ref{fig:ee_autoarima_arima203} y
 \ref{fig:ee_autoarima_arima402}, representan el comportamiento de los
 errores estándar obtenidos de los pronósticos hechos con el mejor modelo
-sugerido por la función \texttt{auto.arima()}. Las figuras
+sugerido por la función \texttt{auto.arima()}. Las Figuras
 \ref{fig:ee_arima_estandar_arima001_011},
 \ref{fig:ee_arima_estandar_arima214_303},
 \ref{fig:ee_arima_estandar_arima100},
@@ -2528,7 +2521,7 @@ sugerido por la función \texttt{auto.arima()}. Las figuras
 \ref{fig:ee_arima_estandar_arima203} y
 \ref{fig:ee_arima_estandar_arima402} representan el comportamiento de
 los errores estándar obtenidos de los pronósticos hechos con el modelo
-\(ARIMA\) estándar. Y finalmente, las figuras
+\(ARIMA\) estándar. Y finalmente, las Figuras
 \ref{fig:ee_sobreparametrizacion_arima001_011},
 \ref{fig:ee_sobreparametrizacion_arima214_303},
 \ref{fig:ee_sobreparametrizacion_arima100},
@@ -2773,7 +2766,7 @@ semuestran en la sección de anexos en el cuadro
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-32}\label{tab:coeficientes_mejores_reales}Coeficientes de las ecuaciones de estimación según método de ajuste}
+\caption{\label{tab:unnamed-chunk-33}\label{tab:coeficientes_mejores_reales}Coeficientes de las ecuaciones de estimación según método de ajuste}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont
@@ -2875,7 +2868,7 @@ comisiones se muestran en la sección de anexos mediante el cuadro
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-36}\label{tab:comparaciones_arima_mejores_reales}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación a partir de las series cronológicas reales}
+\caption{\label{tab:unnamed-chunk-37}\label{tab:comparaciones_arima_mejores_reales}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación a partir de las series cronológicas reales}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont
@@ -2987,7 +2980,7 @@ para las medidas de bondad de ajuste y de precisión.
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-37}\label{tab:resumen_resultados}Distribución porcentual de los métodos de estimación que alcanzaron los mejores resultados según conjunto de datos y tipo de medición}
+\caption{\label{tab:unnamed-chunk-38}\label{tab:resumen_resultados}Distribución porcentual de los métodos de estimación que alcanzaron los mejores resultados según conjunto de datos y tipo de medición}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont
@@ -3017,7 +3010,7 @@ Conjunto de datos & Medidas & auto.arima() & ARIMA estándar & Sobreparametrizac
 \subsection{Conclusiones}
 
 Ante uno de los principales problemas en el análisis de series de tiempo
-emdiante modelos ARIMA, como lo es la subjetividad del observador en la
+mediante modelos ARIMA, como lo es la subjetividad del observador en la
 identificación de procesos, esta investigación ha tenido como objetivo
 principal siempre proponer un aporte metodológico para la selección de
 modelos ARIMA y por ende, una mejora en los pronósticos obtenidos a
@@ -3085,14 +3078,14 @@ pronósticos se obtienen mediante el uso de la sobreparametrización (ver
 cuadro \ref{tab:comparaciones_arima_peores}), pues la magnitud de sus
 errores son siempre menores, sin embargo, el comportamiento de los
 pronósticos también se vuelve constante, tal y como se aprecia en la
-figura \ref{fig:pronostico_arima203}. Con los tres métodos utilizados, a
+Figura \ref{fig:pronostico_arima203}. Con los tres métodos utilizados, a
 pesar de que los pronósticos en series de orden bajo no son los mejores,
 entre las tres opciones la sobreparametrización brinda mejores
 resultados en términos de rendimiento y bondad de ajuste.
 
 Los últimos modelos generados a partir de los datos simulados se
 obtuvieron de la serie cronológica proveniente de un proceso
-\(ARIMA(4,0,2)\). COmo muestra la figura \ref{fig:pronostico_arima402},
+\(ARIMA(4,0,2)\). Como muestra la Figura \ref{fig:pronostico_arima402},
 los pronósticos son bastante competentes en los primeros periodos, pero
 posteriormente se van acotando; mientras que los errores estándar son
 prácticamente los mismos con los modelos. Las medidas de rendimiento
@@ -3104,14 +3097,14 @@ comportamiento similar a lo previamente descrito. Al tener una baja
 cantidad de parámetros en los datos simulados de un proceso estacional
 \(ARIMA(0,0,1)(0,1,1)_{12}\), la sobreparametrización iguala los
 resultados obtenidos mediante la función \texttt{auto.arima()} tal y
-como puede apreciarse en la figura \ref{fig:pronostico_arima001_011} y
+como puede apreciarse en la Figura \ref{fig:pronostico_arima001_011} y
 el cuadro \ref{tab:comparaciones_arima_mejores}; por lo que los errores
 estándar también poseen el mismo comportamiento, igualando así los
 intervalos de confianza.
 
 Al incorporar más parámetros al modelo generador de los datos como en el
 caso del \(ARIMA(2,1,4)(3,0,3)_{12}\), el cuadro
-\ref{tab:comparaciones_arima_mejores} y en la figura
+\ref{tab:comparaciones_arima_mejores} y en la Figura
 \ref{fig:pronostico_arima214_303} muestran como la sobreparametrización
 logra captar de mejor manera el comportamiento de los datos, obteniendo
 así menores mediciones del error, es decir, los pronósticos se acercan
@@ -3124,7 +3117,7 @@ en el caso particular de la Tasa de mortalidad infantil interanual, la
 función \texttt{auto.arima()} sugiere como mejor modelo un
 \(ARIMA(2,1,0)(0,0,1)\), mientras que utilizando la sobreparametrización
 se tiene como mejor modelo un \(ARIMA(4,1,0)(4,1,0)\). El cuadro
-\ref{tab:comparaciones_arima_mejores_reales} y la figura
+\ref{tab:comparaciones_arima_mejores_reales} y la Figura
 \ref{fig:pronostico_TMII} muestran como el uso de la
 sobreparametrización ajusta los valores pronosticados de una mejor
 manera a los datos reales con respecto a utilizar \texttt{auto.arima()}
@@ -3141,7 +3134,7 @@ De manera similar, tras ajustar un modelo utilizando la función
 \texttt{auto.arima()} a la tasa de mortalidad por causa externa el mejor
 modelo sugerido es un \(ARIMA(1,1,1)\), mientras que la
 sobreparametrización propone como mejor modelo un
-\(ARIMA(2,0,1)(0,1,1)_{12}\). Los resultados de la figura
+\(ARIMA(2,0,1)(0,1,1)_{12}\). Los resultados de la Figura
 \ref{fig:pronostico_EXTERNA} y el cuadro
 \ref{tab:comparaciones_arima_peores_reales} muestran que la
 sobreparametrización supera a los resultados del \(ARIMA\) estándar, y
@@ -3170,7 +3163,7 @@ Para la serie de incentivos salariales del sector público, la función
 \(ARIMA(0,0,1)(1,1,0)_{12}\), mientras que la sobreparametrización
 sugiere un \(ARIMA(2,1,0)(1,2,0)_{12}\) como el más adecuado. Los
 resultados del cuadro \ref{tab:comparaciones_arima_mejores_reales} y la
-figura \ref{fig:pronostico_INCENTIVOS} muestran que nuevamente los
+Figura \ref{fig:pronostico_INCENTIVOS} muestran que nuevamente los
 pronósticos obtenidos son superiores utilizando la sobreparametrización
 al analizar los pronósticos, y aunque no presenta las mejores medidas de
 ajuste, la diferencia con los otros modelos no es tan grande.
@@ -3181,12 +3174,12 @@ el caso de la función \texttt{auto.arima()} y un
 \(ARIMA(0,1,2)(0,1,0)_{12}\). En este caso, la sobreparametrización es
 superior en dos de las tres medidas de rendimiento y en las medidas de
 bondad de ajuste, tal y como muestra el cuadro
-\ref{tab:comparaciones_arima_peores_reales}, mientras que la figura
+\ref{tab:comparaciones_arima_peores_reales}, mientras que la Figura
 \ref{fig:pronostico_INTERESES} muestra de manera gráfica los pronósticos
 obtenidos, que son bastante similares pues ambos modelos difieren
 solamente en un parámetro para la parte no estacional.
 
-\subsection{discusiones}
+\subsection{Discusiones}
 
 El uso de la sobreparametrización propuesto mediante un algoritmo de
 selección de modelos implementado en esta investigación permite evaluar
@@ -3238,13 +3231,20 @@ serie cronológica en estudio, pues estos coeficientes adicionales
 podrían controlar cambios particulares en la serie y que podrían mejorar
 la precisión de los pronósticos.
 
+Lo anterior también abre una futura ventana de investigación, y es la
+posibilidad de validar el uso de la sobreparametrización sobre las demás
+alternativas disponibles haciendo un mayor número de realizaciones para
+cada proceso simulado, esto con la finalidad de poder generalizar el
+comportamiento del método propuesto ante distintos escenarios que
+podrían presentarse para un mismo proceso \(ARIMA(p,d,q)(P,D,Q)_s\).
+
 La metodología aquí propuesta se encuentra disponible de manera abierta
 mediante el paquete de R \texttt{popstudy}, el cual fue desarrollado
 para esta investigación y cuenta con los procedimientos previamente
 descritos. Se encuentra disponible en un repositorio de
-Github\footnote{Técnica de suavizamiento mediante regresión local
-  ponderada.} y además en el repositorio CRAN{[}\^{}13{]}, que es la
-fuente oficial de los paquetes del lenguaje R.
+Github\footnote{\url{https://github.com/cgamboasanabria/popstudy}} y
+además en el repositorio CRAN\footnote{\url{https://cran.r-project.org/web/packages/popstudy/index.html}.},
+que es la fuente oficial de los paquetes del lenguaje R.
 
 \newpage
 
@@ -3254,7 +3254,7 @@ fuente oficial de los paquetes del lenguaje R.
 \label{chap:anexos}
 \begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-39}\label{tab:tiempos_estimacion}Tiempos de estimación en minutos para cada modelo según su tipo de estimación.}
+\caption{\label{tab:unnamed-chunk-40}\label{tab:tiempos_estimacion}Tiempos de estimación en minutos para cada modelo según su tipo de estimación.}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{7}{9}\selectfont
@@ -3283,7 +3283,7 @@ INTERESES & 0,6145 & 32,542 & 0,108\\
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-40}\label{tab:coeficientes_peores}Coeficientes del proceso original y de los métodos de estimación de series simuladas no estacionales}
+\caption{\label{tab:unnamed-chunk-41}\label{tab:coeficientes_peores}Coeficientes del proceso original y de los métodos de estimación de series simuladas no estacionales}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont
@@ -3353,7 +3353,7 @@ Proceso original & Coeficiente & Valor real & Puntual & L.I. & L.S. & Puntual & 
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-41}\label{tab:comparaciones_arima_peores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de datos estacionales simulados}
+\caption{\label{tab:unnamed-chunk-42}\label{tab:comparaciones_arima_peores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de datos estacionales simulados}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont
@@ -3511,7 +3511,7 @@ Proceso original & Datos & Estimación & AIC & AICc & BIC & RMSE & MAE & MAPE\\
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-47}\label{tab:coeficientes_peores_reales}Coeficientes de las ecuaciones de estimación según método de ajuste}
+\caption{\label{tab:unnamed-chunk-48}\label{tab:coeficientes_peores_reales}Coeficientes de las ecuaciones de estimación según método de ajuste}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont
@@ -3555,7 +3555,7 @@ Serie real & Coeficiente & Puntual & L.I. & L.S. & Puntual & L.I. & L.S. & Puntu
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-48}\label{tab:comparaciones_arima_peores_reales}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación a partir de las series cronológicas reales}
+\caption{\label{tab:unnamed-chunk-49}\label{tab:comparaciones_arima_peores_reales}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación a partir de las series cronológicas reales}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{6.5}{8.5}\selectfont

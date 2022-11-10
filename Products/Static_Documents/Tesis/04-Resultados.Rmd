@@ -1,6 +1,6 @@
 \label{chap:resultados}
 
-En este capítulo se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas en el apartado metodológico, tanto para las series simuladas como para las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis cumplen con las condiciones descritas en el Marco Teórico. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos y, a partir del procedimiento descrito en la metodología, se divide en dos etapas: Contraste de los ARIMA a partir de las series simuladas y contraste de los ARIMA para las series empíricas.
+En este capítulo se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas en el apartado metodológico, tanto para las series simuladas como para las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis cumplen con las condiciones descritas en el Marco Teórico. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos y, a partir del procedimiento descrito en la metodología, se divide en dos etapas: Contraste de los ARIMA a partir de las series simuladas y contraste de los ARIMA para las series empíricas. Cabe destacar que para las series simuladas se realizó una realización de cada una, pues parte del interés de esta investigación está en poder analizar que tanto se acercan las estimaciones con cada método (ARIMA estándar, auto.arima() y sobreparametrización) a la especificación y coeficientes reales de cada proceso, y no en generalizar para cada proceso ARIMA en específico.
 
 \subsection{Contraste de métodos de estimación de los ARIMA para las series simuladas}
 
@@ -166,13 +166,13 @@ arima214_303 <- resultados_estacional_alto[[2]]$datos
 
 \subsubsection{Análisis exploratorio}
 
-Inicialmente, se analizan las series cronológicas para verificar su comportamiento al ajustar un suavizamiento de Loess[^12] para buscar señales de tendencia y concavidad en los datos temporales, y buscar indicios de los procesos que gobiernan dichas series, además de verificar que se trate de series cronológicas estacionarias. En la figura \ref{fig:series_simuladas} se muestra el comportamiento general de cada una de las series cronológicas simuladas.
+Inicialmente, se analizan las series cronológicas para verificar su comportamiento al ajustar un suavizamiento de Loess[^7] para buscar señales de tendencia y concavidad en los datos temporales, y buscar indicios de los procesos que gobiernan dichas series, además de verificar que se trate de series cronológicas estacionarias. En la Figura \ref{fig:series_simuladas} se muestra el comportamiento general de cada una de las series cronológicas simuladas.
 
-[^12]: Técnica de suavizamiento mediante regresión local ponderada.
+[^7]: Técnica de suavizamiento mediante regresión local ponderada.
 
-Para el $ARIMA(1,0,0)$ puede verse como los datos simulados bajo este proceso se comportan de manera ligeramente oscilante a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. En el caso de los datos generados bajo un proceso $ARIMA(1,0,1)$ se observa cómo se comportan de manera más oscilante que el caso anterior a lo largo del tiempo. Para los datos generados mediante un $ARIMA(2,0,3)$ se observa como los datos simulados no parecen tener ninguna tendencia clara, una alternativa en este caso sería aplicar alguna transformación para volverla aún más estacionaria. En la figura también se observa como los datos generados mediante un proceso $ARIMA(4,0,2)$ parecen tener un cierto grado de tendencia, por lo que podría ser necesario aplicar alguna transformación. 
+Para el $ARIMA(1,0,0)$ puede verse como los datos simulados bajo este proceso se comportan de manera ligeramente oscilante a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. En el caso de los datos generados bajo un proceso $ARIMA(1,0,1)$ se observa cómo se comportan de manera más oscilante que el caso anterior a lo largo del tiempo. Para los datos generados mediante un $ARIMA(2,0,3)$ se observa como los datos simulados no parecen tener ninguna tendencia clara, una alternativa en este caso sería aplicar alguna transformación para volverla aún más estacionaria. En la Figura también se observa como los datos generados mediante un proceso $ARIMA(4,0,2)$ parecen tener un cierto grado de tendencia, por lo que podría ser necesario aplicar alguna transformación. 
 
-Con respecto a los procesos estacionales simulados, los datos del $ARIMA(0,0,1)(0,1,1)_{12}$ parecen ser aproximadamente estacionarios, pero esto no es del todo claro, una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional; mientras que en los datos generados mediante un proceso $ARIMA(2,1,4)(3,0,3)$ se manifiesta una clara tendencia decreciente.
+Con respecto a los procesos estacionales simulados, los datos del $ARIMA(0,0,1)(0,1,1)_{12}$ parecen ser aproximadamente estacionarios, pero esto no es del todo claro, una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional; mientras que en los datos generados mediante un proceso $ARIMA(2,1,4)(3,0,3)_{12}$ se manifiesta una clara tendencia decreciente.
 
 ```{r funcion_exploratorio}
 exploratorio <-
@@ -339,7 +339,7 @@ garima214_303 <- exploratorio(
     titulos = list(
         x = "Periodo t",
         y = "Valor de la serie",
-        titulo = "ARIMA(2,1,4)(3,0,3)",
+        titulo = "ARIMA(2,1,4)(3,0,3)[12]",
         fuente = "Fuente: Datos simulados"
     ),
     grosor=.5
@@ -691,9 +691,9 @@ coeficientes_arima_estandar <- list(
 ) %>% do.call(rbind, .)
 ```
 
-Al ajustar modelos con la función `auto.arima()`, mediante un ARIMA estándar y mediante sobreparametrización, al igual que con cualquier otro método para estimar modelos $ARIMA$, se obtienen estimaciones de los coeficientes. En el caso de los datos simulados, donde se conoce d previo el verdadero proceso que gobierna la serie de tiempo, estos valores pueden compararse con los valores obtenidos.
+Al ajustar modelos con la función `auto.arima()`, mediante un ARIMA estándar y mediante sobreparametrización, al igual que con cualquier otro método para estimar modelos $ARIMA$, se obtienen estimaciones de los coeficientes. En el caso de los datos simulados, donde se conoce de previo el verdadero proceso que gobierna la serie de tiempo, estos valores pueden compararse con los valores obtenidos.
 
-El cuadro \ref{tab:coeficientes_mejores} resume los resultados obtenidos en la estimación de los coeficientes para los procesos simulados estacionales, mientras que los resultados de las series no estacionales se resumen en el cuadro \ref{tab:coeficientes_peores}. En la columna *Proceso original* se indica el proceso a partir del cual se generó la serie cronológica mediante simulación, en la columna *Coeficiente* se indica el coeficiente al cual pertenecen las estimaciones presentes en las columnas *Valor real* (el valor del coeficiente del proceso original), las columnas llamadas *Puntual* muestra la estimación puntual del coeficiente para cada uno de los tres métodos (`auto.arima()`, ARIMA estándar y Sobreparametrización), mientras que las columnas *L.I.* (Límite Inferior) y *L.S.* (Límite Superior) representan del intervalo de confianza el 95% para los coeficientes estimados. Como se ha mencionado, la notación más utilizada para los modelos $ARIMA$ es $ARIMA(p,d,q)(P,D,Q)$, que en cada columna *Puntual* equivale a $ARIMA(ARX, d, MAX)(SARX, D, SMAX)$, con $X=\{1,2,3,4\}$, según corresponda.
+El cuadro \ref{tab:coeficientes_mejores} resume los resultados obtenidos en la estimación de los coeficientes para los procesos simulados estacionales, mientras que los resultados de las series no estacionales se resumen en el cuadro \ref{tab:coeficientes_peores}. En la columna *Proceso original* se indica el proceso a partir del cual se generó la serie cronológica mediante simulación, en la columna *Coeficiente* se indica el coeficiente al cual pertenecen las estimaciones presentes en las columnas *Valor real* (el valor del coeficiente del proceso original), las columnas llamadas *Puntual* muestra la estimación puntual del coeficiente para cada uno de los tres métodos (`auto.arima()`, ARIMA estándar y Sobreparametrización), mientras que las columnas *L.I.* (Límite Inferior) y *L.S.* (Límite Superior) representan del intervalo de confianza el 95% para los coeficientes estimados. Como se ha mencionado, la notación más utilizada para los modelos $ARIMA$ es $ARIMA(p,d,q)(P,D,Q)_s$, que en cada columna *Puntual* equivale a $ARIMA(ARX, d, MAX)(SARX, D, SMAX)_s$, con $X=\{1,2,3,4\}$, según corresponda.
 
 De esta manera, a modo de ejemplo, para los datos simulados a partir de un $ARIMA(2,1,4)(3,0,3)_{12}$, los coeficientes desde $MA1$ hasta $MA4$ representan los cuatro coeficientes de la parte de medias móviles no estacional, mientras que desde  $SAR1$ hasta $SAR3$ son los tres coeficientes del modelo autorregresivo de la parte estacional, la celda del *Valor real* correspondiente al coeficiente $AR1$ del proceso original $ARIMA(0,0,1)(0,1,1)_{12}$ está vacía porque el modelo original solo tenía un coeficiente en el modelo de medias móviles no estacional, es decir, $AR1=0$.
 
@@ -800,9 +800,11 @@ analisis_errores <- function(modelo, titulo="") {
     annotate_figure(
         ggarrange(
             g1,
-            ggarrange(g2, g3, ncol = 2, nrow = 1),
+            #ggarrange(g2, g3, ncol = 2, nrow = 1),
+            g2,
+            g3,
             ncol = 1,
-            nrow = 2
+            nrow = 3
         ),
         top = text_grob(
             titulo,
@@ -816,7 +818,7 @@ analisis_errores <- function(modelo, titulo="") {
 ```
 
 ```{r}
-errores_simulados_autoarima1 <- analisis_errores(comparacion_no_estacional_bajo[[1]]$modelos$autoarima,"auto.arima()\nARIMA(2,1,1)")
+errores_simulados_autoarima1 <- analisis_errores(comparacion_no_estacional_bajo[[1]]$modelos$autoarima,"auto.arima()\nARIMA(2,1,1) ")
 errores_simulados_autoarima2<- analisis_errores(comparacion_no_estacional_bajo[[2]]$modelos$autoarima,"auto.arima()\nARIMA(0,1,1)")
 errores_simulados_autoarima3<- analisis_errores(comparacion_no_estacional_alto[[1]]$modelos$autoarima,"auto.arima()\nARIMA(1,0,3)")
 errores_simulados_autoarima4<- analisis_errores(comparacion_no_estacional_alto[[2]]$modelos$autoarima,"auto.arima()\nARIMA(1,1,3)")
@@ -842,11 +844,12 @@ errores_simulados_arima_estandar5<- analisis_errores(comparacion_estacional_bajo
 errores_simulados_arima_estandar6<- analisis_errores(comparacion_estacional_alto[[2]]$modelos$arima_estandar,"ARIMA estándar\nARIMA(1,1,1)(1,1,1)")
 ```
 
-Como se discutió en la Metodología, al ver la forma de los errores buscamos que estos se comporten como ruido blanco, es decir, que no tengan ningún patrón en particular. El autocorrelograma de los residuos también puede usarse para este fin, pues el 95% de los valores debería estar entre las dos líneas azules. Además, un histograma de los residuos es útil para saber si los residuos siguen una distribución aproximadamente Normal; si no existen grandes desviaciones en este gráfico, entonces puede decirse que el cumplimiento de este supuesto es razonable. 
+Como se discutió en la Metodología, al ver la forma de los errores buscamos que estos se comporten como ruido blanco, es decir, que no tengan ningún patrón temporal en particular. El autocorrelograma de los residuos también puede usarse para este fin, pues el 95% de los valores debería estar entre las dos líneas azules. Además, un histograma de los residuos es útil para saber si los residuos siguen una distribución aproximadamente Normal; si no existen grandes desviaciones en este gráfico, entonces puede decirse que el cumplimiento de este supuesto es razonable. 
 
-En las Figuras \ref{fig:errores_simulados_arima001_011} y \ref{fig:errores_simulados_arima214_303} se visualizan los errores de los modelos estimados a partir de los datos simulados mediante los procesos $ARIMA(0,0,1)(0,1,1)$ y $ARIMA(2,1,4)(3,0,3)$, respectivamente,para los trs métodos de estimación: la función `auto.arima()`, ARIMA estándar y sobreparametrización, mientras que las figuras \ref{fig:errores_simulados_arima100}, \ref{fig:errores_simulados_arima101}, \ref{fig:errores_simulados_arima203} y \ref{fig:errores_simulados_arima402} muestran lo mismo pero para las series simuladas no estacionales. En términos generales, los modelos generados mediante la función `auto.arima()` poseen el comportamiento esperado, aunque cuando se incorporan componentes estacionales los errores varían un poco más en los autocorrelogramas y el supuesto de normalidad, mientras que al utilizar un ARIMA estándar los modelos presentan una mayor cantidad de inconvenientes, particularmente en los autocorrelogramas, donde varios de ellos se salen de los márgenes. Por su parte, cuando se realiza la estimación mediante sobreparametrización, los modelos poseen el comportamiento esperado, incluso con menos problemas en la parte estacional.
+En las Figuras \ref{fig:errores_simulados_arima001_011} y \ref{fig:errores_simulados_arima214_303} se visualizan los errores de los modelos estimados a partir de los datos simulados mediante los procesos $ARIMA(0,0,1)(0,1,1)$ y $ARIMA(2,1,4)(3,0,3)$, respectivamente,para los trs métodos de estimación: la función `auto.arima()`, ARIMA estándar y sobreparametrización, mientras que las Figuras \ref{fig:errores_simulados_arima100}, \ref{fig:errores_simulados_arima101}, \ref{fig:errores_simulados_arima203} y \ref{fig:errores_simulados_arima402} muestran lo mismo pero para las series simuladas no estacionales. En términos generales, los modelos generados mediante la función `auto.arima()` poseen el comportamiento esperado, aunque cuando se incorporan componentes estacionales los errores varían un poco más en los autocorrelogramas y el supuesto de normalidad, mientras que al utilizar un ARIMA estándar los modelos presentan una mayor cantidad de inconvenientes, particularmente en los autocorrelogramas, donde varios de ellos se salen de los márgenes. Por su parte, cuando se realiza la estimación mediante sobreparametrización, los modelos poseen el comportamiento esperado, incluso con menos problemas en la parte estacional.
 
 ```{r errores_simulados_arima001_011, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(0,0,1)(0,1,1)"}
+#
 ggarrange(
     errores_simulados_autoarima5,
     errores_simulados_arima_estandar5,
@@ -857,6 +860,7 @@ ggarrange(
 ```
 
 ```{r errores_simulados_arima214_303, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(2,1,4)(3,0,3)"}
+#
 ggarrange(
     errores_simulados_autoarima6,
     errores_simulados_arima_estandar6,
@@ -1177,9 +1181,9 @@ datos %>%
 
 \subsubsection{Estimación en el periodo de validación}
 
-Las figuras \ref{fig:pronostico_arima001_011}, \ref{fig:pronostico_arima214_303}, \ref{fig:pronostico_arima100}, \ref{fig:pronostico_arima101} y \ref{fig:pronostico_arima203}, \ref{fig:pronostico_arima402}, muestran el ajuste y el pronóstico de cada uno de los modelos estimados con la función `auto.arima()`, con sobreparametrización y con el modelo $ARIMA$ estándar. En todos los casos, la línea vertical punteada indica el inicio del periodo de pronóstico. 
+Las Figuras \ref{fig:pronostico_arima001_011}, \ref{fig:pronostico_arima214_303}, \ref{fig:pronostico_arima100}, \ref{fig:pronostico_arima101} y \ref{fig:pronostico_arima203}, \ref{fig:pronostico_arima402}, muestran el ajuste y el pronóstico de cada uno de los modelos estimados con la función `auto.arima()`, con sobreparametrización y con el modelo $ARIMA$ estándar. En todos los casos, la línea vertical punteada indica el inicio del periodo de pronóstico. 
 
-Además, las figuras \ref{fig:ee_autoarima_arima001_011}, \ref{fig:ee_autoarima_arima214_303}, \ref{fig:ee_autoarima_arima100}, \ref{fig:ee_autoarima_arima101}, \ref{fig:ee_autoarima_arima203} y \ref{fig:ee_autoarima_arima402}, representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el mejor modelo sugerido por la función `auto.arima()`. Las figuras \ref{fig:ee_arima_estandar_arima001_011}, \ref{fig:ee_arima_estandar_arima214_303}, \ref{fig:ee_arima_estandar_arima100}, \ref{fig:ee_arima_estandar_arima101}, \ref{fig:ee_arima_estandar_arima203} y \ref{fig:ee_arima_estandar_arima402} representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el modelo $ARIMA$ estándar. Y finalmente, las figuras \ref{fig:ee_sobreparametrizacion_arima001_011}, \ref{fig:ee_sobreparametrizacion_arima214_303}, \ref{fig:ee_sobreparametrizacion_arima100}, \ref{fig:ee_sobreparametrizacion_arima101}, \ref{fig:ee_sobreparametrizacion_arima203} y \ref{fig:ee_sobreparametrizacion_arima402},  representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el mejor modelo sugerido por la sobreparametrización.
+Además, las Figuras \ref{fig:ee_autoarima_arima001_011}, \ref{fig:ee_autoarima_arima214_303}, \ref{fig:ee_autoarima_arima100}, \ref{fig:ee_autoarima_arima101}, \ref{fig:ee_autoarima_arima203} y \ref{fig:ee_autoarima_arima402}, representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el mejor modelo sugerido por la función `auto.arima()`. Las Figuras \ref{fig:ee_arima_estandar_arima001_011}, \ref{fig:ee_arima_estandar_arima214_303}, \ref{fig:ee_arima_estandar_arima100}, \ref{fig:ee_arima_estandar_arima101}, \ref{fig:ee_arima_estandar_arima203} y \ref{fig:ee_arima_estandar_arima402} representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el modelo $ARIMA$ estándar. Y finalmente, las Figuras \ref{fig:ee_sobreparametrizacion_arima001_011}, \ref{fig:ee_sobreparametrizacion_arima214_303}, \ref{fig:ee_sobreparametrizacion_arima100}, \ref{fig:ee_sobreparametrizacion_arima101}, \ref{fig:ee_sobreparametrizacion_arima203} y \ref{fig:ee_sobreparametrizacion_arima402},  representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el mejor modelo sugerido por la sobreparametrización.
 
 ```{r pronostico_arima001_011, fig.cap="Pronóstico de los datos generados mediante un ARIMA(0,0,1)(0,1,1) según el método de estimación"}
 datos <-
