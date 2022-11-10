@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.28)  1 NOV 2022 15:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.28)  10 NOV 2022 14:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1428,501 +1428,501 @@ Missing character: There is no ; in font nullfont!
 [32]
 Missing character: There is no ; in font nullfont!
 [33] [34] [35] [36] [37] [38]
-<Tesis_files/figure-latex/series_simuladas-1.jpeg, id=1191, 469.755pt x 325.215
+<Tesis_files/figure-latex/series_simuladas-1.jpeg, id=1193, 469.755pt x 325.215
 pt>
 File: Tesis_files/figure-latex/series_simuladas-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/series_simuladas-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/series_simuladas-1.jpeg  used
- on input line 2297.
+ on input line 2299.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/particion_series_simuladas-1.jpeg, id=1193, 469.755pt
+<Tesis_files/figure-latex/particion_series_simuladas-1.jpeg, id=1195, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/particion_series_simuladas-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/particion_series_simuladas-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/particion_series_simuladas-1.
-jpeg  used on input line 2311.
+jpeg  used on input line 2313.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [39 <./Tesis_files/figure-latex/series_simuladas-1.jpeg>] [40 <./Tesis_files/fi
 gure-latex/particion_series_simuladas-1.jpeg>]
-Overfull \hbox (8.07428pt too wide) in paragraph at lines 2350--2359
+Overfull \hbox (8.07428pt too wide) in paragraph at lines 2352--2361
 []\T1/lmr/m/n/10 De es-ta ma-ne-ra, a mo-do de ejem-plo, pa-ra los da-tos si-mu
 -la-dos a par-tir de un $\OML/lmm/m/it/10 ARIMA\OT1/lmr/m/n/10 (2\OML/lmm/m/it/
 10 ; \OT1/lmr/m/n/10 1\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 4)(3\OML/lmm/m/it/10 ;
  \OT1/lmr/m/n/10 0\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 3)[]$\T1/lmr/m/n/10 ,
  []
 
-LaTeX Font Info:    Calculating math sizes for size <6.5> on input line 2405.
+LaTeX Font Info:    Calculating math sizes for size <6.5> on input line 2407.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6.5> on input line 2405.
+(Font)              <6.5> on input line 2407.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <4.54997> on input line 2405.
+(Font)              <4.54997> on input line 2407.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <3.25> on input line 2405.
+(Font)              <3.25> on input line 2407.
 
-Overfull \hbox (7.06519pt too wide) in paragraph at lines 2405--2405
+Overfull \hbox (7.06519pt too wide) in paragraph at lines 2407--2407
  []\T1/lmr/m/n/6.5 Coeficiente| 
  []
 
 
-Overfull \hbox (7.47939pt too wide) in paragraph at lines 2405--2405
+Overfull \hbox (7.47939pt too wide) in paragraph at lines 2407--2407
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (7.47939pt too wide) in paragraph at lines 2405--2405
+Overfull \hbox (7.47939pt too wide) in paragraph at lines 2407--2407
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (7.47939pt too wide) in paragraph at lines 2405--2405
+Overfull \hbox (7.47939pt too wide) in paragraph at lines 2407--2407
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (6.51953pt too wide) in paragraph at lines 2405--2405
+Overfull \hbox (6.51953pt too wide) in paragraph at lines 2407--2407
  [][]| 
  []
 
 
-Overfull \hbox (6.51953pt too wide) in paragraph at lines 2405--2405
+Overfull \hbox (6.51953pt too wide) in paragraph at lines 2407--2407
  [][]| 
  []
 
 [41]
-<Tesis_files/figure-latex/errores_simulados_arima001_011-1.jpeg, id=1215, 469.7
+<Tesis_files/figure-latex/errores_simulados_arima001_011-1.jpeg, id=1217, 469.7
 55pt x 325.215pt>
 File: Tesis_files/figure-latex/errores_simulados_arima001_011-1.jpeg Graphic fi
 le (type jpg)
 <use Tesis_files/figure-latex/errores_simulados_arima001_011-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_simulados_arima001_01
-1-1.jpeg  used on input line 2442.
+1-1.jpeg  used on input line 2444.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/errores_simulados_arima214_303-1.jpeg, id=1216, 469.7
+<Tesis_files/figure-latex/errores_simulados_arima214_303-1.jpeg, id=1218, 469.7
 55pt x 325.215pt>
 File: Tesis_files/figure-latex/errores_simulados_arima214_303-1.jpeg Graphic fi
 le (type jpg)
 <use Tesis_files/figure-latex/errores_simulados_arima214_303-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_simulados_arima214_30
-3-1.jpeg  used on input line 2446.
+3-1.jpeg  used on input line 2448.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [42 <./Tesis_files/figure-latex/errores_simulados_arima001_011-1.jpeg>]
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 2497--2497
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 2499--2499
  []|\T1/lmr/m/n/6.5 Entrenamiento|
  []
 
 
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 2497--2497
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 2499--2499
  []|\T1/lmr/m/n/6.5 Entrenamiento|
  []
 
 [43 <./Tesis_files/figure-latex/errores_simulados_arima214_303-1.jpeg>]
-<Tesis_files/figure-latex/pronostico_arima001_011-1.jpeg, id=1251, 469.755pt x 
+<Tesis_files/figure-latex/pronostico_arima001_011-1.jpeg, id=1253, 469.755pt x 
 325.215pt>
 File: Tesis_files/figure-latex/pronostico_arima001_011-1.jpeg Graphic file (typ
 e jpg)
 <use Tesis_files/figure-latex/pronostico_arima001_011-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_arima001_011-1.jpe
-g  used on input line 2535.
+g  used on input line 2537.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [44]
-<Tesis_files/figure-latex/ee_autoarima_arima001_011-1.jpeg, id=1256, 469.755pt 
+<Tesis_files/figure-latex/ee_autoarima_arima001_011-1.jpeg, id=1259, 469.755pt 
 x 325.215pt>
 File: Tesis_files/figure-latex/ee_autoarima_arima001_011-1.jpeg Graphic file (t
 ype jpg)
 <use Tesis_files/figure-latex/ee_autoarima_arima001_011-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_arima001_011-1.j
-peg  used on input line 2539.
+peg  used on input line 2541.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_arima001_011-1.jpeg, id=1257,
+<Tesis_files/figure-latex/ee_sobreparametrizacion_arima001_011-1.jpeg, id=1260,
  469.755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_arima001_011-1.jpeg Grap
 hic file (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_arima001_011-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_arima
-001_011-1.jpeg  used on input line 2543.
+001_011-1.jpeg  used on input line 2545.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [45 <./Tesis_files/figure-latex/pronostico_arima001_011-1.jpeg> <./Tesis_files/
 figure-latex/ee_autoarima_arima001_011-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_arima001_011-1.jpeg, id=1263, 469.7
+<Tesis_files/figure-latex/ee_arima_estandar_arima001_011-1.jpeg, id=1265, 469.7
 55pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_arima001_011-1.jpeg Graphic fi
 le (type jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_arima001_011-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_arima001_01
-1-1.jpeg  used on input line 2547.
+1-1.jpeg  used on input line 2549.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/pronostico_arima214_303-1.jpeg, id=1264, 469.755pt x 
+<Tesis_files/figure-latex/pronostico_arima214_303-1.jpeg, id=1266, 469.755pt x 
 325.215pt>
 File: Tesis_files/figure-latex/pronostico_arima214_303-1.jpeg Graphic file (typ
 e jpg)
 <use Tesis_files/figure-latex/pronostico_arima214_303-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_arima214_303-1.jpe
-g  used on input line 2551.
+g  used on input line 2553.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [46 <./Tesis_files/figure-latex/ee_sobreparametrizacion_arima001_011-1.jpeg> <.
 /Tesis_files/figure-latex/ee_arima_estandar_arima001_011-1.jpeg>]
-<Tesis_files/figure-latex/ee_autoarima_arima214_303-1.jpeg, id=1269, 469.755pt 
+<Tesis_files/figure-latex/ee_autoarima_arima214_303-1.jpeg, id=1271, 469.755pt 
 x 325.215pt>
 File: Tesis_files/figure-latex/ee_autoarima_arima214_303-1.jpeg Graphic file (t
 ype jpg)
 <use Tesis_files/figure-latex/ee_autoarima_arima214_303-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_arima214_303-1.j
-peg  used on input line 2555.
+peg  used on input line 2557.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_arima214_303-1.jpeg, id=1270,
+<Tesis_files/figure-latex/ee_sobreparametrizacion_arima214_303-1.jpeg, id=1272,
  469.755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_arima214_303-1.jpeg Grap
 hic file (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_arima214_303-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_arima
-214_303-1.jpeg  used on input line 2559.
+214_303-1.jpeg  used on input line 2561.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [47 <./Tesis_files/figure-latex/pronostico_arima214_303-1.jpeg> <./Tesis_files/
 figure-latex/ee_autoarima_arima214_303-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_arima214_303-1.jpeg, id=1276, 469.7
+<Tesis_files/figure-latex/ee_arima_estandar_arima214_303-1.jpeg, id=1278, 469.7
 55pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_arima214_303-1.jpeg Graphic fi
 le (type jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_arima214_303-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_arima214_30
-3-1.jpeg  used on input line 2563.
+3-1.jpeg  used on input line 2565.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [48 <./Tesis_files/figure-latex/ee_sobreparametrizacion_arima214_303-1.jpeg> <.
 /Tesis_files/figure-latex/ee_arima_estandar_arima214_303-1.jpeg>]
-<Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg, id=1282, 469.755pt x 325.215p
+<Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg, id=1284, 469.755pt x 325.215p
 t>
 File: Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg  used 
-on input line 2584.
+on input line 2586.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [49 <./Tesis_files/figure-latex/tmiiplotgeneral-1.jpeg>]
-<Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg, id=1289, 469.755pt x 325.215
+<Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg, id=1291, 469.755pt x 325.215
 pt>
 File: Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg  used
- on input line 2606.
+ on input line 2608.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=1291, 469.755pt x 3
+<Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg, id=1293, 469.755pt x 3
 25.215pt>
 File: Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg Graphic file (type
  jpg)
 <use Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg
-  used on input line 2615.
+  used on input line 2617.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [50 <./Tesis_files/figure-latex/tmiiplotperiodos-1.jpeg>]
-<Tesis_files/figure-latex/tmii_acf-1.jpeg, id=1298, 469.755pt x 325.215pt>
+<Tesis_files/figure-latex/tmii_acf-1.jpeg, id=1300, 469.755pt x 325.215pt>
 File: Tesis_files/figure-latex/tmii_acf-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/tmii_acf-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmii_acf-1.jpeg  used on inpu
-t line 2625.
+t line 2627.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/tmii_pacf-1.jpeg, id=1299, 469.755pt x 325.215pt>
+<Tesis_files/figure-latex/tmii_pacf-1.jpeg, id=1301, 469.755pt x 325.215pt>
 File: Tesis_files/figure-latex/tmii_pacf-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/tmii_pacf-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/tmii_pacf-1.jpeg  used on inp
-ut line 2629.
+ut line 2631.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [51 <./Tesis_files/figure-latex/tmiiplotdescomposicion-1.jpeg> <./Tesis_files/f
 igure-latex/tmii_acf-1.jpeg>]
-<Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg, id=1306, 469.755pt x 32
+<Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg, id=1308, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg 
- used on input line 2646.
+ used on input line 2648.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [52 <./Tesis_files/figure-latex/tmii_pacf-1.jpeg>]
-<Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg, id=1311, 469.755pt x 3
+<Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg, id=1313, 469.755pt x 3
 25.215pt>
 File: Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg Graphic file (type
  jpg)
 <use Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotperiodos-1.jpeg
-  used on input line 2650.
+  used on input line 2652.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [53 <./Tesis_files/figure-latex/incentivosplotgeneral-1.jpeg> <./Tesis_files/fi
 gure-latex/incentivosplotperiodos-1.jpeg>]
-<Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg, id=1318, 469.755
+<Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg, id=1320, 469.755
 pt x 325.215pt>
 File: Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg Graphic file
  (type jpg)
 <use Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivosplotdescomposicion-
-1.jpeg  used on input line 2663.
+1.jpeg  used on input line 2665.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/incentivos_acf-1.jpeg, id=1321, 469.755pt x 325.215pt
+<Tesis_files/figure-latex/incentivos_acf-1.jpeg, id=1323, 469.755pt x 325.215pt
 >
 File: Tesis_files/figure-latex/incentivos_acf-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/incentivos_acf-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivos_acf-1.jpeg  used o
-n input line 2672.
+n input line 2674.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [54 <./Tesis_files/figure-latex/incentivosplotdescomposicion-1.jpeg>]
-<Tesis_files/figure-latex/incentivos_pacf-1.jpeg, id=1326, 469.755pt x 325.215p
+<Tesis_files/figure-latex/incentivos_pacf-1.jpeg, id=1328, 469.755pt x 325.215p
 t>
 File: Tesis_files/figure-latex/incentivos_pacf-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/incentivos_pacf-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/incentivos_pacf-1.jpeg  used 
-on input line 2676.
+on input line 2678.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [55 <./Tesis_files/figure-latex/incentivos_acf-1.jpeg> <./Tesis_files/figure-la
 tex/incentivos_pacf-1.jpeg>] [56]
-<Tesis_files/figure-latex/particion_series_reales-1.jpeg, id=1348, 469.755pt x 
+<Tesis_files/figure-latex/particion_series_reales-1.jpeg, id=1350, 469.755pt x 
 325.215pt>
 File: Tesis_files/figure-latex/particion_series_reales-1.jpeg Graphic file (typ
 e jpg)
 <use Tesis_files/figure-latex/particion_series_reales-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/particion_series_reales-1.jpe
-g  used on input line 2752.
+g  used on input line 2754.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
-Overfull \hbox (7.06519pt too wide) in paragraph at lines 2824--2824
+Overfull \hbox (7.06519pt too wide) in paragraph at lines 2826--2826
  []\T1/lmr/m/n/6.5 Coeficiente| 
  []
 
 
-Overfull \hbox (4.11043pt too wide) in paragraph at lines 2824--2824
+Overfull \hbox (4.11043pt too wide) in paragraph at lines 2826--2826
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (4.11043pt too wide) in paragraph at lines 2824--2824
+Overfull \hbox (4.11043pt too wide) in paragraph at lines 2826--2826
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (4.11043pt too wide) in paragraph at lines 2824--2824
+Overfull \hbox (4.11043pt too wide) in paragraph at lines 2826--2826
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (3.57285pt too wide) in paragraph at lines 2824--2824
+Overfull \hbox (3.57285pt too wide) in paragraph at lines 2826--2826
  [][]| 
  []
 
 [57 <./Tesis_files/figure-latex/particion_series_reales-1.jpeg>] [58]
-<Tesis_files/figure-latex/errores_reales_TMII-1.jpeg, id=1363, 469.755pt x 325.
+<Tesis_files/figure-latex/errores_reales_TMII-1.jpeg, id=1365, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/errores_reales_TMII-1.jpeg Graphic file (type jp
 g)
 <use Tesis_files/figure-latex/errores_reales_TMII-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_reales_TMII-1.jpeg  u
-sed on input line 2852.
+sed on input line 2854.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/errores_reales_incentivos-1.jpeg, id=1364, 469.755pt 
+<Tesis_files/figure-latex/errores_reales_incentivos-1.jpeg, id=1366, 469.755pt 
 x 325.215pt>
 File: Tesis_files/figure-latex/errores_reales_incentivos-1.jpeg Graphic file (t
 ype jpg)
 <use Tesis_files/figure-latex/errores_reales_incentivos-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_reales_incentivos-1.j
-peg  used on input line 2856.
+peg  used on input line 2858.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [59 <./Tesis_files/figure-latex/errores_reales_TMII-1.jpeg>]
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 2906--2906
  []|\T1/lmr/m/n/6.5 Entrenamiento| 
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1615,68[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1615,81[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1624,67[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 4375,95[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 2349,42[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1615,21[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1615,39[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1626,38[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 4310,66[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 2491,66[]|
  []
 
 
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 2906--2906
  []|\T1/lmr/m/n/6.5 Entrenamiento| 
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1617,05[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1617,22[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 1628,22[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 4359,18[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 2564,76[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 5212,81[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 3701,08[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 3917,41[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 3011,28[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 3476,92[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 2904--2904
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 2906--2906
  [][]\T1/lmr/m/n/6.5 2846,98[]|
  []
 
 [60 <./Tesis_files/figure-latex/errores_reales_incentivos-1.jpeg>]
-<Tesis_files/figure-latex/pronostico_TMII-1.jpeg, id=1381, 469.755pt x 325.215p
+<Tesis_files/figure-latex/pronostico_TMII-1.jpeg, id=1383, 469.755pt x 325.215p
 t>
 File: Tesis_files/figure-latex/pronostico_TMII-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/pronostico_TMII-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_TMII-1.jpeg  used 
-on input line 2921.
+on input line 2923.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [61]
-<Tesis_files/figure-latex/pronostico_INCENTIVOS-1.jpeg, id=1386, 469.755pt x 32
+<Tesis_files/figure-latex/pronostico_INCENTIVOS-1.jpeg, id=1388, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/pronostico_INCENTIVOS-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/pronostico_INCENTIVOS-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_INCENTIVOS-1.jpeg 
- used on input line 2925.
+ used on input line 2927.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [62 <./Tesis_files/figure-latex/pronostico_TMII-1.jpeg> <./Tesis_files/figure-l
 atex/pronostico_INCENTIVOS-1.jpeg>]
-<Tesis_files/figure-latex/ee_autoarima_TMII-1.jpeg, id=1403, 469.755pt x 325.21
+<Tesis_files/figure-latex/ee_autoarima_TMII-1.jpeg, id=1405, 469.755pt x 325.21
 5pt>
 File: Tesis_files/figure-latex/ee_autoarima_TMII-1.jpeg Graphic file (type jpg)
 
 <use Tesis_files/figure-latex/ee_autoarima_TMII-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_TMII-1.jpeg  use
-d on input line 2949.
+d on input line 2951.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_TMII-1.jpeg, id=1404, 469.755
+<Tesis_files/figure-latex/ee_sobreparametrizacion_TMII-1.jpeg, id=1406, 469.755
 pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_TMII-1.jpeg Graphic file
  (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_TMII-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_TMII-
-1.jpeg  used on input line 2953.
+1.jpeg  used on input line 2955.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [63 <./Tesis_files/figure-latex/ee_autoarima_TMII-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_TMII-1.jpeg, id=1409, 469.755pt x 3
+<Tesis_files/figure-latex/ee_arima_estandar_TMII-1.jpeg, id=1411, 469.755pt x 3
 25.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_TMII-1.jpeg Graphic file (type
  jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_TMII-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_TMII-1.jpeg
-  used on input line 2957.
+  used on input line 2959.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_autoarima_INCENTIVOS-1.jpeg, id=1410, 469.755pt x 
+<Tesis_files/figure-latex/ee_autoarima_INCENTIVOS-1.jpeg, id=1412, 469.755pt x 
 325.215pt>
 File: Tesis_files/figure-latex/ee_autoarima_INCENTIVOS-1.jpeg Graphic file (typ
 e jpg)
 <use Tesis_files/figure-latex/ee_autoarima_INCENTIVOS-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_INCENTIVOS-1.jpe
-g  used on input line 2961.
+g  used on input line 2963.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [64 <./Tesis_files/figure-latex/ee_sobreparametrizacion_TMII-1.jpeg> <./Tesis_f
 iles/figure-latex/ee_arima_estandar_TMII-1.jpeg>]
-<Tesis_files/figure-latex/ee_sobreparametrizacion_INCENTIVOS-1.jpeg, id=1415, 4
+<Tesis_files/figure-latex/ee_sobreparametrizacion_INCENTIVOS-1.jpeg, id=1417, 4
 69.755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_INCENTIVOS-1.jpeg Graphi
 c file (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_INCENTIVOS-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_INCEN
-TIVOS-1.jpeg  used on input line 2965.
+TIVOS-1.jpeg  used on input line 2967.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_arima_estandar_INCENTIVOS-1.jpeg, id=1416, 469.755
+<Tesis_files/figure-latex/ee_arima_estandar_INCENTIVOS-1.jpeg, id=1418, 469.755
 pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_INCENTIVOS-1.jpeg Graphic file
  (type jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_INCENTIVOS-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_INCENTIVOS-
-1.jpeg  used on input line 2969.
+1.jpeg  used on input line 2971.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [65 <./Tesis_files/figure-latex/ee_autoarima_INCENTIVOS-1.jpeg> <./Tesis_files/
 figure-latex/ee_sobreparametrizacion_INCENTIVOS-1.jpeg>] [66 <./Tesis_files/fig
 ure-latex/ee_arima_estandar_INCENTIVOS-1.jpeg>] [67]
-Underfull \hbox (badness 1688) in paragraph at lines 3105--3114
+Underfull \hbox (badness 1688) in paragraph at lines 3110--3119
 []\T1/lmr/m/n/10 Al in-cor-po-rar más pa-rá-me-tros al mo-de-lo ge-ne-ra-dor de
  los da-tos co-mo en el ca-so del
  []
 
 [68]
-Underfull \hbox (badness 1117) in paragraph at lines 3171--3181
+Underfull \hbox (badness 1117) in paragraph at lines 3179--3189
 []\T1/lmr/m/n/10 Por úl-ti-mo, los mo-de-los ajus-ta-dos pa-ra pro-nos-ti-car l
 os in-tere-ses y co-mi-sio-nes del sec-tor
  []
 
 
-Underfull \hbox (badness 1122) in paragraph at lines 3171--3181
+Underfull \hbox (badness 1122) in paragraph at lines 3179--3189
 \T1/lmr/m/n/10 pú-bli-co son un $\OML/lmm/m/it/10 ARIMA\OT1/lmr/m/n/10 (0\OML/l
 mm/m/it/10 ; \OT1/lmr/m/n/10 0\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 1)(0\OML/lmm/m
 /it/10 ; \OT1/lmr/m/n/10 1\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 0)[]$ \T1/lmr/m/n/
@@ -1931,573 +1931,573 @@ un
  []
 
 [69] [70] [71]
-Overfull \hbox (7.06519pt too wide) in paragraph at lines 3335--3335
+Overfull \hbox (7.06519pt too wide) in paragraph at lines 3349--3349
  []\T1/lmr/m/n/6.5 Coeficiente| 
  []
 
 
-Overfull \hbox (7.47939pt too wide) in paragraph at lines 3335--3335
+Overfull \hbox (7.47939pt too wide) in paragraph at lines 3349--3349
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (7.47939pt too wide) in paragraph at lines 3335--3335
+Overfull \hbox (7.47939pt too wide) in paragraph at lines 3349--3349
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (7.47939pt too wide) in paragraph at lines 3335--3335
+Overfull \hbox (7.47939pt too wide) in paragraph at lines 3349--3349
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
-<Tesis_files/figure-latex/errores_simulados_arima100-1.jpeg, id=1471, 469.755pt
+<Tesis_files/figure-latex/errores_simulados_arima100-1.jpeg, id=1473, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/errores_simulados_arima100-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/errores_simulados_arima100-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_simulados_arima100-1.
-jpeg  used on input line 3339.
+jpeg  used on input line 3353.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [72]
-<Tesis_files/figure-latex/errores_simulados_arima101-1.jpeg, id=1477, 469.755pt
+<Tesis_files/figure-latex/errores_simulados_arima101-1.jpeg, id=1479, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/errores_simulados_arima101-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/errores_simulados_arima101-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_simulados_arima101-1.
-jpeg  used on input line 3343.
+jpeg  used on input line 3357.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/errores_simulados_arima203-1.jpeg, id=1478, 469.755pt
+<Tesis_files/figure-latex/errores_simulados_arima203-1.jpeg, id=1480, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/errores_simulados_arima203-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/errores_simulados_arima203-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_simulados_arima203-1.
-jpeg  used on input line 3347.
+jpeg  used on input line 3361.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [73 <./Tesis_files/figure-latex/errores_simulados_arima100-1.jpeg> <./Tesis_fil
 es/figure-latex/errores_simulados_arima101-1.jpeg>]
-<Tesis_files/figure-latex/errores_simulados_arima402-1.jpeg, id=1483, 469.755pt
+<Tesis_files/figure-latex/errores_simulados_arima402-1.jpeg, id=1485, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/errores_simulados_arima402-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/errores_simulados_arima402-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_simulados_arima402-1.
-jpeg  used on input line 3351.
+jpeg  used on input line 3365.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 3413--3413
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 3427--3427
  []|\T1/lmr/m/n/6.5 Entrenamiento|
  []
 
 
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 3413--3413
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 3427--3427
  []|\T1/lmr/m/n/6.5 Entrenamiento|
  []
 
 
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 3413--3413
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 3427--3427
  []|\T1/lmr/m/n/6.5 Entrenamiento|
  []
 
 
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 3413--3413
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 3427--3427
  []|\T1/lmr/m/n/6.5 Entrenamiento|
  []
 
 [74 <./Tesis_files/figure-latex/errores_simulados_arima203-1.jpeg> <./Tesis_fil
 es/figure-latex/errores_simulados_arima402-1.jpeg>]
-<Tesis_files/figure-latex/pronostico_arima100-1.jpeg, id=1488, 469.755pt x 325.
+<Tesis_files/figure-latex/pronostico_arima100-1.jpeg, id=1490, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/pronostico_arima100-1.jpeg Graphic file (type jp
 g)
 <use Tesis_files/figure-latex/pronostico_arima100-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_arima100-1.jpeg  u
-sed on input line 3417.
+sed on input line 3431.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [75]
-<Tesis_files/figure-latex/ee_autoarima_arima100-1.jpeg, id=1493, 469.755pt x 32
+<Tesis_files/figure-latex/ee_autoarima_arima100-1.jpeg, id=1495, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/ee_autoarima_arima100-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/ee_autoarima_arima100-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_arima100-1.jpeg 
- used on input line 3421.
+ used on input line 3435.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_arima100-1.jpeg, id=1494, 469
+<Tesis_files/figure-latex/ee_sobreparametrizacion_arima100-1.jpeg, id=1496, 469
 .755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_arima100-1.jpeg Graphic 
 file (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_arima100-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_arima
-100-1.jpeg  used on input line 3425.
+100-1.jpeg  used on input line 3439.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [76 <./Tesis_files/figure-latex/pronostico_arima100-1.jpeg> <./Tesis_files/figu
 re-latex/ee_autoarima_arima100-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_arima100-1.jpeg, id=1499, 469.755pt
+<Tesis_files/figure-latex/ee_arima_estandar_arima100-1.jpeg, id=1501, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_arima100-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_arima100-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_arima100-1.
-jpeg  used on input line 3429.
+jpeg  used on input line 3443.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/pronostico_arima101-1.jpeg, id=1500, 469.755pt x 325.
+<Tesis_files/figure-latex/pronostico_arima101-1.jpeg, id=1502, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/pronostico_arima101-1.jpeg Graphic file (type jp
 g)
 <use Tesis_files/figure-latex/pronostico_arima101-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_arima101-1.jpeg  u
-sed on input line 3433.
+sed on input line 3447.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [77 <./Tesis_files/figure-latex/ee_sobreparametrizacion_arima100-1.jpeg> <./Tes
 is_files/figure-latex/ee_arima_estandar_arima100-1.jpeg>]
-<Tesis_files/figure-latex/ee_autoarima_arima101-1.jpeg, id=1506, 469.755pt x 32
+<Tesis_files/figure-latex/ee_autoarima_arima101-1.jpeg, id=1508, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/ee_autoarima_arima101-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/ee_autoarima_arima101-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_arima101-1.jpeg 
- used on input line 3437.
+ used on input line 3451.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_arima101-1.jpeg, id=1507, 469
+<Tesis_files/figure-latex/ee_sobreparametrizacion_arima101-1.jpeg, id=1509, 469
 .755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_arima101-1.jpeg Graphic 
 file (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_arima101-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_arima
-101-1.jpeg  used on input line 3441.
+101-1.jpeg  used on input line 3455.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [78 <./Tesis_files/figure-latex/pronostico_arima101-1.jpeg> <./Tesis_files/figu
 re-latex/ee_autoarima_arima101-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_arima101-1.jpeg, id=1512, 469.755pt
+<Tesis_files/figure-latex/ee_arima_estandar_arima101-1.jpeg, id=1514, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_arima101-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_arima101-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_arima101-1.
-jpeg  used on input line 3445.
+jpeg  used on input line 3459.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/pronostico_arima203-1.jpeg, id=1513, 469.755pt x 325.
+<Tesis_files/figure-latex/pronostico_arima203-1.jpeg, id=1515, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/pronostico_arima203-1.jpeg Graphic file (type jp
 g)
 <use Tesis_files/figure-latex/pronostico_arima203-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_arima203-1.jpeg  u
-sed on input line 3449.
+sed on input line 3463.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [79 <./Tesis_files/figure-latex/ee_sobreparametrizacion_arima101-1.jpeg> <./Tes
 is_files/figure-latex/ee_arima_estandar_arima101-1.jpeg>]
-<Tesis_files/figure-latex/ee_autoarima_arima203-1.jpeg, id=1518, 469.755pt x 32
+<Tesis_files/figure-latex/ee_autoarima_arima203-1.jpeg, id=1520, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/ee_autoarima_arima203-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/ee_autoarima_arima203-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_arima203-1.jpeg 
- used on input line 3453.
+ used on input line 3467.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_arima203-1.jpeg, id=1519, 469
+<Tesis_files/figure-latex/ee_sobreparametrizacion_arima203-1.jpeg, id=1521, 469
 .755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_arima203-1.jpeg Graphic 
 file (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_arima203-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_arima
-203-1.jpeg  used on input line 3457.
+203-1.jpeg  used on input line 3471.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [80 <./Tesis_files/figure-latex/pronostico_arima203-1.jpeg> <./Tesis_files/figu
 re-latex/ee_autoarima_arima203-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_arima203-1.jpeg, id=1524, 469.755pt
+<Tesis_files/figure-latex/ee_arima_estandar_arima203-1.jpeg, id=1526, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_arima203-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_arima203-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_arima203-1.
-jpeg  used on input line 3461.
+jpeg  used on input line 3475.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/pronostico_arima402-1.jpeg, id=1525, 469.755pt x 325.
+<Tesis_files/figure-latex/pronostico_arima402-1.jpeg, id=1527, 469.755pt x 325.
 215pt>
 File: Tesis_files/figure-latex/pronostico_arima402-1.jpeg Graphic file (type jp
 g)
 <use Tesis_files/figure-latex/pronostico_arima402-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_arima402-1.jpeg  u
-sed on input line 3465.
+sed on input line 3479.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [81 <./Tesis_files/figure-latex/ee_sobreparametrizacion_arima203-1.jpeg> <./Tes
 is_files/figure-latex/ee_arima_estandar_arima203-1.jpeg>]
-<Tesis_files/figure-latex/ee_autoarima_arima402-1.jpeg, id=1530, 469.755pt x 32
+<Tesis_files/figure-latex/ee_autoarima_arima402-1.jpeg, id=1532, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/ee_autoarima_arima402-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/ee_autoarima_arima402-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_arima402-1.jpeg 
- used on input line 3469.
+ used on input line 3483.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_arima402-1.jpeg, id=1531, 469
+<Tesis_files/figure-latex/ee_sobreparametrizacion_arima402-1.jpeg, id=1533, 469
 .755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_arima402-1.jpeg Graphic 
 file (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_arima402-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_arima
-402-1.jpeg  used on input line 3473.
+402-1.jpeg  used on input line 3487.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [82 <./Tesis_files/figure-latex/pronostico_arima402-1.jpeg> <./Tesis_files/figu
 re-latex/ee_autoarima_arima402-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_arima402-1.jpeg, id=1536, 469.755pt
+<Tesis_files/figure-latex/ee_arima_estandar_arima402-1.jpeg, id=1538, 469.755pt
  x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_arima402-1.jpeg Graphic file (
 type jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_arima402-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_arima402-1.
-jpeg  used on input line 3477.
+jpeg  used on input line 3491.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/externaplotgeneral-1.jpeg, id=1537, 469.755pt x 325.2
+<Tesis_files/figure-latex/externaplotgeneral-1.jpeg, id=1539, 469.755pt x 325.2
 15pt>
 File: Tesis_files/figure-latex/externaplotgeneral-1.jpeg Graphic file (type jpg
 )
 <use Tesis_files/figure-latex/externaplotgeneral-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/externaplotgeneral-1.jpeg  us
-ed on input line 3481.
+ed on input line 3495.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [83 <./Tesis_files/figure-latex/ee_sobreparametrizacion_arima402-1.jpeg> <./Tes
 is_files/figure-latex/ee_arima_estandar_arima402-1.jpeg>]
-<Tesis_files/figure-latex/interesesplotgeneral-1.jpeg, id=1543, 469.755pt x 325
+<Tesis_files/figure-latex/interesesplotgeneral-1.jpeg, id=1545, 469.755pt x 325
 .215pt>
 File: Tesis_files/figure-latex/interesesplotgeneral-1.jpeg Graphic file (type j
 pg)
 <use Tesis_files/figure-latex/interesesplotgeneral-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/interesesplotgeneral-1.jpeg  
-used on input line 3485.
+used on input line 3499.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/interesesplotperiodos-1.jpeg, id=1544, 469.755pt x 32
+<Tesis_files/figure-latex/interesesplotperiodos-1.jpeg, id=1546, 469.755pt x 32
 5.215pt>
 File: Tesis_files/figure-latex/interesesplotperiodos-1.jpeg Graphic file (type 
 jpg)
 <use Tesis_files/figure-latex/interesesplotperiodos-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/interesesplotperiodos-1.jpeg 
- used on input line 3489.
+ used on input line 3503.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [84 <./Tesis_files/figure-latex/externaplotgeneral-1.jpeg> <./Tesis_files/figur
 e-latex/interesesplotgeneral-1.jpeg>]
-<Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg, id=1549, 469.755p
+<Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg, id=1551, 469.755p
 t x 325.215pt>
 File: Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg Graphic file 
 (type jpg)
 <use Tesis_files/figure-latex/interesesplotdescomposicion-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/interesesplotdescomposicion-1
-.jpeg  used on input line 3493.
+.jpeg  used on input line 3507.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/externa_acf-1.jpeg, id=1550, 469.755pt x 325.215pt>
+<Tesis_files/figure-latex/externa_acf-1.jpeg, id=1552, 469.755pt x 325.215pt>
 File: Tesis_files/figure-latex/externa_acf-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/externa_acf-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/externa_acf-1.jpeg  used on i
-nput line 3497.
+nput line 3511.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [85 <./Tesis_files/figure-latex/interesesplotperiodos-1.jpeg> <./Tesis_files/fi
 gure-latex/interesesplotdescomposicion-1.jpeg>]
-<Tesis_files/figure-latex/externa_pacf-1.jpeg, id=1555, 469.755pt x 325.215pt>
+<Tesis_files/figure-latex/externa_pacf-1.jpeg, id=1557, 469.755pt x 325.215pt>
 File: Tesis_files/figure-latex/externa_pacf-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/externa_pacf-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/externa_pacf-1.jpeg  used on 
-input line 3501.
+input line 3515.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/intereses_acf-1.jpeg, id=1556, 469.755pt x 325.215pt>
+<Tesis_files/figure-latex/intereses_acf-1.jpeg, id=1558, 469.755pt x 325.215pt>
 
 File: Tesis_files/figure-latex/intereses_acf-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/intereses_acf-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/intereses_acf-1.jpeg  used on
- input line 3505.
+ input line 3519.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [86 <./Tesis_files/figure-latex/externa_acf-1.jpeg> <./Tesis_files/figure-latex
 /externa_pacf-1.jpeg>]
-<Tesis_files/figure-latex/intereses_pacf-1.jpeg, id=1561, 469.755pt x 325.215pt
+<Tesis_files/figure-latex/intereses_pacf-1.jpeg, id=1563, 469.755pt x 325.215pt
 >
 File: Tesis_files/figure-latex/intereses_pacf-1.jpeg Graphic file (type jpg)
 <use Tesis_files/figure-latex/intereses_pacf-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/intereses_pacf-1.jpeg  used o
-n input line 3509.
+n input line 3523.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 
-Overfull \hbox (7.06519pt too wide) in paragraph at lines 3545--3545
+Overfull \hbox (7.06519pt too wide) in paragraph at lines 3559--3559
  []\T1/lmr/m/n/6.5 Coeficiente| 
  []
 
 
-Overfull \hbox (4.11043pt too wide) in paragraph at lines 3545--3545
+Overfull \hbox (4.11043pt too wide) in paragraph at lines 3559--3559
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (4.11043pt too wide) in paragraph at lines 3545--3545
+Overfull \hbox (4.11043pt too wide) in paragraph at lines 3559--3559
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (4.11043pt too wide) in paragraph at lines 3545--3545
+Overfull \hbox (4.11043pt too wide) in paragraph at lines 3559--3559
  []\T1/lmr/m/n/6.5 Puntual|
  []
 
 
-Overfull \hbox (38.60095pt too wide) in paragraph at lines 3545--3545
+Overfull \hbox (38.60095pt too wide) in paragraph at lines 3559--3559
  [][]| 
  []
 
 
-Overfull \hbox (10.50705pt too wide) in paragraph at lines 3545--3545
+Overfull \hbox (10.50705pt too wide) in paragraph at lines 3559--3559
  [][]| 
  []
 
 [87 <./Tesis_files/figure-latex/intereses_acf-1.jpeg> <./Tesis_files/figure-lat
 ex/intereses_pacf-1.jpeg>]
-<Tesis_files/figure-latex/errores_reales_externa-1.jpeg, id=1566, 469.755pt x 3
+<Tesis_files/figure-latex/errores_reales_externa-1.jpeg, id=1568, 469.755pt x 3
 25.215pt>
 File: Tesis_files/figure-latex/errores_reales_externa-1.jpeg Graphic file (type
  jpg)
 <use Tesis_files/figure-latex/errores_reales_externa-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_reales_externa-1.jpeg
-  used on input line 3549.
+  used on input line 3563.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/errores_reales_intereses-1.jpeg, id=1567, 469.755pt x
+<Tesis_files/figure-latex/errores_reales_intereses-1.jpeg, id=1569, 469.755pt x
  325.215pt>
 File: Tesis_files/figure-latex/errores_reales_intereses-1.jpeg Graphic file (ty
 pe jpg)
 <use Tesis_files/figure-latex/errores_reales_intereses-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/errores_reales_intereses-1.jp
-eg  used on input line 3553.
+eg  used on input line 3567.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [88 <./Tesis_files/figure-latex/errores_reales_externa-1.jpeg>]
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 3605--3605
  []|\T1/lmr/m/n/6.5 Entrenamiento| 
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2002,15[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2002,25[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2009,26[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 14028,52[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 10046,55[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 4341,75[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2008,17[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2008,32[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2019,95[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 14184,93[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 9681,33[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 4443,19[]|
  []
 
 
-Overfull \hbox (5.12918pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.12918pt too wide) in paragraph at lines 3605--3605
  []|\T1/lmr/m/n/6.5 Entrenamiento| 
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2001,82[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2001,91[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 2008,89[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 14003,13[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 9853,75[]|
  []
 
 
-Overfull \hbox (2.00189pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (2.00189pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 4586,75[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 27737,54[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 19562,59[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 28487,31[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 19645,39[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 27280,47[]|
  []
 
 
-Overfull \hbox (5.70317pt too wide) in paragraph at lines 3591--3591
+Overfull \hbox (5.70317pt too wide) in paragraph at lines 3605--3605
  [][]\T1/lmr/m/n/6.5 19346,26[]|
  []
 
-<Tesis_files/figure-latex/pronostico_EXTERNA-1.jpeg, id=1572, 469.755pt x 325.2
+<Tesis_files/figure-latex/pronostico_EXTERNA-1.jpeg, id=1574, 469.755pt x 325.2
 15pt>
 File: Tesis_files/figure-latex/pronostico_EXTERNA-1.jpeg Graphic file (type jpg
 )
 <use Tesis_files/figure-latex/pronostico_EXTERNA-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_EXTERNA-1.jpeg  us
-ed on input line 3595.
+ed on input line 3609.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [89 <./Tesis_files/figure-latex/errores_reales_intereses-1.jpeg>]
-<Tesis_files/figure-latex/ee_autoarima_EXTERNA-1.jpeg, id=1578, 469.755pt x 325
+<Tesis_files/figure-latex/ee_autoarima_EXTERNA-1.jpeg, id=1580, 469.755pt x 325
 .215pt>
 File: Tesis_files/figure-latex/ee_autoarima_EXTERNA-1.jpeg Graphic file (type j
 pg)
 <use Tesis_files/figure-latex/ee_autoarima_EXTERNA-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_EXTERNA-1.jpeg  
-used on input line 3599.
+used on input line 3613.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_EXTERNA-1.jpeg, id=1579, 469.
+<Tesis_files/figure-latex/ee_sobreparametrizacion_EXTERNA-1.jpeg, id=1581, 469.
 755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_EXTERNA-1.jpeg Graphic f
 ile (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_EXTERNA-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_EXTER
-NA-1.jpeg  used on input line 3603.
+NA-1.jpeg  used on input line 3617.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [90 <./Tesis_files/figure-latex/pronostico_EXTERNA-1.jpeg> <./Tesis_files/figur
 e-latex/ee_autoarima_EXTERNA-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_EXTERNA-1.jpeg, id=1584, 469.755pt 
+<Tesis_files/figure-latex/ee_arima_estandar_EXTERNA-1.jpeg, id=1586, 469.755pt 
 x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_EXTERNA-1.jpeg Graphic file (t
 ype jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_EXTERNA-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_EXTERNA-1.j
-peg  used on input line 3607.
+peg  used on input line 3621.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/pronostico_INTERESES-1.jpeg, id=1585, 469.755pt x 325
+<Tesis_files/figure-latex/pronostico_INTERESES-1.jpeg, id=1587, 469.755pt x 325
 .215pt>
 File: Tesis_files/figure-latex/pronostico_INTERESES-1.jpeg Graphic file (type j
 pg)
 <use Tesis_files/figure-latex/pronostico_INTERESES-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/pronostico_INTERESES-1.jpeg  
-used on input line 3611.
+used on input line 3625.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [91 <./Tesis_files/figure-latex/ee_sobreparametrizacion_EXTERNA-1.jpeg> <./Tesi
 s_files/figure-latex/ee_arima_estandar_EXTERNA-1.jpeg>]
-<Tesis_files/figure-latex/ee_autoarima_INTERESES-1.jpeg, id=1590, 469.755pt x 3
+<Tesis_files/figure-latex/ee_autoarima_INTERESES-1.jpeg, id=1592, 469.755pt x 3
 25.215pt>
 File: Tesis_files/figure-latex/ee_autoarima_INTERESES-1.jpeg Graphic file (type
  jpg)
 <use Tesis_files/figure-latex/ee_autoarima_INTERESES-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_autoarima_INTERESES-1.jpeg
-  used on input line 3615.
+  used on input line 3629.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
-<Tesis_files/figure-latex/ee_sobreparametrizacion_INTERESES-1.jpeg, id=1591, 46
+<Tesis_files/figure-latex/ee_sobreparametrizacion_INTERESES-1.jpeg, id=1593, 46
 9.755pt x 325.215pt>
 File: Tesis_files/figure-latex/ee_sobreparametrizacion_INTERESES-1.jpeg Graphic
  file (type jpg)
 <use Tesis_files/figure-latex/ee_sobreparametrizacion_INTERESES-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_sobreparametrizacion_INTER
-ESES-1.jpeg  used on input line 3619.
+ESES-1.jpeg  used on input line 3633.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [92 <./Tesis_files/figure-latex/pronostico_INTERESES-1.jpeg> <./Tesis_files/fig
 ure-latex/ee_autoarima_INTERESES-1.jpeg>]
-<Tesis_files/figure-latex/ee_arima_estandar_INTERESES-1.jpeg, id=1597, 469.755p
+<Tesis_files/figure-latex/ee_arima_estandar_INTERESES-1.jpeg, id=1599, 469.755p
 t x 325.215pt>
 File: Tesis_files/figure-latex/ee_arima_estandar_INTERESES-1.jpeg Graphic file 
 (type jpg)
 <use Tesis_files/figure-latex/ee_arima_estandar_INTERESES-1.jpeg>
 Package pdftex.def Info: Tesis_files/figure-latex/ee_arima_estandar_INTERESES-1
-.jpeg  used on input line 3623.
+.jpeg  used on input line 3637.
 (pdftex.def)             Requested size: 426.78961pt x 295.46973pt.
 [93 <./Tesis_files/figure-latex/ee_sobreparametrizacion_INTERESES-1.jpeg> <./Te
 sis_files/figure-latex/ee_arima_estandar_INTERESES-1.jpeg>]
-Underfull \hbox (badness 1721) in paragraph at lines 3676--3681
+Underfull \hbox (badness 1721) in paragraph at lines 3690--3695
 []\T1/lmr/m/n/10 Calderón, C. E. (2012). Es-ta-dís-ti-ca pa-ra es-tu-dian-tes d
 e ad-mi-nis-tra-ción de em-pre-sas de
  []
 
 
-Underfull \hbox (badness 2617) in paragraph at lines 3676--3681
+Underfull \hbox (badness 2617) in paragraph at lines 3690--3695
 \T1/lmr/m/n/10 la uni-ver-si-dad na-cio-nal del ca-llao. \T1/lmr/m/it/10 Edi-to
 -rial San Mar-cos, 2da Edi-ción, Li-ma Pe-rú\T1/lmr/m/n/10 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3676--3681
+Underfull \hbox (badness 10000) in paragraph at lines 3690--3695
 [][]$\T1/lmr/m/n/10 https : / / unac . edu . pe / documentos / organizacion / v
 ri / cdcitra / Informes _ Finales _ Investigacion /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3688--3693
+Underfull \hbox (badness 10000) in paragraph at lines 3702--3707
 [][]$\T1/lmr/m/n/10 https : / / www . researchgate . net / publication / 274885
 475 _ Mortalidad _ por _ causa _ externas _
  []
 
 [94]
-Underfull \hbox (badness 10000) in paragraph at lines 3715--3719
+Underfull \hbox (badness 10000) in paragraph at lines 3729--3733
 \T1/lmr/m/n/10 academia . edu / 7140606 / Measuring _ Reliability _ of _ Statio
 nary _ Stochastic _ Processes ? auto =
  []
 
 
-Underfull \hbox (badness 3861) in paragraph at lines 3725--3729
+Underfull \hbox (badness 3861) in paragraph at lines 3739--3743
 \T1/lmr/m/it/10 lia\T1/lmr/m/n/10 . [][]$http : / / www . prres . net / papers 
 / Flaherty _ Modelling _ Private _ New _ Housing _ Starts _ In _
  []
@@ -2513,15 +2513,18 @@ Package rerunfilecheck Info: File `Tesis.out' has not changed.
 (rerunfilecheck)             Checksum: 46451D689D4C632CC0EE46AEB01A30B2;15194.
  ) 
 Here is how much of TeX's memory you used:
- 31345 strings out of 480195
- 638479 string characters out of 5892230
+ 31346 strings out of 480195
+ 638491 string characters out of 5892230
  909642 words of memory out of 5000000
  48289 multiletter control sequences out of 15000+600000
  554977 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,18n,80p,1194b,913s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.10} has been referenced but does not ex
+pdfTeX warning (dest): name{Hfootnote.11} has been referenced but does not ex
 ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Hfootnote.10} has been referenced but does not exis
+t, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.9} has been referenced but does not exist
 , replaced by a fixed one
@@ -2578,10 +2581,10 @@ ll/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><c:/Users
 ers/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c
 :/Users/Dell/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/sym
 bols/msbm10.pfb>
-Output written on Tesis.pdf (111 pages, 89222263 bytes).
+Output written on Tesis.pdf (111 pages, 89223476 bytes).
 PDF statistics:
- 1888 PDF objects out of 2073 (max. 8388607)
- 1630 compressed objects within 17 object streams
- 384 named destinations out of 1000 (max. 500000)
+ 1891 PDF objects out of 2073 (max. 8388607)
+ 1633 compressed objects within 17 object streams
+ 385 named destinations out of 1000 (max. 500000)
  1041 words of extra memory for PDF output out of 10000 (max. 10000000)
 

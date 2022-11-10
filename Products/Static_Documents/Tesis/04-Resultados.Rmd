@@ -170,7 +170,9 @@ Inicialmente, se analizan las series cronológicas para verificar su comportamie
 
 [^7]: Técnica de suavizamiento mediante regresión local ponderada.
 
-Para el $ARIMA(1,0,0)$ puede verse como los datos simulados bajo este proceso se comportan de manera ligeramente oscilante a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos. En el caso de los datos generados bajo un proceso $ARIMA(1,0,1)$ se observa cómo se comportan de manera más oscilante que el caso anterior a lo largo del tiempo. Para los datos generados mediante un $ARIMA(2,0,3)$ se observa como los datos simulados no parecen tener ninguna tendencia clara, una alternativa en este caso sería aplicar alguna transformación para volverla aún más estacionaria. En la Figura también se observa como los datos generados mediante un proceso $ARIMA(4,0,2)$ parecen tener un cierto grado de tendencia, por lo que podría ser necesario aplicar alguna transformación. 
+Para el $ARIMA(1,0,0)$ puede verse como los datos simulados bajo este proceso se comportan de manera ligeramente oscilante a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos[^8]. En el caso de los datos generados bajo un proceso $ARIMA(1,0,1)$ se observa cómo se comportan de manera más oscilante que el caso anterior a lo largo del tiempo. Para los datos generados mediante un $ARIMA(2,0,3)$ se observa como los datos simulados no parecen tener ninguna tendencia clara, una alternativa en este caso sería aplicar alguna transformación para volverla aún más estacionaria. En la Figura también se observa como los datos generados mediante un proceso $ARIMA(4,0,2)$ parecen tener un cierto grado de tendencia, por lo que podría ser necesario aplicar alguna transformación. 
+
+[^8]: Las transformaciones se refiere a las posibles diferenciaciones que se contemplan en la sobreparametrización.
 
 Con respecto a los procesos estacionales simulados, los datos del $ARIMA(0,0,1)(0,1,1)_{12}$ parecen ser aproximadamente estacionarios, pero esto no es del todo claro, una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional; mientras que en los datos generados mediante un proceso $ARIMA(2,1,4)(3,0,3)_{12}$ se manifiesta una clara tendencia decreciente.
 
@@ -2077,7 +2079,7 @@ descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="
 
 \subsection{Resumen de resultados}
 
-A partir de las secciones anteriores, el cuadro \ref{tab:resumen_resultados} muestra de forma porcentual la frecuencia relativa en que cada método de estimación (auto.arima, ARIMA estándar y sobreparametrización) logra alcanzar las mediciones más bajas, tanto para el conjunto de datos de entrenamiento como en el de validación, para las medidas de bondad de ajuste y de precisión.
+A partir de las secciones anteriores, el cuadro \ref{tab:resumen_resultados} muestra de forma porcentual la frecuencia relativa en que cada método de estimación (auto.arima, ARIMA estándar y sobreparametrización) logra alcanzar las mediciones más bajas, tanto para el conjunto de datos de entrenamiento como en el de validación, para las medidas de bondad de ajuste y de precisión. A modo de ejemplo, el 66.67 de la última casilla quiere decir que, de todos los modelos, un 66.67% de las veces la sobreparametrización alcanzó los mejores resultados en cuanto a precisión en los datos de validación.
 
 ```{r}
 tabla <- readxl::read_xlsx("C:\\Users\\Dell\\OneDrive\\GitHub\\Tesis\\Script\\Conteo de resultados.xlsx")

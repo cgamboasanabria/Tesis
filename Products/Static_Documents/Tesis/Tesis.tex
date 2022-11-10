@@ -2274,16 +2274,18 @@ una de las series cronológicas simuladas.
 
 Para el \(ARIMA(1,0,0)\) puede verse como los datos simulados bajo este
 proceso se comportan de manera ligeramente oscilante a lo largo del
-tiempo sin necesidad de aplicar ninguna transformación a los datos. En
-el caso de los datos generados bajo un proceso \(ARIMA(1,0,1)\) se
-observa cómo se comportan de manera más oscilante que el caso anterior a
-lo largo del tiempo. Para los datos generados mediante un
-\(ARIMA(2,0,3)\) se observa como los datos simulados no parecen tener
-ninguna tendencia clara, una alternativa en este caso sería aplicar
-alguna transformación para volverla aún más estacionaria. En la Figura
-también se observa como los datos generados mediante un proceso
-\(ARIMA(4,0,2)\) parecen tener un cierto grado de tendencia, por lo que
-podría ser necesario aplicar alguna transformación.
+tiempo sin necesidad de aplicar ninguna transformación a los
+datos\footnote{Las transformaciones se refiere a las posibles
+  diferenciaciones que se contemplan en la sobreparametrización.}. En el
+caso de los datos generados bajo un proceso \(ARIMA(1,0,1)\) se observa
+cómo se comportan de manera más oscilante que el caso anterior a lo
+largo del tiempo. Para los datos generados mediante un \(ARIMA(2,0,3)\)
+se observa como los datos simulados no parecen tener ninguna tendencia
+clara, una alternativa en este caso sería aplicar alguna transformación
+para volverla aún más estacionaria. En la Figura también se observa como
+los datos generados mediante un proceso \(ARIMA(4,0,2)\) parecen tener
+un cierto grado de tendencia, por lo que podría ser necesario aplicar
+alguna transformación.
 
 Con respecto a los procesos estacionales simulados, los datos del
 \(ARIMA(0,0,1)(0,1,1)_{12}\) parecen ser aproximadamente estacionarios,
@@ -2976,7 +2978,10 @@ A partir de las secciones anteriores, el cuadro
 relativa en que cada método de estimación (auto.arima, ARIMA estándar y
 sobreparametrización) logra alcanzar las mediciones más bajas, tanto
 para el conjunto de datos de entrenamiento como en el de validación,
-para las medidas de bondad de ajuste y de precisión.
+para las medidas de bondad de ajuste y de precisión. A modo de ejemplo,
+el 66.67 de la última casilla quiere decir que, de todos los modelos, un
+66.67\% de las veces la sobreparametrización alcanzó los mejores
+resultados en cuanto a precisión en los datos de validación.
 
 \begin{table}[H]
 
@@ -3116,7 +3121,10 @@ En el caso de las series de tiempo generadas a partir de datos reales, y
 en el caso particular de la Tasa de mortalidad infantil interanual, la
 función \texttt{auto.arima()} sugiere como mejor modelo un
 \(ARIMA(2,1,0)(0,0,1)\), mientras que utilizando la sobreparametrización
-se tiene como mejor modelo un \(ARIMA(4,1,0)(4,1,0)\). El cuadro
+se tiene como mejor modelo un \(ARIMA(4,1,0)(4,1,0)\), siendo este
+segundo un proceso de mayor complejidad que destaca visibiliza las
+dificultades que puede llegar a tener el \texttt{auto.arima()} al
+momento de trabajar con procesos estacionales. El cuadro
 \ref{tab:comparaciones_arima_mejores_reales} y la Figura
 \ref{fig:pronostico_TMII} muestran como el uso de la
 sobreparametrización ajusta los valores pronosticados de una mejor
@@ -3237,6 +3245,12 @@ alternativas disponibles haciendo un mayor número de realizaciones para
 cada proceso simulado, esto con la finalidad de poder generalizar el
 comportamiento del método propuesto ante distintos escenarios que
 podrían presentarse para un mismo proceso \(ARIMA(p,d,q)(P,D,Q)_s\).
+
+Además, los resultados obtenidos de esta investigación también
+posibilitan otra ruta de investigación para evaluar el impacto que
+tendría en los resultados emplear diferentes proporciones en la
+partición de los datos, y no exclusivamente un 80\% para entrenamienvo y
+el restante 20\% para validación.
 
 La metodología aquí propuesta se encuentra disponible de manera abierta
 mediante el paquete de R \texttt{popstudy}, el cual fue desarrollado
