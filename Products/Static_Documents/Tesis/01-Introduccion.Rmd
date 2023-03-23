@@ -3,7 +3,7 @@
 
 Estimar los valores futuros en un determinado contexto ha producido un aumento en el análisis de los datos referidos en el tiempo, conocido también como series cronológicas. Este tipo de datos se encuentra en diferentes áreas, tanto en investigación académica como en el análisis de datos para la toma de decisiones. En el campo financiero es común hablar de la devaluación del colón con respecto al dólar, cantidad de exportaciones mensuales de un determinado producto o las ventas, entre otros [@oscarh-1]. Las series cronológicas son particularmente importantes en la investigación de mercados o en las proyecciones demográficas; de manera conjunta apoyan la toma de decisiones para la aprobación presupuestaria en distintas áreas. 
 
-En la actualidad, la información temporal es muy relevante: El Banco Mundial[^1] cuenta en su sitio web con datos para el análisis de series cronológicas de indicadores de desarrollo, capacidad estadística, indicadores educativos, estadísticas de género, nutrición y población. Kaggle[^2], uno de los sitios más populares relacionados con el análisis de información, ofrece una gran cantidad de datos temporales para realizar competencias relacionadas con las series temporales y determinar los modelos ganadores para una determinada temática[^3]. 
+En la actualidad, la información temporal es muy relevante: el Banco Mundial[^1] cuenta en su sitio web con datos para el análisis de series cronológicas de indicadores de desarrollo, capacidad estadística, indicadores educativos, estadísticas de género, nutrición y población. Kaggle[^2], uno de los sitios más populares relacionados con el análisis de información, ofrece una gran cantidad de datos temporales para realizar competencias relacionadas con las series temporales y determinar los modelos ganadores para una determinada temática[^3]. 
 
 Asimismo, los pronósticos (que para datos longitudinales son la estimación futura de fechas por presentarse en el tiempo) son utilizados por instituciones públicas o del sector privado, centros nacionales o regionales de investigación y organizaciones no gubernamentales dedicadas al desarrollo social. Si las entidades previamente mencionadas cuentan con proyecciones de calidad, la puesta en marcha de sus respectivos planes tendrá un impacto más efectivo.
 
@@ -14,9 +14,9 @@ Al trabajar con el método de Box-Jenkins, que refiere al análisis de series de
 Es debido a lo anterior que se debe buscar una alternativa distinta que opte por aproximar de una mejor manera la identificación de los parámetros estimados, cubriendo un mayor número de posibilidades. Una alternativa al problema de aproximar los parámetros del proceso que gobierna la serie cronológica puede ser la sobreparametrización.
 
 [^1]: [https://databank.worldbank.org/home.aspx](https://databank.worldbank.org/home.aspx)
-[^2]: Se trata de una subsidiaria de la compañía Google que sirve de centro de reunión para todos aquellos interesados en la ciencia de datos.
-[^3]: Muchas de ellas incluyen recompensas económicas que van desde los \$500 hasta los \$100,000 para aquellos que logren obtener los mejor pronósticos.
-[^4]: Su notación se define mediante la ecuación \ref{eqn:proceso_estacionario}.
+[^2]: se trata de una subsidiaria de la compañía Google que sirve de centro de reunión para todos aquellos interesados en la ciencia de datos.
+[^3]: muchas de ellas incluyen recompensas económicas que van desde los \$500 hasta los \$100,000 para aquellos que logren obtener los mejor pronósticos.
+[^4]: su notación se define mediante la ecuación \ref{eqn:proceso_estacionario}.
 
 \subsection{El problema}
 
@@ -26,7 +26,7 @@ Alternativas como la función `auto.arima()`, que ofrece el paquete `forecast` d
 
 Sin embargo, estas pruebas suelen ignorar diversos términos que bien podrían ofrecer mejores pronósticos; no someten a prueba las posibles especificaciones de un modelo en un rango determinado, sino que realizan aproximaciones analíticas para definir el proceso que gobierna la serie cronológica, dejando así un vacío en el cual se corre el riesgo de no seleccionar un modelo que ofrezca mejores pronósticos. Poner a prueba un mayor número de posibilidades para la especificación de los modelos tiene la ventaja de descartar ciertos modelos, y mantener otros con un criterio más científico y una evidencia numérica que respalde esa decisión.
 
-[^5]: Descarga gratuita en [https://cran.r-project.org/](https://cran.r-project.org/)
+[^5]: descarga gratuita en [https://cran.r-project.org/](https://cran.r-project.org/)
 
 \subsection{Objetivos del estudio}
 
@@ -52,12 +52,12 @@ Estimar modelos ARIMA considerando diversas permutaciones de los parámetros de 
 
 \subsection{Organización del estudio}
 
-El presente trabajo de investigación consta de cinco capítulos. El capítulo \ref{chap:introduccion} ofreció una contextualización del uso de las series de tiempo, así como la importancia de poder contar con pronósticos de calidad. Se presentó el objetivo del estudio, así como una breve descripción de la metodología empleada en la aplicación de series temporales, y cómo se planeó modificar el método de estimación en los modelos ARIMA. Se concluye esta sección con hechos que justifican la importancia de esta investigación.
+El presente trabajo de investigación consta de cinco capítulos. En primer lugar, el capítulo \ref{chap:introduccion} ofrece una contextualización del uso de las series de tiempo, así como la importancia de poder contar con pronósticos de calidad. Se presenta el objetivo del estudio, se hace una breve descripción de la metodología empleada en la aplicación de series temporales, y de cómo se planea modificar el método de estimación en los modelos ARIMA. Se concluye esta sección con hechos que justifican la importancia de la investigación.
 
-El capítulo \ref{chap:marco_teorico} consiste en el marco teórico, abarcando aspectos fundamentales de las series temporales: la ecuación de Wold, la metodología Box-Jenkins, la selección de los procesos que gobiernan la serie, la descripción del proceso iterativo, el análisis combinatorio que aborda los escenarios de estimación, entre otros.
+En segundo lugar, el capítulo \ref{chap:marco_teorico} consiste en el marco teórico, abarca aspectos fundamentales de las series temporales: la ecuación de Wold, la metodología Box-Jenkins, la selección de los procesos que gobiernan la serie, la descripción del proceso iterativo, el análisis combinatorio que aborda los escenarios de estimación, entre otros.
 
-El capítulo \ref{chap:metodologia} describe la metodología relacionada al estudio. Se inicia con una descripción global de los conceptos más fundamentales del análisis de series cronológicas, pasando por los componentes fundamentales de las mismas. Se discuten también los supuestos clásicos del análisis de series cronológicas, los distintos tipos de modelos, el análisis de intervención, los métodos de validación y las medidas de rendimiento; aspectos cruciales para obtener un modelo ARIMA vía sobreparametrización. La sección metodológica culmina con la descripción del proceso de simulación que se utilizará, así como la discusión del método propuesto.
+Seguidamente, en el capítulo \ref{chap:metodologia} describe la metodología relacionada al estudio. Se inicia con una descripción global de los conceptos más fundamentales del análisis de series cronológicas, pasando por los componentes fundamentales de las mismas. Se discuten también los supuestos clásicos del análisis de series cronológicas, los distintos tipos de modelos, el análisis de intervención, los métodos de validación y las medidas de rendimiento; aspectos cruciales para obtener un modelo ARIMA vía sobreparametrización. La sección metodológica culmina con la descripción del proceso de simulación que se utilizará, y la discusión del método propuesto.
 
-El capítulo \ref{chap:resultados} consiste en la presentación de los resultados, tanto en los datos simulados como en la aplicación a datos costarricenses y se contrastarán contra los obtenidos por otros métodos como el de la función `auto.arima()` y un modelo estándar como el $ARIMA(1,1,1)(1,1,1)_s$.
+Luego, en el capítulo \ref{chap:resultados} consiste en la presentación de los resultados, tanto en los datos simulados como en la aplicación a datos costarricenses y se contrastarán contra los obtenidos por otros métodos como el de la función `auto.arima()` y un modelo estándar como el $ARIMA(1,1,1)(1,1,1)_s$.
 
-En el capítulo \ref{chap:conclusiones} se incorpora la conclusión/discusión, que busca discutir los principales resultados, así como señalar las conclusiones más importantes y ofrecer algunas recomendaciones que orienten futuros estudios relacionados.
+Por último, en el capítulo \ref{chap:conclusiones} se incorpora la conclusión, que busca plantear la discusión de los principales resultados, así como señalar las conclusiones más importantes y ofrecer algunas recomendaciones que orienten futuros estudios relacionados.

@@ -1,6 +1,6 @@
 \label{chap:resultados}
 
-En este capítulo se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas en el apartado metodológico, tanto para las series simuladas como para las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis cumplen con las condiciones descritas en el Marco Teórico. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos y, a partir del procedimiento descrito en la metodología, se divide en dos etapas: Contraste de los ARIMA a partir de las series simuladas y contraste de los ARIMA para las series empíricas. Cabe destacar que para las series simuladas se realizó una realización de cada una, pues parte del interés de esta investigación está en poder analizar que tanto se acercan las estimaciones con cada método (ARIMA estándar, auto.arima() y sobreparametrización) a la especificación y coeficientes reales de cada proceso, y no en generalizar para cada proceso ARIMA en específico.
+En este capítulo se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas en el apartado metodológico, tanto para las series simuladas como para las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis cumplen con las condiciones descritas en el Marco Teórico. Se describe, además, el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos y, a partir del procedimiento descrito en la metodología, se divide en dos etapas: primero, se hace un contraste de los ARIMA a partir de las series simuladas y, luego, un contraste de los ARIMA para las series empíricas. Cabe destacar que para las series simuladas se realizó una realización de cada una de las simulaciones, pues parte del interés de esta investigación está en poder analizar qué tanto se acercan las estimaciones con cada método (ARIMA estándar, auto.arima() y sobreparametrización) a la especificación y coeficientes reales de cada proceso, y no en generalizar para cada proceso ARIMA en específico.
 
 \subsection{Contraste de métodos de estimación de los ARIMA para las series simuladas}
 
@@ -18,7 +18,7 @@ arima100 <- resultados_no_estacional_bajo[[1]]$datos %>%
     ggtitle("ARIMA(1,0,0)")+
   theme(text = element_text(size=9),
         axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
+  labs(caption="Fuente: datos simulados",
        y="Y",
        x="t") +
   theme(plot.title = element_text(hjust = 0.5, face="plain"),
@@ -35,7 +35,7 @@ arima101 <- resultados_no_estacional_bajo[[2]]$datos %>%
     ggtitle("ARIMA(1,0,1)")+
   theme(text = element_text(size=9),
         axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
+  labs(caption="Fuente: datos simulados",
        y="Y",
        x="t") +
   theme(plot.title = element_text(hjust = 0.5, face="plain"),
@@ -52,7 +52,7 @@ arima203 <- resultados_no_estacional_alto[[1]]$datos %>%
     ggtitle("ARIMA(2,0,3)")+
   theme(text = element_text(size=9),
         axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
+  labs(caption="Fuente: datos simulados",
        y="Y",
        x="t") +
   theme(plot.title = element_text(hjust = 0.5, face="plain"),
@@ -86,7 +86,7 @@ arima001_011 <- resultados_estacional_bajo[[1]]$datos %>%
     ggtitle("ARIMA(0,0,1)(0,1,1)")+
   theme(text = element_text(size=9),
         axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
+  labs(caption="Fuente: datos simulados",
        y="Y",
        x="t") +
   theme(plot.title = element_text(hjust = 0.5, face="plain"),
@@ -103,7 +103,7 @@ arima110_110 <- resultados_estacional_bajo[[2]]$datos %>%
     ggtitle("ARIMA(1,1,0)(1,1,0)")+
   theme(text = element_text(size=9),
         axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
+  labs(caption="Fuente: datos simulados",
        y="Y",
        x="t") +
   theme(plot.title = element_text(hjust = 0.5, face="plain"),
@@ -120,7 +120,7 @@ arima214_414 <- resultados_estacional_alto[[1]]$datos %>%
     ggtitle("ARIMA(2,1,4)(4,1,4)")+
   theme(text = element_text(size=9),
         axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
+  labs(caption="Fuente: datos simulados",
        y="Y",
        x="t") +
   theme(plot.title = element_text(hjust = 0.5, face="plain"),
@@ -137,7 +137,7 @@ arima214_303 <- resultados_estacional_alto[[2]]$datos %>%
     ggtitle("ARIMA(2,1,4)(3,0,3)")+
   theme(text = element_text(size=9),
         axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Datos simulados",
+  labs(caption="Fuente: datos simulados",
        y="Y",
        x="t") +
   theme(plot.title = element_text(hjust = 0.5, face="plain"),
@@ -168,11 +168,11 @@ arima214_303 <- resultados_estacional_alto[[2]]$datos
 
 Inicialmente, se analizan las series cronológicas para verificar su comportamiento al ajustar un suavizamiento de Loess[^7] para buscar señales de tendencia y concavidad en los datos temporales, y buscar indicios de los procesos que gobiernan dichas series, además de verificar que se trate de series cronológicas estacionarias. En la Figura \ref{fig:series_simuladas} se muestra el comportamiento general de cada una de las series cronológicas simuladas.
 
-[^7]: Técnica de suavizamiento mediante regresión local ponderada.
+[^7]: técnica de suavizamiento mediante regresión local ponderada.
 
-Para el $ARIMA(1,0,0)$ puede verse como los datos simulados bajo este proceso se comportan de manera ligeramente oscilante a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos[^8]. En el caso de los datos generados bajo un proceso $ARIMA(1,0,1)$ se observa cómo se comportan de manera más oscilante que el caso anterior a lo largo del tiempo. Para los datos generados mediante un $ARIMA(2,0,3)$ se observa como los datos simulados no parecen tener ninguna tendencia clara, una alternativa en este caso sería aplicar alguna transformación para volverla aún más estacionaria. En la Figura también se observa como los datos generados mediante un proceso $ARIMA(4,0,2)$ parecen tener un cierto grado de tendencia, por lo que podría ser necesario aplicar alguna transformación. 
+Para el $ARIMA(1,0,0)$ puede verse cómo los datos simulados bajo este proceso se comportan de manera ligeramente oscilante a lo largo del tiempo sin necesidad de aplicar ninguna transformación a los datos[^8]. En el caso de los datos generados bajo un proceso $ARIMA(1,0,1)$ se observa cómo se comportan de manera más oscilante que el caso anterior a lo largo del tiempo. Para los datos generados mediante un $ARIMA(2,0,3)$ se observa como los datos simulados no parecen tener ninguna tendencia clara, una alternativa para corregir este comportamiento sería aplicar alguna transformación para volverla aún más estacionaria. También se observa como los datos generados mediante un proceso $ARIMA(4,0,2)$ parecen tener un cierto grado de tendencia, por lo que podría ser necesario aplicar alguna transformación. 
 
-[^8]: Las transformaciones se refiere a las posibles diferenciaciones que se contemplan en la sobreparametrización.
+[^8]: las transformaciones se refiere a las posibles diferenciaciones que se contemplan en la sobreparametrización.
 
 Con respecto a los procesos estacionales simulados, los datos del $ARIMA(0,0,1)(0,1,1)_{12}$ parecen ser aproximadamente estacionarios, pero esto no es del todo claro, una transformación no es estrictamente necesaria, pero puede aplicarse para corregir ligeramente la parte estacional; mientras que en los datos generados mediante un proceso $ARIMA(2,1,4)(3,0,3)_{12}$ se manifiesta una clara tendencia decreciente.
 
@@ -182,12 +182,11 @@ exploratorio <-
              diferenciar = FALSE,
              logaritmo = FALSE,
              diferenciar_logaritmo = FALSE,
-             mostrar=c("comportamiento", "acf", "pacf"),
-             temporalidad=NULL,
-             rango_x=NULL,
-             titulos=NULL,
-             grosor=1.3) {
-        
+             mostrar = c("comportamiento", "acf", "pacf"),
+             temporalidad = NULL,
+             rango_x = NULL,
+             titulos = NULL,
+             grosor = 1.3) {
         if (diferenciar) {
             datos <- diff(datos)
         }
@@ -200,8 +199,8 @@ exploratorio <-
             datos <- diff(log(datos))
         }
         
-        if(!is.null(rango_x)){
-            datos <- ts(datos, start=rango_x[1], end=rango_x[2])
+        if (!is.null(rango_x)) {
+            datos <- ts(datos, start = rango_x[1], end = rango_x[2])
         }
         
         comportamiento <- datos %>%
@@ -228,47 +227,78 @@ exploratorio <-
         # scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
         #scale_x_discrete(expand = c(0,0))
         
-        if(!is.null(titulos)){
-            comportamiento <- comportamiento + 
-                labs(x=titulos$x,
-                     y=titulos$y,
-                     title=titulos$titulo,
-                     caption=titulos$fuente)
+        if (!is.null(titulos)) {
+            comportamiento <- comportamiento +
+                labs(
+                    x = titulos$x,
+                    y = titulos$y,
+                    title = titulos$titulo,
+                    caption = titulos$fuente
+                )
         }
         
-        if(mostrar=="comportamiento"){
+        if (mostrar == "comportamiento") {
             return(comportamiento)
         }
         
-        if(mostrar=="acf" & is.null(temporalidad)){
-            acf(datos, main="", xlab="Rezagos")
+        if (mostrar == "acf" & is.null(temporalidad)) {
+            {
+                acf(datos, main = "", xlab = "Rezagos")
+                # mtext("Fuente: elaboración propia",
+                #       line = -18.5,
+                #       adj = -.25)
+            }
         }
         
-        if(mostrar=="pacf" & is.null(temporalidad)){
-            pacf(datos, main="", xlab="Rezagos", ylab="PACF")
+        if (mostrar == "pacf" & is.null(temporalidad)) {
+            {
+                pacf(datos,
+                     main = "",
+                     xlab = "Rezagos",
+                     ylab = "PACF")
+                # mtext("Fuente: elaboración propia",
+                #       line = -18.5,
+                #       adj = -.25)
+            }
         }
         
-        if(mostrar=="acf" & !is.null(temporalidad)){
-            ACF <- acf(datos, plot = FALSE, lag.max = temporalidad*3)
+        if (mostrar == "acf" & !is.null(temporalidad)) {
+            ACF <- acf(datos, plot = FALSE, lag.max = temporalidad * 3)
             
-            ACF$lag <- ACF$lag*temporalidad
+            ACF$lag <- ACF$lag * temporalidad
             
-            plot(ACF, main="", xlab="Rezagos", ylab="ACF")
+            {
+                plot(ACF,
+                     main = "",
+                     xlab = "Rezagos",
+                     ylab = "ACF")
+                 #mtext("Fuente: Elaboración propia", side = 1, line = 6, adj = 0) 
+    ## line is margin line, starting at 0 counting outwards; adj=0, left or bottom align, 1, right or top align
+            }
         }
         
-        if(mostrar=="pacf" & !is.null(temporalidad)){
-            PACF <- pacf(datos, plot = FALSE, lag.max = temporalidad*3)
+        if (mostrar == "pacf" & !is.null(temporalidad)) {
+            PACF <- pacf(datos, plot = FALSE, lag.max = temporalidad * 3)
             
-            PACF$lag <- PACF$lag*temporalidad
+            PACF$lag <- PACF$lag * temporalidad
             
-            plot(PACF, main="", xlab="Rezagos", ylab="PACF")
+            {
+                plot(PACF,
+                     main = "",
+                     xlab = "Rezagos",
+                     ylab = "PACF")
+                # mtext("Fuente: elaboración propia",
+                #       line = -18.5,
+                #       adj = -1)
+            }
         }
         
-      
+        
     }
 ```
 
-```{r series_simuladas, fig.cap="Comportamiento y tendencia de las series simuladas"}
+
+```{r series_simuladas, fig.cap="Comportamiento y tendencia de las series simuladas \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 garima100 <- exploratorio(
     arima100,
     mostrar = "comportamiento",
@@ -277,7 +307,7 @@ garima100 <- exploratorio(
         x = "Periodo t",
         y = "Valor de la serie",
         titulo = "ARIMA(1,0,0)",
-        fuente = "Fuente: Datos simulados"
+        fuente = "Fuente: elaboración propia"
     ),
     grosor=.5
 )
@@ -290,7 +320,7 @@ garima101 <- exploratorio(
         x = "Periodo t",
         y = "Valor de la serie",
         titulo = "ARIMA(1,0,1)",
-        fuente = "Fuente: Datos simulados"
+        fuente = "Fuente: elaboración propia"
     ),
     grosor=.5
 )
@@ -303,7 +333,7 @@ garima203 <- exploratorio(
         x = "Periodo t",
         y = "Valor de la serie",
         titulo = "ARIMA(2,0,3)",
-        fuente = "Fuente: Datos simulados"
+        fuente = "Fuente: elaboración propia"
     ),
     grosor=.5
 )
@@ -316,7 +346,7 @@ garima402 <- exploratorio(
         x = "Periodo t",
         y = "Valor de la serie",
         titulo = "ARIMA(4,0,2)",
-        fuente = "Fuente: Dats simulados"
+        fuente = "Fuente: elaboración propia"
     ),
     grosor=.5
 )
@@ -329,7 +359,7 @@ garima001_011 <- exploratorio(
         x = "Periodo t",
         y = "Valor de la serie",
         titulo = "ARIMA(0,0,1)(0,1,1)",
-        fuente = "Fuente: Datos simulados"
+        fuente = "Fuente: elaboración propia"
     ),
     grosor=.5
 )
@@ -342,7 +372,7 @@ garima214_303 <- exploratorio(
         x = "Periodo t",
         y = "Valor de la serie",
         titulo = "ARIMA(2,1,4)(3,0,3)[12]",
-        fuente = "Fuente: Datos simulados"
+        fuente = "Fuente: elaboración propia"
     ),
     grosor=.5
 )
@@ -365,14 +395,14 @@ ggarrange(
 
 Como se mencionó en la metodología, la partición utilizada consiste en tomar 80% de las observaciones para generar la serie cronológica de entrenamiento para ajustar los modelos, mientras que el restante 20% corresponde a la serie cronológica utilizada como validación. En el caso de los datos simulados, la ventana de observación de los datos seleccionados se muestra en la Figura \ref{fig:particion_series_simuladas}.
 
-```{r particion_series_simuladas, fig.cap="Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo simuladas"}
+```{r particion_series_simuladas, fig.cap="Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo simuladas \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 particiones <-
     function(serie,
              training = .8,
              titulo = "",
              ejex = "Periodo t",
              ejey = "Valores de la serie",
-             fuente = "Fuente: Datos Simulados",
+             fuente = "Fuente: elaboración propia",
              simulada=TRUE,...) {
         
         if(simulada){
@@ -695,7 +725,9 @@ coeficientes_arima_estandar <- list(
 
 Al ajustar modelos con la función `auto.arima()`, mediante un ARIMA estándar y mediante sobreparametrización, al igual que con cualquier otro método para estimar modelos $ARIMA$, se obtienen estimaciones de los coeficientes. En el caso de los datos simulados, donde se conoce de previo el verdadero proceso que gobierna la serie de tiempo, estos valores pueden compararse con los valores obtenidos.
 
-El cuadro \ref{tab:coeficientes_mejores} resume los resultados obtenidos en la estimación de los coeficientes para los procesos simulados estacionales, mientras que los resultados de las series no estacionales se resumen en el cuadro \ref{tab:coeficientes_peores}. En la columna *Proceso original* se indica el proceso a partir del cual se generó la serie cronológica mediante simulación, en la columna *Coeficiente* se indica el coeficiente al cual pertenecen las estimaciones presentes en las columnas *Valor real* (el valor del coeficiente del proceso original), las columnas llamadas *Puntual* muestra la estimación puntual del coeficiente para cada uno de los tres métodos (`auto.arima()`, ARIMA estándar y Sobreparametrización), mientras que las columnas *L.I.* (Límite Inferior) y *L.S.* (Límite Superior) representan del intervalo de confianza el 95% para los coeficientes estimados. Como se ha mencionado, la notación más utilizada para los modelos $ARIMA$ es $ARIMA(p,d,q)(P,D,Q)_s$, que en cada columna *Puntual* equivale a $ARIMA(ARX, d, MAX)(SARX, D, SMAX)_s$, con $X=\{1,2,3,4\}$, según corresponda.
+El cuadro \ref{tab:coeficientes_mejores} resume los resultados obtenidos en la estimación de los coeficientes para los procesos simulados estacionales, mientras que los resultados de las series no estacionales se resumen en el cuadro \ref{tab:coeficientes_peores}. En la columna *Proceso original* se indica el proceso a partir del cual se generó la serie cronológica mediante simulación, en la columna *Coeficiente* se indica el coeficiente al cual pertenecen las estimaciones presentes en las columnas *Valor real* (el valor del coeficiente del proceso original), las columnas llamadas *Puntual* muestra la estimación puntual del coeficiente para cada uno de los tres métodos (`auto.arima()`, ARIMA estándar y Sobreparametrización), mientras que las columnas *L.I.* (Límite Inferior) y *L.S.* (Límite Superior) representan del intervalo de confianza el 95% para los coeficientes estimados. 
+
+Como se mencionó en el Marco Teórico, la notación más utilizada para los modelos $ARIMA$ es $ARIMA(p,d,q)(P,D,Q)_s$, que en cada columna *Puntual* equivale a $ARIMA(ARX, d, MAX)(SARX, D, SMAX)_s$, con $X=\{1,2,3,4\}$, según corresponda.
 
 De esta manera, a modo de ejemplo, para los datos simulados a partir de un $ARIMA(2,1,4)(3,0,3)_{12}$, los coeficientes desde $MA1$ hasta $MA4$ representan los cuatro coeficientes de la parte de medias móviles no estacional, mientras que desde  $SAR1$ hasta $SAR3$ son los tres coeficientes del modelo autorregresivo de la parte estacional, la celda del *Valor real* correspondiente al coeficiente $AR1$ del proceso original $ARIMA(0,0,1)(0,1,1)_{12}$ está vacía porque el modelo original solo tenía un coeficiente en el modelo de medias móviles no estacional, es decir, $AR1=0$.
 
@@ -777,7 +809,7 @@ do.call(
     add_header_above(c(" " = 3, "auto.arima()" = 3, "ARIMA estándar" = 3, "Sobreparametrización" = 3), bold = T) %>%
     footnote(
         general = c(
-            "Fuente: Elaboración propia a apartir de datos simulados."
+            "Fuente: elaboración propia a partir de datos simulados."
         ),
         general_title = ""
     )
@@ -791,7 +823,11 @@ analisis_errores <- function(modelo, titulo="") {
     
     g1 <- autoplot(residuos) +
         xlab("Periodos") +
-        ylab("Residuos")
+        ylab("Residuos") #+
+  #       labs(caption="Fuente: elaboración propia") +
+  # theme(plot.title = element_text(hjust = 0.5, face="plain"),
+  #       plot.caption=element_text(hjust=0, vjust=0.5,
+  #                                 margin=margin(t=1,10,10,10)))
     
     g2 <- ggAcf(residuos, xlab = "Rezagos", main = "")
     
@@ -848,9 +884,11 @@ errores_simulados_arima_estandar6<- analisis_errores(comparacion_estacional_alto
 
 Como se discutió en la Metodología, al ver la forma de los errores buscamos que estos se comporten como ruido blanco, es decir, que no tengan ningún patrón temporal en particular. El autocorrelograma de los residuos también puede usarse para este fin, pues el 95% de los valores debería estar entre las dos líneas azules. Además, un histograma de los residuos es útil para saber si los residuos siguen una distribución aproximadamente Normal; si no existen grandes desviaciones en este gráfico, entonces puede decirse que el cumplimiento de este supuesto es razonable. 
 
-En las Figuras \ref{fig:errores_simulados_arima001_011} y \ref{fig:errores_simulados_arima214_303} se visualizan los errores de los modelos estimados a partir de los datos simulados mediante los procesos $ARIMA(0,0,1)(0,1,1)$ y $ARIMA(2,1,4)(3,0,3)$, respectivamente,para los trs métodos de estimación: la función `auto.arima()`, ARIMA estándar y sobreparametrización, mientras que las Figuras \ref{fig:errores_simulados_arima100}, \ref{fig:errores_simulados_arima101}, \ref{fig:errores_simulados_arima203} y \ref{fig:errores_simulados_arima402} muestran lo mismo pero para las series simuladas no estacionales. En términos generales, los modelos generados mediante la función `auto.arima()` poseen el comportamiento esperado, aunque cuando se incorporan componentes estacionales los errores varían un poco más en los autocorrelogramas y el supuesto de normalidad, mientras que al utilizar un ARIMA estándar los modelos presentan una mayor cantidad de inconvenientes, particularmente en los autocorrelogramas, donde varios de ellos se salen de los márgenes. Por su parte, cuando se realiza la estimación mediante sobreparametrización, los modelos poseen el comportamiento esperado, incluso con menos problemas en la parte estacional.
+En las Figuras \ref{fig:errores_simulados_arima001_011} y \ref{fig:errores_simulados_arima214_303} se visualizan los errores de los modelos estimados a partir de los datos simulados mediante los procesos $ARIMA(0,0,1)(0,1,1)$ y $ARIMA(2,1,4)(3,0,3)$, respectivamente,para los tres métodos de estimación: la función `auto.arima()`, ARIMA estándar y sobreparametrización, mientras que las Figuras \ref{fig:errores_simulados_arima100}, \ref{fig:errores_simulados_arima101}, \ref{fig:errores_simulados_arima203} y \ref{fig:errores_simulados_arima402} muestran lo mismo pero para las series simuladas no estacionales. 
 
-```{r errores_simulados_arima001_011, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(0,0,1)(0,1,1)"}
+En términos generales, los modelos generados mediante la función `auto.arima()` poseen el comportamiento esperado, aunque cuando se incorporan componentes estacionales los errores varían un poco más en los autocorrelogramas y el supuesto de normalidad, mientras que al utilizar un ARIMA estándar los modelos presentan una mayor cantidad de inconvenientes, particularmente en los autocorrelogramas, donde varios de ellos se salen de los márgenes. Por su parte, cuando se realiza la estimación mediante sobreparametrización, los modelos poseen el comportamiento esperado, incluso con menos problemas en la parte estacional.
+
+```{r errores_simulados_arima001_011, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(0,0,1)(0,1,1) \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 #
 ggarrange(
     errores_simulados_autoarima5,
@@ -858,10 +896,20 @@ ggarrange(
     errores_simulados_sobreparametrizacion5,
     ncol = 3,
     nrow = 1
-)
+) %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r errores_simulados_arima214_303, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(2,1,4)(3,0,3)"}
+```{r errores_simulados_arima214_303, fig.cap="Comportamiento de los errores asociados a los modelos estimados con datos generados a partir de un proceso ARIMA(2,1,4)(3,0,3) \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 #
 ggarrange(
     errores_simulados_autoarima6,
@@ -869,12 +917,22 @@ ggarrange(
     errores_simulados_sobreparametrizacion6,
     ncol = 3,
     nrow = 1
-)
+) %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
 \subsubsection{Medidas de bondad de ajuste y de rendimiento}
 
-Se calculan ahora las medidas de bondad de ajuste y las medidas de precisión descritas en el apartado metodológico. A partir de las series cronológicas simuladas, el cuadro \ref{tab:comparaciones_arima_mejores} muestra estas medidas para la series de tiempo simuladas a partir de procesos estacionales, mientras que el cuadro \ref{tab:comparaciones_arima_peores} hace lo propio para las series generadas a partir de procesos no estacionales. En la mayoría de los casos, las medidas de bondad de ajuste más bajas están presentes al realizar la estimación con sobreparametrización, y sucede lo mismo con respecto a las medidas de precisión.
+A continuación, se calculan ahora las medidas de bondad de ajuste y las medidas de precisión descritas en el apartado metodológico. A partir de las series cronológicas simuladas, el cuadro \ref{tab:comparaciones_arima_mejores} muestra estas medidas para la series de tiempo simuladas a partir de procesos estacionales, mientras que el cuadro \ref{tab:comparaciones_arima_peores}, las series generadas a partir de procesos no estacionales. En la mayoría de los casos, las medidas de bondad de ajuste más bajas están presentes al realizar la estimación con sobreparametrización, y sucede lo mismo con respecto a las medidas de precisión.
 
 ```{r funcion_resumen_resultados}
 resumen_resultados <- function(x) {
@@ -1151,7 +1209,7 @@ datos %>%
         booktabs = T,
         escape = F,
         align = "r",
-        caption = "\\label{tab:comparaciones_arima_mejores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de dtos estacionales simulados",
+        caption = "\\label{tab:comparaciones_arima_mejores}Medidas de bondad de ajuste y de rendimiento según el método de estimación para los conjuntos de entrenamiento y validación simulados a partir de datos estacionales simulados",
         col.names = c(
             "Proceso original",
             "Datos",
@@ -1175,7 +1233,7 @@ datos %>%
     column_spec(3, width = "2.5cm") %>%
     footnote(
         general = c(
-            "Fuente: Elaboración propia a partir de datos simulados"
+            "Fuente: elaboración propia a partir de datos simulados"
         ),
         general_title = ""
     ) 
@@ -1183,11 +1241,11 @@ datos %>%
 
 \subsubsection{Estimación en el periodo de validación}
 
-Las Figuras \ref{fig:pronostico_arima001_011}, \ref{fig:pronostico_arima214_303}, \ref{fig:pronostico_arima100}, \ref{fig:pronostico_arima101} y \ref{fig:pronostico_arima203}, \ref{fig:pronostico_arima402}, muestran el ajuste y el pronóstico de cada uno de los modelos estimados con la función `auto.arima()`, con sobreparametrización y con el modelo $ARIMA$ estándar. En todos los casos, la línea vertical punteada indica el inicio del periodo de pronóstico. 
+Las Figuras \ref{fig:pronostico_arima001_011}, \ref{fig:pronostico_arima214_303}, \ref{fig:pronostico_arima100}, \ref{fig:pronostico_arima101} y \ref{fig:pronostico_arima203}, \ref{fig:pronostico_arima402}, que se presentan a continuación, muestran el ajuste y el pronóstico de cada uno de los modelos estimados con la función `auto.arima()`, con sobreparametrización y con el modelo $ARIMA$ estándar. En todos los casos, la línea vertical punteada indica el inicio del periodo de pronóstico. 
 
 Además, las Figuras \ref{fig:ee_autoarima_arima001_011}, \ref{fig:ee_autoarima_arima214_303}, \ref{fig:ee_autoarima_arima100}, \ref{fig:ee_autoarima_arima101}, \ref{fig:ee_autoarima_arima203} y \ref{fig:ee_autoarima_arima402}, representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el mejor modelo sugerido por la función `auto.arima()`. Las Figuras \ref{fig:ee_arima_estandar_arima001_011}, \ref{fig:ee_arima_estandar_arima214_303}, \ref{fig:ee_arima_estandar_arima100}, \ref{fig:ee_arima_estandar_arima101}, \ref{fig:ee_arima_estandar_arima203} y \ref{fig:ee_arima_estandar_arima402} representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el modelo $ARIMA$ estándar. Y finalmente, las Figuras \ref{fig:ee_sobreparametrizacion_arima001_011}, \ref{fig:ee_sobreparametrizacion_arima214_303}, \ref{fig:ee_sobreparametrizacion_arima100}, \ref{fig:ee_sobreparametrizacion_arima101}, \ref{fig:ee_sobreparametrizacion_arima203} y \ref{fig:ee_sobreparametrizacion_arima402},  representan el comportamiento de los errores estándar obtenidos de los pronósticos hechos con el mejor modelo sugerido por la sobreparametrización.
 
-```{r pronostico_arima001_011, fig.cap="Pronóstico de los datos generados mediante un ARIMA(0,0,1)(0,1,1) según el método de estimación"}
+```{r pronostico_arima001_011, fig.cap="Pronóstico de los datos generados mediante un ARIMA(0,0,1)(0,1,1) según el método de estimación \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 datos <-
     resumen_resultados(reordena_simulacion(comparacion_estacional_bajo[[1]]$modelos, arima001_011))
 
@@ -1205,7 +1263,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(0,0,1)(0,1,1)\nSobreparametrización: ARIMA(0,0,1)(0,1,1)\nARIMA estándar: ARIMA(1,1,1)(1,1,1)",
+    labs(caption = "Fuente: elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(0,0,1)(0,1,1)\nSobreparametrización: ARIMA(0,0,1)(0,1,1)\nARIMA estándar: ARIMA(1,1,1)(1,1,1)",
          y = "Valor de la serie",
          x = "Periodo t") +
     theme(
@@ -1221,25 +1279,55 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
-```{r ee_autoarima_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con la función auto.arima()"}
+```{r ee_autoarima_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con la función auto.arima() \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- comparacion_estacional_bajo[[1]]$modelos$autoarima
 validacion <- arima001_011
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r ee_sobreparametrizacion_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con sobreparametrización"}
+```{r ee_sobreparametrizacion_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con sobreparametrización \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- comparacion_estacional_bajo[[1]]$modelos$sobreparametrizacion
 validacion <- arima001_011
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r ee_arima_estandar_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con el modelo ARIMA estándar"}
+```{r ee_arima_estandar_arima001_011, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(0,0,1)(0,1,1) con el modelo ARIMA estándar \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- comparacion_estacional_bajo[[1]]$modelos$arima_estandar
 validacion <- arima001_011
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r pronostico_arima214_303, fig.cap="Pronóstico de los datos generados mediante un ARIMA(2,1,4)(3,0,3) según el método de estimación"}
+```{r pronostico_arima214_303, fig.cap="Pronóstico de los datos generados mediante un ARIMA(2,1,4)(3,0,3) según el método de estimación \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 reordena_simulacion2 <- function(modelos, testing){
 
     l1 <- list(haa=modelos$autoarima,
@@ -1270,7 +1358,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,1,2)(2,1,1)\nSobreparametrización: ARIMA(1,1,2)(2,1,2)\nARIMA estándar: ARIMA(1,1,1)(1,1,1)",
+    labs(caption = "Fuente: elaboración propia a partir de datos simulados\nauto.arima(): ARIMA(1,1,2)(2,1,1)\nSobreparametrización: ARIMA(1,1,2)(2,1,2)\nARIMA estándar: ARIMA(1,1,1)(1,1,1)",
          y = "Valor de la serie",
          x = "Periodo t") +
     theme(
@@ -1286,22 +1374,52 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
-```{r ee_autoarima_arima214_303, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,1,4)(3,0,3) con la función auto.arima()"}
+```{r ee_autoarima_arima214_303, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,1,4)(3,0,3) con la función auto.arima() \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- comparacion_estacional_alto[[2]]$modelos$autoarima
 validacion <- arima214_303
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r ee_sobreparametrizacion_arima214_303, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,1,4)(3,0,3) con sobreparametrización"}
+```{r ee_sobreparametrizacion_arima214_303, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,1,4)(3,0,3) con sobreparametrización \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- comparacion_estacional_alto[[2]]$modelos$sobreparametrizacion
 validacion <- arima214_303
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
 ```{r ee_arima_estandar_arima214_303, fig.cap="Errores estándar de los pronósticos obtenidos de los datos generados mediante un ARIMA(2,1,4)(3,0,3) con el modelo ARIMA estándar"}
 mod <- comparacion_estacional_alto[[2]]$modelos$arima_estandar
 validacion <- arima214_303
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
 
@@ -1313,7 +1431,7 @@ Para complementar la descripción de las series cronológicas reales utilizadas 
 
 \paragraph{Tasa de mortalidad infantil interanual}
 
-Dado que la medición de la TMII se hace partiendo de un determinado mes y a partir de éste se consideran los 11 meses anteriores, el primer valor de la base de datos fue medido a partir de Enero de 2000, que corresponde al período interanual Febrero 1999 – Enero 2000. Todos los periodos siguientes se muestran en la Figura \ref{fig:tmiiplotgeneral}.
+Dado que la medición de la TMII se hace partiendo de un determinado mes y a partir de éste se consideran los 11 meses anteriores, el primer valor de la base de datos fue medido a partir de enero de 2000, que corresponde al período interanual febrero 1999 – enero 2000. Todos los periodos siguientes se muestran en la Figura \ref{fig:tmiiplotgeneral}.
 
 ```{r}
 base <- popstudy::read_from_dir("TMIIR.xlsx", "References/Results_section_references/01 - Tasa de mortalidad infantil interanual") %>% 
@@ -1322,7 +1440,7 @@ base <- popstudy::read_from_dir("TMIIR.xlsx", "References/Results_section_refere
 TS <- ts(base$tmii, start = c(1989, 1), end = c(2017, 12), frequency = 12)
 ```
 
-```{r tmiiplotgeneral, fig.cap="Tasa de Mortalidad Infantil Interanual 1989 - 2017"}
+```{r tmiiplotgeneral, fig.cap="Tasa de Mortalidad Infantil Interanual 1989 - 2017  \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 #Se requiere el paquete ggpmisc
 ggplot(TS)+
   geom_line(color = "#00AFBB", size = 1.3) +
@@ -1341,11 +1459,11 @@ ggplot(TS)+
   scale_x_discrete(expand = c(0,0), limits=c(1995, 2005, 2015))
 ```
 
-La serie muestra picos y valles pronunciados a lo largo de todo el periodo. A modo de visualización, se ajustó un suavizamiento de Loess para buscar señales de tendencia y concavidad en los datos temporales. La línea roja punteada se ubica aproximadamente en el mes de Julio del año 2000, pues a partir de ese punto el suavizamiento de Loess muestra un ligero cambio en la concavidad, lo cual sugiere que a partir ese punto será más difícil que la TMII vuelva a alcanzar valores similares a los mostrados al inicio de la serie. Además, al presentarse dos caídas y subidas abruptas en la TMII, esta tiende a estabilizarse.
+La serie muestra picos y valles pronunciados a lo largo de todo el periodo. A modo de visualización, se ajustó un suavizamiento de Loess para buscar señales de tendencia y concavidad en los datos temporales. La línea roja punteada se ubica aproximadamente en el mes de julio del año 2000, pues a partir de ese punto el suavizamiento de Loess muestra un ligero cambio en la concavidad, lo cual sugiere que a partir ese punto será más difícil que la TMII vuelva a alcanzar valores similares a los mostrados al inicio de la serie. Además, al presentarse dos caídas y subidas abruptas en la TMII, esta tiende a estabilizarse.
 
 Mediante un análisis visual, la Figura \ref{fig:tmiiplotperiodos} parece respaldar el supuesto de que la mortalidad no posee efectos estacionales determinantes, pues para cada uno de los 12 períodos, en ninguno parecen existir mayores diferencias. El efecto que se mantiene en cada uno de los períodos es el de la tendencia, pues en cada uno ésta sigue descendiendo con el pasar de los años. Este hecho coincide con lo observado en la Figura \ref{fig:tmiiplotgeneral}.
 
-```{r tmiiplotperiodos, fig.cap="Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos"}
+```{r tmiiplotperiodos, fig.cap="Tasa de Mortalidad Infantil Interanual 1989 - 2017 según periodos \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 base %>% 
   group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
   summarise(tmii) %>% 
@@ -1378,7 +1496,7 @@ base %>%
 
 La Figura \ref{fig:tmiiplotdescomposicion} muestra, como se mencionó previamente, una tendencia decreciente y una estacionalidad que no es reiterada a lo largo del tiempo. Además, el componente aleatorio muestra como los errores no son constantes durante todo el período.
 
-```{r tmiiplotdescomposicion, fig.cap="Descomposición de la TMII en el periodo 2000 - 2017"}
+```{r tmiiplotdescomposicion, fig.cap="Descomposición de la TMII en el periodo 2000 - 2017 \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 base %>% 
   mutate(tmii=BoxCox(tmii, lambda=1),
          fecha=as.Date(fecha)) %>% 
@@ -1409,17 +1527,20 @@ ggsdc(., aes(x = fecha, y = tmii),
 
 Por otro lado, las figuras \ref{fig:tmii_acf} y \ref{fig:tmii_pacf} sugieren la presencia de procesos estacionales, mientras que en la parte no estacional se observa como la *ACF* va disminuyendo y el *PACF* se corta tras el segundo rezago, lo cual podría ser indicio de un proceso $MA(2)$ o superior.
 
-```{r tmii_acf, fig.cap="Autocorrelación de los datos diferenciados de la TMII"}
+```{r tmii_acf, fig.cap="Autocorrelación de los datos diferenciados de la TMII \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 exploratorio(TS, mostrar = "acf", temporalidad = 12, diferenciar = T)
 ```
 
-```{r tmii_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la TMII"}
+\text{Fuente: elaboración propia}
+
+```{r tmii_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la TMII \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 exploratorio(TS, mostrar = "pacf", temporalidad = 12, diferenciar = T)
 ```
+\text{Fuente: elaboración propia}
 
 \paragraph{Incentivos salariales del sector público}
 
-De manera análoga a lo visto en la TMII, la Figura \ref{fig:incentivosplotgeneral} muestra el comportamiento general de la serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio de concavidad a partir de Julio 2008, lo cual sugiere que a partir de este momento los incentivos salariales vuelvan a alcanzar valores similares a los mostrados al inicio de la serie. La Figura \ref{fig:incentivosplotperiodos} muestra cómo hay un crecimiento sostenido de los incentivos en cada mes a lo largo de todo el periodo. Sin embargo, este crecimiento se da a una tasa mucho mayor en la época de fin y principio de año.
+De manera análoga a lo visto en la TMII, la Figura \ref{fig:incentivosplotgeneral} muestra el comportamiento general de la serie cronológica. al hacer un suavizamiento Loess hay un ligero cambio de concavidad a partir de julio 2008, lo cual sugiere que a partir de este momento los incentivos salariales vuelvan a alcanzar valores similares a los mostrados al inicio de la serie. La Figura \ref{fig:incentivosplotperiodos} muestra que hay un crecimiento sostenido de los incentivos en cada mes a lo largo de todo el periodo. Sin embargo, este crecimiento se da a una tasa mucho mayor en la época de fin y principio de año.
 
 ```{r}
 base <- popstudy::read_from_dir("Datos examen1.xlsx", "References/Results_section_references/04 - Incentivos salariales del sector público") %>% 
@@ -1431,7 +1552,7 @@ base <- popstudy::read_from_dir("Datos examen1.xlsx", "References/Results_sectio
 TS <- ts(base$valor, start = c(2007, 1), end = c(2015, 06), frequency = 12)
 ```
 
-```{r incentivosplotgeneral, fig.cap="Incentivos salariales en el sector público entre los años 2007 y 2018"}
+```{r incentivosplotgeneral, fig.cap="Incentivos salariales en el sector público entre los años 2007 y 2018 \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 ggplot(TS)+
   geom_line(color = "#00AFBB", size = 1.3) +
   stat_smooth(color = "#FC4E07", fill = "#FC4E07",
@@ -1439,7 +1560,7 @@ ggplot(TS)+
   theme_minimal() +
   theme(text = element_text(size=9),
         axis.text.x = element_text(angle=0, hjust=1)) +
-  labs(caption="Fuente: Contraloría General de la República de Costa Rica",
+  labs(caption="Fuente: contraloría General de la República de Costa Rica",
        y="Incentivos salariales",
        x="Año") +
   theme(plot.title = element_text(hjust = 0.5, face="plain"),
@@ -1447,7 +1568,7 @@ ggplot(TS)+
                                   margin=margin(t=1,10,10,10)))
 ```
 
-```{r incentivosplotperiodos, fig.cap="Incentivos salariales en el sector público entre los años 2007 y 2018 según mes"}
+```{r incentivosplotperiodos, fig.cap="Incentivos salariales en el sector público entre los años 2007 y 2018 según mes \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 base %>% 
   group_by(año=year(fecha), mes=month(fecha, label = TRUE, abbr=FALSE)) %>% 
   summarise(valor) %>% 
@@ -1472,9 +1593,9 @@ base %>%
   scale_x_discrete(expand = c(0,0), limits=c(2005, 2010, 2015))
 ```
 
-En la Figura \ref{fig:incentivosplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo, los picos y las caídas en la parte estacional, lo cual hace referencia a los meses de Diciembre y Enero; cuando no se está en este periodo los incentivos poseen un comportamiento más estable. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo.
+En la Figura \ref{fig:incentivosplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo, los picos y las caídas en la parte estacional, lo cual hace referencia a los meses de diciembre y enero; cuando no se está en este periodo los incentivos poseen un comportamiento más estable. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo.
 
-```{r incentivosplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 al 2018"}
+```{r incentivosplotdescomposicion, fig.cap="Descomposición de la serie de Incentivos salariales en el periodo 2007 al 2018 \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 base %>% 
   mutate(valor=BoxCox(valor, lambda=1)) %>% 
 ggsdc(., aes(x = fecha, y = valor),
@@ -1505,21 +1626,22 @@ ggsdc(., aes(x = fecha, y = valor),
 
 Además, las figuras \ref{fig:incentivos_acf} y \ref{fig:incentivos_pacf} no parecen sugerir un proceso en particular tanto para la parte estacional como para la no estacional, a pesar de que las figuras anteriores muestren un efecto periódico.
 
-```{r incentivos_acf, fig.cap="Autocorrelación de los datos diferenciados de la serie de incentivos salariales"}
+```{r incentivos_acf, fig.cap="Autocorrelación de los datos diferenciados de la serie de incentivos salariales \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}", out.height='80%', out.width='80%'}
 exploratorio(TS, mostrar = "acf", temporalidad = 12, diferenciar = T)
 ```
-
-```{r incentivos_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la serie de incentivos salariales"}
+\text{Fuente: elaboración propia}
+```{r incentivos_pacf, fig.cap="Autocorrelación parcial de los datos diferenciados de la serie de incentivos salariales \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}", out.height='80%', out.width='80%'}
 exploratorio(TS, mostrar = "pacf", temporalidad = 12, diferenciar = T)
 ```
+\text{Fuente: elaboración propia}
 
 \paragraph{Mortalidad por causa externa}
 
-Dado que los registros de defunciones por causa externa se realizan diariamente, conviene analizar su comportamiento de manera mensual desde inicios del milenio de una manera más general, dicho comportamiento puede observarse en la Figura \ref{fig:externaplotgeneral} en la sección de anexos.
+Dado que los registros de defunciones por causa externa se realizan diariamente, conviene analizar su comportamiento de manera mensual desde inicios del milenio de una manera más general, dicho comportamiento puede observarse en la Figura \ref{fig:externaplotgeneral} en la sección de Anexos.
 
-Es importante recalcar que, entre Junio del año 2012 y Diciembre del año 2017, el aumento en la tasa de cambio de la cantidad de defunciones debido a causas externas coincide con el aumento de la flotilla de motocicletas, pues en un período de cinco años esta cifra creció en un 189% [@motos]. Conviene entonces verificar el comportamiento a lo interno de la serie en referencias a las categorías de las causas externas.
+Es importante recalcar que, entre junio del año 2012 y diciembre del año 2017, el aumento en la tasa de cambio de la cantidad de defunciones debido a causas externas coincide con el aumento de la flotilla de motocicletas, pues en un período de cinco años esta cifra creció en un 189% [@motos]. Conviene entonces verificar el comportamiento a lo interno de la serie en referencias a las categorías de las causas externas.
 
-Cada mes tiene sus picos y valles durante cada mes a lo largo del periodo, siendo los meses de Enero, Abril y Diciembre los que presentaron valores ligeramente más altos entre los años 2000 y 2017. 
+Cada mes tiene sus picos y valles durante cada mes a lo largo del periodo, siendo los meses de enero, abril y diciembre los que presentaron valores ligeramente más altos entre los años 2000 y 2017. 
 
 La descomposición de la serie se hará de forma aditiva debido a que no se observan grandes cambios en la variabilidad a lo largo del tiempo. La tendencia se mantiene casi constante a lo largo del tiempo, mientras que parece haber estacionalidad en ciertos lapsos de la segunda mitad del año. Además, el componente aleatorio muestra como los errores no son constantes a lo largo de todo el período. 
 
@@ -1532,11 +1654,13 @@ La descomposición de la serie se hará de forma aditiva debido a que no se obse
 
 ```
 
-Además, las figuras \ref{fig:externa_acf} y \ref{fig:externa_pacf} muestran indicios de un proceso bajo en la parte no estacional, y si bien no hay indicios claros de patrones estacionales, es sabido que los meses de Enero, Abril y Diciembre son los que cuentan con un mayor número de defunciones por estas causas.
+Además, las figuras \ref{fig:externa_acf} y \ref{fig:externa_pacf} muestran indicios de un proceso bajo en la parte no estacional, y si bien no hay indicios claros de patrones estacionales, es sabido que los meses de enero, abril y diciembre son los que cuentan con un mayor número de defunciones por estas causas.
 
 \paragraph{Intereses y comisiones del sector público}
 
-Para iniciar el análisis exploratorio de esta serie, la Figura \ref{fig:interesesplotgeneral} en la sección de anexos muestra que hay un ligero cambio de concavidad a partir de Julio 2010, esto sugiere que a partir de este momento los intereses y comisiones inician una tendencia al alza, la cual se sostiene hasta Junio del 2018. Por su parte, la Figura \ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento sostenido de los intereses y comisiones del sector público al final de cada trimestre durante todo el periodo, mientras que se mantiene casi constante durante los primeros dos meses de cada trimestre. La caída más pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento más rápida parece darse al final del primer trimestre. Además, en la Figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Puede observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional, esto en cuanto a los cierres trimestrales previamente mencionados. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios.
+Para iniciar el análisis exploratorio de esta serie, la Figura \ref{fig:interesesplotgeneral} en la sección de Anexos muestra que hay un ligero cambio de concavidad a partir de julio 2010, esto sugiere que a partir de este momento los intereses y comisiones inician una tendencia al alza, la cual se sostiene hasta junio del 2018. Por su parte, la Figura \ref{fig:interesesplotperiodos} muestra cómo hay un crecimiento sostenido de los intereses y comisiones del sector público al final de cada trimestre durante todo el periodo, mientras que se mantiene casi constante durante los primeros dos meses de cada trimestre. La caída más pronunciada se dio en abril del 2015 mientras que la tasa de crecimiento más rápida parece darse al final del primer trimestre. Además, en la Figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Puede observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional, esto en cuanto a los cierres trimestrales previamente mencionados. 
+
+El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios.
 
 En la Figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición de la serie en sus distintos componentes. Pueden observarse, además de un crecimiento a lo largo del tiempo posterior a una disminución, los picos y las caídas en la parte estacional. El componente aleatorio muestra indicios de que la variabilidad de la serie no es homogénea, sino que cambia conforme pasa el tiempo, pues durante un tiempo se mantuvo relativamente estable pero luego presenta algunos cambios. Las figuras \ref{fig:intereses_acf} y \ref{fig:intereses_pacf} indican que existen un efecto estacional, pero su identificación no es clara.
 
@@ -1552,7 +1676,7 @@ En la Figura \ref{fig:interesesplotdescomposicion} se muestra la descomposición
 
 Para las series cronológicas reales, la Figura \ref{fig:particion_series_reales} muestra la partición realizada.
 
-```{r particion_series_reales, fig.cap="Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo reales"}
+```{r particion_series_reales, fig.cap="Partición de los datos en los conjuntos de entrenamiento y validación para las series de tiempo reales \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 
 base <-
     popstudy::read_from_dir(
@@ -1572,7 +1696,7 @@ particion_tmii <-
     particiones(TS_tmii,
                 titulo = "TMII",
                 ejex = "Año",
-                fuente = "Fuente: INEC",
+                fuente = "Fuente: INEC 2018",
                 ejey = "Tasa", simulada = FALSE, mostrar="comportamiento")
 
 #######################
@@ -1593,7 +1717,7 @@ particion_externa <-
     particiones(TS_externa,
                 titulo = "Mortalidad por causa externa",
                 ejex = "Año",
-                fuente = "Fuente: INEC",
+                fuente = "Fuente: INEC 2018",
                 ejey = "Tasa", mostrar="comportamiento")
 
 #########################
@@ -1619,7 +1743,7 @@ particion_incentivos <-
     particiones(TS_incentivos,
                 titulo = "Incentivos salariales",
                 ejex = "Año",
-                fuente = "Fuente: CGR",
+                fuente = "Fuente: CGR 2018",
                 ejey = "Incentivos", mostrar="comportamiento")
 
 ########################
@@ -1644,7 +1768,7 @@ particion_intereses <-
     particiones(TS_intereses,
                 titulo = "Intereses y comisiones",
                 ejex = "Año",
-                fuente = "Fuente: CGR",
+                fuente = "Fuente: CGR 2018",
                 ejey = "Intereses y comisiones", mostrar="comportamiento")
 
 ggarrange(
@@ -1659,7 +1783,7 @@ ggarrange(
 
 \subsubsection{Identificación y estimación}
 
-En el caso de las series cronológicas reales, se toma en consideración el mejor modelo sugerido por la función `auto.arima()`, el ARIMA estándar y la sobreparametrización. Los coeficientes obtenidos para la serie de la Tasa de Mortalidad Infantil Interanual y para la de Incentivos salariares se muestran en el cuadro \ref{tab:coeficientes_mejores_reales}, mientras que para la mortalidad por causa externa y los intereses y comisiones del sector público semuestran en la sección de anexos en el cuadro \ref{tab:coeficientes_peores_reales}.
+En el caso de las series cronológicas reales, se toma en consideración el mejor modelo sugerido por la función `auto.arima()`, el ARIMA estándar y la sobreparametrización. Los coeficientes obtenidos para la serie de la Tasa de Mortalidad Infantil Interanual y para la de Incentivos salariares se muestran en el Cuadro \ref{tab:coeficientes_mejores_reales}, mientras que para la mortalidad por causa externa y los intereses y comisiones del sector público se muestran en la sección de anexos en el Cuadro \ref{tab:coeficientes_peores_reales}.
 
 ```{r}
 coeficientes_auto.arima_reales <- list(
@@ -1835,7 +1959,7 @@ do.call(
         booktabs = T,
         escape = F, 
         align = "ccrrrrrrrrr",
-        caption = "\\label{tab:coeficientes_mejores_reales}Coeficientes de las ecuaciones de estimación según método de ajuste",
+        caption = "\\label{tab:coeficientes_mejores_reales}Coeficientes de las ecuaciones de estimación según método de ajuste  \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}",
         col.names = c(
             "Serie real",
             "Coeficiente",
@@ -1857,7 +1981,7 @@ do.call(
     add_header_above(c(" " = 2, "auto.arima()" = 3, "ARIMA estándar" = 3, "Sobreparametrización" = 3), bold = T) %>%
     footnote(
         general = c(
-            "Fuente: Elaboración propia a partir de datos simulados."
+            "Fuente: elaboración propia a partir de datos simulados."
         ),
         general_title = ""
     )
@@ -1865,9 +1989,9 @@ do.call(
 
 \subsubsection{Análisis de los errores}
 
-De manera análoga a lo trabajado con los datos simulados, al analizar los errores buscamos que estos se comporten como ruido blanco, es decir, que no tengan ningún patrón en particular. El autocorrelograma de los residuos también puede usarse para este fin, pues el 95% de los valores debería estar entre las dos líneas azules. Además, un histograma de los residuos es útil para saber si los residuos siguen una distribución aproximadamente Normal; si no existen grandes desviaciones en este gráfico, entonces puede decirse que el cumplimiento de este supuesto es razonable. 
+De manera análoga a lo trabajado con los datos simulados, al analizar los errores buscamos que estos se comporten como ruido blanco, es decir, que no tengan ningún patrón en particular. El autocorrelograma de los residuos también puede usarse para este fin, pues el 95 % de los valores debería estar entre las dos líneas azules. Además, un histograma de los residuos es útil para saber si los residuos siguen una distribución aproximadamente Normal; si no existen grandes desviaciones en este gráfico, entonces puede decirse que el cumplimiento de este supuesto es razonable. 
 
-En las Figuras \ref{fig:errores_reales_TMII} y \ref{fig:errores_reales_incentivos} se visualizan los errores de los modelos estimados a partir de la serie cronológicas de la Tasa de Mortalidad Infantil Interanual y de la serie de Incentivos Salariales, respectivamente, para los trs métodos de estimación: la función `auto.arima()`, ARIMA estándar y sobreparametrización, mientras que las figuras \ref{fig:errores_reales_externa} y \ref{fig:errores_reales_intereses} muestran lo mismo pero para las series mortalidad por acusa externa y de intereses y comisiones del sector público. Nuevamente los modelos generados poseen a grandes razgos el comportamiento esperado.
+En las Figuras \ref{fig:errores_reales_TMII} y \ref{fig:errores_reales_incentivos} se visualizan los errores de los modelos estimados a partir de la serie cronológicas de la Tasa de Mortalidad Infantil Interanual y de la serie de Incentivos Salariales, respectivamente, para los tres métodos de estimación: la función `auto.arima()`, ARIMA estándar y sobreparametrización, mientras que las figuras \ref{fig:errores_reales_externa} y \ref{fig:errores_reales_intereses} muestran lo mismo, pero para las series mortalidad por acusa externa y de intereses y comisiones del sector público. Nuevamente los modelos generados poseen a grandes rasgos el comportamiento esperado.
 
 ```{r}
 errores_reales_autoarima1 <- analisis_errores(TMII$haa,"auto.arima()\nARIMA(2,1,0)(0,0,1)")
@@ -1890,29 +2014,49 @@ errores_reales_arima_estandar3<- analisis_errores(INCENTIVOS$arima_estandar,"ARI
 errores_reales_arima_estandar4<- analisis_errores(INTERESES$arima_estandar,"ARIMA estándar\nARIMA(1,1,1)(1,1,1)")
 ```
 
-```{r errores_reales_TMII, fig.cap="Comportamiento de los errores asociados a los modelos estimados con la serie de la TMII"}
+```{r errores_reales_TMII, fig.cap="Comportamiento de los errores asociados a los modelos estimados con la serie de la TMII \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 ggarrange(
     errores_reales_autoarima1,
     errores_reales_arima_estandar1,
     errores_reales_sobreparametrizacion1,
     ncol = 3,
     nrow = 1
-)
+) %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r errores_reales_incentivos, fig.cap="Comportamiento de los errores asociados a los modelos estimados con la serie de incentivos salariales"}
+```{r errores_reales_incentivos, fig.cap="Comportamiento de los errores asociados a los modelos estimados con la serie de incentivos salariales \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 ggarrange(
     errores_reales_autoarima3,
     errores_reales_arima_estandar3,
     errores_reales_sobreparametrizacion3,
     ncol = 3,
     nrow = 1
-)
+) %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
 \subsubsection{Medidas de bondad de ajuste y de precisión}
 
-En este apartado se muestran las medidas de bondad de ajuste y de precisión para la serie de la tasa de mortalidad infantil interanual y la de incentivos salariales en el cuadro \ref{tab:comparaciones_arima_mejores_reales}, mientras que para las series de la mortalidad por causa externa y la ide intereses y comisiones se muestran en la sección de anexos mediante el cuadro \ref{tab:comparaciones_arima_peores_reales}.
+En este apartado se muestran las medidas de bondad de ajuste y de precisión para la serie de la tasa de mortalidad infantil interanual y la de incentivos salariales en el Cuadro \ref{tab:comparaciones_arima_mejores_reales}, mientras que para las series de la mortalidad por causa externa y la ide intereses y comisiones se muestran en la sección de anexos mediante el Cuadro \ref{tab:comparaciones_arima_peores_reales}.
 
 ```{r}
 datos <- mapply(
@@ -1975,7 +2119,7 @@ datos %>%
     column_spec(3, width = "2.5cm") %>%
     footnote(
         general = c(
-            "Fuente: Elaboración propia a partir de datos simulados"
+            "Fuente: elaboración propia a partir de datos simulados"
         ),
         general_title = ""
     ) 
@@ -1983,9 +2127,9 @@ datos %>%
 
 \subsubsection{Estimación en el periodo de validación}
 
-De la misma manera en que se hizo con los datos simulados, las figuras \ref{fig:pronostico_TMII} y \ref{fig:pronostico_INCENTIVOS} representan el pronóstico para los distintos modelos generados con la serie de la tasa de mortalidad infantil interanual y la de incentivos salariales, respectivamente, siendo estas primeras dos donde la tendencia se acerca más al comportamiento real; mientras que las figuras \ref{fig:pronostico_EXTERNA} y \ref{fig:pronostico_INTERESES} en la sección de anexos muestran el resultado obtenido para las series de mortalidad por causa externa y de intereses y comisiones del sector público. La línea vertical punteada marca el inicio del pronóstico.
+De la misma manera en que se hizo con los datos simulados, las Figuras \ref{fig:pronostico_TMII} y \ref{fig:pronostico_INCENTIVOS} representan el pronóstico para los distintos modelos generados con la serie de la tasa de mortalidad infantil interanual y la de incentivos salariales, respectivamente, siendo estas primeras dos donde la tendencia se acerca más al comportamiento real; mientras que las Figuras \ref{fig:pronostico_EXTERNA} y \ref{fig:pronostico_INTERESES} en la sección de anexos muestran el resultado obtenido para las series de mortalidad por causa externa y de intereses y comisiones del sector público. La línea vertical punteada marca el inicio del pronóstico.
 
-```{r pronostico_TMII, fig.cap="Pronóstico de la TMII según el método de estimación"}
+```{r pronostico_TMII, fig.cap="Pronóstico de la TMII según el método de estimación \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 datos <- resumen_resultados(TMII)$pronostico
 corte <- which(datos$tipo == "pronostico")[1]
 corte <- datos$fecha[corte]
@@ -1996,7 +2140,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia.\nauto.arima(): ARIMA(2,1,0)(0,0,1).\nSobreparametrización: ARIMA(4,1,0)(4,1,0).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
+    labs(caption = "Fuente: elaboración propia.\nauto.arima(): ARIMA(2,1,0)(0,0,1).\nSobreparametrización: ARIMA(4,1,0)(4,1,0).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
          y = "TMII",
          x = "Periodo") +
     theme(
@@ -2011,7 +2155,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
-```{r pronostico_INCENTIVOS, fig.cap="Pronóstico de la serie de incentivos salariales del sector público según el método de estimación"}
+```{r pronostico_INCENTIVOS, fig.cap="Pronóstico de la serie de incentivos salariales del sector público según el método de estimación \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 datos <- resumen_resultados(INCENTIVOS)$pronostico
 corte <- which(datos$tipo == "pronostico")[1]
 corte <- datos$fecha[corte]
@@ -2022,7 +2166,7 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     theme_minimal() +
     theme(text = element_text(size = 9),
           axis.text.x = element_text(angle = 0, hjust = 1)) +
-    labs(caption = "Fuente: Elaboración propia.\nauto.arima(): ARIMA(0,0,1)(1,1,0).\nSobreparametrización: ARIMA(2,1,0)(1,2,0).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
+    labs(caption = "Fuente: elaboración propia.\nauto.arima(): ARIMA(0,0,1)(1,1,0).\nSobreparametrización: ARIMA(2,1,0)(1,2,0).\nARIMA estándar: ARIMA(1,1,1)(1,1,1).",
          y = "Incentivos",
          x = "Periodo") +
     theme(
@@ -2037,40 +2181,90 @@ ggplot(datos, aes(x = fecha, y = valor, colour = Serie)) +
     scale_y_continuous(expand = c(0, 0))
 ```
 
-Además, para las series de la tasa de mortalidad infantil interanual, la de mortalidad por causa externa, la series de incentivos y la de intereses y comisiones, se resumen visualmente los errores estándar obtenidos con la función `auto.arima()` en las figuras \ref{fig:ee_autoarima_TMII}, \ref{fig:ee_autoarima_EXTERNA}, \ref{fig:ee_autoarima_INCENTIVOS} y \ref{fig:ee_autoarima_INTERESES}, respectivamente. De manera similar, pero utilizando la sobreparametrización, los errores estándar de las series de la tasa de mortalidad infantil interanul, la de mortalidad por causa externa, la series de incentivos y la de intereses y comisiones, se resumen visualmente en las figuras \ref{fig:ee_sobreparametrizacion_TMII}, \ref{fig:ee_sobreparametrizacion_EXTERNA}, \ref{fig:ee_sobreparametrizacion_INCENTIVOS} y \ref{fig:ee_sobreparametrizacion_INTERESES}, respectivamente. Por último, para las mismas series cronológicas, los errores estándar obtenidos con el modelo $ARIMA$ estándar se resumen en las figuras \ref{fig:ee_arima_estandar_TMII}, \ref{fig:ee_arima_estandar_EXTERNA}, \ref{fig:ee_arima_estandar_INCENTIVOS} y \ref{fig:ee_arima_estandar_INTERESES}.
+Además, para las series de la tasa de mortalidad infantil interanual, la de mortalidad por causa externa, la serie de incentivos y la serie de intereses y comisiones, se resumen visualmente los errores estándar obtenidos con la función `auto.arima()` en las figuras \ref{fig:ee_autoarima_TMII}, \ref{fig:ee_autoarima_EXTERNA}, \ref{fig:ee_autoarima_INCENTIVOS} y \ref{fig:ee_autoarima_INTERESES}, respectivamente. De manera similar, pero utilizando la sobreparametrización, los errores estándar de las series de la tasa de mortalidad infantil interanual, la de mortalidad por causa externa, la series de incentivos y la de intereses y comisiones, se resumen visualmente en las figuras \ref{fig:ee_sobreparametrizacion_TMII}, \ref{fig:ee_sobreparametrizacion_EXTERNA}, \ref{fig:ee_sobreparametrizacion_INCENTIVOS} y \ref{fig:ee_sobreparametrizacion_INTERESES}, respectivamente. Por último, para las mismas series cronológicas, los errores estándar obtenidos con el modelo $ARIMA$ estándar se resumen en las figuras \ref{fig:ee_arima_estandar_TMII}, \ref{fig:ee_arima_estandar_EXTERNA}, \ref{fig:ee_arima_estandar_INCENTIVOS} y \ref{fig:ee_arima_estandar_INTERESES}.
 
-```{r ee_autoarima_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con la función auto.arima()"}
+```{r ee_autoarima_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con la función auto.arima() \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- TMII$haa
 validacion <- TMII$testing
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r ee_sobreparametrizacion_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con sobreparametrización"}
+```{r ee_sobreparametrizacion_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con sobreparametrización \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- TMII$op$best_model
 validacion <- TMII$testing
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r ee_arima_estandar_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con el modelo ARIMA estándar"}
+```{r ee_arima_estandar_TMII, fig.cap="Errores estándar de los pronósticos obtenidos para la TMII con el modelo ARIMA estándar \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- TMII$arima_estandar
 validacion <- TMII$testing
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r ee_autoarima_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con la función auto.arima()"}
+```{r ee_autoarima_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con la función auto.arima() \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- INCENTIVOS$haa
 validacion <- INCENTIVOS$testing
 fc <- forecast(mod, h = length(validacion))
-descriptive_plot(data.frame(ee=as.numeric((fc$upper[,2] - fc$lower[,2]) / (2 * qnorm(.5 + fc$level[2] / 200)))),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(data.frame(ee=as.numeric((fc$upper[,2] - fc$lower[,2]) / (2 * qnorm(.5 + fc$level[2] / 200)))),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r ee_sobreparametrizacion_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con sobreparametrización"}
+```{r ee_sobreparametrizacion_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con sobreparametrización \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- INCENTIVOS$op$best_model
 validacion <- INCENTIVOS$testing
-descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
+descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]] %>%
+    annotate_figure(
+        .,
+        bottom = text_grob(
+            "Fuente: elaboración propia",
+            color = "black",
+            face = "plain",
+            size = 11,
+            hjust = 1.7
+        )
+    )
 ```
 
-```{r ee_arima_estandar_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con el modelo ARIMA estándar"}
+```{r ee_arima_estandar_INCENTIVOS, fig.cap="Errores estándar de los pronósticos obtenidos para la serie de incentivos salariales del sector público con el modelo ARIMA estándar \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 mod <- INCENTIVOS$arima_estandar
 validacion <- INCENTIVOS$testing
 descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="Densidad")[[1]]
@@ -2079,7 +2273,7 @@ descriptive_plot(extrae_ee(mod, validacion),ee, labels="Error Estándar", ylab="
 
 \subsection{Resumen de resultados}
 
-A partir de las secciones anteriores, el cuadro \ref{tab:resumen_resultados} muestra de forma porcentual la frecuencia relativa en que cada método de estimación (auto.arima, ARIMA estándar y sobreparametrización) logra alcanzar las mediciones más bajas, tanto para el conjunto de datos de entrenamiento como en el de validación, para las medidas de bondad de ajuste y de precisión. A modo de ejemplo, el 66.67 de la última casilla quiere decir que, de todos los modelos, un 66.67% de las veces la sobreparametrización alcanzó los mejores resultados en cuanto a precisión en los datos de validación.
+A partir de las secciones anteriores, el Cuadro \ref{tab:resumen_resultados} muestra de forma porcentual la frecuencia relativa en que cada método de estimación (auto.arima, ARIMA estándar y sobreparametrización) logra alcanzar las mediciones más bajas, tanto para el conjunto de datos de entrenamiento como en el de validación, para las medidas de bondad de ajuste y de precisión. A modo de ejemplo, el 66.67 de la última casilla quiere decir que, de todos los modelos, un 66.67% de las veces la sobreparametrización alcanzó los mejores resultados en cuanto a precisión en los datos de validación.
 
 ```{r}
 tabla <- readxl::read_xlsx("C:\\Users\\Dell\\OneDrive\\GitHub\\Tesis\\Script\\Conteo de resultados.xlsx")
@@ -2135,7 +2329,7 @@ tabla %>%
     collapse_rows(columns = c(1, 2)) %>%
     footnote(
         general = c(
-            "Fuente: Elaboración propia a partir de los resultados obtenidos"
+            "Fuente: elaboración propia a partir de los resultados obtenidos"
         ),
         general_title = ""
     )

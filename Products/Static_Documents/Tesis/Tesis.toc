@@ -1,8 +1,9 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {section}{DEDICATORIA}{\es@scroman {i}}{Doc-Start}%
-\contentsline {section}{AGRADECIMIENTOS}{\es@scroman {ii}}{Doc-Start}%
-\contentsline {section}{RESUMEN}{\es@scroman {vii}}{Doc-Start}%
-\contentsline {section}{ABSTRACT}{\es@scroman {viii}}{Doc-Start}%
+\contentsline {section}{DEDICATORIA}{\es@scroman {ii}}{Doc-Start}%
+\contentsline {section}{AGRADECIMIENTOS}{\es@scroman {iii}}{Doc-Start}%
+\contentsline {section}{HOJA DE APROBACIÓN}{\es@scroman {iv}}{Doc-Start}%
+\contentsline {section}{RESUMEN}{\es@scroman {ix}}{Doc-Start}%
+\contentsline {section}{ABSTRACT}{\es@scroman {x}}{Doc-Start}%
 \contentsline {section}{\numberline {1}INTRODUCCIÓN}{1}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Antecedentes}{1}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}El problema}{2}{subsection.1.2}%
@@ -10,7 +11,7 @@
 \contentsline {subsection}{\numberline {1.4}Justificación del estudio}{3}{subsection.1.4}%
 \contentsline {subsection}{\numberline {1.5}Organización del estudio}{4}{subsection.1.5}%
 \contentsline {section}{\numberline {2}MARCO TEÓRICO}{5}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Definición de una serie de tiempo}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.1}Definición de serie de tiempo}{5}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Componentes de una serie cronológica}{6}{subsection.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.1}La tendencia-ciclo}{8}{subsubsection.2.2.1}%
 \contentsline {subsubsection}{\numberline {2.2.2}Componentes estacionales}{10}{subsubsection.2.2.2}%
@@ -21,7 +22,7 @@
 \contentsline {subsubsection}{\numberline {2.5.1}Ecuación de Wold}{16}{subsubsection.2.5.1}%
 \contentsline {subsubsection}{\numberline {2.5.2}Metodología Box-Jenkins}{18}{subsubsection.2.5.2}%
 \contentsline {subsubsection}{\numberline {2.5.3}Modelos Autorregresivos}{18}{subsubsection.2.5.3}%
-\contentsline {subsubsection}{\numberline {2.5.4}Modelos de Medias Móviles}{18}{subsubsection.2.5.4}%
+\contentsline {subsubsection}{\numberline {2.5.4}Modelos de Medias Móviles}{19}{subsubsection.2.5.4}%
 \contentsline {subsubsection}{\numberline {2.5.5}Modelos ARIMA}{19}{subsubsection.2.5.5}%
 \contentsline {subsection}{\numberline {2.6}Los autocorrelogramas}{20}{subsection.2.6}%
 \contentsline {subsection}{\numberline {2.7}La sobreparametrización y el análisis combinatorio}{25}{subsection.2.7}%
@@ -35,19 +36,19 @@
 \contentsline {subsubsection}{\numberline {3.1.6}Procedimiento de simulación}{30}{subsubsection.3.1.6}%
 \contentsline {subsection}{\numberline {3.2}Métodos}{31}{subsection.3.2}%
 \contentsline {subsubsection}{\numberline {3.2.1}Análisis exploratorio}{31}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}Partición de los datos}{31}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2}Partición de los datos}{32}{subsubsection.3.2.2}%
 \contentsline {subsubsection}{\numberline {3.2.3}Identificación y estimación del mejor modelo según la función auto.arima()}{32}{subsubsection.3.2.3}%
 \contentsline {subsubsection}{\numberline {3.2.4}Identificación y estimación del mejor modelo con sobreparametrización}{32}{subsubsection.3.2.4}%
 \contentsline {subsubsection}{\numberline {3.2.5}Estimación de un modelo ARIMA estándar}{35}{subsubsection.3.2.5}%
 \contentsline {subsubsection}{\numberline {3.2.6}Análisis visual de los errores}{35}{subsubsection.3.2.6}%
 \contentsline {subsubsection}{\numberline {3.2.7}Medidas de bondad de ajuste y de rendimiento}{35}{subsubsection.3.2.7}%
 \contentsline {paragraph}{\numberline {3.2.7.1}AIC}{35}{paragraph.3.2.7.1}%
-\contentsline {paragraph}{\numberline {3.2.7.2}AICc}{35}{paragraph.3.2.7.2}%
+\contentsline {paragraph}{\numberline {3.2.7.2}AICc}{36}{paragraph.3.2.7.2}%
 \contentsline {paragraph}{\numberline {3.2.7.3}BIC}{36}{paragraph.3.2.7.3}%
 \contentsline {paragraph}{\numberline {3.2.7.4}MAE}{36}{paragraph.3.2.7.4}%
 \contentsline {paragraph}{\numberline {3.2.7.5}MASE}{36}{paragraph.3.2.7.5}%
 \contentsline {paragraph}{\numberline {3.2.7.6}RMSE}{36}{paragraph.3.2.7.6}%
-\contentsline {subsubsection}{\numberline {3.2.8}Pronósticos}{36}{subsubsection.3.2.8}%
+\contentsline {subsubsection}{\numberline {3.2.8}Pronósticos}{37}{subsubsection.3.2.8}%
 \contentsline {subsubsection}{\numberline {3.2.9}Tiempo de procesamiento}{37}{subsubsection.3.2.9}%
 \contentsline {subsubsection}{\numberline {3.2.10}Resumen de la forma de análisis}{37}{subsubsection.3.2.10}%
 \contentsline {section}{\numberline {4}RESULTADOS}{38}{section.4}%
@@ -55,23 +56,66 @@
 \contentsline {subsubsection}{\numberline {4.1.1}Análisis exploratorio}{38}{subsubsection.4.1.1}%
 \contentsline {subsubsection}{\numberline {4.1.2}Partición de los datos}{39}{subsubsection.4.1.2}%
 \contentsline {subsubsection}{\numberline {4.1.3}Identificación y estimación}{40}{subsubsection.4.1.3}%
-\contentsline {subsubsection}{\numberline {4.1.4}Análisis de los errores}{41}{subsubsection.4.1.4}%
-\contentsline {subsubsection}{\numberline {4.1.5}Medidas de bondad de ajuste y de rendimiento}{43}{subsubsection.4.1.5}%
+\contentsline {subsubsection}{\numberline {4.1.4}Análisis de los errores}{42}{subsubsection.4.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.5}Medidas de bondad de ajuste y de rendimiento}{44}{subsubsection.4.1.5}%
 \contentsline {subsubsection}{\numberline {4.1.6}Estimación en el periodo de validación}{44}{subsubsection.4.1.6}%
 \contentsline {subsection}{\numberline {4.2}Contraste de métodos de estimación de los ARIMA para las series empíricas}{49}{subsection.4.2}%
 \contentsline {subsubsection}{\numberline {4.2.1}Análisis exploratorio}{49}{subsubsection.4.2.1}%
 \contentsline {paragraph}{\numberline {4.2.1.1}Tasa de mortalidad infantil interanual}{49}{paragraph.4.2.1.1}%
-\contentsline {paragraph}{\numberline {4.2.1.2}Incentivos salariales del sector público}{52}{paragraph.4.2.1.2}%
+\contentsline {paragraph}{\numberline {4.2.1.2}Incentivos salariales del sector público}{53}{paragraph.4.2.1.2}%
 \contentsline {paragraph}{\numberline {4.2.1.3}Mortalidad por causa externa}{56}{paragraph.4.2.1.3}%
-\contentsline {paragraph}{\numberline {4.2.1.4}Intereses y comisiones del sector público}{56}{paragraph.4.2.1.4}%
+\contentsline {paragraph}{\numberline {4.2.1.4}Intereses y comisiones del sector público}{57}{paragraph.4.2.1.4}%
 \contentsline {subsubsection}{\numberline {4.2.2}Partición de los datos}{57}{subsubsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.3}Identificación y estimación}{57}{subsubsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.4}Análisis de los errores}{58}{subsubsection.4.2.4}%
-\contentsline {subsubsection}{\numberline {4.2.5}Medidas de bondad de ajuste y de precisión}{60}{subsubsection.4.2.5}%
-\contentsline {subsubsection}{\numberline {4.2.6}Estimación en el periodo de validación}{61}{subsubsection.4.2.6}%
-\contentsline {subsection}{\numberline {4.3}Resumen de resultados}{66}{subsection.4.3}%
-\contentsline {section}{\numberline {5}CONCLUSIÓN Y DISCUSIONES}{67}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Conclusiones}{67}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Discusiones}{70}{subsection.5.2}%
-\contentsline {section}{\numberline {6}ANEXOS}{72}{section.6}%
-\contentsline {section}{\numberline {7}REFERENCIAS}{94}{section.7}%
+\contentsline {subsubsection}{\numberline {4.2.3}Identificación y estimación}{58}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Análisis de los errores}{59}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}Medidas de bondad de ajuste y de precisión}{61}{subsubsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.6}Estimación en el periodo de validación}{62}{subsubsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.3}Resumen de resultados}{67}{subsection.4.3}%
+\contentsline {section}{\numberline {5}CONCLUSIÓN Y DISCUSIONES}{68}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Conclusiones}{68}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Discusiones}{71}{subsection.5.2}%
+\contentsline {section}{\numberline {6}ANEXOS}{73}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Anexo 1}{73}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Anexo 2}{74}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Anexo 3}{75}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Anexo 4}{76}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Anexo 5}{77}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Anexo 6}{78}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Anexo 7}{79}{subsection.6.7}%
+\contentsline {subsection}{\numberline {6.8}Anexo 8}{80}{subsection.6.8}%
+\contentsline {subsection}{\numberline {6.9}Anexo 9}{81}{subsection.6.9}%
+\contentsline {subsection}{\numberline {6.10}Anexo 10}{82}{subsection.6.10}%
+\contentsline {subsection}{\numberline {6.11}Anexo 11}{83}{subsection.6.11}%
+\contentsline {subsection}{\numberline {6.12}Anexo 12}{84}{subsection.6.12}%
+\contentsline {subsection}{\numberline {6.13}Anexo 13}{85}{subsection.6.13}%
+\contentsline {subsection}{\numberline {6.14}Anexo 14}{86}{subsection.6.14}%
+\contentsline {subsection}{\numberline {6.15}Anexo 15}{87}{subsection.6.15}%
+\contentsline {subsection}{\numberline {6.16}Anexo 16}{88}{subsection.6.16}%
+\contentsline {subsection}{\numberline {6.17}Anexo 17}{89}{subsection.6.17}%
+\contentsline {subsection}{\numberline {6.18}Anexo 18}{90}{subsection.6.18}%
+\contentsline {subsection}{\numberline {6.19}Anexo 19}{91}{subsection.6.19}%
+\contentsline {subsection}{\numberline {6.20}Anexo 20}{92}{subsection.6.20}%
+\contentsline {subsection}{\numberline {6.21}Anexo 21}{93}{subsection.6.21}%
+\contentsline {subsection}{\numberline {6.22}Anexo 22}{94}{subsection.6.22}%
+\contentsline {subsection}{\numberline {6.23}Anexo 23}{95}{subsection.6.23}%
+\contentsline {subsection}{\numberline {6.24}Anexo 24}{96}{subsection.6.24}%
+\contentsline {subsection}{\numberline {6.25}Anexo 25}{97}{subsection.6.25}%
+\contentsline {subsection}{\numberline {6.26}Anexo 26}{98}{subsection.6.26}%
+\contentsline {subsection}{\numberline {6.27}Anexo 27}{99}{subsection.6.27}%
+\contentsline {subsection}{\numberline {6.28}Anexo 28}{100}{subsection.6.28}%
+\contentsline {subsection}{\numberline {6.29}Anexo 29}{101}{subsection.6.29}%
+\contentsline {subsection}{\numberline {6.30}Anexo 30}{102}{subsection.6.30}%
+\contentsline {subsection}{\numberline {6.31}Anexo 31}{103}{subsection.6.31}%
+\contentsline {subsection}{\numberline {6.32}Anexo 32}{104}{subsection.6.32}%
+\contentsline {subsection}{\numberline {6.33}Anexo 33}{104}{subsection.6.33}%
+\contentsline {subsection}{\numberline {6.34}Anexo 34}{105}{subsection.6.34}%
+\contentsline {subsection}{\numberline {6.35}Anexo 35}{106}{subsection.6.35}%
+\contentsline {subsection}{\numberline {6.36}Anexo 36}{107}{subsection.6.36}%
+\contentsline {subsection}{\numberline {6.37}Anexo 37}{108}{subsection.6.37}%
+\contentsline {subsection}{\numberline {6.38}Anexo 38}{109}{subsection.6.38}%
+\contentsline {subsection}{\numberline {6.39}Anexo 39}{110}{subsection.6.39}%
+\contentsline {subsection}{\numberline {6.40}Anexo 40}{111}{subsection.6.40}%
+\contentsline {subsection}{\numberline {6.41}Anexo 41}{112}{subsection.6.41}%
+\contentsline {subsection}{\numberline {6.42}Anexo 42}{113}{subsection.6.42}%
+\contentsline {subsection}{\numberline {6.43}Anexo 43}{114}{subsection.6.43}%
+\contentsline {section}{\numberline {7}REFERENCIAS}{115}{section.7}%

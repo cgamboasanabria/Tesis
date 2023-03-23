@@ -2,7 +2,7 @@
 
 La aplicación de las series cronológicas tiene por objetivos: 1) el análisis exploratorio de la serie en cuestión, 2) estimar modelos de proyección, y 3) generar pronósticos para los posibles valores futuros que tomará la serie cronológica.
 
-Esta sección aborda la metodología propuesta como método de estimación y pronóstico de series cronológicas. En la búsqueda de una ecuación de estimación adecuada de entre varias candidatas, se cubren en un primer apartado los materiales a utilizar, así como los métodos, incluyendo el proceso de estimación, el procedimiento de simulación empleado para la verificación del método propuesto, y las medidas de bondad de ajuste y de precisión a utilizar. 
+Tomando en consideración dichos aspectos, esta sección aborda la metodología propuesta como método de estimación y pronóstico de series cronológicas. En la búsqueda de una ecuación de estimación adecuada de entre varias candidatas, se cubren en un primer apartado los materiales a utilizar, así como los métodos, incluyendo el proceso de estimación, el procedimiento de simulación empleado para la verificación del método propuesto, y las medidas de bondad de ajuste y de precisión a utilizar. 
 
 ```{r}
 # Se describe en detalle a lo largo de este apartado el uso de la sobreparametrización como herramienta para la generación de pronósticos de series cronológicas con temporalidades mensuales, bimensuales, trimestrales, cuatrimestrales o anuales mediante un proceso de selección fundamentada en las permutaciones de todos los parámetros de un modelo ARIMA hasta un rango determinado.
@@ -16,13 +16,13 @@ Se describen a continuación las series cronológicas reales que servirán de in
 
 \subsubsection{Tasa de mortalidad infantil interanual}
 
-La Tasa de Mortalidad Infantil (TMI) es uno de los indicadores demográficos más importantes, pues es utilizado como un parámetro de referencia sobre la calidad del sistema de salud, tanto a nivel nacional como regional. Si bien este indicador se construye relacionando las defunciones de menores de un año con el total de nacimientos, también involucra de manera implícita otras condiciones tales como las económicas, sociales y culturales, así como la efectividad en los métodos preventivos y curativos de esta categoría poblacional [@leon]. Debido a esto, el fallecimiento de un niño menor de un año se traduce en una falla del sistema de salud, por lo que estos casos son sujetos de estudio con el fin de conocer las causas que desencadenaron el evento. 
+La Tasa de Mortalidad Infantil (TMI) es uno de los indicadores demográficos más importantes, pues es utilizado como un parámetro de referencia sobre la calidad del sistema de salud, tanto a nivel nacional como regional. Si bien este indicador se construye relacionando las defunciones de menores de un año con el total de nacimientos, también involucra de manera implícita otras condiciones tales como las económicas, las sociales y las culturales, así como la efectividad en los métodos preventivos y curativos de esta categoría poblacional [@leon]. Debido a esto, el fallecimiento de un niño menor de un año se traduce en una falla del sistema de salud, por lo que estos casos son sujetos de estudio por parte de las autoridades con el fin de conocer las causas que desencadenaron el evento. 
 
-En algunos países en vías de desarrollo de Asia, África y América Latina, la mortalidad infantil alcanza valores elevados pues la desnutrición, ausencia de asistencia médica y mala calidad de las condiciones sanitarias son, a diferencia de los países más desarrollados, algo muy común [@donoso]. En el caso de Costa Rica, la unidad de estadísticas demográficas del Instituto Nacional de Estadística y Censos[^6] (INEC) es el ente encargado de reportar este indicador con el fin de dar seguimiento y control al comportamiento del mismo a lo largo del tiempo con el objetivo de llegar a los niveles más bajos posibles. 
+En algunos países en vías de desarrollo de Asia, África y América Latina, la mortalidad infantil alcanza valores elevados pues la desnutrición, la ausencia de asistencia médica y la mala calidad de las condiciones sanitarias son, a diferencia de los países más desarrollados, algo muy común [@donoso]. En el caso de Costa Rica, la unidad de estadísticas demográficas del Instituto Nacional de Estadística y Censos[^6] (INEC) es el ente encargado de reportar este indicador con el fin de dar seguimiento y control al comportamiento de este a lo largo del tiempo con el objetivo de llegar a los niveles más bajos posibles. 
 
 [^6]: http://www.inec.go.cr/
 
-En el INEC, cada mes se publica el boletín de la TMI interanual (TMII), que analiza la TMI de un mes y los 11 meses previos para comparar los periodos correspondientes [@infantiles]. Este apartado busca hacer un análisis de la TMII para los 12 periodos desde el año 1989 y hasta 2017, y no de manera mensual simple, pues dada la volatilidad del fenómeno de estudio, hacer un estudio interanual permite analizar de una mejor manera los cambios entre periodos. Esta forma de definit la TMII genera una autocorrelación natural en los datos, pues la información utilizada en el momento $t$ coincide en alrededor de 92% con la TMII del mes periodo inmediatemente anterior. Se analizará entonces la TMII desde el periodo Febrero 1989 – Enero 1990 hasta el periodo Enero 2017 – Diciembre 2017.
+El INEC cada mes publica el boletín de la TMI interanual (TMII), que analiza la TMI de un mes y los 11 meses previos para comparar los periodos correspondientes [@infantiles]. Este apartado busca hacer un análisis de la TMII para los 12 periodos desde el año 1989 y hasta 2017, y no de manera mensual simple, pues dada la volatilidad del fenómeno de estudio, hacer un estudio interanual permite analizar de una mejor manera los cambios entre periodos. Esta forma de definir la TMII genera una autocorrelación natural en los datos, pues la información utilizada en el momento $t$ coincide en alrededor de 92% con la TMII del mes periodo inmediatamente anterior. Se analizará entonces la TMII desde el periodo febrero 1989 – enero 1990 hasta el periodo enero 2017 – diciembre 2017.
 
 La importancia de este proceso, aparte de servir de parámetro para evaluar el sistema de salud, está en su estrecha relación con las proyecciones de población, pues como se mencionó previamente, la TMII analiza la mortalidad en el grupo de edad de menores de un año, que es el primer grupo al generar tablas de mortalidad, ya sea de la forma clásica o mediante la mortalidad óptima [@mortalidad_optima]. Uno de los métodos más conocidos para realizar estas estimaciones es el método de los componentes de cambio demográfico, que son la fecundidad, la mortalidad y la migración. En el caso de la mortalidad, uno de los puntos de partida es la estimación de las tasas de mortalidad por grupos de edad, siendo de particular interés la de menores de cinco años, pues esta a su vez se subdivide en los grupos de menores de un año y el de uno a cuatro años. Conocer el comportamiento de la mortalidad infantil es importante porque es en este grupo de edad en el que pueden existir cambios muy bruscos en la mortalidad y la fecundidad [@Rincon].
 
@@ -30,21 +30,23 @@ La importancia de este proceso, aparte de servir de parámetro para evaluar el s
 
 \subsubsection{Mortalidad por causa externa}
 
-La violencia es un acto tan antiguo como el mundo, sin embargo, la evolución de esta en conjunto con el crecimiento de su relación con las defunciones registradas en una población la vuelven un problema de salud pública. En base a la clasificación Internacional de Enfermedades [@CIE10] de la de la Organización Mundial de la Salud[^7], las defunciones pueden clasificarse en cuatro grandes grupos, siendo el más importante el de las causas naturales, el cual incluye enfermedades congénitas, cardiopatías u otras relacionadas con la vejez. En menor cuantía se encuentran las causas de muerte ignoradas, las cuales se dan cuando la causa de muerte es desconocida y de intención indeterminada; y de forma similar se encuentran las causas de muerte que se mantienen en estudio, bien sea por parte de la morgue o de algún otro organismo, esta última tiene pocos registros conforme más se retrocede en el tiempo.
+La violencia es un acto tan antiguo como el mundo, sin embargo, la evolución de esta en conjunto con el crecimiento de su relación con las defunciones registradas en una población la vuelven un problema de salud pública. Con base en la clasificación Internacional de Enfermedades [@CIE10] de la de la Organización Mundial de la Salud[^7], las defunciones pueden clasificarse en cuatro grandes grupos, las causas naturales son la causa más importante, ya que son enfermedades congénitas, cardiopatías u otras relacionadas con la vejez. En menor cuantía se encuentran las causas de muerte ignoradas, las cuales se dan cuando la causa de muerte es desconocida y de intención indeterminada; y de forma similar se encuentran las causas de muerte que se mantienen en estudio, bien sea por parte de la morgue o de algún otro organismo, esta causa de muerte tiene pocos registros conforme más se retrocede en el tiempo.
   
-El otro gran grupo, aunque considerablemente menor que las causas naturales, son las causas externas, las cuales son objeto de análisis en este apartado. Este grupo puede a su vez ser clasificado en homicidios, suicidios y las muertes accidentales, esta última comprende los accidentes de tránsito, las muertes por caídas, personas ahogadas, víctimas de incendios, terraplenes u otros similares. Aunado a estas categorías se encuentran también las causas indeterminadas, las cuales se diferencian a las ignoradas en que se sabe que se debe a una causa externa pero no se conoce con certeza a cuál categoría pertenece o aún está en investigación, tal es el caso de una persona que fallece debido a una alta ingesta de drogas o estupefacientes; bien pudo haber consumido intencionalmente hasta morir, lo cual sería un suicidio, o bien el consumo excesivo se debió a un accidente.
+El otro gran grupo, aunque considerablemente menor que las causas naturales, son las causas externas, las cuales son objeto de análisis en este apartado. Este grupo puede a su vez ser clasificado en homicidios, suicidios y las muertes accidentales, esta última comprende los accidentes de tránsito, las muertes por caídas, personas ahogadas, víctimas de incendios, terraplenes u otros similares. Aunado a estas categorías se encuentran también las causas indeterminadas, que se diferencian de las ignoradas en que se sabe que se debe a una causa externa pero no se conoce con certeza a cuál categoría pertenece o aún está en investigación, tal es el caso de una persona que fallece debido a una alta ingesta de drogas o estupefacientes; bien pudo haber consumido intencionalmente hasta morir, como sería un suicidio, o bien el consumo excesivo se debió a un accidente.
 
-En Costa Rica para el año 2011, las muertes por causas externas ocuparon el tercer lugar, siendo solo superadas por las enfermedades del sistema circulatorio, en particular las enfermedades cardiovasculares, y los tumores, ambos casos mostraron una tendencia ascendente [@nacion]. Es debido a los elevados costos económicos y sociales [@ccpexternas] que se aborda la imperiosa necesidad comprender el comportamiento de las defunciones debido a las causas externas con el fin de contar con un punto de partida para la elaboración de políticas públicas que busquen reducir al mínimo este tipo de eventos.
+En Costa Rica para el año 2011, las muertes por causas externas ocuparon el tercer lugar, solo superadas por las enfermedades del sistema circulatorio, en particular las enfermedades cardiovasculares, y por tumores, ambos casos mostraron una tendencia ascendente [@nacion]. 
+
+A raíz de los elevados costos económicos y sociales [@ccpexternas] se aborda la imperiosa necesidad comprender el comportamiento de las defunciones debido a las causas externas con el fin de contar con un punto de partida para la elaboración de políticas públicas que busquen reducir al mínimo este tipo de eventos.
 
 [^7]: https://www.paho.org/salud-en-las-americas-2017/?lang=es]
 
 \subsubsection{Incentivos salariales del sector público}
 
-Los incentivos salariales son retribuciones que de conformidad con la legislación vigente se asignan al servidor por sus características laborales que complementan las remuneraciones básicas. Los incentivos se reconocen tanto a profesionales como a no profesionales, facultados por disposiciones jurídicas que así lo autorizan. Algunos de estos incentivos son: anualidades, dedicación exclusiva, salario escolar, carrera profesional, carrera técnica, zonaje, desarraigo, regionalización, riesgo policial, riesgo penitenciario, riesgo de seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros. Esta serie cronológica representa los incentivos salariales en millones de colones del sector público de Costa Rica de enero 2007 a junio 2015; este es un periodo suficientemente extenso para los objetivos de este estudio, por lo que obtener datos más recientes no generaría un aporte sustantivo a esta investigación.
+Los incentivos salariales son retribuciones que de conformidad con la legislación vigente se asignan al servidor por sus características laborales que complementan las remuneraciones básicas. Los incentivos se reconocen tanto a profesionales como a no profesionales, facultados por disposiciones jurídicas que así lo autorizan. Algunos de estos incentivos son: anualidades, dedicación exclusiva, salario escolar, carrera profesional, carrera técnica, zonaje, desarraigo, regionalización, riesgo policial, riesgo penitenciario, riesgo de seguridad y vigilancia, peligrosidad, incentivo didáctico, entre otros. La serie cronológica de incentivos salariales se representa mediante millones de colones del sector público de Costa Rica de enero 2007 a junio 2015; este es un periodo suficientemente extenso para los objetivos de este estudio, por lo que obtener datos más recientes no generaría un aporte sustantivo a esta investigación.
 
 \subsubsection{Intereses y comisiones del sector público}
 
-Finalmente, se utiliza para este análisis la serie cronológica de los intereses y comisiones del sector público, que comprenden el pago de los intereses de la deuda del gobierno, esto es, las erogaciones de intereses y comisiones destinadas por las instituciones públicas para cubrir el pago a favor de terceras personas, físicas o jurídicas, del sector privado o del sector público, residentes en el territorio nacional o en el exterior, por la utilización en un determinado plazo de recursos financieros provenientes de los conceptos de emisión y colocación de títulos valores, contratación de préstamos directos, créditos de proveedores, depósitos a plazo y a la vista, intereses por deudas de avales asumidos, entre otros pasivos de la entidad tranzados en el país o en el exterior. Incluye el pago por concepto de otras obligaciones contraídas entre las partes, que no provienen de las actividades normales de financiamiento. Además, los intereses y comisiones por las operaciones normales de los bancos comerciales del sector público, así como las diferencias por tipo de cambio por operaciones financieras; y también el pago de intereses moratorios correspondientes a la deuda pública. 
+Finalmente, se utiliza para este análisis la serie cronológica de los intereses y comisiones del sector público. Estas comprenden el pago de los intereses de la deuda del gobierno, es decir, las erogaciones de intereses y comisiones destinadas por las instituciones públicas para cubrir el pago a favor de terceras personas, físicas o jurídicas, del sector privado o del sector público, residentes en el territorio nacional o en el exterior, por la utilización en un determinado plazo de recursos financieros provenientes de los conceptos de emisión y colocación de títulos valores, contratación de préstamos directos, créditos de proveedores, depósitos a plazo y a la vista, intereses por deudas de avales asumidos, entre otros pasivos de la entidad tranzados en el país o en el exterior. Además, incluye el pago por concepto de otras obligaciones contraídas entre las partes, que no provienen de las actividades normales de financiamiento. Igualmente abarca los intereses y comisiones por las operaciones normales de los bancos comerciales del sector público, así como las diferencias por tipo de cambio por operaciones financieras; y también el pago de intereses moratorios correspondientes a la deuda pública. 
 
 \subsubsection{Herramientas analíticas}
 
@@ -52,7 +54,7 @@ Como se ha mencionado en este documento, el lenguaje de programación R ha sido 
 
 \subsubsection{Procedimiento de simulación}
 
-Como parte de esta investigación, es necesario validar la identificación de los parámetros de los modelos ARIMA mediante sobreparametrización no solo con datos reales, sino también mediante datos simulados. Para ello es necesario generar series cronológicas que son gobernadas por un proceso determinado y previamente conocido para poder compararlo con los modelos identificados tanto con la sobreparametrización, como con la función `auto.arima()` y el correspondiente modelo $ARIMA$ estándar. 
+Como parte de esta investigación, es necesario validar la identificación de los parámetros de los modelos ARIMA mediante sobreparametrización no solo con datos reales, sino también mediante datos simulados. Para ello, es necesario generar series cronológicas que son gobernadas por un proceso determinado y previamente conocido para poder compararlo con los modelos identificados tanto con la sobreparametrización, como con la función `auto.arima()` y el correspondiente modelo $ARIMA$ estándar. 
 
 Con este fin, se programó una función que sigue los siguientes pasos (también mostrados en la Figura \ref{fig:diagrama_flujo_simulacion}:
 
@@ -60,9 +62,9 @@ Con este fin, se programó una función que sigue los siguientes pasos (también
 ## **1.** Se generan valores aleatorios de alguna distribución de probabilidad. Para esta investigación se escogen 100 valores de una distribución Normal con media 10 y varianza 1. Estos valores se resumen en la Figura \ref{fig:datos_simulados}; donde las región azul oscuro representa la densidad de datos entre los percentiles 25 y 75, las líneas punteadas de color naranja marcan la cantidad de desviaciones estándar que los datos se alejan del promedio, y las líneas punteadas de color azul marcan los puntos de corte mínimo, percentiles 25, 50 y 75, y el máximo.
 ```
 
-**1.** Se seleccionan mediante un muestreo simple al azar la cantidad de coeficientes a utilizar en los términos del modelo $ARIMA(p,d,q)(P,D,Q)_S$ que gobierna la serie. Para esta investigación fueron seleccionados los siguientes procesos: $ARIMA(1,0,0), ARIMA(1,0,1),$ $ARIMA(2,0,3), ARIMA(4,0,2),$ $ARIMA(0,0,1)(0,1,1)_{12}$ y $ARIMA(2,1,4)(3,0,3)_{12}$.
+**1.** Se selecciona mediante un muestreo simple al azar la cantidad de coeficientes a utilizar en los términos del modelo $ARIMA(p,d,q)(P,D,Q)_S$ que gobierna la serie. Para esta investigación fueron seleccionados los siguientes procesos: $ARIMA(1,0,0), ARIMA(1,0,1),$ $ARIMA(2,0,3), ARIMA(4,0,2),$ $ARIMA(0,0,1)(0,1,1)_{12}$ y $ARIMA(2,1,4)(3,0,3)_{12}$.
 
-**2.** Para cada uno de los procesos seleccionados, se generan valores aleatorios de una distribución uniforme con un valor mínimo de 0 y un valor máximo de 0.99. La cantidad de valores simulados depende de la cantidad de parámetros escogidos en $p, q, P, Q$. Estos valores aleatorios son transformados de manera tal que los polinomios de la parte autorregresiva y de medias móviles no comparta raíces unitarias, este es un proceso iterativo que se completa hasta que los coeficientes obtenidos tanto para la parte autorregresiva como para la parte de medias móviles generen un proceso invertible y estacionario.
+**2.** Para cada uno de los procesos seleccionados, se generan valores aleatorios de una distribución uniforme con un valor mínimo de 0 y un valor máximo de 0.99. La cantidad de valores simulados depende de la cantidad de parámetros escogidos en $p, q, P, Q$. Estos valores aleatorios son transformados de manera tal que los polinomios de la parte autorregresiva y de medias móviles no compartan raíces unitarias, este es un proceso iterativo que se completa hasta que los coeficientes obtenidos tanto para la parte autorregresiva como para la parte de medias móviles generen un proceso invertible y estacionario.
 
 ```{r, eval=FALSE}
 # https://arxiv.org/pdf/1611.01387.pdf
@@ -74,7 +76,7 @@ Con este fin, se programó una función que sigue los siguientes pasos (también
 
 **4.** Con cada modelo ajustado, se utiliza la función `simulate.Arima()` para generar 200 observaciones basadas en dichos modelos.
 
-```{r diagrama_flujo_simulacion, fig.cap="Diagrama de flijo del proceso de simulación de las series cronológicas."}
+```{r diagrama_flujo_simulacion, fig.cap="Diagrama de flijo del proceso de simulación de las series cronológicas \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}"}
 #https://graphviz.org/docs/attrs/splines/
 #https://stackoverflow.com/questions/7115870/creating-straight-edges-in-graphviz/12869546
 grViz(diagram = 'digraph start_up {
@@ -90,9 +92,6 @@ grViz(diagram = 'digraph start_up {
     }
 
     node [style = rounded]; 
-    node [shape = rect label="Generar números\naleatorios"] generar;
-    node [style = ""];
-    
     node [shape = rect label="Seleccionar cantidad\nde coeficientes"] coef;
     node [style = ""];
     
@@ -108,8 +107,6 @@ grViz(diagram = 'digraph start_up {
     node [style = rounded]; 
     node [shape = rect label="Simular serie"] simular_serie;
     node [style = ""];
-
-    generar -> coef;
     
     coef -> coef_sim;
     
@@ -124,8 +121,9 @@ grViz(diagram = 'digraph start_up {
     estimar_arima -> simular_serie;
 
 }')
-```
 
+```
+\text{Fuente: elaboración propia}
 
 ```{r, echo=FALSE, results='hide', cache=TRUE}
 # load(popstudy::read_from_dir("Resultados simulaciones.RData", "Output/Results"))
@@ -145,13 +143,13 @@ load(popstudy::read_from_dir("Resultados_2022.RData", "Output/Results"))
 # }
 ```
 
-```{r datos_simulados, fig.cap="Valores de referencia para la simulación de series cronológicas", eval=FALSE}
+```{r datos_simulados, fig.cap="Valores de referencia para la simulación de series cronológicas \\textcolor{white}{prueba de aaaaaaaaaaaaaaaaaaaaaaa}", eval=FALSE}
 popstudy::descriptive_plot(data = data.frame(Xt=dat), Xt, labels = "Datos simulados", ylab = "Densidad")[[1]]
 ```
 
 \subsection{Métodos}
 
-En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias, y en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos.
+En este apartado se describe el procedimiento a seguir con cada una de las series cronológicas mencionadas previamente, tanto las series simuladas como las reales. Para comprobar el poder predictivo del método propuesto se realiza inicialmente un análisis exploratorio para verificar si las series temporales sujetas a análisis son o no estacionarias y, en caso de no serlo, si requieren algún proceso de diferenciación. Se describe además el proceso de partición de los datos tanto para ajustar los modelos como para validar los pronósticos.
 
 \subsubsection{Análisis exploratorio}
 
@@ -159,21 +157,23 @@ Como fue mencionado en el Marco Teórico, debe corroborarse que la serie cronol�
 
 \subsubsection{Partición de los datos}
 
-A partir de la serie cronológica que se someterá a análisis, se realiza una partición de los datos para tener dos conjuntos distintos: entrenamiento y validación. El primero servirá precisamente para entrenar y estimar los distintos modelos; mientras que el segundo servirá para validar los pronósticos obtenidos. De manera predeterminada, se utilizará una partición del 80% de los datos para el conjunto de entrenamiento y un 20% para los datos de validación, pues es la proporción más tradicional, sin embargo, esto puede cambiar de acuerdo al interés propio del(la) investigador(a), seleccionando una proporción distinta para las particiones. 
+A partir de la serie cronológica que se someterá a análisis, se realiza una partición de los datos para tener dos conjuntos distintos: entrenamiento y validación. El primero servirá precisamente para entrenar y estimar los distintos modelos, mientras que el segundo servirá para validar los pronósticos obtenidos. De manera predeterminada, se utilizará una partición del 80% de los datos para el conjunto de entrenamiento y un 20% para los datos de validación, pues es la proporción más tradicional, sin embargo, esto puede cambiar de acuerdo con el interés propio del o la investigadora, seleccionando una proporción distinta para las particiones. 
 
 \subsubsection{Identificación y estimación del mejor modelo según la función auto.arima()}
 
-Con el correspondiente conjunto de datos de entrenamiento, se utiliza la función `auto.arima()` para encontrar el mejor modelo ARIMA sugerido con este método, que como fue mencionado en la introducción de esta tesis, usa como criterio la minimización del AICc y realiza la estimación mediante máxima verosimilitud.
+Con el correspondiente conjunto de datos de entrenamiento, se utiliza la función `auto.arima()` para encontrar el mejor modelo ARIMA sugerido con este método, que, como fue mencionado en la introducción de esta tesis, usa como criterio la minimización del AICc y realiza la estimación mediante máxima verosimilitud.
 
 \subsubsection{Identificación y estimación del mejor modelo con sobreparametrización}
 
 A partir del mismo conjunto de datos de entrenamiento de la correspondiente serie cronológica, se utiliza la sobreparametrización para encontrar el mejor modelo a partir de distintas permutaciones de la cantidad de coeficientes de los términos $p, d, q, P, D, Q$, según sea el caso. 
 
-La estimación mediante máxima verosimilitud de los modelos y posterior selección de los mismos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R, el cuál fue construido haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación:
+La estimación mediante máxima verosimilitud de los modelos y posterior selección de estos vía sobreparametrización es un proceso que requiere de distintas etapas. El procedimiento completo fue programado utilizando el lenguaje R, el cual fue construido haciendo uso de los paquetes de R `tidyr` [@tidyr], `dplyr`[@dplyr] y `parallel`[@parallel], los procesos internos de esta función son descritos a continuación:
 
 **1.** Una vez que se define la partición que tendrá la serie cronológica, se prosigue con la selección de los escenarios para estimar los modelos de ARIMA. Es en esta instancia en donde se decide el valor máximo de los parámetros $p,d,q,P,D,Q$ del modelo $ARIMA(p,d,q)(P,D,Q)_s$ que serán sujetos al análisis. 
 
-**2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero (porque precisamente, no se estiman coeficientes para la parte estacional). Se estiman para esta investigación todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$, aunque el orden del modelo más grande puede permitir un mayor número de diferenciaciones o de parámetros. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \eqref{eqn:matriz_arima_1}:
+**2.** Para el caso de series cronológicas no estacionales, los valores $P,D$ y $Q$ son iguales a cero porque precisamente, no se estiman coeficientes para la parte estacional. 
+
+En el caso de la presente investigación, se estiman todas las permutaciones de parámetros $p,d,q$ hasta tener como máximo un modelo $ARIMA(6,1,6)$, aunque el orden del modelo más grande puede permitir un mayor número de diferenciaciones o de parámetros. Para ello se genera una matriz con cada una de estas permutaciones, denominada matriz de valores paramétricos, en donde cada fila representa la especificación del modelo $ARIMA(p,d,q)$ que se va a estimar, tal y como se muestra en \eqref{eqn:matriz_arima_1}:
 
 ```{r, eval=FALSE, echo=FALSE}
 # Las siguiente matriz se obtuvo de:
@@ -205,7 +205,7 @@ La estimación mediante máxima verosimilitud de los modelos y posterior selecci
 \end{tikzpicture}
 \end{equation}
 
-**3.** De manera análoga, al trabajar con series cronológicas estacionales, se decide trabajar (para una temporalidad determinada, como mensual) hasta un modelo máximo de $ARIMA(4,1,4)(4,1,4)_{12}$. Así, la matriz de valores paramétricos mostrada en \eqref{eqn:matriz_arima_2} posee, en cada línea, una especificación de modelo a estimar:
+**3.** De manera análoga, al trabajar con series cronológicas estacionales, se decide trabajar (para una temporalidad determinada, como mensual) hasta un modelo máximo de $ARIMA(4,1,4)(4,1,4)_{12}$. De este modo, la matriz de valores paramétricos mostrada en \eqref{eqn:matriz_arima_2} posee, en cada línea, una especificación de modelo a estimar:
 
 \begin{equation}
 \label{eqn:matriz_arima_2}
@@ -230,7 +230,7 @@ La estimación mediante máxima verosimilitud de los modelos y posterior selecci
 
 A partir de las estimaciones vía sobreparametrización hechas para este estudio, se calcularon los tiempos de estimación para modelos no estacionales y modelos estacionales. Estos tiempos se muestran en el Cuadro \ref{tab:tiempos_estimacion}. 
 
-Para calcular el indicador de sobreparametrización $(I_{sp})$ primero se calcula el tiempo mediano de estimación, tanto para los modelos no estacionales como para los modelos estacionales. Para este estudio se obtuvo que el tiempo mediano para los modelos no estacionales fue de aproximadamente $7.424944$ minutos, mientras que para los modelos estacionales el tiempo mediano de estimación fue de $36.0432$ minutos, aproximadamente.
+Para calcular el indicador de sobreparametrización $(I_{sp})$, primero se calcula el tiempo mediano de estimación, tanto para los modelos no estacionales como para los modelos estacionales. Para este estudio se obtuvo que el tiempo mediano para los modelos no estacionales fue de aproximadamente $7.424944$ minutos, mientras que para los modelos estacionales el tiempo mediano de estimación fue de $36.0432$ minutos, aproximadamente.
 
 Luego, a cada fila de la matriz de valores paramétricos se le calcula un promedio ponderado a la cantidad de coeficientes en la parte no estacional y en la parte estacional, utilizando como ponderador los tiempos de estimación descritos previamente. Este procedimiento se expresa en la ecuación \eqref{eqn:indicador_sp},
 
@@ -243,7 +243,7 @@ donde $p,q,P$ y $Q$ son los términos del modelo ARIMA, $m_n$ es el tiempo media
 
 Por último, el valor de $I_{sp}$ es reescalado de forma tal que sus valores estén en el intervalo $[0,100]$ para el espacio de valores paramétricos definido, donde el cero representa el modelo nulo y 100 el modelo más sobreparametrizado posible dentro del espacio de valores paramétricos definido. La razón de esto es poder limitar, si se desea, la cantidad de estimaciones que se deben realizar. Por ejemplo, si se define que la matriz de valores paramétricos llegue como máximo a un $ARIMA(6,1,6)(6,1,6)_S$, es posible incorporar una restricción para estimar solo aquellas permutaciones de modelos $ARIMA$ cuyo indicador de sobreparametrización sea menor o igual a 60. 
 
-**5.** Con la matriz de valores paramétricos, como las mostradas en \eqref{eqn:matriz_arima_1} y \eqref{eqn:matriz_arima_2} y el indicador de sobreparametrización, se inicia la estimación los modelos en orden ascendente, es decir, del modelo con menos parámetros al que tiene más parámetros. Al estimar un nuevo modelo, se evalúa mediante una prueba *t* [@astsa] para verificar que el nuevo término incorporado al modelo es significativamente distinto de cero, es decir, el nuevo parámetro está generando un impacto en el modelo.
+**5.** Con la matriz de valores paramétricos, como las mostradas en \eqref{eqn:matriz_arima_1} y \eqref{eqn:matriz_arima_2} y el indicador de sobreparametrización, se inicia la estimación los modelos en orden ascendente, es decir, del modelo con menos parámetros al que tiene más parámetros. Al estimar un nuevo modelo, se evalúa mediante una prueba *t* [@astsa] para verificar que el nuevo término incorporado al modelo es significativamente distinto de cero, es decir; el nuevo parámetro está generando un impacto en el modelo.
 
 **6.** Al tratarse de un proceso iterativo, el cálculo puede volverse computacionalmente pesado, es por esta razón que la programación del proceso fue habilitada para realizar procesamiento paralelo y de esta manera reducir el consumo de tiempo en la obtención de resultados.
 
@@ -313,7 +313,7 @@ El error absoluto medio se define mediante la ecuación \eqref{eqn:MAE}
 
 \paragraph{MASE}
 
-Esta medida de rendimiento tiene dos casos, uno para series cronológicas no estacionales y otro para series cronológicas estacionales, como se muestra en las ecuaciones \eqref{eqn:MASE_no} y \eqref{eqn:MASE_si}.
+Esta medida de rendimiento tiene dos casos; uno para series cronológicas no estacionales y otro para series cronológicas estacionales, como se muestra en las ecuaciones \eqref{eqn:MASE_no} y \eqref{eqn:MASE_si}.
 
 \begin{equation}
 \label{eqn:MASE_no}
@@ -338,11 +338,11 @@ Es la raíz del error cuadrático medio, como se define en la ecuación \eqref{e
 
 \subsubsection{Pronósticos}
 
-Para cada modelo estimado, se realiza un pronóstico de $h$ periodos hacia el futuro (donde el valor de $h$ es el tamaño de los conjuntos de validación creados para cada serie) para realizar una inspección visual de los resultados previo a hacer una comparación numérica mediante dos formas distintas pero complementarias: las medidas de bondad de ajuste y de precisión.
+Para cada modelo estimado, se realiza un pronóstico de $h$ periodos hacia el futuro (donde el valor de $h$ es el tamaño de los conjuntos de validación creados para cada serie) para realizar una inspección visual de los resultados previo a hacer una comparación numérica mediante dos formas distintas pero complementarias; las medidas de bondad de ajuste y de precisión.
 
 \subsubsection{Tiempo de procesamiento}
 
-Para cada uno de los modelos estimados mediante sobreparametrización, se mostrará el tiempo de procesamiento requerido en cada serie cronológica, esto con el fin de evaluar la viabilidad del método propuesto para la obtención de resultados. Esta etapa de importante pues independientemente de los resultados obtenidos con la sobreparametrización, el tiempo de procesamiento debe mantenerse dentro de un margen razonable para quienes apliquen la técnica, ya que si se tardaran varios días en obtener los cálculos, sería un procedimiento poco práctico.
+Para cada uno de los modelos estimados mediante sobreparametrización, se mostrará el tiempo de procesamiento requerido en cada serie cronológica, esto con el fin de evaluar la viabilidad del método propuesto para la obtención de resultados. Esta etapa de importante porque independientemente de los resultados obtenidos con la sobreparametrización, el tiempo de procesamiento debe mantenerse dentro de un margen razonable para quienes apliquen la técnica, ya que, si se tardaran varios días en obtener los cálculos, sería un procedimiento poco práctico.
 
 \subsubsection{Resumen de la forma de análisis}
 

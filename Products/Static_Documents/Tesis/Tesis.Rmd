@@ -7,7 +7,7 @@ title: |
     |
     |
 subtitle: |
-    | LA SOBREPARAMETRIZACIÓN EN EL ARIMA: UNA APLICACIÓN A DATOS COSTARRICENCES
+    | LA SOBREPARAMETRIZACIÓN EN EL ARIMA: UNA APLICACIÓN A DATOS COSTARRICENSES
     |
     |
     |
@@ -19,7 +19,7 @@ author: |
     |
     |
     |
-    | CÉSAR ANDRÉS GAMBOA SANABRIA B12672
+    | CÉSAR ANDRÉS GAMBOA SANABRIA
     |
     |
     |
@@ -62,7 +62,7 @@ knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, dpi=1000,
 
 popstudy::required_packages(knitr, kableExtra, readxl, gridExtra, ggpubr, ggplot2, lubridate, 
                      ggseas, astsa, ggpmisc, forecast, 
-                     tidyr, popstudy, DiagrammeR, Hmisc, dplyr, timetk)
+                     tidyr, popstudy, DiagrammeR, Hmisc, dplyr, timetk, reporter)
 
 
 oldSource <- knit_hooks$get("source")
@@ -75,8 +75,9 @@ knit_hooks$set(source = function(x, options) {
 
 \addcontentsline{toc}{section}{DEDICATORIA}
 \section*{DEDICATORIA}
-
+\pagestyle{fancy}
 \pagenumbering{roman}
+\setcounter{page}{2}
 
 A mi abuela, un pilar fundamental en mi vida sin cuyo apoyo no hubiese alcanzado muchas de mis metas y de quien aprendí que no desaparece lo que se muere, solo lo que se olvida. A mi madre, que junto con mi abuela me enseñaron en su más amplio sentido que quien no estudia, muere en el charco de la ignorancia.
 
@@ -84,7 +85,7 @@ A mi esposa, quien con su forma de ver la vida me sigue haciendo crecer tanto pe
 
 A mi tía, a mi hermana y su esposo, quienes con su comprensión en los momentos más difíciles supieron darme el aliento necesario y la motivación para seguir adelante.
 
-A mis tíos, por velar en distintas etapas de mi vida que tuviera las heramientas necesarias para ser cada día una mejor persona.
+A mis tíos, por velar en distintas etapas de mi vida que tuviera las herramientas necesarias para ser cada día una mejor persona.
 
 \cleardoublepage
 
@@ -92,9 +93,13 @@ A mis tíos, por velar en distintas etapas de mi vida que tuviera las heramienta
 \addcontentsline{toc}{section}{AGRADECIMIENTOS}
 \section*{AGRADECIMIENTOS}
 
-Agradezco profundamente a Óscar Centeno Mora, quien con sus buenos consejos y dedicación ayudó a hacer posible este proyecto, a Gilbert Brenes Camacho y a Shu Wei Chou por sus valiosos aportes técnicos y sustantivos en el contexto de esta tesis, y a Cindy Cárdenas, por su invaluable apoyo administrativo en los momentos justos.
+Agradezco profundamente a Óscar Centeno Mora, quien con sus buenos consejos y dedicación ayudó a hacer posible este proyecto.
+
+A Gilbert Brenes Camacho y a Shu Wei Chou Chen por sus valiosos aportes técnicos y sustantivos en el contexto de esta tesis, y a Cindy Cárdenas, por su invaluable apoyo administrativo en los momentos justos.
 
 \cleardoublepage
+
+\addcontentsline{toc}{section}{HOJA DE APROBACIÓN}
 
 \begin{center}
 
@@ -103,8 +108,9 @@ Agradezco profundamente a Óscar Centeno Mora, quien con sus buenos consejos y d
 \text{}
 
 \noindent\rule{7cm}{0.4pt}\\
-Ph.D. Flor Isabel Jiménez Segura\\
-\textbf{Decano Sistema de Estudios de Posgrado}
+Dr. Guaner Rojas Rojas\\
+\textbf{Representante de la Decana}\\
+\textbf{Sistema de Estudios de Posgrado}
 
 \text{}
 
@@ -115,26 +121,26 @@ M.Sc. Óscar Centeno Mora\\
 \text{}
 
 \noindent\rule{7cm}{0.4pt}\\
-Ph.D. Gilbert Brenes Camacho\\
-\textbf{Lector}
+Dr. Gilbert Brenes Camacho\\
+\textbf{Asesor}
 
 \text{}
 
 \noindent\rule{7cm}{0.4pt}\\
-Ph.D. ShuWei Chou.\\
-\textbf{Lector}
+Dr. Shu Wei Chou Chen\\
+\textbf{Asesor}
 
 \text{}
 
 \noindent\rule{7cm}{0.4pt}\\
-Ph.D. Gilbert Brenes Camacho\\
-\textbf{Director Programa de Posgrado en Estadística}
+M.Sc. Ericka Méndez Chacón\\
+\textbf{Representante del Director Programa de Posgrado en Estadística}
 
 \text{}
 
 \noindent\rule{7cm}{0.4pt}\\
 César Andrés Gamboa Sanabria\\
-\textbf{Candidato}
+\textbf{Estudiante}
 
 \end{center}
 
@@ -148,15 +154,15 @@ César Andrés Gamboa Sanabria\\
 \addcontentsline{toc}{section}{RESUMEN}
 \section*{RESUMEN}
 
-Estimar modelos de series cronológicas es una labor ampliamente extendida en múltiples campos de la investigación y uno de los objetivos es generar pronósticos de la forma más precisa posible dentro de un horizonte determinado. Existe una amplia gama de modelos que puede utilizarse con este fin, entre ellos están los modelos Autorregresivos Integrados de Medias Móviles ($ARIMA$), e incluso existen diversos métodos de estimación automática o semi-automática para esta rama de la estadística. 
+Estimar modelos de series cronológicas es una labor ampliamente extendida en múltiples campos de la investigación y uno de los objetivos es generar pronósticos de la forma más precisa posible dentro de un horizonte determinado. Existe una amplia gama de modelos que puede utilizarse con este fin, entre ellos están los modelos Autorregresivos Integrados de Medias Móviles ($ARIMA$), e incluso existen diversos métodos de estimación automática o semi-automática para esta rama de la Estadística. 
 
 A pesar de esto, encontrar un modelo que posea un buen ajuste a los datos no es fácil, pues se deben considerar tanto aspectos teóricos como prácticos, y de la temática de estudio para así obtener un modelo adecuado que genere pronósticos realistas y pertinentes para la toma de decisiones dentro de lo posible.
 
-La investigación propone hacer uso de método denominado sobreparametrización en conjunto con el método de permutaciones del análisis combinatorio para someter a prueba una espectro más amplio de posibles modelos $ARIMA$. En la selección de modelos ARIMA los métodos más tradicionales como los correlogramas u otros, no suelen cubrir muchas alternativas para definir la cantidad de coeficientes a estimar en el modelo, lo cual representa un método de estimación que no es óptimo. El presente tesis propone una metodología para obtener pronósticos más precisos en comparación a los métodos tradicionales.
+Esta investigación propone hacer uso del método denominado sobreparametrización en conjunto con el método de permutaciones del análisis combinatorio para someter a prueba un espectro más amplio de posibles modelos $ARIMA$. En la selección de modelos ARIMA, los métodos más tradicionales como los correlogramas u otros, no suelen cubrir muchas alternativas para definir la cantidad de coeficientes a estimar en el modelo, lo cual representa un método de estimación que no es óptimo. Por lo tanto, la presente tesis propone una metodología para obtener pronósticos más precisos en comparación a los métodos tradicionales.
 
-Los resultados se contrastan con datos simulados de series cronológicas y cuatro series reales para ajustar modelos $ARIMA$ con la función `auto.arima()`, la sobreparametrización y un modelo $ARIMA$ de orden bajo. Para cada una de estas series se realiza una partición del 80% para entrenar los modelos y el restante 20% para validación de los pronósticos. En cada una de estas series se realizó un análisis visual del comportamiento de los errores y posteriormente se evalúa la calidad de los resultados de cada modelo obtenido con las tres técnicas descritas mediante medidas de bondad de ajuste (AIC, AICc y BIC) y de precisión (RMSE, MAE y MAPE).
+Los resultados encontrados se contrastan con datos simulados de series cronológicas y cuatro series reales para ajustar modelos $ARIMA$ con la función `auto.arima()`, la sobreparametrización y un modelo $ARIMA$ de orden bajo. Para cada una de estas series se realiza una partición del 80% para entrenar los modelos y el restante 20% para validación de los pronósticos. En cada una de estas series se realizó un análisis visual del comportamiento de los errores y posteriormente se evalúa la calidad de los resultados de cada modelo obtenido con las tres técnicas descritas mediante medidas de bondad de ajuste (AIC, AICc y BIC) y de precisión (RMSE, MAE y MAPE).
 
-Al tener datos que vienen de un proceso con bajo número de parámetros, la sobreparametrización logra captar de buena manera el comportamiento de la serie en comparación a las otras alternativas, y cuando el proceso que gobierna la serie es de un mayor grado, la metodología propuesta es capaz de capturar de mejor forma el comportamiento de la serie y conseguir pronósticos con una precisión mayor al de los métodos más tradicionales, pues en los resultados de entrenamiento, la sobreparametrización obtuvo el mejor ajuste un 58,33% de las veces y la mejor precisión el 45,45% de las veces, mientras que al evaluar los resultados sobre los conjuntos de datos de validación, la sobreparametrización obtuvo el mejor ajuste el 50% de las veces, mientras que las mejores medidas de precisión se alcanzaron un 67% del tiempo.
+Al tener datos que vienen de un proceso con bajo número de parámetros, la sobreparametrización logra captar de buena manera el comportamiento de la serie en comparación a las otras alternativas, y cuando el proceso que gobierna la serie es de un mayor grado. La metodología propuesta es capaz de capturar de mejor forma el comportamiento de la serie y conseguir pronósticos con una precisión mayor a los de los métodos tradicionales, ya que en los resultados de entrenamiento, la sobreparametrización obtuvo el mejor ajuste un 58,33% de las veces y la mejor precisión el 45,45% de las veces, mientras que al evaluar los resultados sobre los conjuntos de datos de validación, la sobreparametrización obtuvo el mejor ajuste el 50% de las veces, mientras que las mejores medidas de precisión se alcanzaron un 67% del tiempo.
 
 \cleardoublepage
 
@@ -165,7 +171,7 @@ Al tener datos que vienen de un proceso con bajo número de parámetros, la sobr
 
 Time series analysis is widely extended in several research fields, and one goal is to generate forecasts as accurately as possible within a given horizon. Several models can be used for this purpose, among them are the Autoregressive Integrated Moving Average models (ARIMA). There are even some automatic or semi-automatic estimation methods for their calculation. 
 
-Despite this, finding a well-fitted model is not easy, since both theoretical and practical aspects must be considered, as well as particular context to obtain an adequate model that generates realistic and relevant forecasts for decision making as much as possible. 
+Despite this, finding a well-fitted model is not easy, since both theoretical and practical aspects must be considered, as well as a particular context to obtain an adequate model that generates realistic and relevant forecasts for decision making as much as possible. 
 
 This research proposes the use of overparameterization combinatorial analysis to test a broader spectrum of possible $ARIMA$ models. In ARIMA model selection, the most traditional methods, such as correlograms, do not usually cover many alternatives to define the number of the coefficients to be estimated in the model, which represents a non-optimal estimation method. This thesis proposes a methodology to obtain more accurate forecasts compared to traditional methods. 
 
@@ -186,10 +192,13 @@ In the training results, the overparameterization obtained the best fit 58,33% o
 \cleardoublepage
 \pagenumbering{arabic}
 
+
+\includepdf[pages=-]{Licencia_Publicacion.pdf}
+
 \newpage
 
 \section{INTRODUCCIÓN}  
-
+\setcounter{page}{1}
 ```{r, child="01-Introduccion.Rmd"}
 ```
 
